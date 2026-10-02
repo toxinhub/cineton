@@ -37,7 +37,7 @@ input,select,textarea,button{font:inherit;color:var(--tx);background:#101217;bor
 <section><h2>Your Library <small id="libCount">0 titles</small></h2><div class="toolbar"><input id="libSearch" placeholder="🔍 Search your library…"><select id="libFilter" style="max-width:150px"><option value="all">All</option><option value="watched">Watched</option><option value="watchlist">Watchlist</option><option value="review">Needs review</option></select></div><div id="ls"></div></section>
 </div>
 <script>
-const $=s=>document.querySelector(s),L=localStorage,S=sessionStorage,IMG='https://image.tmdb.org/t/p/w92';
+const $=s=>document.querySelector(s),$=s=>document.querySelectorAll(s),L=localStorage,S=sessionStorage,IMG='https://image.tmdb.org/t/p/w92';
 const e=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 ['repo','tk','ok'].forEach(k=>$('#'+k).value=L['mt_'+k]||'');$('#tok').value=S['mt_tok']||'';
 let data=[],sha='',pick=null;
@@ -65,5 +65,5 @@ $('#libSearch').addEventListener('input',list);$('#libSearch').addEventListener(
 async function rm(i){if(confirm(data[i].title+' Delete?')){const t=data.splice(i,1)[0].title;await save('Remove '+t)}}
 async function mv(i){data[i].status='watched';data[i].watched_on=new Date().toISOString().slice(0,10);await save('Watched '+data[i].title)}
 async function ed(i){const r=prompt('Your rating (0–10):',data[i].my_rating??'');if(r===null)return;const c=prompt('Your note:',data[i].comment||'');if(c===null)return;const d=prompt('Watched date (YYYY-MM-DD):',data[i].watched_on||'');if(d===null)return;Object.assign(data[i],{my_rating:r?+r:null,comment:c,watched_on:d,needs_review:false});await save('Edit '+data[i].title)}
-if($('#tok').value&&$('#repo').value&&$('#tk').value&&$('#ok').value)load().then(()=>setConn('ok','GitHub library loaded successfully.')).catch(x=>setConn('error',connError(x)));
+if($('#tok').value&&$('#repo').value)load().then(()=>setConn('ok','GitHub library loaded successfully.')).catch(x=>setConn('error',connError(x)));
 </script></body></html>
