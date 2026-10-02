@@ -1,15 +1,15 @@
 <!DOCTYPE html>
 <html lang="en"><head><meta charset="utf-8">
-<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><meta name="theme-color" content="#12131a"><meta name="description" content="Personal movie & TV diary">
-<title>My Cinema Diary</title>
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><meta name="theme-color" content="#12131a"><meta name="description" content="CineTon — Some of the films I've watched. Rest of the drama? I'm living it.">
+<title>CineTon</title>
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:wght@600;800&family=Hind+Siliguri:wght@400;500;600&display=swap">
 <style>
 :root{--bg:#12131a;--sf:#1c1e2b;--tx:#eceaf4;--mu:#9b98ad;--ac:#ff5d8f;--gd:#f5c542;color-scheme:dark}
 @media(prefers-color-scheme:light){:root{--bg:#f6f4fa;--sf:#fff;--tx:#1a1a24;--mu:#6b6880;color-scheme:light}}
 *{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;background:radial-gradient(circle at 15% -10%,#ff5d8f10,transparent 30%),var(--bg);color:var(--tx);font:16px/1.6 'Hind Siliguri',sans-serif}
 header{padding:48px 20px 16px;max-width:1200px;margin:auto}
-h1{font:800 clamp(2.2rem,7vw,4.5rem)/1 Fraunces,serif;margin:0 0 6px;letter-spacing:-.02em}
-.sub{color:var(--mu);margin:0}.stats{display:flex;flex-wrap:wrap;gap:8px;margin-top:12px}.stat{background:var(--sf);border:1px solid #ffffff18;border-radius:10px;padding:5px 9px;color:var(--mu);font-size:.82rem}.stat b{color:var(--tx)}
+h1{font:800 clamp(2.2rem,7vw,4.5rem)/1 Fraunces,serif;margin:0 0 4px;letter-spacing:-.02em}
+.sub{color:var(--mu);margin:0;max-width:680px;font-size:clamp(.88rem,1.8vw,1rem);line-height:1.45}.stats{display:flex;flex-wrap:wrap;gap:8px;margin-top:14px}.stat{background:var(--sf);border:1px solid #ffffff18;border-radius:10px;padding:5px 9px;color:var(--mu);font-size:.82rem}.stat b{color:var(--tx)}
 .bar{position:sticky;backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);top:0;z-index:5;background:var(--bg);padding:12px 20px;max-width:1200px;margin:auto;display:flex;flex-wrap:wrap;gap:10px;align-items:center}.views{display:flex;gap:4px;margin-left:auto}.views button{padding:8px 10px;line-height:1}.views button.on{background:var(--ac);border-color:var(--ac);color:#fff}
 .tabs{display:flex;gap:6px}
 button,select,input{font:inherit;color:var(--tx);background:var(--sf);border:1px solid #ffffff1f;border-radius:10px;padding:8px 14px}
@@ -34,8 +34,9 @@ dialog::backdrop{background:#000b}
 .chips{display:flex;flex-wrap:wrap;gap:8px;margin:10px 0}.chips span{background:#ffffff14;padding:3px 10px;border-radius:99px;font-size:.9rem}
 .cm{border-left:3px solid var(--ac);padding-left:12px;font-style:italic}
 .x{float:right;margin:12px}
-.skel{background:linear-gradient(100deg,var(--sf) 35%,#ffffff08 50%,var(--sf) 65%);background-size:300% 100%;animation:sh 1.2s infinite;border-radius:14px;aspect-ratio:2/3}@keyframes sh{to{background-position:-300% 0}}@media(prefers-reduced-motion:reduce){*{scroll-behavior:auto!important;animation:none!important;transition:none!important}}@media(max-width:600px){header{padding-top:32px}.bar{padding:10px 12px}.bar input{order:3;flex-basis:100%;min-width:0}.views{order:2;margin-left:auto}.views button{padding:7px 9px}main{padding:12px 12px 50px;gap:12px}.ci{padding:8px 9px 10px}.ci b{font-size:.95rem}.ci small{font-size:.78rem}main.list .c{grid-template-columns:52px 1fr;min-height:70px}main.list .c img,main.list .c .ph{width:52px;height:70px}main.list .bd{right:8px;left:auto}} </style></head><body>
-<header><h1>My Cinema Diary</h1><p class="sub" id="stat"></p><div id="stats" class="stats" aria-label="Statistics"></div></header>
+.skel{background:linear-gradient(100deg,var(--sf) 35%,#ffffff08 50%,var(--sf) 65%);background-size:300% 100%;animation:sh 1.2s infinite;border-radius:14px;aspect-ratio:2/3}@keyframes sh{to{background-position:-300% 0}}@media(prefers-reduced-motion:reduce){*{scroll-behavior:auto!important;animation:none!important;transition:none!important}}@media(max-width:600px){header{padding-top:32px;padding-bottom:14px}h1{font-size:clamp(2rem,11vw,3rem);margin-bottom:4px}.sub{font-size:.82rem;line-height:1.4;max-width:360px}.stats{margin-top:12px}.bar{padding:10px 12px}.bar input{order:3;flex-basis:100%;min-width:0}.views{order:2;margin-left:auto}.views button{padding:7px 9px}main{padding:12px 12px 50px;gap:12px}.ci{padding:8px 9px 10px}.ci b{font-size:.95rem}.ci small{font-size:.78rem}main.list .c{grid-template-columns:52px 1fr;min-height:70px}main.list .c img,main.list .c .ph{width:52px;height:70px}main.list .bd{right:8px;left:auto}}
+</style></head><body>
+<header><h1>CineTon</h1><p class="sub">Some of the films I've watched. Rest of the drama? I'm living it.</p><div id="stats" class="stats" aria-label="Statistics"></div></header>
 <div class="bar">
  <div class="tabs"><button id="t-watched" class="on">Watched</button><button id="t-watchlist">Watchlist</button></div>
  <input id="q" type="search" placeholder="Search title, actor or director…" aria-label="Search">
@@ -59,7 +60,7 @@ function render(){
  let L=D.filter(m=>m.status===tab&&(ty==='all'||m.type===ty)&&(!q||[m.title,m.director,(m.cast||[]).join(' '),m.year].join(' ').toLowerCase().includes(q)));
  const n=v=>parseFloat(v)||0;
  L.sort({new:(a,b)=>(b.watched_on||'').localeCompare(a.watched_on||''),my:(a,b)=>n(b.my_rating)-n(a.my_rating),im:(a,b)=>n(b.imdb)-n(a.imdb),yr:(a,b)=>n(b.year)-n(a.year),az:(a,b)=>a.title.localeCompare(b.title)}[so]);
- const w=D.filter(m=>m.status==='watched'),wl=D.filter(m=>m.status==='watchlist'),rated=w.filter(m=>n(m.my_rating)>0),avg=rated.length?(rated.reduce((a,m)=>a+n(m.my_rating),0)/rated.length).toFixed(1):'—';$('#stat').textContent=`Watched ${w.length} · Watchlist ${wl.length}`;$('#stats').innerHTML=`<span class="stat">Movie <b>${D.filter(m=>m.type==='movie').length}</b></span><span class="stat">TV <b>${D.filter(m=>m.type==='tv').length}</b></span><span class="stat">My average <b>${avg}</b></span><span class="stat">Rated <b>${rated.length}</b></span>`;
+ const w=D.filter(m=>m.status==='watched'),wl=D.filter(m=>m.status==='watchlist'),rated=w.filter(m=>n(m.my_rating)>0),avg=rated.length?(rated.reduce((a,m)=>a+n(m.my_rating),0)/rated.length).toFixed(1):'—';$('#stats').innerHTML=`<span class="stat">Movie <b>${D.filter(m=>m.type==='movie').length}</b></span><span class="stat">TV <b>${D.filter(m=>m.type==='tv').length}</span><span class="stat">My average <b>${avg}</b></span><span class="stat">Rated <b>${rated.length}</b></span>`;
  $('#g').innerHTML=L.length?L.map(m=>`<button class="c" data-id="${e(m.id)}">${pic(m)}${m.imdb?`<span class="bd">★ ${e(m.imdb)}</span>`:''}<div class="ci"><b>${e(m.title)}${m.my_rating?`<span class="list-rating">★ ${e(m.my_rating)}</span>`:""}</b><small>${e(m.year)} · ${m.type==='tv'?'TV / Show':'Movie'}${m.my_rating?` · My ${e(m.my_rating)}/10`:''}</small></div></button>`).join(''):'<p class="empty">No titles found.</p>';
 }
 $('#g').onclick=ev=>{const c=ev.target.closest('.c');if(!c)return;const m=D.find(x=>x.id===c.dataset.id);
