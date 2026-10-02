@@ -16,7 +16,7 @@ button{width:auto;cursor:pointer;background:var(--ac);border-color:var(--ac);col
 <h1>অ্যাডমিন প্যানেল</h1>
 <section><h2>১. সংযোগ (শুধু এই ব্রাউজারে সংরক্ষিত হয়)</h2>
 <input id="repo" placeholder="GitHub রিপো: username/repo-name">
-<input id="tok" type="password" placeholder="GitHub fine-grained token (শুধু এই রিপোর Contents: Read & write)">
+<input id="tok" type="password" autocomplete="off" placeholder="GitHub fine-grained token (শুধু এই রিপোর Contents: Read & write)"><p class="mu">নিরাপত্তার জন্য GitHub token এই ব্রাউজারের session শেষ হলে মুছে যাবে।</p>
 <input id="tk" placeholder="TMDB API key">
 <input id="ok" placeholder="OMDb API key (IMDb রেটিংয়ের জন্য)">
 <button id="sv">সংরক্ষণ ও ডেটা লোড</button> <span class="mu" id="st"></span></section>
@@ -36,14 +36,14 @@ button{width:auto;cursor:pointer;background:var(--ac);border-color:var(--ac);col
 
 <section><h2>৪. বর্তমান তালিকা</h2><div id="ls"></div></section>
 <script>
-const $=s=>document.querySelector(s),L=localStorage,IMG='https://image.tmdb.org/t/p/w92';
+const $=s=>document.querySelector(s),L=localStorage,S=sessionStorage,IMG='https://image.tmdb.org/t/p/w92';
 const e=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
-['repo','tok','tk','ok'].forEach(k=>$('#'+k).value=L['mt_'+k]||'');
+['repo','tk','ok'].forEach(k=>$('#'+k).value=L['mt_'+k]||'');$('#tok').value=S['mt_tok']||'';
 let data=[],sha='',pick=null;
 const gh=(m,b)=>fetch(`https://api.github.com/repos/${$('#repo').value.trim()}/contents/data.json`,{method:m||'GET',headers:{Authorization:'Bearer '+$('#tok').value.trim(),Accept:'application/vnd.github+json'},body:b&&JSON.stringify(b)}).then(async r=>{if(!r.ok)throw Error(r.status+' '+(await r.json()).message);return r.json()});
 async function load(){const r=await gh();sha=r.sha;data=JSON.parse(decodeURIComponent(escape(atob(r.content.replace(/\n/g,'')))));list()}
 async function save(msg){const r=await gh('PUT',{message:msg,sha,content:btoa(unescape(encodeURIComponent(JSON.stringify(data,null,1))))});sha=r.content.sha;list()}
-$('#sv').onclick=async()=>{['repo','tok','tk','ok'].forEach(k=>L['mt_'+k]=$('#'+k).value.trim());try{await load();$('#st').textContent='✔ সংযুক্ত ('+data.length+'টি)'}catch(x){$('#st').textContent='✖ '+x.message}};
+$('#sv').onclick=async()=>{['repo','tk','ok'].forEach(k=>L['mt_'+k]=$('#'+k).value.trim());S['mt_tok']=$('#tok').value.trim();try{await load();$('#st').textContent='✔ সংযুক্ত ('+data.length+'টি)'}catch(x){$('#st').textContent='✖ '+x.message}};
 const T=(p)=>fetch('https://api.themoviedb.org/3'+p+(p.includes('?')?'&':'?')+'api_key='+$('#tk').value.trim()+'&language=en-US').then(r=>r.json());
 const parse=s=>{let r='',c='';s=s.replace(/\[\s*(\d+(?:\.\d+)?)\s*(?:\/\s*10)?\s*\]/,(_,x)=>{r=x;return''}).replace(/\|(.*)$/,(_,x)=>{c=x.trim();return''});const m=s.trim().match(/^(.*?)\s*\((\d{4})\)\s*$/);return m?{t:m[1],y:m[2],r,c}:{t:s.trim(),y:'',r,c}};
 const yr=h=>(h.release_date||h.first_air_date||'').slice(0,4);
