@@ -20,7 +20,7 @@ input,select,textarea,button{font:inherit;color:var(--tx);background:#101217;bor
 <section><h2>Connection <small>saved locally</small></h2>
 <div class="r"><input id="repo" placeholder="GitHub repository: username/repo-name"><input id="tok" type="password" autocomplete="off" placeholder="GitHub fine-grained token"></div>
 <div class="r"><input id="tk" placeholder="TMDB API key"><input id="ok" placeholder="OMDb API key (IMDb ratings)"></div>
-<div class="actions"><button id="sv">Save & Load Library</button><span class="mu">Your token is cleared when this browser session ends.</span></div></section>
+<div class="actions"><button id="sv" type="button">Connect</button><span class="mu">Connect to GitHub and load your library. Token is cleared when this browser session ends.</span></div></section>
 
 <div class="wideGrid"><section><h2>Add a title <small>one at a time</small></h2>
 <div class="toolbar"><input id="sq" placeholder="Search for a movie or TV show…"><button id="addNew" type="button">＋ Add</button></div><div id="hits"></div>
@@ -44,7 +44,7 @@ const gh=(m,b)=>fetch(`https://api.github.com/repos/${$('#repo').value.trim()}/c
 async function load(){const r=await gh();sha=r.sha;data=JSON.parse(decodeURIComponent(escape(atob(r.content.replace(/\n/g,'')))));list()}
 async function save(msg){const r=await gh('PUT',{message:msg,sha,content:btoa(unescape(encodeURIComponent(JSON.stringify(data,null,1))))});sha=r.content.sha;list()}
 function dashboard(){const w=data.filter(d=>d.status==='watched').length,q=data.filter(d=>d.status==='watchlist').length;$('#total').textContent=data.length;$('#watched').textContent=w;$('#queue').textContent=q;$('#libCount').textContent=data.length+' title'+(data.length===1?'':'s')}
-$('#sv').onclick=async()=>{['repo','tk','ok'].forEach(k=>L['mt_'+k]=$('#'+k).value.trim());S['mt_tok']=$('#tok').value.trim();try{await load();$('#st').textContent='● Connected';$('#st').classList.add('ok')}catch(x){$('#st').textContent='✖ '+x.message;$('#st').classList.remove('ok')}};
+$('#sv').onclick=async()=>{['repo','tk','ok'].forEach(k=>L['mt_'+k]=$('#'+k).value.trim());S['mt_tok']=$('#tok').value.trim();try{await load();$('#st').textContent='● Connected';$('#st').classList.add('ok');$('#sv').textContent='Connected ✓'}catch(x){$('#st').textContent='✖ '+x.message;$('#st').classList.remove('ok');$('#sv').textContent='Connect'}};
 const T=(p)=>fetch('https://api.themoviedb.org/3'+p+(p.includes('?')?'&':'?')+'api_key='+$('#tk').value.trim()+'&language=en-US').then(r=>r.json());
 const parse=s=>{let r='',c='';s=String(s||'').replace(/^\s*(?:\d+\s*[.)-]|[-•])\s*/,'').trim();s=s.replace(/\|\s*(.*)$/,(m,x)=>{c=x.trim();return''}).trim();s=s.replace(/[\[【]\s*(\d+(?:\.\d+)?)\s*(?:\/\s*10)?\s*[\]】]\s*$/i,(_,x)=>{r=x;return''}).trim();const m=s.match(/^(.*?)\s*\((\d{4})\)\s*$/);return m?{t:m[1].trim(),y:m[2],r,c}:{t:s.trim(),y:'',r,c}};
 const yr=h=>(h.release_date||h.first_air_date||'').slice(0,4);
