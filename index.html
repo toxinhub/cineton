@@ -1,16 +1,16 @@
 <!DOCTYPE html>
 <html lang="bn"><head><meta charset="utf-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><meta name="theme-color" content="#12131a"><meta name="description" content="ব্যক্তিগত সিনেমা ও সিরিজ ডায়েরি">
 <title>আমার সিনেমা ডায়েরি</title>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:wght@600;800&family=Hind+Siliguri:wght@400;500;600&display=swap">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:wght@600;800&family=Hind+Siliguri:wght@400;500;600&display=swap">
 <style>
 :root{--bg:#12131a;--sf:#1c1e2b;--tx:#eceaf4;--mu:#9b98ad;--ac:#ff5d8f;--gd:#f5c542;color-scheme:dark}
 @media(prefers-color-scheme:light){:root{--bg:#f6f4fa;--sf:#fff;--tx:#1a1a24;--mu:#6b6880;color-scheme:light}}
-*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--tx);font:16px/1.6 'Hind Siliguri',sans-serif}
+*{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;background:radial-gradient(circle at 15% -10%,#ff5d8f10,transparent 30%),var(--bg);color:var(--tx);font:16px/1.6 'Hind Siliguri',sans-serif}
 header{padding:48px 20px 16px;max-width:1200px;margin:auto}
 h1{font:800 clamp(2.2rem,7vw,4.5rem)/1 Fraunces,serif;margin:0 0 6px;letter-spacing:-.02em}
 .sub{color:var(--mu);margin:0}
-.bar{position:sticky;top:0;z-index:5;background:var(--bg);padding:12px 20px;max-width:1200px;margin:auto;display:flex;flex-wrap:wrap;gap:10px;align-items:center}
+.bar{position:sticky;backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);top:0;z-index:5;background:var(--bg);padding:12px 20px;max-width:1200px;margin:auto;display:flex;flex-wrap:wrap;gap:10px;align-items:center}
 .tabs{display:flex;gap:6px}
 button,select,input{font:inherit;color:var(--tx);background:var(--sf);border:1px solid #ffffff1f;border-radius:10px;padding:8px 14px}
 button{cursor:pointer}button.on{background:var(--ac);border-color:var(--ac);color:#fff}
@@ -18,7 +18,7 @@ input{flex:1;min-width:150px}
 :focus-visible{outline:2px solid var(--gd);outline-offset:2px}
 main{max-width:1200px;margin:auto;padding:12px 20px 60px;display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:18px}
 @media(min-width:700px){main{grid-template-columns:repeat(auto-fill,minmax(190px,1fr))}}
-.c{background:var(--sf);border-radius:14px;overflow:hidden;cursor:pointer;position:relative;border:0;padding:0;text-align:left;color:inherit;transition:transform .2s}
+.c{background:var(--sf);border-radius:14px;overflow:hidden;cursor:pointer;position:relative;border:1px solid #ffffff18;padding:0;text-align:left;color:inherit;transition:transform .2s}
 .c:hover{transform:translateY(-4px)}
 .c img,.ph{width:100%;aspect-ratio:2/3;object-fit:cover;display:block;background:#2a2d3f}
 .ph{display:grid;place-items:center;color:var(--mu);padding:10px;text-align:center}
@@ -34,7 +34,7 @@ dialog::backdrop{background:#000b}
 .chips{display:flex;flex-wrap:wrap;gap:8px;margin:10px 0}.chips span{background:#ffffff14;padding:3px 10px;border-radius:99px;font-size:.9rem}
 .cm{border-left:3px solid var(--ac);padding-left:12px;font-style:italic}
 .x{float:right;margin:12px}
-</style></head><body>
+.skel{background:linear-gradient(100deg,var(--sf) 35%,#ffffff08 50%,var(--sf) 65%);background-size:300% 100%;animation:sh 1.2s infinite;border-radius:14px;aspect-ratio:2/3}@keyframes sh{to{background-position:-300% 0}}@media(prefers-reduced-motion:reduce){*{scroll-behavior:auto!important;animation:none!important;transition:none!important}}@media(max-width:600px){header{padding-top:32px}.bar{padding:10px 12px}.bar input{order:3;flex-basis:100%;min-width:0}main{padding:12px 12px 50px;gap:12px}.ci{padding:8px 9px 10px}.ci b{font-size:.95rem}.ci small{font-size:.78rem}} </style></head><body>
 <header><h1>আমার সিনেমা ডায়েরি</h1><p class="sub" id="stat"></p></header>
 <div class="bar">
  <div class="tabs"><button id="t-watched" class="on">দেখে ফেলেছি</button><button id="t-watchlist">দেখতে চাই</button></div>
@@ -42,14 +42,14 @@ dialog::backdrop{background:#000b}
  <select id="ty" aria-label="ধরন"><option value="all">সব ধরন</option><option value="movie">মুভি</option><option value="tv">সিরিজ / শো</option></select>
  <select id="so" aria-label="সাজান"><option value="new">নতুন আগে</option><option value="my">আমার রেটিং</option><option value="im">IMDb রেটিং</option><option value="yr">মুক্তির সাল</option><option value="az">নাম (A–Z)</option></select>
 </div>
-<main id="g"></main>
+<main id="g" aria-live="polite"></main>
 <dialog id="d"><button class="x" onclick="d.close()" aria-label="বন্ধ">✕</button><div class="m" id="mb"></div></dialog>
 <script>
 const $=s=>document.querySelector(s),d=$('#d'),IMG='https://image.tmdb.org/t/p/w500';
 const e=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 let D=[],tab='watched';
-fetch('data.json?'+Date.now()).then(r=>r.json()).then(x=>{D=x;render()}).catch(()=>$('#g').innerHTML='<p class="empty">data.json লোড হয়নি।</p>');
-const pic=m=>m.poster?`<img loading="lazy" src="${IMG}${e(m.poster)}" alt="${e(m.title)} পোস্টার">`:`<div class="ph">${e(m.title)}</div>`;
+skeleton();fetch('data.json?'+Date.now(),{cache:'no-store'}).then(r=>{if(!r.ok)throw Error('HTTP '+r.status);return r.json()}).then(x=>{D=x;render()}).catch(()=>$('#g').innerHTML='<p class="empty">data.json লোড হয়নি।</p>');
+const pic=m=>m.poster?`<img loading="lazy" decoding="async" src="${IMG}${e(m.poster)}" alt="${e(m.title)} পোস্টার" onerror="this.style.display='none';this.nextElementSibling&&(this.nextElementSibling.style.display='grid')">`:`<div class="ph">${e(m.title)}</div>`;
 function render(){
  const q=$('#q').value.trim().toLowerCase(),ty=$('#ty').value,so=$('#so').value;
  let L=D.filter(m=>m.status===tab&&(ty==='all'||m.type===ty)&&(!q||[m.title,m.director,(m.cast||[]).join(' '),m.year].join(' ').toLowerCase().includes(q)));
