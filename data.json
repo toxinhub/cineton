@@ -1,5 +1,55 @@
 [
  {
+  "id": "movie-457799",
+  "type": "movie",
+  "title": "Extremely Wicked, Shockingly Evil and Vile",
+  "year": "2019",
+  "poster": "/a7dVwEBU3vupg3hZQMeyL6ksz0F.jpg",
+  "overview": "A chronicle of the crimes of Ted Bundy, from the perspective of his longtime girlfriend, Elizabeth Kloepfer, who refused to believe the truth about him for years.",
+  "director": "Joe Berlinger",
+  "cast": [
+   "Zac Efron",
+   "Lily Collins",
+   "Kaya Scodelario",
+   "Jeffrey Donovan",
+   "Angela Sarafyan",
+   "Dylan Baker",
+   "Brian Geraghty",
+   "Terry Kinney"
+  ],
+  "imdb": "6.7",
+  "my_rating": null,
+  "watched_on": "",
+  "comment": "",
+  "status": "watched",
+  "needs_review": false
+ },
+ {
+  "id": "movie-474354",
+  "type": "movie",
+  "title": "22 July",
+  "year": "2018",
+  "poster": "/8RZjeZ69UDLkaFQVKcslciP6MOr.jpg",
+  "overview": "On 22 July 2011, neo-Nazi terrorist Anders Behring Breivik murdered 77 young people attending a Labour Party Youth Camp on Utøya Island outside of Oslo. This three-part story focuses on the survivors, the political leadership of Norway, and the lawyers involved.",
+  "director": "Paul Greengrass",
+  "cast": [
+   "Jonas Strand Gravli",
+   "Anders Danielsen Lie",
+   "Jon Øigarden",
+   "Seda Witt",
+   "Ola G. Furuseth",
+   "Maria Bock",
+   "Isak Bakli Aglen",
+   "Thorbjørn Harr"
+  ],
+  "imdb": "6.8",
+  "my_rating": null,
+  "watched_on": "",
+  "comment": "",
+  "status": "watched",
+  "needs_review": false
+ },
+ {
   "id": "movie-603",
   "type": "movie",
   "title": "The Matrix",
