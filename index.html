@@ -9,7 +9,7 @@
 *{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;background:radial-gradient(circle at 15% -10%,#ff5d8f10,transparent 30%),var(--bg);color:var(--tx);font:16px/1.6 'Hind Siliguri',sans-serif}
 header{padding:48px 20px 16px;max-width:1200px;margin:auto}
 h1{font:800 clamp(2.2rem,7vw,4.5rem)/1 Fraunces,serif;margin:0 0 6px;letter-spacing:-.02em}
-.sub{color:var(--mu);margin:0}
+.sub{color:var(--mu);margin:0}.stats{display:flex;flex-wrap:wrap;gap:8px;margin-top:12px}.stat{background:var(--sf);border:1px solid #ffffff18;border-radius:10px;padding:5px 9px;color:var(--mu);font-size:.82rem}.stat b{color:var(--tx)}
 .bar{position:sticky;backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);top:0;z-index:5;background:var(--bg);padding:12px 20px;max-width:1200px;margin:auto;display:flex;flex-wrap:wrap;gap:10px;align-items:center}
 .tabs{display:flex;gap:6px}
 button,select,input{font:inherit;color:var(--tx);background:var(--sf);border:1px solid #ffffff1f;border-radius:10px;padding:8px 14px}
@@ -35,7 +35,7 @@ dialog::backdrop{background:#000b}
 .cm{border-left:3px solid var(--ac);padding-left:12px;font-style:italic}
 .x{float:right;margin:12px}
 .skel{background:linear-gradient(100deg,var(--sf) 35%,#ffffff08 50%,var(--sf) 65%);background-size:300% 100%;animation:sh 1.2s infinite;border-radius:14px;aspect-ratio:2/3}@keyframes sh{to{background-position:-300% 0}}@media(prefers-reduced-motion:reduce){*{scroll-behavior:auto!important;animation:none!important;transition:none!important}}@media(max-width:600px){header{padding-top:32px}.bar{padding:10px 12px}.bar input{order:3;flex-basis:100%;min-width:0}main{padding:12px 12px 50px;gap:12px}.ci{padding:8px 9px 10px}.ci b{font-size:.95rem}.ci small{font-size:.78rem}} </style></head><body>
-<header><h1>আমার সিনেমা ডায়েরি</h1><p class="sub" id="stat"></p></header>
+<header><h1>আমার সিনেমা ডায়েরি</h1><p class="sub" id="stat"></p><div id="stats" class="stats" aria-label="পরিসংখ্যান"></div></header>
 <div class="bar">
  <div class="tabs"><button id="t-watched" class="on">দেখে ফেলেছি</button><button id="t-watchlist">দেখতে চাই</button></div>
  <input id="q" type="search" placeholder="নাম, অভিনেতা বা পরিচালক খুঁজুন…" aria-label="সার্চ">
@@ -49,13 +49,13 @@ const $=s=>document.querySelector(s),d=$('#d'),IMG='https://image.tmdb.org/t/p/w
 const e=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 let D=[],tab='watched';
 skeleton();fetch('data.json?'+Date.now(),{cache:'no-store'}).then(r=>{if(!r.ok)throw Error('HTTP '+r.status);return r.json()}).then(x=>{D=x;render()}).catch(()=>$('#g').innerHTML='<p class="empty">data.json লোড হয়নি।</p>');
-const pic=m=>m.poster?`<img loading="lazy" decoding="async" src="${IMG}${e(m.poster)}" alt="${e(m.title)} পোস্টার" onerror="this.style.display='none';this.nextElementSibling&&(this.nextElementSibling.style.display='grid')">`:`<div class="ph">${e(m.title)}</div>`;
+const pic=m=>m.poster?`<img loading="lazy" decoding="async" src="${IMG}${e(m.poster)}" alt="${e(m.title)} পোস্টার" onerror="this.replaceWith(Object.assign(document.createElement('div'),{className:'ph',textContent:this.alt.replace(/ পোস্টার$/,'')}))">`:`<div class="ph">${e(m.title)}</div>`;
 function render(){
  const q=$('#q').value.trim().toLowerCase(),ty=$('#ty').value,so=$('#so').value;
  let L=D.filter(m=>m.status===tab&&(ty==='all'||m.type===ty)&&(!q||[m.title,m.director,(m.cast||[]).join(' '),m.year].join(' ').toLowerCase().includes(q)));
  const n=v=>parseFloat(v)||0;
  L.sort({new:(a,b)=>(b.watched_on||'').localeCompare(a.watched_on||''),my:(a,b)=>n(b.my_rating)-n(a.my_rating),im:(a,b)=>n(b.imdb)-n(a.imdb),yr:(a,b)=>n(b.year)-n(a.year),az:(a,b)=>a.title.localeCompare(b.title)}[so]);
- $('#stat').textContent=`দেখা ${D.filter(m=>m.status==='watched').length}টি · তালিকায় ${D.filter(m=>m.status==='watchlist').length}টি`;
+ const w=D.filter(m=>m.status==='watched'),wl=D.filter(m=>m.status==='watchlist'),rated=w.filter(m=>n(m.my_rating)>0),avg=rated.length?(rated.reduce((a,m)=>a+n(m.my_rating),0)/rated.length).toFixed(1):'—';$('#stat').textContent=`দেখা ${w.length}টি · তালিকায় ${wl.length}টি`;$('#stats').innerHTML=`<span class="stat">মুভি <b>${D.filter(m=>m.type==='movie').length}</b></span><span class="stat">সিরিজ <b>${D.filter(m=>m.type==='tv').length}</b></span><span class="stat">আমার গড় <b>${avg}</b></span><span class="stat">রেটিং দেওয়া <b>${rated.length}</b></span>`;
  $('#g').innerHTML=L.length?L.map(m=>`<button class="c" data-id="${e(m.id)}">${pic(m)}${m.imdb?`<span class="bd">★ ${e(m.imdb)}</span>`:''}<div class="ci"><b>${e(m.title)}</b><small>${e(m.year)} · ${m.type==='tv'?'সিরিজ':'মুভি'}${m.my_rating?` · আমার ${e(m.my_rating)}/10`:''}</small></div></button>`).join(''):'<p class="empty">কিছু পাওয়া যায়নি।</p>';
 }
 $('#g').onclick=ev=>{const c=ev.target.closest('.c');if(!c)return;const m=D.find(x=>x.id===c.dataset.id);
