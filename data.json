@@ -710,11 +710,11 @@
    "Georgia Goodman"
   ],
   "imdb": "7.0",
-  "my_rating": null,
+  "my_rating": 6,
   "watched_on": "2026-10-02",
-  "comment": "",
+  "comment": "It started off interesting, but then it got kinda meh. ",
   "status": "watched",
-  "needs_review": true
+  "needs_review": false
  },
  {
   "id": "movie-612",
