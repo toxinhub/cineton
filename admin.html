@@ -29,7 +29,7 @@ button{width:auto;cursor:pointer;background:var(--ac);border-color:var(--ac);col
 <textarea id="fc" rows="2" placeholder="আমার মন্তব্য"></textarea><button id="add">যোগ করুন</button></div></section>
 
 <section><h2>৩. তালিকা থেকে একসাথে যোগ</h2>
-<p class="mu">প্রতি লাইনে একটা নাম। সাল দিলে নির্ভুলতা বাড়ে: <code>Dune (2021)</code>। সাল ছাড়া হলে সম্ভাব্য ভুল ম্যাচে "যাচাই দরকার" চিহ্ন বসবে।</p>
+<p class="mu">প্রতি লাইনে একটা নাম। সাল ও রেটিং দিলে নির্ভুলতা বাড়ে: <code>Dune (2021) [8] | মন্তব্য</code>। সাল ছাড়া হলে সম্ভাব্য ভুল ম্যাচে "যাচাই দরকার" চিহ্ন বসবে।</p>
 <textarea id="bl" rows="8"></textarea>
 <select id="bs"><option value="watched">সবই দেখে ফেলেছি</option><option value="watchlist">সবই দেখতে চাই</option></select>
 <button id="bg">আনুন ও যোগ করুন</button><div id="log"></div></section>
@@ -45,9 +45,9 @@ async function load(){const r=await gh();sha=r.sha;data=JSON.parse(decodeURIComp
 async function save(msg){const r=await gh('PUT',{message:msg,sha,content:btoa(unescape(encodeURIComponent(JSON.stringify(data,null,1))))});sha=r.content.sha;list()}
 $('#sv').onclick=async()=>{['repo','tok','tk','ok'].forEach(k=>L['mt_'+k]=$('#'+k).value.trim());try{await load();$('#st').textContent='✔ সংযুক্ত ('+data.length+'টি)'}catch(x){$('#st').textContent='✖ '+x.message}};
 const T=(p)=>fetch('https://api.themoviedb.org/3'+p+(p.includes('?')?'&':'?')+'api_key='+$('#tk').value.trim()+'&language=en-US').then(r=>r.json());
-const parse=s=>{const m=s.match(/^(.*?)\s*\((\d{4})\)\s*$/);return m?{t:m[1],y:m[2]}:{t:s.trim(),y:''}};
+const parse=s=>{let r='',c='';s=s.replace(/\[\s*(\d+(?:\.\d+)?)\s*(?:\/\s*10)?\s*\]/,(_,x)=>{r=x;return''}).replace(/\|(.*)$/,(_,x)=>{c=x.trim();return''});const m=s.trim().match(/^(.*?)\s*\((\d{4})\)\s*$/);return m?{t:m[1],y:m[2],r,c}:{t:s.trim(),y:'',r,c}};
 const yr=h=>(h.release_date||h.first_air_date||'').slice(0,4);
-async function search(s){const {t,y}=parse(s);const r=(await T('/search/multi?query='+encodeURIComponent(t))).results||[];return {hits:r.filter(h=>h.media_type==='movie'||h.media_type==='tv'),y}}
+async function search(s){const {t,y,r:rt,c:cm}=parse(s);const r=(await T('/search/multi?query='+encodeURIComponent(t))).results||[];return {hits:r.filter(h=>h.media_type==='movie'||h.media_type==='tv'),y,rt,cm}}
 async function build(h){const type=h.media_type,x=await T(`/${type}/${h.id}?append_to_response=credits,external_ids`);
  const imdbId=x.imdb_id||x.external_ids?.imdb_id;let imdb='';
  if(imdbId&&$('#ok').value.trim()){try{const o=await fetch(`https://www.omdbapi.com/?i=${imdbId}&apikey=${$('#ok').value.trim()}`).then(r=>r.json());if(o.imdbRating&&o.imdbRating!=='N/A')imdb=o.imdbRating}catch{}}
@@ -59,9 +59,9 @@ $('#hits').onclick=ev=>{const h=ev.target.closest('.hit');if(!h)return;pick=$('#
 $('#add').onclick=async()=>{try{const m=await build(pick);Object.assign(m,{my_rating:$('#fr').value?+$('#fr').value:null,watched_on:$('#fd').value,comment:$('#fc').value,status:$('#fs').value,needs_review:false});
  if(data.some(d=>d.id===m.id))return alert('এটা আগেই আছে।');data.unshift(m);await save('Add '+m.title);$('#f').hidden=true;$('#sq').value=''}catch(x){alert(x.message)}};
 $('#bg').onclick=async()=>{const lines=$('#bl').value.split('\n').map(s=>s.trim()).filter(Boolean),log=$('#log');log.textContent='';let ok=0;
- for(const s of lines){try{const {hits,y}=await search(s);let h=y?hits.find(h=>yr(h)===y):hits[0];if(!h){log.textContent+='✖ পাওয়া যায়নি: '+s+'\n';continue}
+ for(const s of lines){try{const {hits,y,rt,cm}=await search(s);let h=y?hits.find(h=>yr(h)===y):hits[0],fb=false;if(!h&&y&&hits[0]){h=hits[0];fb=true}if(!h){log.textContent+='✖ পাওয়া যায়নি: '+s+'\n';continue}
   const m=await build(h);if(data.some(d=>d.id===m.id)){log.textContent+='⏭ আগেই আছে: '+m.title+'\n';continue}
-  Object.assign(m,{my_rating:null,watched_on:'',comment:'',status:$('#bs').value,needs_review:!y&&hits.length>1});data.unshift(m);ok++;log.textContent+='✔ '+m.title+' ('+m.year+')'+(m.needs_review?' ⚠ যাচাই দরকার':'')+'\n'}catch(x){log.textContent+='✖ '+s+': '+x.message+'\n'}}
+  Object.assign(m,{my_rating:rt?+rt:null,watched_on:'',comment:cm,status:$('#bs').value,needs_review:fb||(!y&&hits.length>1)});data.unshift(m);ok++;log.textContent+='✔ '+m.title+' ('+m.year+')'+(m.needs_review?' ⚠ যাচাই দরকার':'')+'\n'}catch(x){log.textContent+='✖ '+s+': '+x.message+'\n'}}
  if(ok)try{await save('Bulk add '+ok+' titles');log.textContent+='\nসংরক্ষিত হয়েছে: '+ok+'টি'}catch(x){log.textContent+='সংরক্ষণ ব্যর্থ: '+x.message}};
 function list(){$('#ls').innerHTML=data.map((m,i)=>`<div class="it"><span>${e(m.title)} <span class="mu">${e(m.year)} · ${m.status==='watched'?'দেখা':'তালিকায়'}${m.needs_review?' · ⚠':''}</span></span><span>${m.status==='watchlist'?`<button class="g" onclick="mv(${i})">দেখেছি</button> `:''}<button class="g" onclick="ed(${i})">রেটিং/মন্তব্য</button> <button class="g" onclick="rm(${i})">মুছুন</button></span></div>`).join('')}
 async function rm(i){if(confirm(data[i].title+' মুছবেন?')){const t=data.splice(i,1)[0].title;await save('Remove '+t)}}
