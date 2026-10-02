@@ -39,7 +39,7 @@ dialog::backdrop{background:#000b}
 <div class="bar">
  <div class="tabs"><button id="t-watched" class="on">Watched</button><button id="t-watchlist">Watchlist</button></div>
  <input id="q" type="search" placeholder="Search title, actor or director…" aria-label="Search">
- <select id="ty" aria-label="ধরন"><option value="all">All types</option><option value="movie">Movie</option><option value="tv">TV / Show</option></select>
+ <select id="ty" aria-label="Type"><option value="all">All types</option><option value="movie">Movie</option><option value="tv">TV / Show</option></select>
  <select id="so" aria-label="Sort"><option value="new">Newest first</option><option value="my">My rating</option><option value="im">IMDb rating</option><option value="yr">Release year</option><option value="az">Title (A–Z)</option></select>
  <div class="views" role="group" aria-label="View"><button id="v-grid" class="on" aria-label="Grid view" title="Grid view">▦</button><button id="v-list" aria-label="List view" title="List view">☷</button></div>
 </div>
@@ -50,7 +50,7 @@ const $=s=>document.querySelector(s),d=$('#d'),IMG='https://image.tmdb.org/t/p/w
 const e=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 let D=[],tab='watched',view=localStorage.getItem('cineton-view')||'grid';
 function skeleton(){const g=$('#g');g.innerHTML=Array.from({length:12},()=>'<div class="skel" aria-hidden="true"></div>').join('')}
-fetch('data.json?'+Date.now(),{cache:'no-store'}).then(r=>{if(!r.ok)throw Error('HTTP '+r.status);return r.json()}).then(x=>{D=x;render()}).catch(()=>$('#g').innerHTML='<p class="empty">Could not load data.json.</p>');
+fetch('data.json?'+Date.now(),{cache:'no-store'}).then(r=>{if(!r.ok)throw Error('HTTP '+r.status);return r.json()}).then(x=>{D=x;render()}).catch(()=>$('#g').innerHTML='<p class="empty">Couldn’t load your library.</p>');
 const pic=m=>m.poster?`<img loading="lazy" decoding="async" src="${IMG}${e(m.poster)}" alt="${e(m.title)} poster" onerror="this.replaceWith(Object.assign(document.createElement('div'),{className:'ph',textContent:this.alt.replace(/ poster$/,'')}))">`:`<div class="ph">${e(m.title)}</div>`;
 function applyView(){const g=$('#g');g.classList.toggle('list',view==='list');$('#v-grid').classList.toggle('on',view==='grid');$('#v-list').classList.toggle('on',view==='list')}
 function render(){
@@ -60,7 +60,7 @@ function render(){
  const n=v=>parseFloat(v)||0;
  L.sort({new:(a,b)=>(b.watched_on||'').localeCompare(a.watched_on||''),my:(a,b)=>n(b.my_rating)-n(a.my_rating),im:(a,b)=>n(b.imdb)-n(a.imdb),yr:(a,b)=>n(b.year)-n(a.year),az:(a,b)=>a.title.localeCompare(b.title)}[so]);
  const w=D.filter(m=>m.status==='watched'),wl=D.filter(m=>m.status==='watchlist'),rated=w.filter(m=>n(m.my_rating)>0),avg=rated.length?(rated.reduce((a,m)=>a+n(m.my_rating),0)/rated.length).toFixed(1):'—';$('#stat').textContent=`Watched ${w.length} · Watchlist ${wl.length}`;$('#stats').innerHTML=`<span class="stat">Movie <b>${D.filter(m=>m.type==='movie').length}</b></span><span class="stat">TV <b>${D.filter(m=>m.type==='tv').length}</b></span><span class="stat">My average <b>${avg}</b></span><span class="stat">Rated <b>${rated.length}</b></span>`;
- $('#g').innerHTML=L.length?L.map(m=>`<button class="c" data-id="${e(m.id)}">${pic(m)}${m.imdb?`<span class="bd">★ ${e(m.imdb)}</span>`:''}<div class="ci"><b>${e(m.title)}${m.my_rating?`<span class="list-rating">★ ${e(m.my_rating)}</span>`:""}</b><small>${e(m.year)} · ${m.type==='tv'?'সিরিজ':'Movie'}${m.my_rating?` · My ${e(m.my_rating)}/10`:''}</small></div></button>`).join(''):'<p class="empty">Nothing found.</p>';
+ $('#g').innerHTML=L.length?L.map(m=>`<button class="c" data-id="${e(m.id)}">${pic(m)}${m.imdb?`<span class="bd">★ ${e(m.imdb)}</span>`:''}<div class="ci"><b>${e(m.title)}${m.my_rating?`<span class="list-rating">★ ${e(m.my_rating)}</span>`:""}</b><small>${e(m.year)} · ${m.type==='tv'?'TV / Show':'Movie'}${m.my_rating?` · My ${e(m.my_rating)}/10`:''}</small></div></button>`).join(''):'<p class="empty">No titles found.</p>';
 }
 $('#g').onclick=ev=>{const c=ev.target.closest('.c');if(!c)return;const m=D.find(x=>x.id===c.dataset.id);
  $('#mb').innerHTML=`<div>${pic(m)}</div><div><h2>${e(m.title)}</h2><div class="chips"><span>${e(m.year)}</span><span>${m.type==='tv'?'TV / Show':'Movie'}</span>${m.imdb?`<span>IMDb ${e(m.imdb)}</span>`:''}${m.my_rating?`<span>My rating ${e(m.my_rating)}/10</span>`:''}${m.watched_on?`<span>Watched ${e(m.watched_on)}</span>`:''}</div>
