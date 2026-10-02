@@ -10,13 +10,13 @@
 header{padding:48px 20px 16px;max-width:1200px;margin:auto}
 h1{font:800 clamp(2.2rem,7vw,4.5rem)/1 Fraunces,serif;margin:0 0 6px;letter-spacing:-.02em}
 .sub{color:var(--mu);margin:0}.stats{display:flex;flex-wrap:wrap;gap:8px;margin-top:12px}.stat{background:var(--sf);border:1px solid #ffffff18;border-radius:10px;padding:5px 9px;color:var(--mu);font-size:.82rem}.stat b{color:var(--tx)}
-.bar{position:sticky;backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);top:0;z-index:5;background:var(--bg);padding:12px 20px;max-width:1200px;margin:auto;display:flex;flex-wrap:wrap;gap:10px;align-items:center}
+.bar{position:sticky;backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);top:0;z-index:5;background:var(--bg);padding:12px 20px;max-width:1200px;margin:auto;display:flex;flex-wrap:wrap;gap:10px;align-items:center}.views{display:flex;gap:4px;margin-left:auto}.views button{padding:8px 10px;line-height:1}.views button.on{background:var(--ac);border-color:var(--ac);color:#fff}
 .tabs{display:flex;gap:6px}
 button,select,input{font:inherit;color:var(--tx);background:var(--sf);border:1px solid #ffffff1f;border-radius:10px;padding:8px 14px}
 button{cursor:pointer}button.on{background:var(--ac);border-color:var(--ac);color:#fff}
 input{flex:1;min-width:150px}
 :focus-visible{outline:2px solid var(--gd);outline-offset:2px}
-main{max-width:1200px;margin:auto;padding:12px 20px 60px;display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:18px}
+main{max-width:1200px;margin:auto;padding:12px 20px 60px;display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:18px}main.list{display:flex;flex-direction:column;gap:8px}main.list .c{display:grid;grid-template-columns:58px 1fr;min-height:78px;align-items:center}main.list .c img,main.list .c .ph{width:58px;height:78px;aspect-ratio:auto}main.list .ci{padding:8px 12px}main.list .bd{left:66px;top:8px;font-size:.7rem}main.list .rv{right:8px;top:8px}main.list .ci b{padding-right:70px}main.list .c:hover{transform:none}
 @media(min-width:700px){main{grid-template-columns:repeat(auto-fill,minmax(190px,1fr))}}
 .c{background:var(--sf);border-radius:14px;overflow:hidden;cursor:pointer;position:relative;border:1px solid #ffffff18;padding:0;text-align:left;color:inherit;transition:transform .2s}
 .c:hover{transform:translateY(-4px)}
@@ -34,24 +34,27 @@ dialog::backdrop{background:#000b}
 .chips{display:flex;flex-wrap:wrap;gap:8px;margin:10px 0}.chips span{background:#ffffff14;padding:3px 10px;border-radius:99px;font-size:.9rem}
 .cm{border-left:3px solid var(--ac);padding-left:12px;font-style:italic}
 .x{float:right;margin:12px}
-.skel{background:linear-gradient(100deg,var(--sf) 35%,#ffffff08 50%,var(--sf) 65%);background-size:300% 100%;animation:sh 1.2s infinite;border-radius:14px;aspect-ratio:2/3}@keyframes sh{to{background-position:-300% 0}}@media(prefers-reduced-motion:reduce){*{scroll-behavior:auto!important;animation:none!important;transition:none!important}}@media(max-width:600px){header{padding-top:32px}.bar{padding:10px 12px}.bar input{order:3;flex-basis:100%;min-width:0}main{padding:12px 12px 50px;gap:12px}.ci{padding:8px 9px 10px}.ci b{font-size:.95rem}.ci small{font-size:.78rem}} </style></head><body>
+.skel{background:linear-gradient(100deg,var(--sf) 35%,#ffffff08 50%,var(--sf) 65%);background-size:300% 100%;animation:sh 1.2s infinite;border-radius:14px;aspect-ratio:2/3}@keyframes sh{to{background-position:-300% 0}}@media(prefers-reduced-motion:reduce){*{scroll-behavior:auto!important;animation:none!important;transition:none!important}}@media(max-width:600px){header{padding-top:32px}.bar{padding:10px 12px}.bar input{order:3;flex-basis:100%;min-width:0}.views{order:2;margin-left:auto}main{padding:12px 12px 50px;gap:12px}.ci{padding:8px 9px 10px}.ci b{font-size:.95rem}.ci small{font-size:.78rem}main.list .c{grid-template-columns:52px 1fr;min-height:70px}main.list .c img,main.list .c .ph{width:52px;height:70px}main.list .bd{left:60px}} </style></head><body>
 <header><h1>My Cinema Diary</h1><p class="sub" id="stat"></p><div id="stats" class="stats" aria-label="Statistics"></div></header>
 <div class="bar">
  <div class="tabs"><button id="t-watched" class="on">Watched</button><button id="t-watchlist">Watchlist</button></div>
  <input id="q" type="search" placeholder="Search title, actor or director…" aria-label="Search">
  <select id="ty" aria-label="ধরন"><option value="all">All types</option><option value="movie">Movie</option><option value="tv">TV / Show</option></select>
  <select id="so" aria-label="Sort"><option value="new">Newest first</option><option value="my">My rating</option><option value="im">IMDb rating</option><option value="yr">Release year</option><option value="az">Title (A–Z)</option></select>
+ <div class="views" role="group" aria-label="View"><button id="v-grid" class="on" aria-label="Grid view" title="Grid view">▦</button><button id="v-list" aria-label="List view" title="List view">☷</button></div>
 </div>
 <main id="g" aria-live="polite"></main>
 <dialog id="d"><button class="x" onclick="d.close()" aria-label="Close">✕</button><div class="m" id="mb"></div></dialog>
 <script>
 const $=s=>document.querySelector(s),d=$('#d'),IMG='https://image.tmdb.org/t/p/w500';
 const e=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
-let D=[],tab='watched';
+let D=[],tab='watched',view=localStorage.getItem('cineton-view')||'grid';
 function skeleton(){const g=$('#g');g.innerHTML=Array.from({length:12},()=>'<div class="skel" aria-hidden="true"></div>').join('')}
 fetch('data.json?'+Date.now(),{cache:'no-store'}).then(r=>{if(!r.ok)throw Error('HTTP '+r.status);return r.json()}).then(x=>{D=x;render()}).catch(()=>$('#g').innerHTML='<p class="empty">Could not load data.json.</p>');
 const pic=m=>m.poster?`<img loading="lazy" decoding="async" src="${IMG}${e(m.poster)}" alt="${e(m.title)} poster" onerror="this.replaceWith(Object.assign(document.createElement('div'),{className:'ph',textContent:this.alt.replace(/ poster$/,'')}))">`:`<div class="ph">${e(m.title)}</div>`;
+function applyView(){const g=$('#g');g.classList.toggle('list',view==='list');$('#v-grid').classList.toggle('on',view==='grid');$('#v-list').classList.toggle('on',view==='list')}
 function render(){
+ applyView();
  const q=$('#q').value.trim().toLowerCase(),ty=$('#ty').value,so=$('#so').value;
  let L=D.filter(m=>m.status===tab&&(ty==='all'||m.type===ty)&&(!q||[m.title,m.director,(m.cast||[]).join(' '),m.year].join(' ').toLowerCase().includes(q)));
  const n=v=>parseFloat(v)||0;
@@ -66,4 +69,6 @@ $('#g').onclick=ev=>{const c=ev.target.closest('.c');if(!c)return;const m=D.find
 d.onclick=ev=>{if(ev.target===d)d.close()};
 ['q','ty','so'].forEach(i=>$('#'+i).oninput=render);
 ['watched','watchlist'].forEach(t=>$('#t-'+t).onclick=()=>{tab=t;document.querySelectorAll('.tabs button').forEach(b=>b.classList.toggle('on',b.id==='t-'+t));render()});
+$('#v-grid').onclick=()=>{view='grid';localStorage.setItem('cineton-view',view);applyView()};
+$('#v-list').onclick=()=>{view='list';localStorage.setItem('cineton-view',view);applyView()};
 </script></body></html>
