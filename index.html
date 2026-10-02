@@ -1,7 +1,7 @@
 <!DOCTYPE html>
-<html lang="bn"><head><meta charset="utf-8">
-<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><meta name="theme-color" content="#12131a"><meta name="description" content="ব্যক্তিগত সিনেমা ও সিরিজ ডায়েরি">
-<title>আমার সিনেমা ডায়েরি</title>
+<html lang="en"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><meta name="theme-color" content="#12131a"><meta name="description" content="Personal movie & TV diary">
+<title>My Cinema Diary</title>
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:wght@600;800&family=Hind+Siliguri:wght@400;500;600&display=swap">
 <style>
 :root{--bg:#12131a;--sf:#1c1e2b;--tx:#eceaf4;--mu:#9b98ad;--ac:#ff5d8f;--gd:#f5c542;color-scheme:dark}
@@ -35,33 +35,33 @@ dialog::backdrop{background:#000b}
 .cm{border-left:3px solid var(--ac);padding-left:12px;font-style:italic}
 .x{float:right;margin:12px}
 .skel{background:linear-gradient(100deg,var(--sf) 35%,#ffffff08 50%,var(--sf) 65%);background-size:300% 100%;animation:sh 1.2s infinite;border-radius:14px;aspect-ratio:2/3}@keyframes sh{to{background-position:-300% 0}}@media(prefers-reduced-motion:reduce){*{scroll-behavior:auto!important;animation:none!important;transition:none!important}}@media(max-width:600px){header{padding-top:32px}.bar{padding:10px 12px}.bar input{order:3;flex-basis:100%;min-width:0}main{padding:12px 12px 50px;gap:12px}.ci{padding:8px 9px 10px}.ci b{font-size:.95rem}.ci small{font-size:.78rem}} </style></head><body>
-<header><h1>আমার সিনেমা ডায়েরি</h1><p class="sub" id="stat"></p><div id="stats" class="stats" aria-label="পরিসংখ্যান"></div></header>
+<header><h1>My Cinema Diary</h1><p class="sub" id="stat"></p><div id="stats" class="stats" aria-label="Statistics"></div></header>
 <div class="bar">
- <div class="tabs"><button id="t-watched" class="on">দেখে ফেলেছি</button><button id="t-watchlist">দেখতে চাই</button></div>
- <input id="q" type="search" placeholder="নাম, অভিনেতা বা পরিচালক খুঁজুন…" aria-label="সার্চ">
- <select id="ty" aria-label="ধরন"><option value="all">সব ধরন</option><option value="movie">মুভি</option><option value="tv">সিরিজ / শো</option></select>
- <select id="so" aria-label="সাজান"><option value="new">নতুন আগে</option><option value="my">আমার রেটিং</option><option value="im">IMDb রেটিং</option><option value="yr">মুক্তির সাল</option><option value="az">নাম (A–Z)</option></select>
+ <div class="tabs"><button id="t-watched" class="on">Watched</button><button id="t-watchlist">Watchlist</button></div>
+ <input id="q" type="search" placeholder="Search title, actor or director…" aria-label="Search">
+ <select id="ty" aria-label="ধরন"><option value="all">All types</option><option value="movie">Movie</option><option value="tv">TV / Show</option></select>
+ <select id="so" aria-label="Sort"><option value="new">Newest first</option><option value="my">My rating</option><option value="im">IMDb rating</option><option value="yr">Release year</option><option value="az">Title (A–Z)</option></select>
 </div>
 <main id="g" aria-live="polite"></main>
-<dialog id="d"><button class="x" onclick="d.close()" aria-label="বন্ধ">✕</button><div class="m" id="mb"></div></dialog>
+<dialog id="d"><button class="x" onclick="d.close()" aria-label="Close">✕</button><div class="m" id="mb"></div></dialog>
 <script>
 const $=s=>document.querySelector(s),d=$('#d'),IMG='https://image.tmdb.org/t/p/w500';
 const e=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 let D=[],tab='watched';
 function skeleton(){const g=$('#g');g.innerHTML=Array.from({length:12},()=>'<div class="skel" aria-hidden="true"></div>').join('')}
-fetch('data.json?'+Date.now(),{cache:'no-store'}).then(r=>{if(!r.ok)throw Error('HTTP '+r.status);return r.json()}).then(x=>{D=x;render()}).catch(()=>$('#g').innerHTML='<p class="empty">data.json লোড হয়নি।</p>');
-const pic=m=>m.poster?`<img loading="lazy" decoding="async" src="${IMG}${e(m.poster)}" alt="${e(m.title)} পোস্টার" onerror="this.replaceWith(Object.assign(document.createElement('div'),{className:'ph',textContent:this.alt.replace(/ পোস্টার$/,'')}))">`:`<div class="ph">${e(m.title)}</div>`;
+fetch('data.json?'+Date.now(),{cache:'no-store'}).then(r=>{if(!r.ok)throw Error('HTTP '+r.status);return r.json()}).then(x=>{D=x;render()}).catch(()=>$('#g').innerHTML='<p class="empty">Could not load data.json.</p>');
+const pic=m=>m.poster?`<img loading="lazy" decoding="async" src="${IMG}${e(m.poster)}" alt="${e(m.title)} poster" onerror="this.replaceWith(Object.assign(document.createElement('div'),{className:'ph',textContent:this.alt.replace(/ poster$/,'')}))">`:`<div class="ph">${e(m.title)}</div>`;
 function render(){
  const q=$('#q').value.trim().toLowerCase(),ty=$('#ty').value,so=$('#so').value;
  let L=D.filter(m=>m.status===tab&&(ty==='all'||m.type===ty)&&(!q||[m.title,m.director,(m.cast||[]).join(' '),m.year].join(' ').toLowerCase().includes(q)));
  const n=v=>parseFloat(v)||0;
  L.sort({new:(a,b)=>(b.watched_on||'').localeCompare(a.watched_on||''),my:(a,b)=>n(b.my_rating)-n(a.my_rating),im:(a,b)=>n(b.imdb)-n(a.imdb),yr:(a,b)=>n(b.year)-n(a.year),az:(a,b)=>a.title.localeCompare(b.title)}[so]);
- const w=D.filter(m=>m.status==='watched'),wl=D.filter(m=>m.status==='watchlist'),rated=w.filter(m=>n(m.my_rating)>0),avg=rated.length?(rated.reduce((a,m)=>a+n(m.my_rating),0)/rated.length).toFixed(1):'—';$('#stat').textContent=`দেখা ${w.length}টি · তালিকায় ${wl.length}টি`;$('#stats').innerHTML=`<span class="stat">মুভি <b>${D.filter(m=>m.type==='movie').length}</b></span><span class="stat">সিরিজ <b>${D.filter(m=>m.type==='tv').length}</b></span><span class="stat">আমার গড় <b>${avg}</b></span><span class="stat">রেটিং দেওয়া <b>${rated.length}</b></span>`;
- $('#g').innerHTML=L.length?L.map(m=>`<button class="c" data-id="${e(m.id)}">${pic(m)}${m.imdb?`<span class="bd">★ ${e(m.imdb)}</span>`:''}<div class="ci"><b>${e(m.title)}</b><small>${e(m.year)} · ${m.type==='tv'?'সিরিজ':'মুভি'}${m.my_rating?` · আমার ${e(m.my_rating)}/10`:''}</small></div></button>`).join(''):'<p class="empty">কিছু পাওয়া যায়নি।</p>';
+ const w=D.filter(m=>m.status==='watched'),wl=D.filter(m=>m.status==='watchlist'),rated=w.filter(m=>n(m.my_rating)>0),avg=rated.length?(rated.reduce((a,m)=>a+n(m.my_rating),0)/rated.length).toFixed(1):'—';$('#stat').textContent=`Watched ${w.length} · Watchlist ${wl.length}`;$('#stats').innerHTML=`<span class="stat">Movie <b>${D.filter(m=>m.type==='movie').length}</b></span><span class="stat">TV <b>${D.filter(m=>m.type==='tv').length}</b></span><span class="stat">My average <b>${avg}</b></span><span class="stat">Rated <b>${rated.length}</b></span>`;
+ $('#g').innerHTML=L.length?L.map(m=>`<button class="c" data-id="${e(m.id)}">${pic(m)}${m.imdb?`<span class="bd">★ ${e(m.imdb)}</span>`:''}<div class="ci"><b>${e(m.title)}</b><small>${e(m.year)} · ${m.type==='tv'?'সিরিজ':'Movie'}${m.my_rating?` · My ${e(m.my_rating)}/10`:''}</small></div></button>`).join(''):'<p class="empty">Nothing found.</p>';
 }
 $('#g').onclick=ev=>{const c=ev.target.closest('.c');if(!c)return;const m=D.find(x=>x.id===c.dataset.id);
- $('#mb').innerHTML=`<div>${pic(m)}</div><div><h2>${e(m.title)}</h2><div class="chips"><span>${e(m.year)}</span><span>${m.type==='tv'?'সিরিজ / শো':'মুভি'}</span>${m.imdb?`<span>IMDb ${e(m.imdb)}</span>`:''}${m.my_rating?`<span>আমার রেটিং ${e(m.my_rating)}/10</span>`:''}${m.watched_on?`<span>দেখেছি ${e(m.watched_on)}</span>`:''}</div>
- ${m.director?`<p><b>পরিচালক/স্রষ্টা:</b> ${e(m.director)}</p>`:''}${(m.cast||[]).length?`<p><b>কলাকুশলী:</b> ${m.cast.map(e).join(', ')}</p>`:''}
+ $('#mb').innerHTML=`<div>${pic(m)}</div><div><h2>${e(m.title)}</h2><div class="chips"><span>${e(m.year)}</span><span>${m.type==='tv'?'TV / Show':'Movie'}</span>${m.imdb?`<span>IMDb ${e(m.imdb)}</span>`:''}${m.my_rating?`<span>My rating ${e(m.my_rating)}/10</span>`:''}${m.watched_on?`<span>Watched ${e(m.watched_on)}</span>`:''}</div>
+ ${m.director?`<p><b>Director/Creator:</b> ${e(m.director)}</p>`:''}${(m.cast||[]).length?`<p><b>Cast:</b> ${m.cast.map(e).join(', ')}</p>`:''}
  <p>${e(m.overview)}</p>${m.comment?`<p class="cm">${e(m.comment)}</p>`:''}</div>`;d.showModal()};
 d.onclick=ev=>{if(ev.target===d)d.close()};
 ['q','ty','so'].forEach(i=>$('#'+i).oninput=render);
