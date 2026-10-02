@@ -1,5 +1,30 @@
 [
  {
+  "id": "movie-414906",
+  "type": "movie",
+  "title": "The Batman",
+  "year": "2022",
+  "poster": "/74xTEgt7R36Fpooo50r9T25onhq.jpg",
+  "overview": "In his second year of fighting crime, Batman uncovers corruption in Gotham City that connects to his own family while facing a serial killer known as the Riddler.",
+  "director": "Matt Reeves",
+  "cast": [
+   "Robert Pattinson",
+   "Zoë Kravitz",
+   "Jeffrey Wright",
+   "Colin Farrell",
+   "Paul Dano",
+   "John Turturro",
+   "Andy Serkis",
+   "Peter Sarsgaard"
+  ],
+  "imdb": "7.8",
+  "my_rating": 8,
+  "watched_on": "",
+  "comment": "",
+  "status": "watched",
+  "needs_review": false
+ },
+ {
   "id": "movie-1101383",
   "type": "movie",
   "title": "The End of Oak Street",
