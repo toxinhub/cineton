@@ -1,0 +1,5 @@
+[
+ {"id":"movie-27205","type":"movie","title":"Inception","year":"2010","poster":"/ljsZTbVsrQSqZgWeep2B1QiDKuh.jpg","overview":"একজন চোর স্বপ্নের ভেতর ঢুকে তথ্য চুরি করে।","director":"Christopher Nolan","cast":["Leonardo DiCaprio","Joseph Gordon-Levitt","Elliot Page"],"imdb":"8.8","my_rating":9,"watched_on":"2024-03-12","comment":"শেষের ঘূর্ণিটা এখনো ঘুরছে!","status":"watched","needs_review":false},
+ {"id":"tv-1396","type":"tv","title":"Breaking Bad","year":"2008","poster":"/ggFHVNu6YYI5L9pCfOacjizRGt.jpg","overview":"রসায়নের শিক্ষক মাদক সম্রাট হয়ে ওঠেন।","director":"Vince Gilligan","cast":["Bryan Cranston","Aaron Paul"],"imdb":"9.5","my_rating":10,"watched_on":"2023-11-02","comment":"","status":"watched","needs_review":false},
+ {"id":"movie-157336","type":"movie","title":"Interstellar","year":"2014","poster":"/gEU2QniE6E77NI6lCU6MxlNBvIx.jpg","overview":"মানবজাতির নতুন ঘর খুঁজতে মহাকাশযাত্রা।","director":"Christopher Nolan","cast":["Matthew McConaughey","Anne Hathaway"],"imdb":"8.7","my_rating":null,"watched_on":"","comment":"","status":"watchlist","needs_review":false}
+]
