@@ -3307,11 +3307,12 @@
    "Natasha Lyonne"
   ],
   "imdb": "6.8",
-  "my_rating": null,
+  "my_rating": 7,
   "watched_on": "",
-  "comment": "",
+  "comment": "ভালো রিবুট ছিল।",
   "status": "watched",
-  "needs_review": false
+  "needs_review": false,
+  "loved": false
  },
  {
   "id": "tv-286801",
