@@ -1,5 +1,30 @@
 [
  {
+  "id": "movie-528427",
+  "type": "movie",
+  "title": "Premer Kahini",
+  "year": "2008",
+  "poster": "/8CrB1yNfwVShajGiL2JDybvQEiU.jpg",
+  "overview": "A young guy falls in love with a girl who is engaged to be married.They meet again and the girl also fall in love with him.On the day of her wedding,the girl's father gets a letter and the lovers get married.",
+  "director": "Ravi Kinagi",
+  "cast": [
+   "Dev",
+   "Koel Mallick",
+   "Ranjit Mallick",
+   "Mousumi Saha",
+   "Jisshu Sengupta",
+   "Shyamal Dutta",
+   "Diganta Bagchi"
+  ],
+  "imdb": "6.3",
+  "my_rating": 8,
+  "watched_on": "",
+  "comment": "",
+  "status": "watched",
+  "needs_review": false,
+  "added_at": "2026-10-03T22:16:47.584Z"
+ },
+ {
   "id": "tv-60059",
   "type": "tv",
   "title": "Better Call Saul",
