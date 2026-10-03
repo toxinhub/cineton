@@ -1,5 +1,28 @@
 [
  {
+  "id": "tv-60059",
+  "type": "tv",
+  "title": "Better Call Saul",
+  "year": "2015",
+  "poster": "/fC2HDm5t0kHl7mTm7jxMR31b7by.jpg",
+  "overview": "Six years before Saul Goodman meets Walter White. We meet him when the man who will become Saul Goodman is known as Jimmy McGill, a small-time lawyer searching for his destiny, and, more immediately, hustling to make ends meet. Working alongside, and, often, against Jimmy, is “fixer” Mike Ehrmantraut. The series tracks Jimmy’s transformation into Saul Goodman, the man who puts “criminal” in “criminal lawyer\".",
+  "director": "Vince Gilligan, Peter Gould",
+  "cast": [
+   "Bob Odenkirk",
+   "Jonathan Banks",
+   "Rhea Seehorn",
+   "Tony Dalton",
+   "Giancarlo Esposito"
+  ],
+  "imdb": "",
+  "my_rating": 8,
+  "watched_on": "",
+  "comment": "",
+  "status": "watched",
+  "needs_review": false,
+  "added_at": "2026-10-03T22:13:48.239Z"
+ },
+ {
   "id": "movie-68718",
   "type": "movie",
   "title": "Django Unchained",
