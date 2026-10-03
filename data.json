@@ -1,5 +1,30 @@
 [
  {
+  "id": "movie-597",
+  "type": "movie",
+  "title": "Titanic",
+  "year": "1997",
+  "poster": "/9xjZS2rlVxm8SFx8kPC3aIGCOYQ.jpg",
+  "overview": "101-year-old Rose DeWitt Bukater tells the story of her life aboard the Titanic, 84 years later. A young Rose boards the ship with her mother and fiancé. Meanwhile, Jack Dawson and Fabrizio De Rossi win third-class tickets aboard the ship. Rose tells the whole story from Titanic's departure through to its death—on its first and last voyage—on April 15, 1912.",
+  "director": "James Cameron",
+  "cast": [
+   "Leonardo DiCaprio",
+   "Kate Winslet",
+   "Billy Zane",
+   "Kathy Bates",
+   "Frances Fisher",
+   "Gloria Stuart",
+   "Bill Paxton",
+   "Bernard Hill"
+  ],
+  "imdb": "8.0",
+  "my_rating": null,
+  "watched_on": "2012-10-10",
+  "comment": "",
+  "status": "watched",
+  "needs_review": false
+ },
+ {
   "id": "movie-220289",
   "type": "movie",
   "title": "Coherence",
