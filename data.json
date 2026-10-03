@@ -4066,11 +4066,12 @@
    "Dr. Dre"
   ],
   "imdb": "7.8",
-  "my_rating": null,
+  "my_rating": 7,
   "watched_on": "",
-  "comment": "",
+  "comment": "এটা দারুণ লেগেছিল, মনে আছে সকাল বেলা দেখেছিলাম, আবহাওয়া ভালো ছিল, দেখা worthy ছিল।",
   "status": "watched",
-  "needs_review": false
+  "needs_review": false,
+  "loved": false
  },
  {
   "id": "movie-1233413",
