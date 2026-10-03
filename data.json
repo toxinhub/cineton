@@ -54,7 +54,13 @@
   "comment": "নাম ও গান শুনে ভেবেছিলাম ধুমধারাক্কা এক প্রেমের সিনেমা বোধহয়, তবে দেখলাম যে না। ভালো লেগেছিল, গ্রামের ঐ উৎসব মুখর পরিবেশের কাহিনি!",
   "status": "watched",
   "needs_review": false,
-  "added_at": "2026-10-03T22:18:26.076Z"
+  "added_at": "2026-10-03T22:18:26.076Z",
+  "genres": [
+   "Family",
+   "Romance",
+   "Drama",
+   "Comedy"
+  ]
  },
  {
   "id": "movie-528427",
@@ -79,7 +85,12 @@
   "comment": "",
   "status": "watched",
   "needs_review": false,
-  "added_at": "2026-10-03T22:16:47.584Z"
+  "added_at": "2026-10-03T22:16:47.584Z",
+  "genres": [
+   "Romance",
+   "Drama",
+   "Family"
+  ]
  },
  {
   "id": "tv-60059",
@@ -102,7 +113,11 @@
   "comment": "",
   "status": "watched",
   "needs_review": false,
-  "added_at": "2026-10-03T22:13:48.239Z"
+  "added_at": "2026-10-03T22:13:48.239Z",
+  "genres": [
+   "Crime",
+   "Drama"
+  ]
  },
  {
   "id": "movie-68718",
@@ -129,7 +144,11 @@
   "status": "watched",
   "needs_review": false,
   "added_at": "2026-10-03T18:36:23.735Z",
-  "loved": true
+  "loved": true,
+  "genres": [
+   "Drama",
+   "Western"
+  ]
  },
  {
   "id": "movie-1372",
@@ -156,7 +175,12 @@
   "status": "watched",
   "needs_review": false,
   "added_at": "2026-10-03T18:33:01.862Z",
-  "loved": true
+  "loved": true,
+  "genres": [
+   "Drama",
+   "Thriller",
+   "Action"
+  ]
  },
  {
   "id": "movie-969681",
@@ -182,7 +206,12 @@
   "comment": "",
   "status": "watched",
   "needs_review": false,
-  "added_at": "2026-10-03T18:25:24.980Z"
+  "added_at": "2026-10-03T18:25:24.980Z",
+  "genres": [
+   "Science Fiction",
+   "Action",
+   "Adventure"
+  ]
  },
  {
   "id": "movie-1690",
@@ -208,7 +237,10 @@
   "comment": "প্রথমবার এইটাইপের মুভি দেখেছিলাম, দেখে তো চক্ষু চড়কগাছে উঠেছিল...",
   "status": "watched",
   "needs_review": false,
-  "added_at": "2026-10-03T18:24:17.293Z"
+  "added_at": "2026-10-03T18:24:17.293Z",
+  "genres": [
+   "Horror"
+  ]
  },
  {
   "id": "movie-1724",
@@ -234,7 +266,12 @@
   "comment": "OG",
   "status": "watched",
   "needs_review": false,
-  "added_at": "2026-10-03T17:26:00.000Z"
+  "added_at": "2026-10-03T17:26:00.000Z",
+  "genres": [
+   "Science Fiction",
+   "Action",
+   "Adventure"
+  ]
  },
  {
   "id": "movie-597",
@@ -261,7 +298,11 @@
   "status": "watched",
   "needs_review": false,
   "loved": true,
-  "added_at": "2026-10-03T17:26:01.000Z"
+  "added_at": "2026-10-03T17:26:01.000Z",
+  "genres": [
+   "Drama",
+   "Romance"
+  ]
  },
  {
   "id": "movie-220289",
@@ -286,7 +327,11 @@
   "watched_on": "",
   "comment": "",
   "status": "watchlist",
-  "needs_review": true
+  "needs_review": true,
+  "genres": [
+   "Thriller",
+   "Science Fiction"
+  ]
  },
  {
   "id": "movie-1040718",
@@ -311,7 +356,12 @@
   "watched_on": "",
   "comment": "",
   "status": "watchlist",
-  "needs_review": true
+  "needs_review": true,
+  "genres": [
+   "Action",
+   "Crime",
+   "Drama"
+  ]
  },
  {
   "id": "tv-306215",
@@ -336,7 +386,11 @@
   "watched_on": "",
   "comment": "",
   "status": "watchlist",
-  "needs_review": true
+  "needs_review": true,
+  "genres": [
+   "Family",
+   "Drama"
+  ]
  },
  {
   "id": "movie-1222479",
@@ -361,7 +415,12 @@
   "watched_on": "",
   "comment": "",
   "status": "watchlist",
-  "needs_review": false
+  "needs_review": false,
+  "genres": [
+   "Action",
+   "Adventure",
+   "Fantasy"
+  ]
  },
  {
   "id": "movie-489925",
@@ -386,7 +445,11 @@
   "watched_on": "",
   "comment": "",
   "status": "watchlist",
-  "needs_review": true
+  "needs_review": true,
+  "genres": [
+   "Comedy",
+   "Drama"
+  ]
  },
  {
   "id": "movie-285923",
@@ -411,7 +474,12 @@
   "watched_on": "",
   "comment": "",
   "status": "watchlist",
-  "needs_review": true
+  "needs_review": true,
+  "genres": [
+   "Thriller",
+   "Action",
+   "Horror"
+  ]
  },
  {
   "id": "movie-4638",
@@ -436,7 +504,12 @@
   "watched_on": "",
   "comment": "",
   "status": "watchlist",
-  "needs_review": true
+  "needs_review": true,
+  "genres": [
+   "Crime",
+   "Action",
+   "Comedy"
+  ]
  },
  {
   "id": "movie-107985",
@@ -461,7 +534,12 @@
   "watched_on": "",
   "comment": "",
   "status": "watchlist",
-  "needs_review": true
+  "needs_review": true,
+  "genres": [
+   "Comedy",
+   "Action",
+   "Science Fiction"
+  ]
  },
  {
   "id": "movie-698948",
@@ -486,7 +564,12 @@
   "watched_on": "",
   "comment": "",
   "status": "watchlist",
-  "needs_review": true
+  "needs_review": true,
+  "genres": [
+   "Drama",
+   "Thriller",
+   "History"
+  ]
  },
  {
   "id": "tv-221939",
@@ -511,7 +594,12 @@
   "watched_on": "",
   "comment": "",
   "status": "watchlist",
-  "needs_review": true
+  "needs_review": true,
+  "genres": [
+   "Drama",
+   "Family",
+   "Sci-Fi & Fantasy"
+  ]
  },
  {
   "id": "movie-988046",
@@ -536,7 +624,11 @@
   "watched_on": "",
   "comment": "",
   "status": "watchlist",
-  "needs_review": true
+  "needs_review": true,
+  "genres": [
+   "Crime",
+   "Documentary"
+  ]
  },
  {
   "id": "movie-747",
@@ -561,7 +653,11 @@
   "watched_on": "",
   "comment": "",
   "status": "watchlist",
-  "needs_review": true
+  "needs_review": true,
+  "genres": [
+   "Horror",
+   "Comedy"
+  ]
  },
  {
   "id": "movie-660120",
@@ -586,7 +682,12 @@
   "watched_on": "",
   "comment": "",
   "status": "watchlist",
-  "needs_review": true
+  "needs_review": true,
+  "genres": [
+   "Drama",
+   "Romance",
+   "Comedy"
+  ]
  },
  {
   "id": "movie-567",
@@ -611,7 +712,12 @@
   "watched_on": "",
   "comment": "",
   "status": "watchlist",
-  "needs_review": true
+  "needs_review": true,
+  "genres": [
+   "Thriller",
+   "Mystery",
+   "Drama"
+  ]
  },
  {
   "id": "movie-79",
@@ -636,7 +742,13 @@
   "watched_on": "",
   "comment": "",
   "status": "watchlist",
-  "needs_review": true
+  "needs_review": true,
+  "genres": [
+   "Drama",
+   "Adventure",
+   "Action",
+   "History"
+  ]
  },
  {
   "id": "movie-25937",
@@ -661,7 +773,11 @@
   "watched_on": "",
   "comment": "",
   "status": "watchlist",
-  "needs_review": true
+  "needs_review": true,
+  "genres": [
+   "Drama",
+   "Romance"
+  ]
  },
  {
   "id": "movie-17111",
@@ -686,7 +802,12 @@
   "watched_on": "",
   "comment": "",
   "status": "watchlist",
-  "needs_review": true
+  "needs_review": true,
+  "genres": [
+   "Horror",
+   "Mystery",
+   "Thriller"
+  ]
  },
  {
   "id": "movie-1084199",
@@ -711,7 +832,12 @@
   "watched_on": "",
   "comment": "",
   "status": "watchlist",
-  "needs_review": true
+  "needs_review": true,
+  "genres": [
+   "Horror",
+   "Science Fiction",
+   "Thriller"
+  ]
  },
  {
   "id": "movie-1045394",
@@ -736,7 +862,11 @@
   "watched_on": "",
   "comment": "",
   "status": "watchlist",
-  "needs_review": true
+  "needs_review": true,
+  "genres": [
+   "Drama",
+   "Romance"
+  ]
  },
  {
   "id": "tv-54344",
@@ -760,7 +890,11 @@
   "watched_on": "",
   "comment": "",
   "status": "watchlist",
-  "needs_review": true
+  "needs_review": true,
+  "genres": [
+   "Sci-Fi & Fantasy",
+   "Drama"
+  ]
  },
  {
   "id": "movie-10501",
@@ -785,7 +919,14 @@
   "watched_on": "",
   "comment": "",
   "status": "watchlist",
-  "needs_review": true
+  "needs_review": true,
+  "genres": [
+   "Family",
+   "Adventure",
+   "Animation",
+   "Comedy",
+   "Fantasy"
+  ]
  },
  {
   "id": "movie-393423",
@@ -809,7 +950,13 @@
   "watched_on": "",
   "comment": "",
   "status": "watchlist",
-  "needs_review": true
+  "needs_review": true,
+  "genres": [
+   "Comedy",
+   "Crime",
+   "Drama",
+   "Thriller"
+  ]
  },
  {
   "id": "movie-1419406",
@@ -834,7 +981,13 @@
   "watched_on": "",
   "comment": "",
   "status": "watchlist",
-  "needs_review": true
+  "needs_review": true,
+  "genres": [
+   "Action",
+   "Crime",
+   "Drama",
+   "Thriller"
+  ]
  },
  {
   "id": "movie-76025",
@@ -859,7 +1012,10 @@
   "watched_on": "",
   "comment": "",
   "status": "watchlist",
-  "needs_review": true
+  "needs_review": true,
+  "genres": [
+   "Drama"
+  ]
  },
  {
   "id": "movie-188161",
@@ -884,7 +1040,11 @@
   "watched_on": "",
   "comment": "",
   "status": "watchlist",
-  "needs_review": true
+  "needs_review": true,
+  "genres": [
+   "Comedy",
+   "Western"
+  ]
  },
  {
   "id": "tv-271017",
@@ -906,7 +1066,12 @@
   "watched_on": "",
   "comment": "",
   "status": "watchlist",
-  "needs_review": true
+  "needs_review": true,
+  "genres": [
+   "Drama",
+   "Crime",
+   "Mystery"
+  ]
  },
  {
   "id": "tv-116799",
@@ -928,7 +1093,11 @@
   "watched_on": "",
   "comment": "",
   "status": "watchlist",
-  "needs_review": true
+  "needs_review": true,
+  "genres": [
+   "Drama",
+   "Crime"
+  ]
  },
  {
   "id": "movie-9874",
@@ -953,7 +1122,12 @@
   "watched_on": "",
   "comment": "",
   "status": "watchlist",
-  "needs_review": true
+  "needs_review": true,
+  "genres": [
+   "Action",
+   "Crime",
+   "Thriller"
+  ]
  },
  {
   "id": "movie-1119449",
@@ -978,7 +1152,12 @@
   "watched_on": "2026-10-02",
   "comment": "It started off interesting, but then it got kinda meh. ",
   "status": "watched",
-  "needs_review": false
+  "needs_review": false,
+  "genres": [
+   "Science Fiction",
+   "Action",
+   "Comedy"
+  ]
  },
  {
   "id": "movie-612",
@@ -1003,7 +1182,12 @@
   "watched_on": "",
   "comment": "",
   "status": "watchlist",
-  "needs_review": true
+  "needs_review": true,
+  "genres": [
+   "Drama",
+   "History",
+   "Thriller"
+  ]
  },
  {
   "id": "movie-1427387",
@@ -1028,7 +1212,8 @@
   "watched_on": "",
   "comment": "",
   "status": "watchlist",
-  "needs_review": true
+  "needs_review": true,
+  "genres": []
  },
  {
   "id": "movie-1079310",
@@ -1053,7 +1238,11 @@
   "watched_on": "",
   "comment": "",
   "status": "watchlist",
-  "needs_review": true
+  "needs_review": true,
+  "genres": [
+   "Drama",
+   "Comedy"
+  ]
  },
  {
   "id": "movie-49519",
@@ -1078,7 +1267,13 @@
   "watched_on": "",
   "comment": "",
   "status": "watchlist",
-  "needs_review": false
+  "needs_review": false,
+  "genres": [
+   "Animation",
+   "Adventure",
+   "Family",
+   "Comedy"
+  ]
  },
  {
   "id": "movie-8645",
@@ -1103,7 +1298,11 @@
   "watched_on": "",
   "comment": "",
   "status": "watchlist",
-  "needs_review": true
+  "needs_review": true,
+  "genres": [
+   "Thriller",
+   "Science Fiction"
+  ]
  },
  {
   "id": "movie-527511",
@@ -1128,7 +1327,11 @@
   "watched_on": "",
   "comment": "",
   "status": "watchlist",
-  "needs_review": true
+  "needs_review": true,
+  "genres": [
+   "Action",
+   "Drama"
+  ]
  },
  {
   "id": "tv-1411",
@@ -1150,7 +1353,12 @@
   "watched_on": "",
   "comment": "",
   "status": "watchlist",
-  "needs_review": true
+  "needs_review": true,
+  "genres": [
+   "Action & Adventure",
+   "Crime",
+   "Sci-Fi & Fantasy"
+  ]
  },
  {
   "id": "tv-127865",
@@ -1174,7 +1382,12 @@
   "watched_on": "",
   "comment": "",
   "status": "watchlist",
-  "needs_review": true
+  "needs_review": true,
+  "genres": [
+   "Drama",
+   "Crime",
+   "Mystery"
+  ]
  },
  {
   "id": "movie-14626",
@@ -1199,7 +1412,10 @@
   "watched_on": "",
   "comment": "",
   "status": "watchlist",
-  "needs_review": true
+  "needs_review": true,
+  "genres": [
+   "Drama"
+  ]
  },
  {
   "id": "movie-617653",
@@ -1224,7 +1440,12 @@
   "watched_on": "",
   "comment": "",
   "status": "watchlist",
-  "needs_review": true
+  "needs_review": true,
+  "genres": [
+   "Drama",
+   "History",
+   "Thriller"
+  ]
  },
  {
   "id": "movie-504949",
@@ -1249,7 +1470,12 @@
   "watched_on": "",
   "comment": "",
   "status": "watchlist",
-  "needs_review": true
+  "needs_review": true,
+  "genres": [
+   "Drama",
+   "History",
+   "War"
+  ]
  },
  {
   "id": "movie-454227",
@@ -1274,7 +1500,12 @@
   "watched_on": "",
   "comment": "",
   "status": "watchlist",
-  "needs_review": true
+  "needs_review": true,
+  "genres": [
+   "Action",
+   "History",
+   "War"
+  ]
  },
  {
   "id": "movie-979",
@@ -1299,7 +1530,12 @@
   "watched_on": "",
   "comment": "",
   "status": "watchlist",
-  "needs_review": true
+  "needs_review": true,
+  "genres": [
+   "Drama",
+   "Thriller",
+   "Crime"
+  ]
  },
  {
   "id": "movie-605116",
@@ -1324,7 +1560,13 @@
   "watched_on": "",
   "comment": "",
   "status": "watchlist",
-  "needs_review": true
+  "needs_review": true,
+  "genres": [
+   "Action",
+   "Crime",
+   "Science Fiction",
+   "Thriller"
+  ]
  },
  {
   "id": "movie-4961",
@@ -1349,7 +1591,11 @@
   "watched_on": "",
   "comment": "",
   "status": "watchlist",
-  "needs_review": true
+  "needs_review": true,
+  "genres": [
+   "Horror",
+   "Science Fiction"
+  ]
  },
  {
   "id": "movie-1832",
@@ -1374,7 +1620,12 @@
   "watched_on": "",
   "comment": "",
   "status": "watchlist",
-  "needs_review": false
+  "needs_review": false,
+  "genres": [
+   "Fantasy",
+   "Comedy",
+   "Adventure"
+  ]
  },
  {
   "id": "tv-136315",
@@ -1399,7 +1650,11 @@
   "watched_on": "",
   "comment": "",
   "status": "watchlist",
-  "needs_review": true
+  "needs_review": true,
+  "genres": [
+   "Drama",
+   "Comedy"
+  ]
  },
  {
   "id": "movie-850165",
@@ -1424,7 +1679,11 @@
   "watched_on": "",
   "comment": "",
   "status": "watchlist",
-  "needs_review": true
+  "needs_review": true,
+  "genres": [
+   "Drama",
+   "History"
+  ]
  },
  {
   "id": "movie-1020006",
@@ -1449,7 +1708,11 @@
   "watched_on": "",
   "comment": "",
   "status": "watchlist",
-  "needs_review": true
+  "needs_review": true,
+  "genres": [
+   "Drama",
+   "Romance"
+  ]
  },
  {
   "id": "movie-776797",
@@ -1474,7 +1737,11 @@
   "watched_on": "",
   "comment": "",
   "status": "watchlist",
-  "needs_review": true
+  "needs_review": true,
+  "genres": [
+   "Horror",
+   "Thriller"
+  ]
  },
  {
   "id": "tv-5920",
@@ -1497,7 +1764,12 @@
   "watched_on": "",
   "comment": "",
   "status": "watchlist",
-  "needs_review": true
+  "needs_review": true,
+  "genres": [
+   "Crime",
+   "Drama",
+   "Mystery"
+  ]
  },
  {
   "id": "tv-270476",
@@ -1520,7 +1792,12 @@
   "watched_on": "",
   "comment": "",
   "status": "watchlist",
-  "needs_review": true
+  "needs_review": true,
+  "genres": [
+   "Drama",
+   "Comedy",
+   "Mystery"
+  ]
  },
  {
   "id": "movie-718135",
@@ -1545,7 +1822,11 @@
   "watched_on": "",
   "comment": "",
   "status": "watchlist",
-  "needs_review": false
+  "needs_review": false,
+  "genres": [
+   "Horror",
+   "Thriller"
+  ]
  },
  {
   "id": "movie-1032863",
@@ -1570,7 +1851,11 @@
   "watched_on": "",
   "comment": "",
   "status": "watchlist",
-  "needs_review": true
+  "needs_review": true,
+  "genres": [
+   "Romance",
+   "Comedy"
+  ]
  },
  {
   "id": "tv-1399",
@@ -1595,7 +1880,12 @@
   "watched_on": "",
   "comment": "",
   "status": "watched",
-  "needs_review": false
+  "needs_review": false,
+  "genres": [
+   "Sci-Fi & Fantasy",
+   "Drama",
+   "Action & Adventure"
+  ]
  },
  {
   "id": "movie-414906",
@@ -1621,7 +1911,12 @@
   "comment": "A top-notch detective, kinda like Batman mixed in.",
   "status": "watched",
   "needs_review": false,
-  "loved": true
+  "loved": true,
+  "genres": [
+   "Crime",
+   "Mystery",
+   "Thriller"
+  ]
  },
  {
   "id": "movie-1101383",
@@ -1646,7 +1941,12 @@
   "watched_on": "",
   "comment": "",
   "status": "watched",
-  "needs_review": false
+  "needs_review": false,
+  "genres": [
+   "Science Fiction",
+   "Mystery",
+   "Thriller"
+  ]
  },
  {
   "id": "movie-1212763",
@@ -1671,7 +1971,10 @@
   "watched_on": "",
   "comment": "",
   "status": "watched",
-  "needs_review": false
+  "needs_review": false,
+  "genres": [
+   "Horror"
+  ]
  },
  {
   "id": "movie-1339676",
@@ -1696,7 +1999,12 @@
   "watched_on": "",
   "comment": "",
   "status": "watched",
-  "needs_review": false
+  "needs_review": false,
+  "genres": [
+   "Crime",
+   "Action",
+   "Thriller"
+  ]
  },
  {
   "id": "movie-1628448",
@@ -1721,7 +2029,12 @@
   "watched_on": "",
   "comment": "",
   "status": "watched",
-  "needs_review": false
+  "needs_review": false,
+  "genres": [
+   "Comedy",
+   "Thriller",
+   "Drama"
+  ]
  },
  {
   "id": "movie-3170",
@@ -1746,7 +2059,12 @@
   "watched_on": "",
   "comment": "",
   "status": "watched",
-  "needs_review": false
+  "needs_review": false,
+  "genres": [
+   "Animation",
+   "Drama",
+   "Family"
+  ]
  },
  {
   "id": "movie-936075",
@@ -1771,7 +2089,11 @@
   "watched_on": "",
   "comment": "",
   "status": "watched",
-  "needs_review": false
+  "needs_review": false,
+  "genres": [
+   "Music",
+   "Drama"
+  ]
  },
  {
   "id": "movie-1280738",
@@ -1796,7 +2118,12 @@
   "watched_on": "",
   "comment": "",
   "status": "watched",
-  "needs_review": false
+  "needs_review": false,
+  "genres": [
+   "Action",
+   "Crime",
+   "Thriller"
+  ]
  },
  {
   "id": "movie-847742",
@@ -1822,7 +2149,12 @@
   "comment": "না বানালেও চলত, এমন মনে হয়েছে 🙃",
   "status": "watched",
   "needs_review": false,
-  "loved": false
+  "loved": false,
+  "genres": [
+   "Crime",
+   "Drama",
+   "Thriller"
+  ]
  },
  {
   "id": "movie-1495",
@@ -1847,7 +2179,14 @@
   "watched_on": "",
   "comment": "",
   "status": "watched",
-  "needs_review": false
+  "needs_review": false,
+  "genres": [
+   "Drama",
+   "Action",
+   "Adventure",
+   "History",
+   "War"
+  ]
  },
  {
   "id": "movie-1122573",
@@ -1872,7 +2211,11 @@
   "watched_on": "",
   "comment": "",
   "status": "watched",
-  "needs_review": false
+  "needs_review": false,
+  "genres": [
+   "Action",
+   "Thriller"
+  ]
  },
  {
   "id": "tv-284631",
@@ -1897,7 +2240,11 @@
   "watched_on": "",
   "comment": "",
   "status": "watched",
-  "needs_review": false
+  "needs_review": false,
+  "genres": [
+   "Crime",
+   "Drama"
+  ]
  },
  {
   "id": "movie-1171145",
@@ -1922,7 +2269,11 @@
   "watched_on": "",
   "comment": "",
   "status": "watched",
-  "needs_review": true
+  "needs_review": true,
+  "genres": [
+   "Crime",
+   "Thriller"
+  ]
  },
  {
   "id": "tv-276161",
@@ -1943,7 +2294,12 @@
   "watched_on": "",
   "comment": "",
   "status": "watched",
-  "needs_review": false
+  "needs_review": false,
+  "genres": [
+   "Action & Adventure",
+   "Drama",
+   "Comedy"
+  ]
  },
  {
   "id": "movie-1607",
@@ -1968,7 +2324,11 @@
   "watched_on": "",
   "comment": "",
   "status": "watched",
-  "needs_review": false
+  "needs_review": false,
+  "genres": [
+   "Drama",
+   "Crime"
+  ]
  },
  {
   "id": "movie-687163",
@@ -1994,7 +2354,11 @@
   "comment": "a wholesome movie",
   "status": "watched",
   "needs_review": true,
-  "loved": false
+  "loved": false,
+  "genres": [
+   "Science Fiction",
+   "Adventure"
+  ]
  },
  {
   "id": "movie-1542995",
@@ -2020,7 +2384,12 @@
   "comment": "মন্দ না,  তবে মনে হচ্ছিল চাইলে আরো ভালো করা যেত এই উপাদান সামগ্রী দিয়ে।",
   "status": "watched",
   "needs_review": true,
-  "loved": false
+  "loved": false,
+  "genres": [
+   "Drama",
+   "Comedy",
+   "Family"
+  ]
  },
  {
   "id": "movie-1318447",
@@ -2046,7 +2415,11 @@
   "comment": "থেমে থাকে না, বাঁচার লড়াই",
   "status": "watched",
   "needs_review": false,
-  "loved": false
+  "loved": false,
+  "genres": [
+   "Action",
+   "Thriller"
+  ]
  },
  {
   "id": "movie-749170",
@@ -2071,7 +2444,12 @@
   "watched_on": "",
   "comment": "",
   "status": "watched",
-  "needs_review": false
+  "needs_review": false,
+  "genres": [
+   "Action",
+   "Thriller",
+   "Comedy"
+  ]
  },
  {
   "id": "movie-1241983",
@@ -2096,7 +2474,10 @@
   "watched_on": "",
   "comment": "",
   "status": "watched",
-  "needs_review": false
+  "needs_review": false,
+  "genres": [
+   "Drama"
+  ]
  },
  {
   "id": "movie-33",
@@ -2121,7 +2502,10 @@
   "watched_on": "",
   "comment": "",
   "status": "watched",
-  "needs_review": false
+  "needs_review": false,
+  "genres": [
+   "Western"
+  ]
  },
  {
   "id": "tv-292625",
@@ -2146,7 +2530,11 @@
   "watched_on": "",
   "comment": "",
   "status": "watched",
-  "needs_review": false
+  "needs_review": false,
+  "genres": [
+   "Comedy",
+   "Drama"
+  ]
  },
  {
   "id": "movie-34544",
@@ -2171,7 +2559,12 @@
   "watched_on": "",
   "comment": "",
   "status": "watched",
-  "needs_review": false
+  "needs_review": false,
+  "genres": [
+   "Action",
+   "Comedy",
+   "Crime"
+  ]
  },
  {
   "id": "movie-10045",
@@ -2196,7 +2589,12 @@
   "watched_on": "",
   "comment": "",
   "status": "watched",
-  "needs_review": false
+  "needs_review": false,
+  "genres": [
+   "Action",
+   "Thriller",
+   "Science Fiction"
+  ]
  },
  {
   "id": "movie-1223601",
@@ -2221,7 +2619,12 @@
   "watched_on": "",
   "comment": "",
   "status": "watched",
-  "needs_review": false
+  "needs_review": false,
+  "genres": [
+   "Action",
+   "War",
+   "Thriller"
+  ]
  },
  {
   "id": "movie-1265609",
@@ -2246,7 +2649,12 @@
   "watched_on": "",
   "comment": "",
   "status": "watched",
-  "needs_review": false
+  "needs_review": false,
+  "genres": [
+   "Action",
+   "Science Fiction",
+   "Thriller"
+  ]
  },
  {
   "id": "tv-71446",
@@ -2271,7 +2679,11 @@
   "watched_on": "",
   "comment": "",
   "status": "watched",
-  "needs_review": true
+  "needs_review": true,
+  "genres": [
+   "Crime",
+   "Drama"
+  ]
  },
  {
   "id": "movie-9357",
@@ -2296,7 +2708,11 @@
   "watched_on": "",
   "comment": "",
   "status": "watched",
-  "needs_review": false
+  "needs_review": false,
+  "genres": [
+   "Drama",
+   "Thriller"
+  ]
  },
  {
   "id": "movie-457955",
@@ -2321,7 +2737,12 @@
   "watched_on": "",
   "comment": "",
   "status": "watched",
-  "needs_review": true
+  "needs_review": true,
+  "genres": [
+   "Horror",
+   "Thriller",
+   "Science Fiction"
+  ]
  },
  {
   "id": "movie-103731",
@@ -2346,7 +2767,10 @@
   "watched_on": "",
   "comment": "",
   "status": "watched",
-  "needs_review": true
+  "needs_review": true,
+  "genres": [
+   "Drama"
+  ]
  },
  {
   "id": "movie-1317288",
@@ -2371,7 +2795,11 @@
   "watched_on": "",
   "comment": "",
   "status": "watched",
-  "needs_review": false
+  "needs_review": false,
+  "genres": [
+   "Drama",
+   "Thriller"
+  ]
  },
  {
   "id": "movie-885272",
@@ -2396,7 +2824,12 @@
   "watched_on": "",
   "comment": "",
   "status": "watched",
-  "needs_review": false
+  "needs_review": false,
+  "genres": [
+   "Comedy",
+   "Crime",
+   "Drama"
+  ]
  },
  {
   "id": "movie-1168190",
@@ -2421,7 +2854,13 @@
   "watched_on": "",
   "comment": "",
   "status": "watched",
-  "needs_review": false
+  "needs_review": false,
+  "genres": [
+   "Action",
+   "Comedy",
+   "Crime",
+   "Mystery"
+  ]
  },
  {
   "id": "movie-639988",
@@ -2446,7 +2885,12 @@
   "watched_on": "",
   "comment": "",
   "status": "watched",
-  "needs_review": false
+  "needs_review": false,
+  "genres": [
+   "Comedy",
+   "Crime",
+   "Thriller"
+  ]
  },
  {
   "id": "tv-82700",
@@ -2471,7 +2915,10 @@
   "watched_on": "",
   "comment": "",
   "status": "watched",
-  "needs_review": true
+  "needs_review": true,
+  "genres": [
+   "Drama"
+  ]
  },
  {
   "id": "movie-1236153",
@@ -2497,7 +2944,13 @@
   "comment": "কনসেপ্ট ভালো ছিল",
   "status": "watched",
   "needs_review": false,
-  "loved": false
+  "loved": false,
+  "genres": [
+   "Science Fiction",
+   "Thriller",
+   "Crime",
+   "Mystery"
+  ]
  },
  {
   "id": "movie-138697",
@@ -2522,7 +2975,12 @@
   "watched_on": "",
   "comment": "",
   "status": "watched",
-  "needs_review": false
+  "needs_review": false,
+  "genres": [
+   "Romance",
+   "Comedy",
+   "Drama"
+  ]
  },
  {
   "id": "movie-1054867",
@@ -2547,7 +3005,12 @@
   "watched_on": "",
   "comment": "",
   "status": "watched",
-  "needs_review": false
+  "needs_review": false,
+  "genres": [
+   "Thriller",
+   "Crime",
+   "Comedy"
+  ]
  },
  {
   "id": "movie-106",
@@ -2572,7 +3035,13 @@
   "watched_on": "",
   "comment": "",
   "status": "watched",
-  "needs_review": false
+  "needs_review": false,
+  "genres": [
+   "Science Fiction",
+   "Action",
+   "Adventure",
+   "Thriller"
+  ]
  },
  {
   "id": "movie-1368166",
@@ -2597,7 +3066,11 @@
   "watched_on": "",
   "comment": "",
   "status": "watched",
-  "needs_review": false
+  "needs_review": false,
+  "genres": [
+   "Mystery",
+   "Thriller"
+  ]
  },
  {
   "id": "movie-15977",
@@ -2622,7 +3095,12 @@
   "watched_on": "",
   "comment": "",
   "status": "watched",
-  "needs_review": false
+  "needs_review": false,
+  "genres": [
+   "Comedy",
+   "Drama",
+   "Romance"
+  ]
  },
  {
   "id": "movie-1473354",
@@ -2647,7 +3125,11 @@
   "watched_on": "",
   "comment": "",
   "status": "watched",
-  "needs_review": false
+  "needs_review": false,
+  "genres": [
+   "Comedy",
+   "Family"
+  ]
  },
  {
   "id": "movie-1234731",
@@ -2672,7 +3154,12 @@
   "watched_on": "",
   "comment": "",
   "status": "watched",
-  "needs_review": false
+  "needs_review": false,
+  "genres": [
+   "Adventure",
+   "Comedy",
+   "Horror"
+  ]
  },
  {
   "id": "movie-10734",
@@ -2697,7 +3184,11 @@
   "watched_on": "",
   "comment": "",
   "status": "watched",
-  "needs_review": false
+  "needs_review": false,
+  "genres": [
+   "Drama",
+   "Thriller"
+  ]
  },
  {
   "id": "movie-516632",
@@ -2722,7 +3213,12 @@
   "watched_on": "",
   "comment": "",
   "status": "watched",
-  "needs_review": false
+  "needs_review": false,
+  "genres": [
+   "Horror",
+   "Mystery",
+   "Thriller"
+  ]
  },
  {
   "id": "movie-500664",
@@ -2747,7 +3243,12 @@
   "watched_on": "",
   "comment": "",
   "status": "watched",
-  "needs_review": false
+  "needs_review": false,
+  "genres": [
+   "Action",
+   "Thriller",
+   "Science Fiction"
+  ]
  },
  {
   "id": "movie-13223",
@@ -2772,7 +3273,10 @@
   "watched_on": "",
   "comment": "",
   "status": "watched",
-  "needs_review": false
+  "needs_review": false,
+  "genres": [
+   "Drama"
+  ]
  },
  {
   "id": "movie-533533",
@@ -2797,7 +3301,12 @@
   "watched_on": "",
   "comment": "",
   "status": "watched",
-  "needs_review": false
+  "needs_review": false,
+  "genres": [
+   "Science Fiction",
+   "Adventure",
+   "Action"
+  ]
  },
  {
   "id": "movie-565160",
@@ -2815,7 +3324,8 @@
   "watched_on": "",
   "comment": "",
   "status": "watched",
-  "needs_review": true
+  "needs_review": true,
+  "genres": []
  },
  {
   "id": "movie-1158915",
@@ -2840,7 +3350,11 @@
   "watched_on": "",
   "comment": "",
   "status": "watched",
-  "needs_review": false
+  "needs_review": false,
+  "genres": [
+   "Comedy",
+   "Drama"
+  ]
  },
  {
   "id": "movie-1070186",
@@ -2865,7 +3379,11 @@
   "watched_on": "",
   "comment": "",
   "status": "watched",
-  "needs_review": false
+  "needs_review": false,
+  "genres": [
+   "Drama",
+   "Mystery"
+  ]
  },
  {
   "id": "movie-1306368",
@@ -2890,7 +3408,12 @@
   "watched_on": "",
   "comment": "",
   "status": "watched",
-  "needs_review": false
+  "needs_review": false,
+  "genres": [
+   "Action",
+   "Thriller",
+   "Crime"
+  ]
  },
  {
   "id": "movie-1254590",
@@ -2915,7 +3438,11 @@
   "watched_on": "",
   "comment": "",
   "status": "watched",
-  "needs_review": true
+  "needs_review": true,
+  "genres": [
+   "Crime",
+   "Drama"
+  ]
  },
  {
   "id": "movie-1156202",
@@ -2940,7 +3467,11 @@
   "watched_on": "",
   "comment": "",
   "status": "watched",
-  "needs_review": false
+  "needs_review": false,
+  "genres": [
+   "Drama",
+   "Thriller"
+  ]
  },
  {
   "id": "movie-68734",
@@ -2965,7 +3496,11 @@
   "watched_on": "",
   "comment": "",
   "status": "watched",
-  "needs_review": false
+  "needs_review": false,
+  "genres": [
+   "Drama",
+   "Thriller"
+  ]
  },
  {
   "id": "movie-10386",
@@ -2991,7 +3526,14 @@
   "comment": "",
   "status": "watched",
   "needs_review": false,
-  "loved": false
+  "loved": false,
+  "genres": [
+   "Animation",
+   "Drama",
+   "Family",
+   "Science Fiction",
+   "Adventure"
+  ]
  },
  {
   "id": "movie-604079",
@@ -3016,7 +3558,12 @@
   "watched_on": "",
   "comment": "",
   "status": "watched",
-  "needs_review": false
+  "needs_review": false,
+  "genres": [
+   "Science Fiction",
+   "Thriller",
+   "Horror"
+  ]
  },
  {
   "id": "movie-10315",
@@ -3042,7 +3589,13 @@
   "comment": "চমৎকার শিয়াল মহাশয়",
   "status": "watched",
   "needs_review": false,
-  "loved": false
+  "loved": false,
+  "genres": [
+   "Adventure",
+   "Animation",
+   "Comedy",
+   "Family"
+  ]
  },
  {
   "id": "movie-457799",
@@ -3068,7 +3621,11 @@
   "comment": "A Devil and his Ego",
   "status": "watched",
   "needs_review": false,
-  "loved": false
+  "loved": false,
+  "genres": [
+   "Drama",
+   "Crime"
+  ]
  },
  {
   "id": "movie-474354",
@@ -3094,7 +3651,13 @@
   "comment": "শান্তির দেশের এক ভয়াবহ ট্রাজেডি",
   "status": "watched",
   "needs_review": false,
-  "loved": false
+  "loved": false,
+  "genres": [
+   "Crime",
+   "Drama",
+   "History",
+   "Thriller"
+  ]
  },
  {
   "id": "movie-603",
@@ -3119,7 +3682,11 @@
   "watched_on": "",
   "comment": "",
   "status": "watched",
-  "needs_review": false
+  "needs_review": false,
+  "genres": [
+   "Action",
+   "Science Fiction"
+  ]
  },
  {
   "id": "movie-254320",
@@ -3144,7 +3711,12 @@
   "watched_on": "",
   "comment": "",
   "status": "watched",
-  "needs_review": false
+  "needs_review": false,
+  "genres": [
+   "Comedy",
+   "Drama",
+   "Romance"
+  ]
  },
  {
   "id": "movie-13183",
@@ -3169,7 +3741,12 @@
   "watched_on": "",
   "comment": "",
   "status": "watched",
-  "needs_review": false
+  "needs_review": false,
+  "genres": [
+   "Mystery",
+   "Action",
+   "Science Fiction"
+  ]
  },
  {
   "id": "movie-1227739",
@@ -3194,7 +3771,10 @@
   "watched_on": "",
   "comment": "",
   "status": "watched",
-  "needs_review": false
+  "needs_review": false,
+  "genres": [
+   "Drama"
+  ]
  },
  {
   "id": "movie-1242898",
@@ -3220,7 +3800,12 @@
   "comment": "এটা ভালো ছিল।",
   "status": "watched",
   "needs_review": false,
-  "loved": false
+  "loved": false,
+  "genres": [
+   "Action",
+   "Science Fiction",
+   "Adventure"
+  ]
  },
  {
   "id": "movie-530385",
@@ -3246,7 +3831,12 @@
   "comment": "বাপরে!",
   "status": "watched",
   "needs_review": false,
-  "loved": false
+  "loved": false,
+  "genres": [
+   "Horror",
+   "Drama",
+   "Mystery"
+  ]
  },
  {
   "id": "movie-481848",
@@ -3271,7 +3861,12 @@
   "watched_on": "",
   "comment": "",
   "status": "watched",
-  "needs_review": false
+  "needs_review": false,
+  "genres": [
+   "Adventure",
+   "Family",
+   "Drama"
+  ]
  },
  {
   "id": "movie-1062722",
@@ -3296,7 +3891,12 @@
   "watched_on": "",
   "comment": "",
   "status": "watched",
-  "needs_review": false
+  "needs_review": false,
+  "genres": [
+   "Drama",
+   "Fantasy",
+   "Horror"
+  ]
  },
  {
   "id": "movie-37822",
@@ -3321,7 +3921,10 @@
   "watched_on": "",
   "comment": "",
   "status": "watched",
-  "needs_review": false
+  "needs_review": false,
+  "genres": [
+   "Crime"
+  ]
  },
  {
   "id": "movie-1078605",
@@ -3347,7 +3950,11 @@
   "comment": "",
   "status": "watched",
   "needs_review": false,
-  "loved": false
+  "loved": false,
+  "genres": [
+   "Horror",
+   "Mystery"
+  ]
  },
  {
   "id": "movie-59440",
@@ -3372,7 +3979,11 @@
   "watched_on": "",
   "comment": "",
   "status": "watched",
-  "needs_review": false
+  "needs_review": false,
+  "genres": [
+   "Drama",
+   "Action"
+  ]
  },
  {
   "id": "movie-8329",
@@ -3397,7 +4008,11 @@
   "watched_on": "",
   "comment": "",
   "status": "watched",
-  "needs_review": false
+  "needs_review": false,
+  "genres": [
+   "Horror",
+   "Mystery"
+  ]
  },
  {
   "id": "movie-619979",
@@ -3422,7 +4037,12 @@
   "watched_on": "",
   "comment": "",
   "status": "watched",
-  "needs_review": false
+  "needs_review": false,
+  "genres": [
+   "Drama",
+   "Mystery",
+   "Thriller"
+  ]
  },
  {
   "id": "movie-337170",
@@ -3447,7 +4067,12 @@
   "watched_on": "",
   "comment": "",
   "status": "watched",
-  "needs_review": false
+  "needs_review": false,
+  "genres": [
+   "Comedy",
+   "Crime",
+   "Drama"
+  ]
  },
  {
   "id": "movie-1513875",
@@ -3472,7 +4097,10 @@
   "watched_on": "",
   "comment": "",
   "status": "watched",
-  "needs_review": false
+  "needs_review": false,
+  "genres": [
+   "Action"
+  ]
  },
  {
   "id": "movie-1007734",
@@ -3497,7 +4125,12 @@
   "watched_on": "",
   "comment": "",
   "status": "watched",
-  "needs_review": true
+  "needs_review": true,
+  "genres": [
+   "Action",
+   "Thriller",
+   "Crime"
+  ]
  },
  {
   "id": "movie-617126",
@@ -3523,7 +4156,12 @@
   "comment": "ভালো রিবুট ছিল।",
   "status": "watched",
   "needs_review": false,
-  "loved": false
+  "loved": false,
+  "genres": [
+   "Science Fiction",
+   "Adventure",
+   "Action"
+  ]
  },
  {
   "id": "tv-286801",
@@ -3544,7 +4182,11 @@
   "watched_on": "",
   "comment": "",
   "status": "watched",
-  "needs_review": false
+  "needs_review": false,
+  "genres": [
+   "Crime",
+   "Drama"
+  ]
  },
  {
   "id": "movie-388",
@@ -3570,7 +4212,12 @@
   "comment": "",
   "status": "watched",
   "needs_review": false,
-  "loved": false
+  "loved": false,
+  "genres": [
+   "Crime",
+   "Drama",
+   "Thriller"
+  ]
  },
  {
   "id": "movie-911430",
@@ -3595,7 +4242,11 @@
   "watched_on": "",
   "comment": "",
   "status": "watched",
-  "needs_review": false
+  "needs_review": false,
+  "genres": [
+   "Action",
+   "Drama"
+  ]
  },
  {
   "id": "movie-1065426",
@@ -3621,7 +4272,12 @@
   "comment": "প্রথমটা বেশি ভালো ছিল",
   "status": "watched",
   "needs_review": false,
-  "loved": false
+  "loved": false,
+  "genres": [
+   "Drama",
+   "Romance",
+   "Comedy"
+  ]
  },
  {
   "id": "movie-1398359",
@@ -3646,7 +4302,12 @@
   "watched_on": "",
   "comment": "",
   "status": "watched",
-  "needs_review": false
+  "needs_review": false,
+  "genres": [
+   "Comedy",
+   "Drama",
+   "Family"
+  ]
  },
  {
   "id": "movie-575265",
@@ -3672,7 +4333,12 @@
   "comment": "সাবমেরিন সিনটা - চমৎকার লেগেছে",
   "status": "watched",
   "needs_review": false,
-  "loved": false
+  "loved": false,
+  "genres": [
+   "Action",
+   "Thriller",
+   "Adventure"
+  ]
  },
  {
   "id": "movie-334533",
@@ -3698,7 +4364,11 @@
   "comment": "",
   "status": "watched",
   "needs_review": false,
-  "loved": false
+  "loved": false,
+  "genres": [
+   "Drama",
+   "Comedy"
+  ]
  },
  {
   "id": "movie-1443184",
@@ -3724,7 +4394,12 @@
   "comment": "ভালো ছিল",
   "status": "watched",
   "needs_review": false,
-  "loved": false
+  "loved": false,
+  "genres": [
+   "Comedy",
+   "Drama",
+   "Family"
+  ]
  },
  {
   "id": "movie-97341",
@@ -3749,7 +4424,12 @@
   "watched_on": "",
   "comment": "",
   "status": "watched",
-  "needs_review": false
+  "needs_review": false,
+  "genres": [
+   "Comedy",
+   "Drama",
+   "Romance"
+  ]
  },
  {
   "id": "movie-1234821",
@@ -3775,7 +4455,12 @@
   "comment": "বানানো দরকার তাই বানাইছিল মনে হয়েছে।",
   "status": "watched",
   "needs_review": false,
-  "loved": false
+  "loved": false,
+  "genres": [
+   "Science Fiction",
+   "Adventure",
+   "Action"
+  ]
  },
  {
   "id": "movie-1100988",
@@ -3800,7 +4485,12 @@
   "watched_on": "",
   "comment": "",
   "status": "watched",
-  "needs_review": false
+  "needs_review": false,
+  "genres": [
+   "Horror",
+   "Thriller",
+   "Science Fiction"
+  ]
  },
  {
   "id": "movie-456570",
@@ -3825,7 +4515,11 @@
   "watched_on": "",
   "comment": "",
   "status": "watched",
-  "needs_review": false
+  "needs_review": false,
+  "genres": [
+   "Comedy",
+   "Drama"
+  ]
  },
  {
   "id": "movie-15975",
@@ -3851,7 +4545,11 @@
   "comment": "এই লোকটার মুভিগুলো সব অদ্ভুত সুন্দর",
   "status": "watched",
   "needs_review": false,
-  "loved": false
+  "loved": false,
+  "genres": [
+   "Action",
+   "Comedy"
+  ]
  },
  {
   "id": "movie-90843",
@@ -3876,7 +4574,12 @@
   "watched_on": "",
   "comment": "",
   "status": "watched",
-  "needs_review": false
+  "needs_review": false,
+  "genres": [
+   "Thriller",
+   "Crime",
+   "Mystery"
+  ]
  },
  {
   "id": "movie-197368",
@@ -3902,7 +4605,11 @@
   "comment": "মরতে চাওয়া লোকজনদের দেখা উচিত এটা",
   "status": "watched",
   "needs_review": false,
-  "loved": false
+  "loved": false,
+  "genres": [
+   "Thriller",
+   "Romance"
+  ]
  },
  {
   "id": "movie-1653",
@@ -3927,7 +4634,10 @@
   "watched_on": "",
   "comment": "",
   "status": "watched",
-  "needs_review": false
+  "needs_review": false,
+  "genres": [
+   "Drama"
+  ]
  },
  {
   "id": "movie-9693",
@@ -3952,7 +4662,12 @@
   "watched_on": "",
   "comment": "",
   "status": "watched",
-  "needs_review": false
+  "needs_review": false,
+  "genres": [
+   "Science Fiction",
+   "Thriller",
+   "Action"
+  ]
  },
  {
   "id": "movie-1171101",
@@ -3977,7 +4692,12 @@
   "watched_on": "",
   "comment": "",
   "status": "watched",
-  "needs_review": false
+  "needs_review": false,
+  "genres": [
+   "Crime",
+   "Thriller",
+   "Drama"
+  ]
  },
  {
   "id": "movie-1449364",
@@ -4002,7 +4722,11 @@
   "watched_on": "",
   "comment": "",
   "status": "watched",
-  "needs_review": false
+  "needs_review": false,
+  "genres": [
+   "Horror",
+   "Comedy"
+  ]
  },
  {
   "id": "movie-936667",
@@ -4027,7 +4751,11 @@
   "watched_on": "",
   "comment": "",
   "status": "watched",
-  "needs_review": false
+  "needs_review": false,
+  "genres": [
+   "Drama",
+   "Action"
+  ]
  },
  {
   "id": "movie-541671",
@@ -4053,7 +4781,12 @@
   "comment": "এ্যাকশন ভালোই ছিল।",
   "status": "watched",
   "needs_review": false,
-  "loved": false
+  "loved": false,
+  "genres": [
+   "Action",
+   "Thriller",
+   "Crime"
+  ]
  },
  {
   "id": "movie-16345",
@@ -4079,7 +4812,11 @@
   "comment": "",
   "status": "watched",
   "needs_review": false,
-  "loved": false
+  "loved": false,
+  "genres": [
+   "Comedy",
+   "Drama"
+  ]
  },
  {
   "id": "movie-986056",
@@ -4104,7 +4841,12 @@
   "watched_on": "",
   "comment": "",
   "status": "watched",
-  "needs_review": false
+  "needs_review": false,
+  "genres": [
+   "Action",
+   "Science Fiction",
+   "Adventure"
+  ]
  },
  {
   "id": "movie-574475",
@@ -4129,7 +4871,11 @@
   "watched_on": "",
   "comment": "",
   "status": "watched",
-  "needs_review": false
+  "needs_review": false,
+  "genres": [
+   "Horror",
+   "Mystery"
+  ]
  },
  {
   "id": "movie-1396122",
@@ -4155,7 +4901,12 @@
   "comment": "অনেকদিন পরে সাকিবের মুভি দেখেছিলাম, কাহিনি অনেকটা ভুলেই গেছি, সাথে জয়া ছিল, ঐটা না?",
   "status": "watched",
   "needs_review": false,
-  "loved": false
+  "loved": false,
+  "genres": [
+   "Crime",
+   "Action",
+   "Thriller"
+  ]
  },
  {
   "id": "movie-263472",
@@ -4180,7 +4931,12 @@
   "watched_on": "",
   "comment": "",
   "status": "watched",
-  "needs_review": false
+  "needs_review": false,
+  "genres": [
+   "Horror",
+   "Thriller",
+   "Crime"
+  ]
  },
  {
   "id": "movie-505951",
@@ -4205,7 +4961,12 @@
   "watched_on": "",
   "comment": "",
   "status": "watched",
-  "needs_review": false
+  "needs_review": false,
+  "genres": [
+   "Romance",
+   "Comedy",
+   "Drama"
+  ]
  },
  {
   "id": "movie-1376434",
@@ -4231,7 +4992,13 @@
   "comment": "বেশ ভালো লেগেছে...",
   "status": "watched",
   "needs_review": false,
-  "loved": false
+  "loved": false,
+  "genres": [
+   "Animation",
+   "Action",
+   "Science Fiction",
+   "Thriller"
+  ]
  },
  {
   "id": "movie-910784",
@@ -4256,7 +5023,13 @@
   "watched_on": "",
   "comment": "",
   "status": "watched",
-  "needs_review": false
+  "needs_review": false,
+  "genres": [
+   "Adventure",
+   "Action",
+   "Fantasy",
+   "History"
+  ]
  },
  {
   "id": "movie-2034",
@@ -4282,7 +5055,12 @@
   "comment": "এটা দারুণ লেগেছিল, মনে আছে সকাল বেলা দেখেছিলাম, আবহাওয়া ভালো ছিল, দেখা worthy ছিল।",
   "status": "watched",
   "needs_review": false,
-  "loved": false
+  "loved": false,
+  "genres": [
+   "Action",
+   "Crime",
+   "Drama"
+  ]
  },
  {
   "id": "movie-1233413",
@@ -4308,7 +5086,12 @@
   "comment": "এটা নিয়ে যে পরিমাণ সোরগোল ছিল, এমনকি অস্কার অব্দি জিতল, কিন্তু আমার কাছে কেন যে তেমন একটা ভালো লাগেনি, আর অন্যদের কাছেও বা এটা এতটা ভালো লেগেছিল এই মিমাংসা আমি করতে পারিনি।",
   "status": "watched",
   "needs_review": false,
-  "loved": false
+  "loved": false,
+  "genres": [
+   "Horror",
+   "Action",
+   "Thriller"
+  ]
  },
  {
   "id": "movie-185008",
@@ -4333,7 +5116,11 @@
   "watched_on": "",
   "comment": "",
   "status": "watched",
-  "needs_review": false
+  "needs_review": false,
+  "genres": [
+   "Romance",
+   "Comedy"
+  ]
  },
  {
   "id": "movie-1261125",
@@ -4358,7 +5145,12 @@
   "watched_on": "",
   "comment": "",
   "status": "watched",
-  "needs_review": false
+  "needs_review": false,
+  "genres": [
+   "Action",
+   "Drama",
+   "Thriller"
+  ]
  },
  {
   "id": "movie-26247",
@@ -4383,7 +5175,11 @@
   "watched_on": "",
   "comment": "",
   "status": "watched",
-  "needs_review": false
+  "needs_review": false,
+  "genres": [
+   "Drama",
+   "Romance"
+  ]
  },
  {
   "id": "movie-1168102",
@@ -4408,7 +5204,12 @@
   "watched_on": "",
   "comment": "",
   "status": "watched",
-  "needs_review": false
+  "needs_review": false,
+  "genres": [
+   "Romance",
+   "Drama",
+   "Thriller"
+  ]
  },
  {
   "id": "movie-1168104",
@@ -4433,7 +5234,11 @@
   "watched_on": "",
   "comment": "",
   "status": "watched",
-  "needs_review": false
+  "needs_review": false,
+  "genres": [
+   "Romance",
+   "Drama"
+  ]
  },
  {
   "id": "movie-23168",
@@ -4458,7 +5263,12 @@
   "watched_on": "",
   "comment": "",
   "status": "watched",
-  "needs_review": false
+  "needs_review": false,
+  "genres": [
+   "Crime",
+   "Drama",
+   "Thriller"
+  ]
  },
  {
   "id": "movie-2048",
@@ -4483,7 +5293,11 @@
   "watched_on": "",
   "comment": "",
   "status": "watched",
-  "needs_review": false
+  "needs_review": false,
+  "genres": [
+   "Action",
+   "Science Fiction"
+  ]
  },
  {
   "id": "movie-1241436",
@@ -4508,7 +5322,11 @@
   "watched_on": "",
   "comment": "",
   "status": "watched",
-  "needs_review": false
+  "needs_review": false,
+  "genres": [
+   "War",
+   "Action"
+  ]
  },
  {
   "id": "movie-189",
@@ -4533,7 +5351,12 @@
   "watched_on": "",
   "comment": "",
   "status": "watched",
-  "needs_review": false
+  "needs_review": false,
+  "genres": [
+   "Action",
+   "Crime",
+   "Thriller"
+  ]
  },
  {
   "id": "movie-362045",
@@ -4558,7 +5381,12 @@
   "watched_on": "",
   "comment": "",
   "status": "watched",
-  "needs_review": false
+  "needs_review": false,
+  "genres": [
+   "History",
+   "Romance",
+   "Drama"
+  ]
  },
  {
   "id": "movie-20492",
@@ -4583,7 +5411,11 @@
   "watched_on": "",
   "comment": "",
   "status": "watched",
-  "needs_review": false
+  "needs_review": false,
+  "genres": [
+   "Drama",
+   "Romance"
+  ]
  },
  {
   "id": "movie-13",
@@ -4609,7 +5441,12 @@
   "comment": "এক চমৎকার জিনিস!!",
   "status": "watched",
   "needs_review": false,
-  "loved": false
+  "loved": false,
+  "genres": [
+   "Comedy",
+   "Drama",
+   "Romance"
+  ]
  },
  {
   "id": "movie-1424217",
@@ -4634,7 +5471,12 @@
   "watched_on": "",
   "comment": "",
   "status": "watched",
-  "needs_review": false
+  "needs_review": false,
+  "genres": [
+   "Drama",
+   "Romance",
+   "Crime"
+  ]
  },
  {
   "id": "movie-10634",
@@ -4659,7 +5501,11 @@
   "watched_on": "",
   "comment": "",
   "status": "watched",
-  "needs_review": false
+  "needs_review": false,
+  "genres": [
+   "Comedy",
+   "Drama"
+  ]
  },
  {
   "id": "movie-668489",
@@ -4684,7 +5530,13 @@
   "watched_on": "",
   "comment": "",
   "status": "watched",
-  "needs_review": false
+  "needs_review": false,
+  "genres": [
+   "Action",
+   "Crime",
+   "Thriller",
+   "Drama"
+  ]
  },
  {
   "id": "movie-1226572",
@@ -4709,7 +5561,11 @@
   "watched_on": "",
   "comment": "",
   "status": "watched",
-  "needs_review": false
+  "needs_review": false,
+  "genres": [
+   "Comedy",
+   "Drama"
+  ]
  },
  {
   "id": "movie-1290954",
@@ -4735,7 +5591,12 @@
   "comment": "ভালোই সাসপেন্স ছিল।",
   "status": "watched",
   "needs_review": false,
-  "loved": false
+  "loved": false,
+  "genres": [
+   "Mystery",
+   "Thriller",
+   "Crime"
+  ]
  },
  {
   "id": "movie-20495",
@@ -4760,7 +5621,11 @@
   "watched_on": "",
   "comment": "",
   "status": "watched",
-  "needs_review": false
+  "needs_review": false,
+  "genres": [
+   "Romance",
+   "Comedy"
+  ]
  },
  {
   "id": "movie-1197306",
@@ -4785,7 +5650,12 @@
   "watched_on": "",
   "comment": "",
   "status": "watched",
-  "needs_review": false
+  "needs_review": false,
+  "genres": [
+   "Action",
+   "Crime",
+   "Thriller"
+  ]
  },
  {
   "id": "movie-9040",
@@ -4810,7 +5680,12 @@
   "watched_on": "",
   "comment": "",
   "status": "watched",
-  "needs_review": false
+  "needs_review": false,
+  "genres": [
+   "Crime",
+   "Drama",
+   "History"
+  ]
  },
  {
   "id": "movie-1251551",
@@ -4835,7 +5710,12 @@
   "watched_on": "",
   "comment": "",
   "status": "watched",
-  "needs_review": false
+  "needs_review": false,
+  "genres": [
+   "Thriller",
+   "Crime",
+   "Mystery"
+  ]
  },
  {
   "id": "movie-1195506",
@@ -4860,7 +5740,12 @@
   "watched_on": "",
   "comment": "",
   "status": "watched",
-  "needs_review": false
+  "needs_review": false,
+  "genres": [
+   "Action",
+   "Comedy",
+   "Thriller"
+  ]
  },
  {
   "id": "movie-10637",
@@ -4885,7 +5770,10 @@
   "watched_on": "",
   "comment": "",
   "status": "watched",
-  "needs_review": false
+  "needs_review": false,
+  "genres": [
+   "Drama"
+  ]
  },
  {
   "id": "movie-616",
@@ -4911,7 +5799,12 @@
   "comment": "আমার বেশ লেগেছে।",
   "status": "watched",
   "needs_review": false,
-  "loved": false
+  "loved": false,
+  "genres": [
+   "Drama",
+   "Action",
+   "War"
+  ]
  },
  {
   "id": "movie-7214",
@@ -4936,7 +5829,11 @@
   "watched_on": "",
   "comment": "",
   "status": "watched",
-  "needs_review": false
+  "needs_review": false,
+  "genres": [
+   "Drama",
+   "History"
+  ]
  },
  {
   "id": "movie-256591",
@@ -4961,7 +5858,12 @@
   "watched_on": "",
   "comment": "",
   "status": "watched",
-  "needs_review": false
+  "needs_review": false,
+  "genres": [
+   "Romance",
+   "Comedy",
+   "Crime"
+  ]
  },
  {
   "id": "movie-1087192",
@@ -4986,7 +5888,13 @@
   "watched_on": "",
   "comment": "",
   "status": "watched",
-  "needs_review": false
+  "needs_review": false,
+  "genres": [
+   "Fantasy",
+   "Family",
+   "Action",
+   "Adventure"
+  ]
  },
  {
   "id": "movie-493922",
@@ -5011,7 +5919,12 @@
   "watched_on": "",
   "comment": "",
   "status": "watched",
-  "needs_review": false
+  "needs_review": false,
+  "genres": [
+   "Horror",
+   "Mystery",
+   "Thriller"
+  ]
  },
  {
   "id": "movie-1147546",
@@ -5036,7 +5949,11 @@
   "watched_on": "",
   "comment": "",
   "status": "watched",
-  "needs_review": false
+  "needs_review": false,
+  "genres": [
+   "Thriller",
+   "Drama"
+  ]
  },
  {
   "id": "movie-2056",
@@ -5061,7 +5978,11 @@
   "watched_on": "",
   "comment": "",
   "status": "watched",
-  "needs_review": false
+  "needs_review": false,
+  "genres": [
+   "Drama",
+   "Comedy"
+  ]
  },
  {
   "id": "movie-1297763",
@@ -5086,7 +6007,12 @@
   "watched_on": "",
   "comment": "",
   "status": "watched",
-  "needs_review": false
+  "needs_review": false,
+  "genres": [
+   "Animation",
+   "Action",
+   "Science Fiction"
+  ]
  },
  {
   "id": "movie-9416",
@@ -5111,7 +6037,13 @@
   "watched_on": "",
   "comment": "",
   "status": "watched",
-  "needs_review": false
+  "needs_review": false,
+  "genres": [
+   "Action",
+   "Comedy",
+   "Crime",
+   "Thriller"
+  ]
  },
  {
   "id": "movie-823219",
@@ -5127,7 +6059,13 @@
   "watched_on": "",
   "comment": "",
   "status": "watched",
-  "needs_review": false
+  "needs_review": false,
+  "genres": [
+   "Adventure",
+   "Animation",
+   "Family",
+   "Fantasy"
+  ]
  },
  {
   "id": "movie-1244068",
@@ -5152,7 +6090,12 @@
   "watched_on": "",
   "comment": "",
   "status": "watched",
-  "needs_review": false
+  "needs_review": false,
+  "genres": [
+   "Drama",
+   "Comedy",
+   "Thriller"
+  ]
  },
  {
   "id": "movie-263115",
@@ -5177,7 +6120,12 @@
   "watched_on": "",
   "comment": "",
   "status": "watched",
-  "needs_review": false
+  "needs_review": false,
+  "genres": [
+   "Action",
+   "Drama",
+   "Science Fiction"
+  ]
  },
  {
   "id": "movie-41188",
@@ -5202,7 +6150,12 @@
   "watched_on": "",
   "comment": "",
   "status": "watched",
-  "needs_review": false
+  "needs_review": false,
+  "genres": [
+   "Comedy",
+   "Thriller",
+   "Romance"
+  ]
  },
  {
   "id": "movie-1196943",
@@ -5227,7 +6180,12 @@
   "watched_on": "",
   "comment": "",
   "status": "watched",
-  "needs_review": false
+  "needs_review": false,
+  "genres": [
+   "History",
+   "Action",
+   "Drama"
+  ]
  },
  {
   "id": "movie-3933",
@@ -5252,7 +6210,12 @@
   "watched_on": "",
   "comment": "",
   "status": "watched",
-  "needs_review": false
+  "needs_review": false,
+  "genres": [
+   "Romance",
+   "Fantasy",
+   "Animation"
+  ]
  },
  {
   "id": "movie-1064213",
@@ -5277,7 +6240,12 @@
   "watched_on": "",
   "comment": "",
   "status": "watched",
-  "needs_review": false
+  "needs_review": false,
+  "genres": [
+   "Drama",
+   "Comedy",
+   "Romance"
+  ]
  },
  {
   "id": "movie-363093",
@@ -5302,7 +6270,13 @@
   "watched_on": "",
   "comment": "",
   "status": "watched",
-  "needs_review": false
+  "needs_review": false,
+  "genres": [
+   "Action",
+   "History",
+   "Adventure",
+   "Drama"
+  ]
  },
  {
   "id": "movie-1255",
@@ -5327,7 +6301,12 @@
   "watched_on": "",
   "comment": "",
   "status": "watched",
-  "needs_review": false
+  "needs_review": false,
+  "genres": [
+   "Horror",
+   "Drama",
+   "Science Fiction"
+  ]
  },
  {
   "id": "movie-6977",
@@ -5352,7 +6331,12 @@
   "watched_on": "",
   "comment": "",
   "status": "watched",
-  "needs_review": false
+  "needs_review": false,
+  "genres": [
+   "Crime",
+   "Thriller",
+   "Western"
+  ]
  },
  {
   "id": "movie-2503",
@@ -5377,7 +6361,13 @@
   "watched_on": "",
   "comment": "",
   "status": "watched",
-  "needs_review": false
+  "needs_review": false,
+  "genres": [
+   "Action",
+   "Drama",
+   "Mystery",
+   "Thriller"
+  ]
  },
  {
   "id": "movie-117369",
@@ -5401,7 +6391,11 @@
   "watched_on": "",
   "comment": "",
   "status": "watched",
-  "needs_review": false
+  "needs_review": false,
+  "genres": [
+   "Action",
+   "Animation"
+  ]
  },
  {
   "id": "movie-155",
@@ -5426,7 +6420,12 @@
   "watched_on": "",
   "comment": "",
   "status": "watched",
-  "needs_review": true
+  "needs_review": true,
+  "genres": [
+   "Action",
+   "Thriller",
+   "Crime"
+  ]
  },
  {
   "id": "movie-46418",
@@ -5451,7 +6450,11 @@
   "watched_on": "",
   "comment": "",
   "status": "watched",
-  "needs_review": false
+  "needs_review": false,
+  "genres": [
+   "Drama",
+   "Romance"
+  ]
  },
  {
   "id": "movie-890138",
@@ -5476,7 +6479,12 @@
   "watched_on": "",
   "comment": "",
   "status": "watched",
-  "needs_review": false
+  "needs_review": false,
+  "genres": [
+   "Action",
+   "Adventure",
+   "Drama"
+  ]
  },
  {
   "id": "movie-1068394",
@@ -5501,7 +6509,11 @@
   "watched_on": "",
   "comment": "",
   "status": "watched",
-  "needs_review": false
+  "needs_review": false,
+  "genres": [
+   "Comedy",
+   "Family"
+  ]
  },
  {
   "id": "movie-1189518",
@@ -5526,7 +6538,11 @@
   "watched_on": "",
   "comment": "",
   "status": "watched",
-  "needs_review": false
+  "needs_review": false,
+  "genres": [
+   "Comedy",
+   "Drama"
+  ]
  },
  {
   "id": "movie-1046183",
@@ -5551,7 +6567,11 @@
   "watched_on": "",
   "comment": "",
   "status": "watched",
-  "needs_review": false
+  "needs_review": false,
+  "genres": [
+   "Thriller",
+   "Drama"
+  ]
  },
  {
   "id": "movie-950075",
@@ -5576,7 +6596,12 @@
   "watched_on": "",
   "comment": "",
   "status": "watched",
-  "needs_review": false
+  "needs_review": false,
+  "genres": [
+   "Mystery",
+   "Thriller",
+   "Comedy"
+  ]
  },
  {
   "id": "movie-1186350",
@@ -5601,7 +6626,12 @@
   "watched_on": "",
   "comment": "",
   "status": "watched",
-  "needs_review": false
+  "needs_review": false,
+  "genres": [
+   "Action",
+   "Crime",
+   "Thriller"
+  ]
  },
  {
   "id": "movie-1177623",
@@ -5626,7 +6656,11 @@
   "watched_on": "",
   "comment": "",
   "status": "watched",
-  "needs_review": false
+  "needs_review": false,
+  "genres": [
+   "Action",
+   "Thriller"
+  ]
  },
  {
   "id": "movie-857598",
@@ -5651,7 +6685,13 @@
   "watched_on": "",
   "comment": "",
   "status": "watched",
-  "needs_review": false
+  "needs_review": false,
+  "genres": [
+   "Action",
+   "Drama",
+   "Thriller",
+   "Crime"
+  ]
  },
  {
   "id": "movie-333669",
@@ -5676,7 +6716,10 @@
   "watched_on": "",
   "comment": "",
   "status": "watched",
-  "needs_review": false
+  "needs_review": false,
+  "genres": [
+   "Action"
+  ]
  },
  {
   "id": "movie-535389",
@@ -5701,7 +6744,12 @@
   "watched_on": "",
   "comment": "",
   "status": "watched",
-  "needs_review": false
+  "needs_review": false,
+  "genres": [
+   "War",
+   "History",
+   "Action"
+  ]
  },
  {
   "id": "movie-558449",
@@ -5726,7 +6774,12 @@
   "watched_on": "",
   "comment": "",
   "status": "watched",
-  "needs_review": false
+  "needs_review": false,
+  "genres": [
+   "Action",
+   "Adventure",
+   "Drama"
+  ]
  },
  {
   "id": "movie-1013850",
@@ -5751,7 +6804,11 @@
   "watched_on": "",
   "comment": "",
   "status": "watched",
-  "needs_review": false
+  "needs_review": false,
+  "genres": [
+   "Comedy",
+   "Drama"
+  ]
  },
  {
   "id": "movie-149",
@@ -5776,7 +6833,12 @@
   "watched_on": "",
   "comment": "",
   "status": "watched",
-  "needs_review": false
+  "needs_review": false,
+  "genres": [
+   "Animation",
+   "Science Fiction",
+   "Action"
+  ]
  },
  {
   "id": "movie-27205",
@@ -5796,7 +6858,12 @@
   "watched_on": "2024-03-12",
   "comment": "শেষের ঘূর্ণিটা এখনো ঘুরছে!",
   "status": "watched",
-  "needs_review": false
+  "needs_review": false,
+  "genres": [
+   "Action",
+   "Science Fiction",
+   "Adventure"
+  ]
  },
  {
   "id": "tv-1396",
@@ -5815,7 +6882,11 @@
   "watched_on": "2023-11-02",
   "comment": "",
   "status": "watched",
-  "needs_review": false
+  "needs_review": false,
+  "genres": [
+   "Drama",
+   "Crime"
+  ]
  },
  {
   "id": "movie-157336",
@@ -5834,6 +6905,11 @@
   "watched_on": "2026-10-02",
   "comment": "",
   "status": "watched",
-  "needs_review": false
+  "needs_review": false,
+  "genres": [
+   "Adventure",
+   "Drama",
+   "Science Fiction"
+  ]
  }
 ]
