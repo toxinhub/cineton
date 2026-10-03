@@ -178,14 +178,14 @@ function renderLibrary(){
   return(!q||hay.includes(q))&&(f==='all'||(f==='review'?m.needs_review===true:m.status===f));
  });
  $('#library').innerHTML=rows.length?rows.map(({m,i})=>{
-  const poster=m.poster?IMG+m.poster:'';
+  const poster=m.poster?'https://image.tmdb.org/t/p/w342'+m.poster:'';
   return '<article class="item">'+(poster?'<img class="itemPoster" src="'+esc(poster)+'" alt="">':'<div class="itemPoster"></div>')+
   '<div class="itemBody"><div class="itemTitle"><strong>'+esc(m.title)+'</strong>'+(m.loved?'<span class="itemLove" aria-label="Loved">♥</span>':'')+'</div>'+
   '<div class="meta">'+esc(m.year||'')+' · IMDb '+esc(m.imdb||'—')+'</div>'+
   '<div class="meta itemRating">'+(m.my_rating!==null&&m.my_rating!==undefined&&m.my_rating!==''?'★ '+esc(m.my_rating)+'/10':'No rating')+'</div>'+
   (m.comment?'<div class="meta" style="margin-top:3px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">'+esc(m.comment)+'</div>':'')+
   '</div><div class="itemActions"><button class="btn secondary" onclick="editTitle('+i+')">Open</button>'+
-  (m.status==='watchlist'?'<button class="btn secondary" onclick="markWatched('+i+')">Watched</button>':'<button class="btn secondary" onclick="editTitle('+i+')">Edit</button>')+
+  (m.status==='watchlist'?'<button class="btn secondary" onclick="editTitle('+i+')">Edit</button>':'<button class="btn secondary" onclick="markWatched('+i+')">Watched</button>')+
   '<button class="btn danger deleteBtn" onclick="deleteTitle('+i+')">Delete</button></div></article>';
  }).join(''):'<div class="empty" style="grid-column:1/-1">No titles found.</div>';
 }
@@ -197,13 +197,13 @@ async function doSearch(){const q=$('#search').value.trim();if(q.length<2)return
 $('#searchBtn').onclick=doSearch;$('#search').addEventListener('keydown',e=>{if(e.key==='Enter')doSearch()});
 $('#results').onclick=async e=>{const row=e.target.closest('.result');if(!row)return;selected=$('#results').hits[+row.dataset.i];$('#selected').innerHTML=(selected.poster_path?'<img src="'+IMG+selected.poster_path+'" alt="">':'')+'<div class="previewText"><strong>'+esc(selected.title||selected.name)+'</strong><p>'+esc(yearOf(selected))+' · '+(selected.media_type==='tv'?'TV / Show':'Movie')+'</p></div>';$('#editor').classList.remove('hidden')};
 $('#cancelEdit').onclick=()=>{$('#editor').classList.add('hidden');selected=null};
-$('#addOne').onclick=async()=>{if(!selected)return;try{const m=await enrich(selected);if(data.some(x=>x.id===m.id))throw Error('This title is already in the library.');Object.assign(m,{my_rating:$('#rating').value?+$('#rating').value:null,watched_on:$('#watchedDate').value||'',comment:$('#note').value.trim(),status:$('#statusSel').value,needs_review:false});data.unshift(m);try{await save('Add '+m.title)}catch(e){data.shift();throw e}$('#editor').classList.add('hidden');selected=null;$('#search').value='';$('#results').innerHTML=''}catch(e){alert(e.message)}};
+$('#addOne').onclick=async()=>{if(!selected)return;try{const m=await enrich(selected);if(data.some(x=>x.id===m.id))throw Error('This title is already in the library.');Object.assign(m,{my_rating:$('#rating').value?+$('#rating').value:null,watched_on:$('#watchedDate').value||'',comment:$('#note').value.trim(),status:$('#statusSel').value,needs_review:false,added_at:new Date().toISOString()});data.unshift(m);try{await save('Add '+m.title)}catch(e){data.shift();throw e}$('#editor').classList.add('hidden');selected=null;$('#search').value='';$('#results').innerHTML=''}catch(e){alert(e.message)}};
 
 function parseLine(line){let s=String(line||'').trim();s=s.replace(/^\s*(?:\d+\s*[.)-]|[-•])\s*/,'').trim();let comment='';s=s.replace(/\|\s*(.*)$/,(m,x)=>{comment=x.trim();return''}).trim();let rating=null;const rm=s.match(/[\[【]\s*(\d+(?:\.\d+)?)\s*(?:\/\s*10)?\s*[\]】]\s*$/i);if(rm){rating=+rm[1];s=s.slice(0,rm.index).trim()}let year='';const ym=s.match(/\(\s*(\d{4})\s*\)\s*$/);if(ym){year=ym[1];s=s.slice(0,ym.index).trim()}return{raw:line,title:s,year,rating,comment}}
 async function analyzeLine(p){const r=await tmdb('/search/multi?query='+encodeURIComponent(p.title)),hits=(r.results||[]).filter(x=>x.media_type==='movie'||x.media_type==='tv');const norm=p.title.toLocaleLowerCase();hits.sort((a,b)=>{const score=h=>((yearOf(h)===p.year&&p.year)?100:0)+((h.title||h.name||'').toLocaleLowerCase()===norm?50:0)+((h.title||h.name||'').toLocaleLowerCase().startsWith(norm)?10:0);return score(b)-score(a)});const best=hits[0];return{...p,best,hitsCount:hits.length,yearMatch:!!best&&(!p.year||yearOf(best)===p.year)}}
 $('#parseBtn').onclick=async()=>{const lines=$('#bulk').value.split(/\r?\n/).map(x=>x.trim()).filter(Boolean);bulkPlan=[];$('#bulkSave').disabled=true;if(!lines.length)return $('#parseBox').classList.add('hidden');$('#parseBox').classList.remove('hidden');$('#parseBox').innerHTML='<div class="parseRow"><b>Analyzing…</b><span></span><span></span><span></span></div>';for(const line of lines){try{bulkPlan.push(await analyzeLine(parseLine(line)))}catch(e){bulkPlan.push({...parseLine(line),error:e.message})}}renderPlan();$('#bulkSave').disabled=!bulkPlan.some(x=>x.best&&!x.error)};
 function renderPlan(){$('#parseBox').innerHTML=bulkPlan.map((p,i)=>'<div class="parseRow"><div><b>'+esc(p.title||'Untitled')+'</b><br><small>'+esc(p.year||'Year unknown')+(p.comment?' · '+esc(p.comment):'')+'</small></div><span class="badge '+(p.yearMatch?'good':'warn')+'">'+(p.best?esc(yearOf(p.best)||'—'):'Not found')+'</span><span class="badge '+(p.rating!==null?'good':'')+'">'+(p.rating!==null?p.rating+'/10':'No rating')+'</span><span class="num">'+(p.best?'✓':'✕')+'</span></div>').join('')}
-$('#bulkSave').onclick=async()=>{const valid=bulkPlan.filter(x=>x.best&&!x.error);if(!valid.length)return;const btn=$('#bulkSave');btn.disabled=true;let added=0;try{const addedRows=[];for(const p of valid){const m=await enrich(p.best);if(data.some(x=>x.id===m.id))continue;Object.assign(m,{my_rating:p.rating,watched_on:'',comment:p.comment,status:$('#bulkStatus').value,needs_review:!p.year||!p.yearMatch});data.unshift(m);addedRows.push(m);added++}if(added)try{await save('Bulk add '+added+' titles')}catch(e){for(const m of addedRows){const idx=data.indexOf(m);if(idx>-1)data.splice(idx,1)}throw e}$('#bulkMsg').textContent='Added '+added+' title'+(added===1?'':'s')+'.';}catch(e){$('#bulkMsg').textContent=e.message}finally{btn.disabled=false}};
+$('#bulkSave').onclick=async()=>{const valid=bulkPlan.filter(x=>x.best&&!x.error);if(!valid.length)return;const btn=$('#bulkSave');btn.disabled=true;let added=0;try{const addedRows=[];for(const p of valid){const m=await enrich(p.best);if(data.some(x=>x.id===m.id))continue;Object.assign(m,{my_rating:p.rating,watched_on:'',comment:p.comment,status:$('#bulkStatus').value,needs_review:!p.year||!p.yearMatch,added_at:new Date().toISOString()});data.unshift(m);addedRows.push(m);added++}if(added)try{await save('Bulk add '+added+' titles')}catch(e){for(const m of addedRows){const idx=data.indexOf(m);if(idx>-1)data.splice(idx,1)}throw e}$('#bulkMsg').textContent='Added '+added+' title'+(added===1?'':'s')+'.';}catch(e){$('#bulkMsg').textContent=e.message}finally{btn.disabled=false}};
 async function markWatched(i){if(draftDirty&&!confirm('Unsaved changes will be lost. Continue?'))return;try{data[i].status='watched';data[i].watched_on=new Date().toISOString().slice(0,10);await save('Watched '+data[i].title)}catch(e){alert(e.message)}}
 async function deleteTitle(i){if(draftDirty&&!confirm('Unsaved changes will be lost. Continue?'))return;if(!confirm('Delete "'+data[i].title+'"?'))return;try{const t=data[i].title;data.splice(i,1);await save('Delete '+t)}catch(e){alert(e.message)}}
 let draftDirty=false,currentEditIndex=-1;
@@ -211,7 +211,7 @@ function openEdit(i){
  if(draftDirty&&currentEditIndex!==i&&!confirm('Unsaved changes will be lost. Open another movie?'))return;
  currentEditIndex=i; draftDirty=false;
  const m=data[i],d=$('#editModal');
- $('#editPoster').src=m.poster?IMG+m.poster:'';
+ $('#editPoster').src=m.poster?'https://image.tmdb.org/t/p/w342'+m.poster:'';
  $('#editTitle').textContent=m.title;
  $('#editMeta').textContent=(m.year||'')+' · '+(m.type==='tv'?'TV / Show':'Movie')+' · IMDb '+(m.imdb||'—');
  $('#editRating').value=m.my_rating??'';
