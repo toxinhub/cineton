@@ -1608,9 +1608,10 @@
   "imdb": "",
   "my_rating": 6,
   "watched_on": "",
-  "comment": "",
+  "comment": "না বানালেও চলত, এমন মনে হয়েছে 🙃",
   "status": "watched",
-  "needs_review": false
+  "needs_review": false,
+  "loved": false
  },
  {
   "id": "movie-1495",
