@@ -2828,9 +2828,10 @@
   "imdb": "7.9",
   "my_rating": 8,
   "watched_on": "",
-  "comment": "",
+  "comment": "চমৎকার শিয়াল মহাশয়",
   "status": "watched",
-  "needs_review": false
+  "needs_review": false,
+  "loved": false
  },
  {
   "id": "movie-457799",
