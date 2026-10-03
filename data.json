@@ -3637,9 +3637,10 @@
   "imdb": "7.7",
   "my_rating": null,
   "watched_on": "",
-  "comment": "",
+  "comment": "এই লোকটার মুভিগুলো সব অদ্ভুত সুন্দর",
   "status": "watched",
-  "needs_review": false
+  "needs_review": false,
+  "loved": false
  },
  {
   "id": "movie-90843",
