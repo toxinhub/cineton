@@ -7,7 +7,26 @@
 <title>CineTon Admin</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600&family=Inter:wght@400;500;600;700&family=Mina:wght@400;700&display=swap">
-<style>
+<style>/* Final responsive polish */
+.admin-nav{box-shadow:0 1px 0 var(--line)}
+.subsection-title{display:flex;align-items:center;justify-content:space-between;margin:2px 0 9px;font:600 11px/1.2 Mina,sans-serif;color:var(--text)}
+.subsection-title span{font-weight:400;color:var(--muted)}
+@media(min-width:801px){
+ .app{width:min(100% - 48px,1180px)}
+ .admin-nav{max-width:760px;margin-left:auto;margin-right:auto}
+ .connection-overview{grid-template-columns:repeat(3,1fr)}
+ .library{grid-template-columns:repeat(auto-fill,minmax(175px,1fr))}
+ .panel{padding:20px}
+}
+@media(max-width:600px){
+ .admin-nav button{min-height:40px;padding:8px 5px;font-size:11px}
+ .head h2{font-size:14px}.head span{font-size:9px}
+ .searchbar{grid-template-columns:minmax(0,1fr) auto;gap:5px}
+ .searchbar .btn{min-width:66px}
+ .itemActions{grid-template-columns:1fr 1fr}.itemActions .deleteBtn{grid-column:1/-1}
+ .connection-card{min-height:50px}
+}
+
 :root{--bg:#0b0d11;--panel:#11151b;--panel2:#151a21;--line:#ffffff12;--line2:#ffffff1d;--text:#f4f6f8;--muted:#8e98a6;--accent:#ff5c8a;--ok:#63d39a;--warn:#f4c76b;--danger:#ff718e;--radius:16px;color-scheme:dark}
 *{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;background:radial-gradient(900px 500px at 50% -180px,#252b36 0,#101319 48%,var(--bg) 100%);color:var(--text);font:14px/1.5 Inter,system-ui,sans-serif;min-height:100vh}
 button,input,select,textarea{font:inherit}button{cursor:pointer}
