@@ -4519,11 +4519,12 @@
    "Megha Thomas"
   ],
   "imdb": "7.8",
-  "my_rating": null,
+  "my_rating": 7,
   "watched_on": "",
-  "comment": "",
+  "comment": "ভালোই সাসপেন্স ছিল।",
   "status": "watched",
-  "needs_review": false
+  "needs_review": false,
+  "loved": false
  },
  {
   "id": "movie-20495",
