@@ -1780,9 +1780,10 @@
   "imdb": "8.2",
   "my_rating": 8,
   "watched_on": "",
-  "comment": "",
+  "comment": "a wholesome movie",
   "status": "watched",
-  "needs_review": true
+  "needs_review": true,
+  "loved": false
  },
  {
   "id": "movie-1542995",
