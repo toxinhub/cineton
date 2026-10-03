@@ -1,5 +1,31 @@
 [
  {
+  "id": "movie-377880",
+  "type": "movie",
+  "title": "100% Love",
+  "year": "2012",
+  "poster": "/cPxjJg0On2ND6DV0uZ9VHjTD3XY.jpg",
+  "overview": "Rahul, who hails from a middle-class family, comes across Anuradha, immediately falls in love with her and travels to Australia. However, his father dies and he soon learns that she is getting married to his friend.",
+  "director": "Ravi Kinagi",
+  "cast": [
+   "Jeet",
+   "Koel Mallick",
+   "Supriyo Dutta",
+   "Biswajit Chakraborty",
+   "Biswanath Basu",
+   "Rittika Sen",
+   "Kamalika Banerjee",
+   "Mousumi Saha"
+  ],
+  "imdb": "5.7",
+  "my_rating": 8,
+  "watched_on": "",
+  "comment": "নাম ও গান শুনে ভেবেছিলাম ধুমধারাক্কা এক প্রেমের সিনেমা বোধহয়, তবে দেখলাম যে না। ভালো লেগেছিল, গ্রামের ঐ উৎসব মুখর পরিবেশের কাহিনি!",
+  "status": "watched",
+  "needs_review": false,
+  "added_at": "2026-10-03T22:18:26.076Z"
+ },
+ {
   "id": "movie-528427",
   "type": "movie",
   "title": "Premer Kahini",
