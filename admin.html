@@ -25,6 +25,39 @@ input,select,textarea{width:100%;border:1px solid var(--line2);border-radius:10p
 .libraryTools{display:grid;grid-template-columns:minmax(0,1fr) 150px;gap:7px}.library{margin-top:7px}.item{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:10px;align-items:center;padding:9px 0;border-bottom:1px solid var(--line)}.item:last-child{border-bottom:0}.itemTitle{display:flex;gap:7px;min-width:0}.itemTitle strong{white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.meta{color:var(--muted);font-size:10px;white-space:nowrap}.itemActions{display:flex;gap:5px}.itemActions button{font-size:10px;padding:6px 8px}.empty{text-align:center;color:var(--muted);padding:18px 0;font-size:11px}
 @media(max-width:700px){.app{width:min(100% - 20px,1040px);padding-top:14px}.grid{grid-template-columns:1fr}.panel.full{grid-column:auto}.top{margin-bottom:12px}.brand h1{font-size:16px}.status{font-size:10px}.row{grid-template-columns:1fr 1fr}.libraryTools{grid-template-columns:1fr}.item{grid-template-columns:1fr;gap:7px}.itemActions button{flex:1}.searchbar{grid-template-columns:1fr}.searchbar .btn{width:100%}}
 @media(max-width:430px){.row{grid-template-columns:1fr}.stats{gap:6px}.stat{padding:9px}.stat b{font-size:15px}.bulkTools{grid-template-columns:1fr}.parseRow{grid-template-columns:minmax(0,1fr) 42px 48px 25px}.panel{padding:12px;border-radius:14px}}
+
+/* CineTon Admin redesign — targeted layer */
+:root{--bg:#f4ecdf;--panel:#fbf6ed;--panel2:#f7efe3;--line:#6b51321a;--line2:#6b51322b;--text:#2f241b;--muted:#58483a;--accent:#77583b;--ok:#55785f;--warn:#8a6a35;--danger:#9b514f;color-scheme:light}
+body{background:#f4ecdf;color:var(--text);background-image:radial-gradient(700px 360px at 50% -180px,#fffaf1 0,transparent 70%)}
+.app{width:min(100% - 20px,1120px);padding:18px 0 42px}
+.top{margin-bottom:10px}.logo{background:#77583b0d;border-color:var(--line2)}.brand h1{font-family:"Cormorant Garamond",Georgia,serif;font-size:25px}.brand p{font-family:Mina,system-ui,sans-serif;color:var(--muted)}
+.status{color:var(--muted)}.status.ok{color:var(--ok)}
+.stats{display:none}
+.admin-nav{display:flex;gap:4px;position:sticky;top:0;z-index:30;padding:6px 0 8px;background:#f4ecdfed;backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);margin-bottom:8px}
+.admin-nav button{flex:1;border:1px solid transparent;background:transparent;color:var(--muted);border-radius:9px;padding:9px 8px;font:600 12px/1.2 Mina,system-ui,sans-serif}
+.admin-nav button.active{background:#77583b10;border-color:var(--line2);color:var(--text)}
+.grid{display:block}.panel{background:#fbf6ed;border-color:var(--line);border-radius:15px;padding:16px;box-shadow:0 10px 30px #5b42250d;margin-bottom:10px}
+.panel[data-section]{display:none}.panel[data-section].active{display:block}
+.head{margin-bottom:12px}.head h2{font:600 15px/1.2 Mina,system-ui,sans-serif}.head span{color:var(--muted)}
+.connection-overview{display:grid;gap:7px;margin-bottom:9px}
+.connection-card{display:flex;align-items:center;justify-content:space-between;gap:10px;padding:10px 11px;border:1px solid var(--line);border-radius:11px;background:#fffaf1}
+.connection-card strong{font-size:12px}.connection-card small{display:block;color:var(--muted);font-size:10px;margin-top:2px}
+.connection-card .configure{border:0;background:transparent;color:var(--accent);padding:4px 2px;font-size:10px}
+details.configure-box{border-top:1px solid var(--line);padding-top:8px}details.configure-box summary{cursor:pointer;color:var(--muted);font-size:10px;list-style:none}details.configure-box summary::-webkit-details-marker{display:none}
+details.configure-box summary::after{content:"Configure";float:right;color:var(--accent)}
+details.configure-box[open] summary::after{content:"Hide"}
+input,select,textarea{background:#fffaf2;color:var(--text);border-color:var(--line2)}input:focus,select:focus,textarea:focus{background:#fffdf8;border-color:#8a68436b;box-shadow:0 0 0 2px #b18a4a18;outline:none}
+.btn{background:var(--accent);color:#fffaf2}.btn.secondary{background:#77583b0b;border-color:var(--line2);color:var(--text)}.btn.danger{background:#9b514f0c;border-color:#9b514f30;color:#8f4b49}.hint,.message,.meta{color:var(--muted)}.message{background:#77583b07;border-color:var(--line)}
+.searchbar .btn{min-width:74px}
+.libraryTools{grid-template-columns:minmax(0,1fr) 150px}.library{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:10px;margin-top:10px}
+.item{display:flex;flex-direction:column;align-items:stretch;gap:0;padding:0;border:1px solid var(--line);border-radius:12px;overflow:hidden;background:#fffaf2;min-width:0}
+.itemPoster{width:100%;aspect-ratio:2/3;object-fit:cover;background:#ded0bc}.itemBody{padding:9px}.itemTitle{gap:5px}.itemTitle strong{font-size:12px;line-height:1.25}.itemActions{padding:0 9px 9px;display:grid;grid-template-columns:1fr 1fr;gap:5px}.itemActions button{font-size:10px}.itemActions .deleteBtn{grid-column:1/-1}
+.itemLove{color:#a54d45;font-size:11px;margin-left:3px}.itemRating{color:var(--accent);font-weight:700}
+.admin-modal{border:1px solid var(--line2);border-radius:16px;background:#fbf6ed;color:var(--text);width:min(680px,calc(100% - 18px));max-height:90vh;padding:0;box-shadow:0 24px 70px #40352c30;position:fixed;inset:0;margin:auto}
+.admin-modal::backdrop{background:#40352c55;backdrop-filter:blur(4px);-webkit-backdrop-filter:blur(4px)}
+.admin-modal .modal-inner{padding:16px;overflow:auto;max-height:90vh}.admin-modal h2{font:600 27px/.98 "Cormorant Garamond",serif;margin:0 38px 3px 0}.admin-modal .modal-meta{color:var(--muted);font-size:10px}.admin-detail{display:grid;grid-template-columns:120px 1fr;gap:14px;margin:12px 0}.admin-detail img{width:120px;aspect-ratio:2/3;object-fit:cover;border-radius:9px;background:#ded0bc}.personal-box{border-top:1px solid var(--line);padding-top:12px}.personal-box h3{font:600 13px/1.2 Mina,sans-serif;margin:0 0 9px}.personal-grid{display:grid;grid-template-columns:110px 1fr;gap:8px}.love-toggle{display:flex;align-items:center;justify-content:center;gap:6px;width:100%;min-height:40px;background:#fffaf2;border:1px solid var(--line2);border-radius:10px;color:var(--muted)}.love-toggle.loved{color:#a54d45;border-color:#a54d4540;background:#a54d4508}.draft-state{font-size:10px;color:var(--warn);min-height:15px}.admin-modal .x{position:absolute;top:7px;right:7px;width:38px;height:38px;border:0;background:transparent;color:#8f6258;font-size:22px;border-radius:50%}
+@media(max-width:600px){.app{width:calc(100% - 12px);padding-top:10px}.admin-nav{margin-left:-1px;margin-right:-1px}.panel{padding:12px;border-radius:13px}.library{grid-template-columns:repeat(2,minmax(0,1fr));gap:7px}.libraryTools{grid-template-columns:1fr}.admin-detail{grid-template-columns:82px 1fr;gap:11px}.admin-detail img{width:82px}.personal-grid{grid-template-columns:1fr}.admin-modal{width:calc(100% - 12px);max-height:92vh}.admin-modal .modal-inner{padding:13px}.admin-modal h2{font-size:24px}}
+@media(max-width:360px){.library{grid-template-columns:1fr}}
 </style>
 </head>
 <body>
@@ -33,23 +66,33 @@ input,select,textarea{width:100%;border:1px solid var(--line2);border-radius:10p
 
 <div class="stats"><div class="stat"><b id="total">—</b><span>Total titles</span></div><div class="stat"><b id="watched">—</b><span>Watched</span></div><div class="stat"><b id="watchlist">—</b><span>Watchlist</span></div></div>
 
+<nav class="admin-nav" aria-label="Admin sections"><button type="button" data-target="connection" class="active">Connection</button><button type="button" data-target="add">Add New</button><button type="button" data-target="rating">Rating &amp; Comments</button></nav>
 <div class="grid">
-<section class="panel">
-<div class="head"><h2>Connection</h2><span>GitHub + metadata</span></div>
-<div class="row">
+<section class="panel" data-section="connection" id="connectionSection">
+<div class="head"><h2>Connection</h2><span>Technical configuration</span></div>
+<div class="connection-overview">
+<div class="connection-card"><div><strong>GitHub</strong><small id="repoSummary">Not connected</small></div><button class="configure" type="button" onclick="document.getElementById('connectionConfig').open=true">Configure</button></div>
+<div class="connection-card"><div><strong>TMDB</strong><small id="tmdbSummary">Not configured</small></div><button class="configure" type="button" onclick="document.getElementById('connectionConfig').open=true">Configure</button></div>
+<div class="connection-card"><div><strong>OMDb</strong><small id="omdbSummary">Optional</small></div><button class="configure" type="button" onclick="document.getElementById('connectionConfig').open=true">Configure</button></div>
+</div>
+<details class="configure-box" id="connectionConfig">
+<summary>Connection settings</summary>
+<div class="row" style="margin-top:9px">
 <div class="field"><label>Repository</label><input id="repo" autocomplete="off" placeholder="username/repository"></div>
 <div class="field"><label>GitHub token</label><input id="tok" type="password" autocomplete="off" placeholder="Fine-grained token"></div>
 </div>
 <div class="row">
-<div class="field"><label>TMDB API key <span class="hint">optional until adding titles</span></label><input id="tmdb" autocomplete="off" placeholder="TMDB key"></div>
+<div class="field"><label>TMDB API key <span class="hint">needed for adding titles</span></label><input id="tmdb" autocomplete="off" placeholder="TMDB key"></div>
 <div class="field"><label>OMDb API key <span class="hint">optional</span></label><input id="omdb" autocomplete="off" placeholder="OMDb key"></div>
 </div>
 <div class="actions"><button class="btn" id="connect">Connect GitHub</button><button class="btn secondary" id="clearKeys" type="button">Clear saved keys</button></div>
 <div id="connMsg" class="message">GitHub connection is required to load and save your library.</div>
+</details>
 </section>
 
-<section class="panel">
-<div class="head"><h2>Quick Add</h2><span>One title</span></div>
+<section class="panel" data-section="add" id="quickAddSection">
+<div class="head"><h2>Add New</h2><span>Search → Preview → Add</span></div>
+<div class="subsection-title">Quick Add</div><span>One title</span></div>
 <div class="searchbar"><input id="search" placeholder="Search movie or TV show…"><button class="btn" id="searchBtn" type="button">Search</button></div>
 <div id="results" class="results"></div>
 <div id="editor" class="editor hidden">
@@ -60,7 +103,7 @@ input,select,textarea{width:100%;border:1px solid var(--line2);border-radius:10p
 </div>
 </section>
 
-<section class="panel">
+<section class="panel" data-section="add" id="bulkAddSection">
 <div class="head"><h2>Bulk Add</h2><span>Paste your personal list</span></div>
 <textarea id="bulk" placeholder="1. Fantastic Mr. Fox (2009) [8/10]
 2. The Long Walk (2025) [6]"></textarea>
@@ -70,10 +113,20 @@ input,select,textarea{width:100%;border:1px solid var(--line2);border-radius:10p
 <div class="actions"><button class="btn" id="bulkSave" type="button" disabled>Add analyzed titles</button><span id="bulkMsg" class="hint"></span></div>
 </section>
 
-<section class="panel">
-<div class="head"><h2>Library</h2><span id="libraryCount">0 titles</span></div>
+<section class="panel" data-section="rating" id="librarySection">
+<div class="head"><h2>Rating &amp; Comments</h2><span id="libraryCount">0 titles</span></div><span id="libraryCount">0 titles</span></div>
 <div class="libraryTools"><input id="librarySearch" placeholder="Search title, year, rating, note…"><select id="libraryFilter"><option value="all">All titles</option><option value="watched">Watched</option><option value="watchlist">Watchlist</option><option value="review">Needs review</option></select></div>
 <div id="library" class="library"></div>
+</section>
+<dialog id="editModal" class="admin-modal" aria-labelledby="editTitle">
+<div class="modal-inner"><button id="closeEdit" class="x" type="button" aria-label="Close">×</button>
+<div class="admin-detail"><img id="editPoster" alt=""><div><h2 id="editTitle"></h2><div id="editMeta" class="modal-meta"></div><div class="personal-box" style="margin-top:12px"><h3>Personal Interaction</h3>
+<div class="personal-grid"><div class="field"><label for="editRating">My Rating</label><input id="editRating" type="number" min="0" max="10" step="0.5" inputmode="decimal" placeholder="0–10"></div>
+<div class="field"><label for="editComment">Comment</label><textarea id="editComment" placeholder="Write your thoughts about this movie..."></textarea></div></div>
+<div style="margin-top:8px"><button id="loveToggle" class="love-toggle" type="button" aria-pressed="false"><span id="loveIcon">♡</span><span id="loveText">Add Love</span></button></div>
+</div></div></div>
+<div class="actions"><span id="draftState" class="draft-state"></span><button id="savePersonal" class="btn" type="button">Save Changes</button></div>
+</div></dialog>
 </section>
 </div>
 </div>
@@ -93,14 +146,31 @@ function decode(b){const bin=atob(String(b).replace(/\n/g,''));return new TextDe
 function encode(s){const bytes=new TextEncoder().encode(s),bin=Array.from(bytes,c=>String.fromCharCode(c)).join('');return btoa(bin)}
 async function load(){const r=await gh();if(!r.sha||!r.content)throw Error('GitHub returned an incomplete data.json response.');fileSha=r.sha;try{data=JSON.parse(decode(r.content));if(!Array.isArray(data))throw 0}catch{throw Error('data.json is not a valid CineTon library file.')}renderAll()}
 async function save(message){if(!fileSha)throw Error('Connect to GitHub first.');const r=await gh('PUT',{message,sha:fileSha,content:encode(JSON.stringify(data,null,1))});if(!r.content?.sha)throw Error('GitHub did not confirm the save.');fileSha=r.content.sha;renderAll()}
-async function connect(){const repo=$('#repo').value.trim(),tok=$('#tok').value.trim();if(!repo||!/^[^\s/]+\/[^\s/]+$/.test(repo))return setConnection('error','Enter a valid repository as username/repository.');if(!tok)return setConnection('error','Enter your GitHub token.');saved('ct_repo',repo);SS.setItem('ct_tok',tok);saved('ct_tmdb',$('#tmdb').value.trim());saved('ct_omdb',$('#omdb').value.trim());setConnection('busy','Verifying GitHub access and loading data.json…');try{await load();setConnection('ok','GitHub verified · library loaded successfully.')}catch(e){setConnection('error',connError(e))}}
+async function connect(){const repo=$('#repo').value.trim(),tok=$('#tok').value.trim();if(!repo||!/^[^\s/]+\/[^\s/]+$/.test(repo))return setConnection('error','Enter a valid repository as username/repository.');if(!tok)return setConnection('error','Enter your GitHub token.');saved('ct_repo',repo);SS.setItem('ct_tok',tok);saved('ct_tmdb',$('#tmdb').value.trim());saved('ct_omdb',$('#omdb').value.trim());setConnection('busy','Verifying GitHub access and loading data.json…');try{await load();setConnection('ok','GitHub verified · library loaded successfully.');renderAll()}catch(e){setConnection('error',connError(e))}}
 $('#connect').onclick=connect;
 $('#clearKeys').onclick=()=>{if(confirm('Clear saved connection keys from this browser?')){['ct_repo','ct_tmdb','ct_omdb'].forEach(k=>LS.removeItem(k));SS.removeItem('ct_tok');location.reload()}};
 $$('#repo,#tok,#tmdb,#omdb').forEach(x=>x.addEventListener('input',()=>{if(x.id==='repo'||x.id==='tok')setConnection('idle','Ready to connect.')}));
 
 function stats(){const w=data.filter(x=>x.status==='watched').length,q=data.filter(x=>x.status==='watchlist').length;$('#total').textContent=data.length;$('#watched').textContent=w;$('#watchlist').textContent=q;$('#libraryCount').textContent=data.length+' title'+(data.length===1?'':'s')}
-function renderLibrary(){const q=$('#librarySearch').value.trim().toLocaleLowerCase(),f=$('#libraryFilter').value;const rows=data.map((m,i)=>({m,i})).filter(({m})=>{const hay=[m.title,m.year,m.imdb,m.my_rating,m.comment,m.director,m.status,...(m.cast||[])].join(' ').toLocaleLowerCase();return(!q||hay.includes(q))&&(f==='all'||(f==='review'?m.needs_review===true:m.status===f))});$('#library').innerHTML=rows.length?rows.map(({m,i})=>'<div class="item"><div><div class="itemTitle"><strong>'+esc(m.title)+'</strong><span class="meta">'+esc(m.year||'')+'</span></div><div class="meta">IMDb '+esc(m.imdb||'—')+' · My '+esc(m.my_rating??'—')+' · '+(m.status==='watched'?'Watched':'Watchlist')+(m.needs_review?' · Review':'')+'</div></div><div class="itemActions">'+(m.status==='watchlist'?'<button class="btn secondary" onclick="markWatched('+i+')">Watched</button>':'')+'<button class="btn secondary" onclick="editTitle('+i+')">Edit</button><button class="btn danger" onclick="deleteTitle('+i+')">Delete</button></div></div>').join(''):'<div class="empty">No titles found.</div>'}
-function renderAll(){stats();renderLibrary()}
+function renderLibrary(){
+ const q=$('#librarySearch').value.trim().toLocaleLowerCase(),f=$('#libraryFilter').value;
+ const rows=data.map((m,i)=>({m,i})).filter(({m})=>{
+  const hay=[m.title,m.year,m.imdb,m.my_rating,m.comment,m.director,m.status,...(m.cast||[])].join(' ').toLocaleLowerCase();
+  return(!q||hay.includes(q))&&(f==='all'||(f==='review'?m.needs_review===true:m.status===f));
+ });
+ $('#library').innerHTML=rows.length?rows.map(({m,i})=>{
+  const poster=m.poster?IMG+m.poster:'';
+  return '<article class="item">'+(poster?'<img class="itemPoster" src="'+esc(poster)+'" alt="">':'<div class="itemPoster"></div>')+
+  '<div class="itemBody"><div class="itemTitle"><strong>'+esc(m.title)+'</strong>'+(m.loved?'<span class="itemLove" aria-label="Loved">♥</span>':'')+'</div>'+
+  '<div class="meta">'+esc(m.year||'')+' · IMDb '+esc(m.imdb||'—')+'</div>'+
+  '<div class="meta itemRating">'+(m.my_rating!==null&&m.my_rating!==undefined&&m.my_rating!==''?'★ '+esc(m.my_rating)+'/10':'No rating')+'</div>'+
+  (m.comment?'<div class="meta" style="margin-top:3px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">'+esc(m.comment)+'</div>':'')+
+  '</div><div class="itemActions"><button class="btn secondary" onclick="editTitle('+i+')">Open</button>'+
+  (m.status==='watchlist'?'<button class="btn secondary" onclick="markWatched('+i+')">Watched</button>':'<button class="btn secondary" onclick="editTitle('+i+')">Edit</button>')+
+  '<button class="btn danger deleteBtn" onclick="deleteTitle('+i+')">Delete</button></div></article>';
+ }).join(''):'<div class="empty" style="grid-column:1/-1">No titles found.</div>';
+}
+function renderAll(){stats();renderLibrary();$('#repoSummary').textContent=$('#repo').value.trim()||'Not connected';$('#tmdbSummary').textContent=$('#tmdb').value.trim()?'● Configured':'Not configured';$('#omdbSummary').textContent=$('#omdb').value.trim()?'● Configured':'Optional'}
 async function tmdb(path){const key=$('#tmdb').value.trim();if(!key)throw Error('Add your TMDB API key in Connection first.');const r=await fetch('https://api.themoviedb.org/3'+path+(path.includes('?')?'&':'?')+'api_key='+encodeURIComponent(key)+'&language=en-US');const j=await r.json();if(!r.ok)throw Error(j.status_message||'TMDB request failed.');return j}
 function yearOf(h){return(h.release_date||h.first_air_date||'').slice(0,4)}
 async function enrich(h){const type=h.media_type,x=await tmdb('/'+type+'/'+h.id+'?append_to_response=credits,external_ids');let imdb='';const imdbId=x.imdb_id||x.external_ids?.imdb_id,ok=$('#omdb').value.trim();if(imdbId&&ok){try{const o=await fetch('https://www.omdbapi.com/?i='+encodeURIComponent(imdbId)+'&apikey='+encodeURIComponent(ok)).then(r=>r.json());if(o.imdbRating&&o.imdbRating!=='N/A')imdb=o.imdbRating}catch{}}const director=type==='movie'?(x.credits?.crew||[]).filter(c=>c.job==='Director').map(c=>c.name).join(', '):(x.created_by||[]).map(c=>c.name).join(', ');return{id:type+'-'+h.id,type,title:x.title||x.name,year:yearOf(x),poster:x.poster_path||'',overview:x.overview||'',director,cast:(x.credits?.cast||[]).slice(0,8).map(c=>c.name),imdb}}
@@ -115,9 +185,52 @@ async function analyzeLine(p){const r=await tmdb('/search/multi?query='+encodeUR
 $('#parseBtn').onclick=async()=>{const lines=$('#bulk').value.split(/\r?\n/).map(x=>x.trim()).filter(Boolean);bulkPlan=[];$('#bulkSave').disabled=true;if(!lines.length)return $('#parseBox').classList.add('hidden');$('#parseBox').classList.remove('hidden');$('#parseBox').innerHTML='<div class="parseRow"><b>Analyzing…</b><span></span><span></span><span></span></div>';for(const line of lines){try{bulkPlan.push(await analyzeLine(parseLine(line)))}catch(e){bulkPlan.push({...parseLine(line),error:e.message})}}renderPlan();$('#bulkSave').disabled=!bulkPlan.some(x=>x.best&&!x.error)};
 function renderPlan(){$('#parseBox').innerHTML=bulkPlan.map((p,i)=>'<div class="parseRow"><div><b>'+esc(p.title||'Untitled')+'</b><br><small>'+esc(p.year||'Year unknown')+(p.comment?' · '+esc(p.comment):'')+'</small></div><span class="badge '+(p.yearMatch?'good':'warn')+'">'+(p.best?esc(yearOf(p.best)||'—'):'Not found')+'</span><span class="badge '+(p.rating!==null?'good':'')+'">'+(p.rating!==null?p.rating+'/10':'No rating')+'</span><span class="num">'+(p.best?'✓':'✕')+'</span></div>').join('')}
 $('#bulkSave').onclick=async()=>{const valid=bulkPlan.filter(x=>x.best&&!x.error);if(!valid.length)return;const btn=$('#bulkSave');btn.disabled=true;let added=0;try{for(const p of valid){const m=await enrich(p.best);if(data.some(x=>x.id===m.id))continue;Object.assign(m,{my_rating:p.rating,watched_on:'',comment:p.comment,status:$('#bulkStatus').value,needs_review:!p.year||!p.yearMatch});data.unshift(m);added++}if(added)await save('Bulk add '+added+' titles');$('#bulkMsg').textContent='Added '+added+' title'+(added===1?'':'s')+'.';}catch(e){$('#bulkMsg').textContent=e.message}finally{btn.disabled=false}};
-async function markWatched(i){try{data[i].status='watched';data[i].watched_on=new Date().toISOString().slice(0,10);await save('Watched '+data[i].title)}catch(e){alert(e.message)}}
-async function deleteTitle(i){if(!confirm('Delete "'+data[i].title+'"?'))return;try{const t=data[i].title;data.splice(i,1);await save('Delete '+t)}catch(e){alert(e.message)}}
-async function editTitle(i){const m=data[i],rating=prompt('My rating (0–10):',m.my_rating??'');if(rating===null)return;const note=prompt('Note:',m.comment||'');if(note===null)return;try{Object.assign(m,{my_rating:rating?+rating:null,comment:note,needs_review:false});await save('Edit '+m.title)}catch(e){alert(e.message)}}
+async function markWatched(i){if(draftDirty&&!confirm('Unsaved changes will be lost. Continue?'))return;try{data[i].status='watched';data[i].watched_on=new Date().toISOString().slice(0,10);await save('Watched '+data[i].title)}catch(e){alert(e.message)}}
+async function deleteTitle(i){if(draftDirty&&!confirm('Unsaved changes will be lost. Continue?'))return;if(!confirm('Delete "'+data[i].title+'"?'))return;try{const t=data[i].title;data.splice(i,1);await save('Delete '+t)}catch(e){alert(e.message)}}
+let draftDirty=false,currentEditIndex=-1;
+function openEdit(i){
+ currentEditIndex=i; draftDirty=false;
+ const m=data[i],d=$('#editModal');
+ $('#editPoster').src=m.poster?IMG+m.poster:'';
+ $('#editTitle').textContent=m.title;
+ $('#editMeta').textContent=(m.year||'')+' · '+(m.type==='tv'?'TV / Show':'Movie')+' · IMDb '+(m.imdb||'—');
+ $('#editRating').value=m.my_rating??'';
+ $('#editComment').value=m.comment||'';
+ const loved=!!m.loved; $('#loveToggle').classList.toggle('loved',loved); $('#loveToggle').setAttribute('aria-pressed',String(loved)); $('#loveIcon').textContent=loved?'❤️':'♡'; $('#loveText').textContent=loved?'Loved':'Add Love';
+ $('#draftState').textContent='';
+ d.showModal();
+}
+window.editTitle=openEdit;
+function markDraft(){draftDirty=true;$('#draftState').textContent='Unsaved changes';}
+$('#editRating').addEventListener('input',markDraft);$('#editComment').addEventListener('input',markDraft);
+$('#loveToggle').onclick=()=>{const b=$('#loveToggle'),next=b.getAttribute('aria-pressed')!=='true';b.setAttribute('aria-pressed',String(next));b.classList.toggle('loved',next);$('#loveIcon').textContent=next?'❤️':'♡';$('#loveText').textContent=next?'Loved':'Add Love';markDraft()};
+$('#savePersonal').onclick=async()=>{
+ if(currentEditIndex<0)return;
+ const m=data[currentEditIndex],v=$('#editRating').value.trim();
+ if(v!==''&&(Number(v)<0||Number(v)>10||!/^(?:\d{1,2})(?:\.\d+)?$/.test(v)))return alert('Rating must be between 0 and 10.');
+ try{
+  const old={...m};
+  m.my_rating=v===''?null:+v;
+  m.comment=$('#editComment').value.trim();
+  m.loved=$('#loveToggle').getAttribute('aria-pressed')==='true';
+  $('#savePersonal').disabled=true;
+  await save('Update personal details '+m.title);
+  draftDirty=false;$('#draftState').textContent='✓ Saved';
+  setTimeout(()=>{if($('#editModal').open)$('#editModal').close()},450);
+ }catch(e){Object.assign(m,old);alert(connError(e));}finally{$('#savePersonal').disabled=false}
+};
+$('#closeEdit').onclick=()=>$('#editModal').close();
+$('#editModal').addEventListener('cancel',e=>{if(draftDirty&&!confirm('Unsaved changes will be lost. Leave this movie?'))e.preventDefault()});
+$('#editModal').addEventListener('close',()=>{currentEditIndex=-1;draftDirty=false});
+function switchSection(target){
+ if(draftDirty&&!confirm('Unsaved changes will be lost. Switch section?'))return;
+ document.querySelectorAll('.admin-nav button').forEach(b=>b.classList.toggle('active',b.dataset.target===target));
+ document.querySelectorAll('.panel[data-section]').forEach(p=>p.classList.toggle('active',p.dataset.section===target));
+ if(target==='rating')requestAnimationFrame(()=>window.scrollTo({top:0,behavior:'smooth'}));
+}
+document.querySelectorAll('.admin-nav button').forEach(b=>b.onclick=()=>switchSection(b.dataset.target));
+window.addEventListener('beforeunload',e=>{if(draftDirty){e.preventDefault();e.returnValue=''}});
+document.querySelectorAll('.panel[data-section]').forEach(p=>p.classList.toggle('active',p.dataset.section==='connection'));
 $('#librarySearch').oninput=renderLibrary;$('#libraryFilter').onchange=renderLibrary;
 if($('#repo').value&&$('#tok').value)load().then(()=>setConnection('ok','Saved GitHub connection restored.')).catch(()=>setConnection('idle','Saved credentials found. Click Connect GitHub to verify.'));
 </script>
