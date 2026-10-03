@@ -3456,11 +3456,12 @@
    "Holt McCallany"
   ],
   "imdb": "7.1",
-  "my_rating": null,
+  "my_rating": 7,
   "watched_on": "",
-  "comment": "",
+  "comment": "সাবমেরিন সিনটা - চমৎকার লেগেছে",
   "status": "watched",
-  "needs_review": false
+  "needs_review": false,
+  "loved": false
  },
  {
   "id": "movie-334533",
