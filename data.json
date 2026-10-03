@@ -3407,9 +3407,10 @@
   "imdb": "6.6",
   "my_rating": null,
   "watched_on": "",
-  "comment": "",
+  "comment": "প্রথমটা বেশি ভালো ছিল",
   "status": "watched",
-  "needs_review": false
+  "needs_review": false,
+  "loved": false
  },
  {
   "id": "movie-1398359",
