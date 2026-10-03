@@ -3839,9 +3839,10 @@
   "imdb": "6.8",
   "my_rating": null,
   "watched_on": "",
-  "comment": "",
+  "comment": "এ্যাকশন ভালোই ছিল।",
   "status": "watched",
-  "needs_review": false
+  "needs_review": false,
+  "loved": false
  },
  {
   "id": "movie-16345",
