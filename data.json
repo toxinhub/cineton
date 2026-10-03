@@ -44,12 +44,13 @@
    "Anointing Lukola"
   ],
   "imdb": "8.0",
-  "my_rating": 7,
+  "my_rating": 8,
   "watched_on": "",
   "comment": "চকচকে ডায়মন্ড এর অন্ধকার দিক বুঝতে হলে, এটা অবশ্যই দেখা উচিত...",
   "status": "watched",
   "needs_review": false,
-  "added_at": "2026-10-03T18:33:01.862Z"
+  "added_at": "2026-10-03T18:33:01.862Z",
+  "loved": false
  },
  {
   "id": "movie-969681",
