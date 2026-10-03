@@ -3941,9 +3941,10 @@
   "imdb": "7.7",
   "my_rating": null,
   "watched_on": "",
-  "comment": "",
+  "comment": "অনেকদিন পরে সাকিবের মুভি দেখেছিলাম, কাহিনি অনেকটা ভুলেই গেছি, সাথে জয়া ছিল, ঐটা না?",
   "status": "watched",
-  "needs_review": false
+  "needs_review": false,
+  "loved": false
  },
  {
   "id": "movie-263472",
