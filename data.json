@@ -1354,9 +1354,10 @@
   "imdb": "7.8",
   "my_rating": 8,
   "watched_on": "",
-  "comment": "",
+  "comment": "A top-notch detective, kinda like Batman mixed in.",
   "status": "watched",
-  "needs_review": false
+  "needs_review": false,
+  "loved": true
  },
  {
   "id": "movie-1101383",
