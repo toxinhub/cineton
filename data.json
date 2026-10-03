@@ -2777,9 +2777,10 @@
   "imdb": "8.1",
   "my_rating": 8,
   "watched_on": "",
-  "comment": "",
+  "comment": "মিষ্টি একটা সিনেমা",
   "status": "watched",
-  "needs_review": false
+  "needs_review": false,
+  "loved": false
  },
  {
   "id": "movie-604079",
