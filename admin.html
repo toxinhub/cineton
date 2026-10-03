@@ -109,6 +109,14 @@ input,select,textarea{background:#fffaf2;color:var(--text);border-color:var(--li
 </details>
 </section>
 
+<section class="panel" data-section="genres" id="genresSection">
+<div class="head"><h2>Genres</h2><span>TMDB metadata</span></div>
+<div class="subsection-title">Genre Sync <span>Existing library</span></div>
+<p class="hint" style="margin:0 0 9px">Fetch official TMDB genres for every movie and TV show in your library. Existing data and personal fields stay unchanged.</p>
+<div class="actions"><button class="btn" id="syncGenres" type="button">Sync Genres</button></div>
+<div id="genreSyncMsg" class="message">Connect GitHub and configure TMDB to sync genres.</div>
+</section>
+
 <section class="panel" data-section="add" id="quickAddSection">
 <div class="head"><h2>Add New</h2><span>Search → Preview → Add</span></div>
 <div class="subsection-title">Quick Add <span>One title</span></div>
@@ -166,7 +174,32 @@ function encode(s){const bytes=new TextEncoder().encode(s),bin=Array.from(bytes,
 async function load(){const r=await gh();if(!r.sha||!r.content)throw Error('GitHub returned an incomplete data.json response.');fileSha=r.sha;try{data=JSON.parse(decode(r.content));if(!Array.isArray(data))throw 0}catch{throw Error('data.json is not a valid CineTon library file.')}renderAll()}
 async function save(message){if(!fileSha)throw Error('Connect to GitHub first.');const r=await gh('PUT',{message,sha:fileSha,content:encode(JSON.stringify(data,null,1))});if(!r.content?.sha)throw Error('GitHub did not confirm the save.');fileSha=r.content.sha;renderAll()}
 async function connect(){const repo=$('#repo').value.trim(),tok=$('#tok').value.trim();if(!repo||!/^[^\s/]+\/[^\s/]+$/.test(repo))return setConnection('error','Enter a valid repository as username/repository.');if(!tok)return setConnection('error','Enter your GitHub token.');saved('ct_repo',repo);SS.setItem('ct_tok',tok);saved('ct_tmdb',$('#tmdb').value.trim());saved('ct_omdb',$('#omdb').value.trim());setConnection('busy','Verifying GitHub access and loading data.json…');try{await load();setConnection('ok','GitHub verified · library loaded successfully.');renderAll()}catch(e){setConnection('error',connError(e))}}
-$('#connect').onclick=connect;
+$('#connect').onclick=connect;async function syncGenres(){
+ if(!fileSha)throw Error('Connect to GitHub first.');
+ if(!$('#tmdb').value.trim())throw Error('Add your TMDB API key in Connection first.');
+ const btn=$('#syncGenres'),msg=$('#genreSyncMsg');btn.disabled=true;
+ let updated=0,missing=0,failed=0;
+ try{
+  for(let i=0;i<data.length;i++){
+   const m=data[i],type=m.type==='tv'?'tv':'movie',id=String(m.id||'').replace(/^(movie|tv)-/,'');
+   if(!id){missing++;continue}
+   msg.textContent='Syncing genres · '+(i+1)+' / '+data.length+' · '+m.title;
+   try{
+    const x=await tmdb('/'+type+'/'+encodeURIComponent(id));
+    const genres=(x.genres||[]).map(g=>g.name).filter(Boolean);
+    if(genres.length){const old=JSON.stringify(m.genres||[]);m.genres=genres;if(JSON.stringify(genres)!==old)updated++}
+    else{m.genres=[];missing++}
+   }catch(e){failed++}
+   await new Promise(r=>setTimeout(r,120));
+  }
+  await save('Sync TMDB genres for library');
+  msg.className='message ok';
+  msg.textContent='Genre sync complete · '+updated+' updated · '+missing+' without genres · '+failed+' failed.';
+ }catch(e){msg.className='message error';msg.textContent=e.message||'Genre sync failed.'}
+ finally{btn.disabled=false}
+}
+$('#syncGenres').onclick=()=>syncGenres().catch(e=>{const m=$('#genreSyncMsg');m.className='message error';m.textContent=e.message||'Genre sync failed.'});
+
 $('#clearKeys').onclick=()=>{if(confirm('Clear saved connection keys from this browser?')){['ct_repo','ct_tmdb','ct_omdb'].forEach(k=>LS.removeItem(k));SS.removeItem('ct_tok');location.reload()}};
 $$('#repo,#tok,#tmdb,#omdb').forEach(x=>x.addEventListener('input',()=>{if(x.id==='repo'||x.id==='tok')setConnection('idle','Ready to connect.')}));
 
@@ -192,7 +225,7 @@ function renderLibrary(){
 function renderAll(){stats();renderLibrary();$('#repoSummary').textContent=$('#repo').value.trim()||'Not connected';$('#tmdbSummary').textContent=$('#tmdb').value.trim()?'● Configured':'Not configured';$('#omdbSummary').textContent=$('#omdb').value.trim()?'● Configured':'Optional'}
 async function tmdb(path){const key=$('#tmdb').value.trim();if(!key)throw Error('Add your TMDB API key in Connection first.');const r=await fetch('https://api.themoviedb.org/3'+path+(path.includes('?')?'&':'?')+'api_key='+encodeURIComponent(key)+'&language=en-US');const j=await r.json();if(!r.ok)throw Error(j.status_message||'TMDB request failed.');return j}
 function yearOf(h){return(h.release_date||h.first_air_date||'').slice(0,4)}
-async function enrich(h){const type=h.media_type,x=await tmdb('/'+type+'/'+h.id+'?append_to_response=credits,external_ids');let imdb='';const imdbId=x.imdb_id||x.external_ids?.imdb_id,ok=$('#omdb').value.trim();if(imdbId&&ok){try{const o=await fetch('https://www.omdbapi.com/?i='+encodeURIComponent(imdbId)+'&apikey='+encodeURIComponent(ok)).then(r=>r.json());if(o.imdbRating&&o.imdbRating!=='N/A')imdb=o.imdbRating}catch{}}const director=type==='movie'?(x.credits?.crew||[]).filter(c=>c.job==='Director').map(c=>c.name).join(', '):(x.created_by||[]).map(c=>c.name).join(', ');return{id:type+'-'+h.id,type,title:x.title||x.name,year:yearOf(x),poster:x.poster_path||'',overview:x.overview||'',director,cast:(x.credits?.cast||[]).slice(0,8).map(c=>c.name),imdb}}
+async function enrich(h){const type=h.media_type,x=await tmdb('/'+type+'/'+h.id+'?append_to_response=credits,external_ids');let imdb='';const imdbId=x.imdb_id||x.external_ids?.imdb_id,ok=$('#omdb').value.trim();if(imdbId&&ok){try{const o=await fetch('https://www.omdbapi.com/?i='+encodeURIComponent(imdbId)+'&apikey='+encodeURIComponent(ok)).then(r=>r.json());if(o.imdbRating&&o.imdbRating!=='N/A')imdb=o.imdbRating}catch{}}const director=type==='movie'?(x.credits?.crew||[]).filter(c=>c.job==='Director').map(c=>c.name).join(', '):(x.created_by||[]).map(c=>c.name).join(', ');return{id:type+'-'+h.id,type,title:x.title||x.name,year:yearOf(x),poster:x.poster_path||'',overview:x.overview||'',director,cast:(x.credits?.cast||[]).slice(0,8).map(c=>c.name),imdb,genres:(x.genres||[]).map(g=>g.name)}}
 async function doSearch(){const q=$('#search').value.trim();if(q.length<2)return;try{const r=await tmdb('/search/multi?query='+encodeURIComponent(q)),hits=(r.results||[]).filter(x=>x.media_type==='movie'||x.media_type==='tv').slice(0,8);$('#results').innerHTML=hits.length?hits.map((h,i)=>'<div class="result" data-i="'+i+'">'+(h.poster_path?'<img src="'+IMG+h.poster_path+'" alt="">':'')+'<main><strong>'+esc(h.title||h.name)+'</strong><small>'+yearOf(h)+' · '+(h.media_type==='tv'?'TV / Show':'Movie')+'</small></main></div>').join(''):'<div class="hint">No matches found.</div>';$('#results').hits=hits}catch(e){$('#results').innerHTML='<div class="message error">'+esc(e.message)+'</div>'}}
 $('#searchBtn').onclick=doSearch;$('#search').addEventListener('keydown',e=>{if(e.key==='Enter')doSearch()});
 $('#results').onclick=async e=>{const row=e.target.closest('.result');if(!row)return;selected=$('#results').hits[+row.dataset.i];$('#selected').innerHTML=(selected.poster_path?'<img src="'+IMG+selected.poster_path+'" alt="">':'')+'<div class="previewText"><strong>'+esc(selected.title||selected.name)+'</strong><p>'+esc(yearOf(selected))+' · '+(selected.media_type==='tv'?'TV / Show':'Movie')+'</p></div>';$('#editor').classList.remove('hidden')};
