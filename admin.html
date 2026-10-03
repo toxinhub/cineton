@@ -185,7 +185,7 @@ function renderLibrary(){
   '<div class="meta itemRating">'+(m.my_rating!==null&&m.my_rating!==undefined&&m.my_rating!==''?'★ '+esc(m.my_rating)+'/10':'No rating')+'</div>'+
   (m.comment?'<div class="meta" style="margin-top:3px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">'+esc(m.comment)+'</div>':'')+
   '</div><div class="itemActions"><button class="btn secondary" onclick="editTitle('+i+')">Open</button>'+
-  (m.status==='watchlist'?'<button class="btn secondary" onclick="editTitle('+i+')">Edit</button>':'<button class="btn secondary" onclick="markWatched('+i+')">Watched</button>')+
+  '<button class="btn secondary" onclick="editTitle('+i+')">Edit</button>'+(m.status==='watchlist'?'<button class="btn secondary" onclick="markWatched('+i+')">Watched</button>':'')+
   '<button class="btn danger deleteBtn" onclick="deleteTitle('+i+')">Delete</button></div></article>';
  }).join(''):'<div class="empty" style="grid-column:1/-1">No titles found.</div>';
 }
