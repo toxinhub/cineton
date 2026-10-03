@@ -2854,9 +2854,10 @@
   "imdb": "6.7",
   "my_rating": null,
   "watched_on": "",
-  "comment": "",
+  "comment": "A Devil and his Ego",
   "status": "watched",
-  "needs_review": false
+  "needs_review": false,
+  "loved": false
  },
  {
   "id": "movie-474354",
