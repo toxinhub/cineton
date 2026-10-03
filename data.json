@@ -1,5 +1,31 @@
 [
  {
+  "id": "movie-68718",
+  "type": "movie",
+  "title": "Django Unchained",
+  "year": "2012",
+  "poster": "/7oWY8VDWW7thTzWh3OKYRkWUlD5.jpg",
+  "overview": "With the help of a German bounty hunter, a freed slave sets out to rescue his wife from a brutal Mississippi plantation owner.",
+  "director": "Quentin Tarantino",
+  "cast": [
+   "Jamie Foxx",
+   "Christoph Waltz",
+   "Leonardo DiCaprio",
+   "Kerry Washington",
+   "Samuel L. Jackson",
+   "Walton Goggins",
+   "Dennis Christopher",
+   "James Remar"
+  ],
+  "imdb": "8.5",
+  "my_rating": 8,
+  "watched_on": "",
+  "comment": "অভিনয় ও ডায়লগ ডেলিভারি, একদম টপ নচ!",
+  "status": "watched",
+  "needs_review": false,
+  "added_at": "2026-10-03T18:36:23.735Z"
+ },
+ {
   "id": "movie-1372",
   "type": "movie",
   "title": "Blood Diamond",
