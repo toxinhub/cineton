@@ -3004,11 +3004,12 @@
    "Alison Wright"
   ],
   "imdb": "7.2",
-  "my_rating": null,
+  "my_rating": 7,
   "watched_on": "",
-  "comment": "",
+  "comment": "এটা ভালো ছিল।",
   "status": "watched",
-  "needs_review": false
+  "needs_review": false,
+  "loved": false
  },
  {
   "id": "movie-530385",
