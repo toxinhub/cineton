@@ -4393,11 +4393,12 @@
    "Haley Joel Osment"
   ],
   "imdb": "8.8",
-  "my_rating": null,
+  "my_rating": 9,
   "watched_on": "",
-  "comment": "",
+  "comment": "এক চমৎকার জিনিস!!",
   "status": "watched",
-  "needs_review": false
+  "needs_review": false,
+  "loved": false
  },
  {
   "id": "movie-1424217",
