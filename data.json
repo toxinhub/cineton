@@ -1,5 +1,36 @@
 [
  {
+  "id": "movie-49521",
+  "type": "movie",
+  "title": "Man of Steel",
+  "year": "2013",
+  "poster": "/8GFtkImmK0K1VaUChR0n9O61CFU.jpg",
+  "overview": "A young boy learns that he has extraordinary powers and is not of this earth. As a young man, he journeys to discover where he came from and what he was sent here to do. But the hero in him must emerge if he is to save the world from annihilation and become the symbol of hope for all mankind.",
+  "director": "Zack Snyder",
+  "cast": [
+   "Henry Cavill",
+   "Amy Adams",
+   "Michael Shannon",
+   "Diane Lane",
+   "Russell Crowe",
+   "Antje Traue",
+   "Harry Lennix",
+   "Richard Schiff"
+  ],
+  "imdb": "7.1",
+  "genres": [
+   "Action",
+   "Adventure",
+   "Science Fiction"
+  ],
+  "my_rating": 8,
+  "watched_on": "",
+  "comment": "সুপারম্যানের অরিজিন ও জ্যাক স্নাইডারের কেরামতি মিলিয়ে চমৎকার লেগেছিল, সেই সাথে হেনরি দ্য সুপারম্যানের প্রেমে পরা।",
+  "status": "watched",
+  "needs_review": false,
+  "added_at": "2026-10-03T22:26:49.512Z"
+ },
+ {
   "id": "movie-377880",
   "type": "movie",
   "title": "100% Love",
