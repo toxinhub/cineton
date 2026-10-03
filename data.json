@@ -3508,11 +3508,12 @@
    "Tariq Anam Khan"
   ],
   "imdb": "8.5",
-  "my_rating": null,
+  "my_rating": 7,
   "watched_on": "",
-  "comment": "",
+  "comment": "ভালো ছিল",
   "status": "watched",
-  "needs_review": false
+  "needs_review": false,
+  "loved": false
  },
  {
   "id": "movie-97341",
