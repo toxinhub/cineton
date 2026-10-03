@@ -62,9 +62,8 @@ body{background:#f4ecdf;color:var(--text);background-image:radial-gradient(700px
 .connection-card{display:flex;align-items:center;justify-content:space-between;gap:10px;padding:10px 11px;border:1px solid var(--line);border-radius:11px;background:#fffaf1}
 .connection-card strong{font-size:12px}.connection-card small{display:block;color:var(--muted);font-size:10px;margin-top:2px}
 .connection-card .configure{border:0;background:transparent;color:var(--accent);padding:4px 2px;font-size:10px}
-details.configure-box{border-top:1px solid var(--line);padding-top:8px}details.configure-box summary{cursor:pointer;color:var(--muted);font-size:10px;list-style:none}details.configure-box summary::-webkit-details-marker{display:none}
-details.configure-box summary::after{content:"Configure";float:right;color:var(--accent)}
-details.configure-box[open] summary::after{content:"Hide"}
+.tech-label{display:flex;flex-direction:column;gap:2px;margin:10px 0 7px;padding:7px 9px;border:1px solid #77583b22;border-radius:10px;background:#77583b08}.tech-label span{font:700 10px/1.2 Mina,sans-serif;color:var(--text);letter-spacing:.03em}.tech-label small{font-size:9px;color:var(--muted)}
+details.configure-box{margin-top:10px;border:1px solid #77583b2b;border-radius:12px;background:#77583b08;overflow:hidden}details.configure-box summary{cursor:pointer;color:var(--text);font:600 11px/1.2 Mina,sans-serif;list-style:none;padding:10px 11px;position:relative}details.configure-box summary::-webkit-details-marker{display:none}details.configure-box summary::before{content:"";display:inline-block;width:6px;height:6px;margin:0 7px 1px 0;border-right:1px solid var(--accent);border-bottom:1px solid var(--accent);transform:rotate(-45deg);transition:transform .16s}.configure-box[open] summary::before{transform:rotate(45deg);margin-bottom:3px}details.configure-box summary::after{content:"Tap to open";float:right;color:var(--accent);font-size:9px;font-weight:500}details.configure-box[open] summary::after{content:"Tap to close"}details.configure-box[open]{background:#fffaf208}details.configure-box>div{padding:0 11px 11px;border-top:1px solid #77583b18}
 input,select,textarea{background:#fffaf2;color:var(--text);border-color:var(--line2)}input:focus,select:focus,textarea:focus{background:#fffdf8;border-color:#8a68436b;box-shadow:0 0 0 2px #b18a4a18;outline:none}
 .btn{background:var(--accent);color:#fffaf2}.btn.secondary{background:#77583b0b;border-color:var(--line2);color:var(--text)}.btn.danger{background:#9b514f0c;border-color:#9b514f30;color:#8f4b49}.hint,.message,.meta{color:var(--muted)}.message{background:#77583b07;border-color:var(--line)}
 .searchbar .btn{min-width:74px}
@@ -89,6 +88,7 @@ input,select,textarea{background:#fffaf2;color:var(--text);border-color:var(--li
 <div class="grid">
 <section class="panel" data-section="connection" id="connectionSection">
 <div class="head"><h2>Connection</h2><span>Technical configuration</span></div>
+<div class="tech-label"><span>Technical configuration</span><small>Services connected to your CineTon library</small></div>
 <div class="connection-overview">
 <div class="connection-card"><div><strong>GitHub</strong><small id="repoSummary">Not connected</small></div><button class="configure" type="button" onclick="document.getElementById('connectionConfig').open=true">Configure</button></div>
 <div class="connection-card"><div><strong>TMDB</strong><small id="tmdbSummary">Not configured</small></div><button class="configure" type="button" onclick="document.getElementById('connectionConfig').open=true">Configure</button></div>
