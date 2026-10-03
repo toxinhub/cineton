@@ -4015,11 +4015,12 @@
    "Jeff Leach"
   ],
   "imdb": "7.4",
-  "my_rating": null,
+  "my_rating": 8,
   "watched_on": "",
-  "comment": "",
+  "comment": "বেশ ভালো লাগছে।",
   "status": "watched",
-  "needs_review": false
+  "needs_review": false,
+  "loved": false
  },
  {
   "id": "movie-910784",
