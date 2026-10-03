@@ -1,5 +1,31 @@
 [
  {
+  "id": "movie-1690",
+  "type": "movie",
+  "title": "Hostel",
+  "year": "2006",
+  "poster": "/dDrtuWUKhgUGp12kgUWuP0NpTdF.jpg",
+  "overview": "Three backpackers head to a Slovakian city that promises to meet their hedonistic expectations, with no idea of the hell that awaits them.",
+  "director": "Eli Roth",
+  "cast": [
+   "Jay Hernandez",
+   "Derek Richardson",
+   "Eythor Gudjonsson",
+   "Barbara Nedeljakova",
+   "Jana Kaderabkova",
+   "Jennifer Lim",
+   "Jan Vlasák",
+   "Jana Havlickova"
+  ],
+  "imdb": "5.9",
+  "my_rating": null,
+  "watched_on": "",
+  "comment": "প্রথমবার এইটাইপের মুভি দেখেছিলাম, দেখে তো চক্ষু চড়কগাছে উঠেছিল...",
+  "status": "watched",
+  "needs_review": false,
+  "added_at": "2026-10-03T18:24:17.293Z"
+ },
+ {
   "id": "movie-1724",
   "type": "movie",
   "title": "The Incredible Hulk",
