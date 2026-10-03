@@ -1832,9 +1832,10 @@
   "imdb": "6.1",
   "my_rating": 7,
   "watched_on": "",
-  "comment": "",
+  "comment": "থেমে থাকে না, বাঁচার লড়াই",
   "status": "watched",
-  "needs_review": false
+  "needs_review": false,
+  "loved": false
  },
  {
   "id": "movie-749170",
