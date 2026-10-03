@@ -1806,9 +1806,10 @@
   "imdb": "",
   "my_rating": 6,
   "watched_on": "",
-  "comment": "",
+  "comment": "মন্দ না,  তবে মনে হচ্ছিল চাইলে আরো ভালো করা যেত এই উপাদান সামগ্রী দিয়ে।",
   "status": "watched",
-  "needs_review": true
+  "needs_review": true,
+  "loved": false
  },
  {
   "id": "movie-1318447",
