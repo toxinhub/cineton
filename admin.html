@@ -84,7 +84,7 @@ input,select,textarea{background:#fffaf2;color:var(--text);border-color:var(--li
 
 <div class="stats"><div class="stat"><b id="total">—</b><span>Total titles</span></div><div class="stat"><b id="watched">—</b><span>Watched</span></div><div class="stat"><b id="watchlist">—</b><span>Watchlist</span></div></div>
 
-<nav class="admin-nav" aria-label="Admin sections"><button type="button" data-target="connection" class="active">Connection</button><button type="button" data-target="add">Add New</button><button type="button" data-target="rating">Rating &amp; Comments</button></nav>
+<nav class="admin-nav" aria-label="Admin sections"><button type="button" data-target="connection" class="active">Connection</button><button type="button" data-target="genres">Genres</button><button type="button" data-target="add">Add New</button><button type="button" data-target="rating">Rating &amp; Comments</button></nav>
 <div class="grid">
 <section class="panel" data-section="connection" id="connectionSection">
 <div class="head"><h2>Connection</h2><span>Technical configuration</span></div>
@@ -173,7 +173,7 @@ function decode(b){const bin=atob(String(b).replace(/\n/g,''));return new TextDe
 function encode(s){const bytes=new TextEncoder().encode(s),bin=Array.from(bytes,c=>String.fromCharCode(c)).join('');return btoa(bin)}
 async function load(){const r=await gh();if(!r.sha||!r.content)throw Error('GitHub returned an incomplete data.json response.');fileSha=r.sha;try{data=JSON.parse(decode(r.content));if(!Array.isArray(data))throw 0}catch{throw Error('data.json is not a valid CineTon library file.')}renderAll()}
 async function save(message){if(!fileSha)throw Error('Connect to GitHub first.');const r=await gh('PUT',{message,sha:fileSha,content:encode(JSON.stringify(data,null,1))});if(!r.content?.sha)throw Error('GitHub did not confirm the save.');fileSha=r.content.sha;renderAll()}
-async function connect(){const repo=$('#repo').value.trim(),tok=$('#tok').value.trim();if(!repo||!/^[^\s/]+\/[^\s/]+$/.test(repo))return setConnection('error','Enter a valid repository as username/repository.');if(!tok)return setConnection('error','Enter your GitHub token.');saved('ct_repo',repo);SS.setItem('ct_tok',tok);saved('ct_tmdb',$('#tmdb').value.trim());saved('ct_omdb',$('#omdb').value.trim());setConnection('busy','Verifying GitHub access and loading data.json…');try{await load();setConnection('ok','GitHub verified · library loaded successfully.');renderAll();if($('#tmdb').value.trim()&&data.some(m=>!Array.isArray(m.genres))){await syncGenres(true)}}catch(e){setConnection('error',connError(e))}}
+async function connect(){const repo=$('#repo').value.trim(),tok=$('#tok').value.trim();if(!repo||!/^[^\s/]+\/[^\s/]+$/.test(repo))return setConnection('error','Enter a valid repository as username/repository.');if(!tok)return setConnection('error','Enter your GitHub token.');saved('ct_repo',repo);SS.setItem('ct_tok',tok);saved('ct_tmdb',$('#tmdb').value.trim());saved('ct_omdb',$('#omdb').value.trim());setConnection('busy','Verifying GitHub access and loading data.json…');try{await load();setConnection('ok','GitHub verified · library loaded successfully.');renderAll();if($('#tmdb').value.trim()&&data.some(m=>!Array.isArray(m.genres)||m.genres.length===0)){await syncGenres(true)}}catch(e){setConnection('error',connError(e))}}
 $('#connect').onclick=connect;async function syncGenres(auto=false){
  if(!fileSha)throw Error('Connect to GitHub first.');
  if(!$('#tmdb').value.trim())throw Error('Add your TMDB API key in Connection first.');
@@ -181,7 +181,7 @@ $('#connect').onclick=connect;async function syncGenres(auto=false){
  let updated=0,missing=0,failed=0;
  try{
   for(let i=0;i<data.length;i++){
-   const m=data[i],type=m.type==='tv'?'tv':'movie',id=String(m.id||'').replace(/^(movie|tv)-/,'');
+   const m=data[i];if(auto&&Array.isArray(m.genres)&&m.genres.length)continue;const type=m.type==='tv'?'tv':'movie',id=String(m.id||'').replace(/^(movie|tv)-/,'');
    if(!id){missing++;continue}
    msg.textContent=(auto?'Auto-syncing genres':'Syncing genres')+' · '+(i+1)+' / '+data.length+' · '+m.title;
    try{
@@ -285,7 +285,7 @@ document.querySelectorAll('.admin-nav button').forEach(b=>b.onclick=()=>switchSe
 window.addEventListener('beforeunload',e=>{if(draftDirty){e.preventDefault();e.returnValue=''}});
 document.querySelectorAll('.panel[data-section]').forEach(p=>p.classList.toggle('active',p.dataset.section==='connection'));
 $('#librarySearch').oninput=renderLibrary;$('#libraryFilter').onchange=renderLibrary;
-if($('#repo').value&&$('#tok').value)load().then(()=>setConnection('ok','Saved GitHub connection restored.')).catch(()=>setConnection('idle','Saved credentials found. Click Connect GitHub to verify.'));
+if($('#repo').value&&$('#tok').value)load().then(async()=>{setConnection('ok','Saved GitHub connection restored.');if($('#tmdb').value.trim()&&data.some(m=>!Array.isArray(m.genres)||m.genres.length===0))await syncGenres(true)}).catch(()=>setConnection('idle','Saved credentials found. Click Connect GitHub to verify.'));
 </script>
 </body>
 </html>
