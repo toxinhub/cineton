@@ -3686,11 +3686,12 @@
    "Bratya Basu"
   ],
   "imdb": "7.5",
-  "my_rating": null,
+  "my_rating": 8,
   "watched_on": "",
-  "comment": "",
+  "comment": "মরতে চাওয়া লোকজনদের দেখা উচিত এটা",
   "status": "watched",
-  "needs_review": false
+  "needs_review": false,
+  "loved": false
  },
  {
   "id": "movie-1653",
