@@ -2283,9 +2283,10 @@
   "imdb": "6.2",
   "my_rating": 7,
   "watched_on": "",
-  "comment": "",
+  "comment": "কনসেপ্ট ভালো ছিল",
   "status": "watched",
-  "needs_review": false
+  "needs_review": false,
+  "loved": false
  },
  {
   "id": "movie-138697",
