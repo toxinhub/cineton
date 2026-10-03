@@ -6,7 +6,7 @@
 <meta name="robots" content="noindex">
 <title>CineTon Admin</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600&family=Inter:wght@400;500;600;700&family=Mina:wght@400;700&display=swap">
 <style>
 :root{--bg:#0b0d11;--panel:#11151b;--panel2:#151a21;--line:#ffffff12;--line2:#ffffff1d;--text:#f4f6f8;--muted:#8e98a6;--accent:#ff5c8a;--ok:#63d39a;--warn:#f4c76b;--danger:#ff718e;--radius:16px;color-scheme:dark}
 *{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;background:radial-gradient(900px 500px at 50% -180px,#252b36 0,#101319 48%,var(--bg) 100%);color:var(--text);font:14px/1.5 Inter,system-ui,sans-serif;min-height:100vh}
@@ -207,9 +207,9 @@ $('#loveToggle').onclick=()=>{const b=$('#loveToggle'),next=b.getAttribute('aria
 $('#savePersonal').onclick=async()=>{
  if(currentEditIndex<0)return;
  const m=data[currentEditIndex],v=$('#editRating').value.trim();
+ let old={...m};
  if(v!==''&&(Number(v)<0||Number(v)>10||!/^(?:\d{1,2})(?:\.\d+)?$/.test(v)))return alert('Rating must be between 0 and 10.');
  try{
-  const old={...m};
   m.my_rating=v===''?null:+v;
   m.comment=$('#editComment').value.trim();
   m.loved=$('#loveToggle').getAttribute('aria-pressed')==='true';
@@ -217,7 +217,7 @@ $('#savePersonal').onclick=async()=>{
   await save('Update personal details '+m.title);
   draftDirty=false;$('#draftState').textContent='✓ Saved';
   setTimeout(()=>{if($('#editModal').open)$('#editModal').close()},450);
- }catch(e){Object.assign(m,old);alert(connError(e));}finally{$('#savePersonal').disabled=false}
+ }catch(e){Object.assign(m,old);draftDirty=true;$('#draftState').textContent='Save failed — changes are still unsaved';alert(connError(e));}finally{$('#savePersonal').disabled=false}
 };
 $('#closeEdit').onclick=()=>$('#editModal').close();
 $('#editModal').addEventListener('cancel',e=>{if(draftDirty&&!confirm('Unsaved changes will be lost. Leave this movie?'))e.preventDefault()});
