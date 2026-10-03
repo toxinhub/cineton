@@ -2880,9 +2880,10 @@
   "imdb": "6.8",
   "my_rating": null,
   "watched_on": "",
-  "comment": "",
+  "comment": "শান্তির দেশের এক ভয়াবহ ট্রাজেডি",
   "status": "watched",
-  "needs_review": false
+  "needs_review": false,
+  "loved": false
  },
  {
   "id": "movie-603",
