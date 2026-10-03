@@ -18,11 +18,12 @@
    "Bernard Hill"
   ],
   "imdb": "8.0",
-  "my_rating": null,
+  "my_rating": 9,
   "watched_on": "2012-10-10",
   "comment": "",
   "status": "watched",
-  "needs_review": false
+  "needs_review": false,
+  "loved": true
  },
  {
   "id": "movie-220289",
