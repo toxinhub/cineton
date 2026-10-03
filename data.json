@@ -4092,11 +4092,12 @@
    "Delroy Lindo"
   ],
   "imdb": "7.5",
-  "my_rating": null,
+  "my_rating": 6,
   "watched_on": "",
-  "comment": "",
+  "comment": "এটা নিয়ে যে পরিমাণ সোরগোল ছিল, এমনকি অস্কার অব্দি জিতল, কিন্তু আমার কাছে কেন যে তেমন একটা ভালো লাগেনি, আর অন্যদের কাছেও বা এটা এতটা ভালো লেগেছিল এই মিমাংসা আমি করতে পারিনি।",
   "status": "watched",
-  "needs_review": false
+  "needs_review": false,
+  "loved": false
  },
  {
   "id": "movie-185008",
