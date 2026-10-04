@@ -743,6 +743,12 @@ async function loadPublicComments(mediaId,root){const list=root.querySelector('.
     -webkit-backdrop-filter:blur(2px) saturate(102%) !important;
   }
 }
+</style><style id="warm-texture-noise-v1">
+/* Warm texture — subtle grain tuned separately for desktop and mobile. */
+body{background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180' viewBox='0 0 180 180'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.82' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.16'/%3E%3C/svg%3E");}
+@media(max-width:600px){
+  body{background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180' viewBox='0 0 180 180'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.82' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.13'/%3E%3C/svg%3E");}
+}
 </style><style id="modal-typography-readability-v1">
 /* Modal typography — slightly larger body metadata for easier reading. */
 .cinemodal .detail-value{font-size:.80rem!important;line-height:1.48!important}
