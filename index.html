@@ -773,4 +773,27 @@ body{background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/20
   }
 }
 </style>
+<style id="warm-tonal-separation-v1">
+/* Warm tonal separation — stronger hierarchy without heavier borders. */
+.bar,.select-trigger,.surprise{
+  background:color-mix(in srgb,var(--sf) 88%,#8b6848 12%) !important;
+}
+.c{
+  background:color-mix(in srgb,var(--sf) 94%,#8b6848 6%) !important;
+}
+.views button{
+  background:color-mix(in srgb,var(--sf) 90%,#8b6848 10%) !important;
+}
+@media(max-width:600px){
+  .bar{
+    background:color-mix(in srgb,var(--sf) 88%,#8b6848 12%) !important;
+  }
+  .select-trigger,.surprise,.views button{
+    background:color-mix(in srgb,var(--sf) 90%,#8b6848 10%) !important;
+  }
+  .c{
+    background:color-mix(in srgb,var(--sf) 94%,#8b6848 6%) !important;
+  }
+}
+</style>
 </body></html>
