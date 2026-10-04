@@ -1164,31 +1164,17 @@ update();
     transition:none!important;
   }
 }
-</style></body></html><style id="modal-close-poster-color-v3">
-.cinemodal{--poster-accent:var(--gd);--poster-close-image:none}
+</style></body></html><style id="modal-close-poster-color-v4">
+.cinemodal{--poster-accent:var(--gd)}
 .cinemodal .x{
-  color:var(--tx)!important;
-  background:color-mix(in srgb,var(--sf) 82%,transparent)!important;
-  overflow:hidden;
-  isolation:isolate;
-  transition:color .18s ease,background .18s ease,transform .16s ease,box-shadow .18s ease
+  color:var(--poster-accent)!important;
+  background:transparent!important;
+  transition:color .18s ease,transform .16s ease
 }
-.cinemodal .x::before{
-  content:"";
-  position:absolute;
-  inset:0;
-  z-index:-1;
-  background-image:var(--poster-close-image);
-  background-size:cover;
-  background-position:center;
-  filter:blur(7px) saturate(1.12);
-  transform:scale(1.35);
-  opacity:.72;
-}
+.cinemodal .x::before{display:none!important}
 .cinemodal .x:hover{
-  color:var(--tx)!important;
-  background:color-mix(in srgb,var(--sf) 68%,transparent)!important;
-  box-shadow:0 2px 10px color-mix(in srgb,var(--poster-accent) 22%,transparent);
+  color:var(--poster-accent)!important;
+  background:transparent!important;
 }
 .cinemodal .x:focus-visible{outline-color:var(--poster-accent)!important}
 </style>
