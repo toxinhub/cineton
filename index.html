@@ -989,4 +989,54 @@ update();
     -webkit-backdrop-filter:blur(4px) saturate(102%) !important;
   }
 }
+</style><style id="view-toggle-visual-fix-v1">
+/* View toggle — restore a clean, compact two-state control without changing behavior. */
+.views{
+  display:flex;
+  align-items:center;
+  gap:4px;
+  margin-left:auto;
+}
+.views button{
+  appearance:none;
+  -webkit-appearance:none;
+  width:34px;
+  min-width:34px;
+  height:34px;
+  min-height:34px;
+  margin:0;
+  padding:0;
+  display:grid;
+  place-items:center;
+  border:1px solid #6b513240;
+  border-radius:8px;
+  background:color-mix(in srgb,var(--sf) 90%,#8b6848 10%) !important;
+  color:var(--mu);
+  font:400 19px/1 Arial,sans-serif;
+  box-shadow:0 1px 0 #fff8 inset;
+  transition:background .16s ease,border-color .16s ease,color .16s ease,transform .16s ease;
+}
+.views button:hover{
+  background:color-mix(in srgb,var(--sf) 78%,#8b6848 22%) !important;
+  border-color:#6b513260;
+  color:var(--tx);
+}
+.views button.on{
+  background:var(--ac) !important;
+  border-color:var(--ac) !important;
+  color:#fff9f1 !important;
+  box-shadow:0 1px 0 #fff3 inset,0 2px 6px #5b42251a;
+}
+.views button:active{transform:scale(.95)}
+@media(max-width:600px){
+  .views{gap:4px}
+  .views button{
+    width:36px;
+    min-width:36px;
+    height:36px;
+    min-height:36px;
+    border-radius:8px;
+    font-size:19px;
+  }
+}
 </style></body></html>
