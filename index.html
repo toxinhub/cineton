@@ -916,16 +916,16 @@ body{background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/20
   }
 }
 </style>
-<style id="sticky-bar-backdrop-blur-v4">
-/* Sticky bar — translucent surface so the content behind it can actually blur while scrolling. */
+<style id="sticky-bar-backdrop-blur-v5">
+/* Sticky bar — slightly dimmer warm surface while keeping the blur visible. */
 .bar{
-  background:color-mix(in srgb,var(--sf) 82%,transparent) !important;
+  background:color-mix(in srgb,var(--sf) 76%,transparent) !important;
   backdrop-filter:blur(7px) saturate(102%) !important;
   -webkit-backdrop-filter:blur(8px) saturate(102%) !important;
 }
 @media(max-width:600px){
   .bar{
-    background:color-mix(in srgb,var(--sf) 80%,transparent) !important;
+    background:color-mix(in srgb,var(--sf) 74%,transparent) !important;
     backdrop-filter:blur(2px) saturate(102%) !important;
     -webkit-backdrop-filter:blur(4px) saturate(102%) !important;
   }
