@@ -294,7 +294,24 @@ header{position:relative}
   .cinemodal .modal-top{grid-template-columns:88px minmax(0,1fr)!important}
   .cinemodal .m img{max-height:132px!important}
 }
-</style><style id="modal-poster-ambient-v2">
+</style><style id="modal-close-position-fix-v1">
+/* Keep the modal close control anchored to the modal, not the scrolling content. */
+.cinemodal .x{
+  position:absolute!important;
+  top:8px!important;
+  right:8px!important;
+  left:auto!important;
+  bottom:auto!important;
+  z-index:20!important;
+  width:40px!important;
+  height:40px!important;
+  margin:0!important;
+}
+@media(max-width:600px){
+  .cinemodal .x{top:8px!important;right:8px!important}
+}
+</style>
+<style id="modal-poster-ambient-v2">
 .cinemodal{background-color:var(--modal)!important;background-image:linear-gradient(180deg,#f8f0e5e8 0%,#f8f0e5f2 52%,#f8f0e5f8 100%)!important}
 .cinemodal::before{content:"";position:absolute!important;inset:-18%!important;z-index:0!important;background:var(--modal-bg) center/cover no-repeat!important;filter:blur(42px) saturate(118%)!important;opacity:.20!important;transform:scale(1.08)!important;pointer-events:none!important}
 .cinemodal::after{content:"";position:absolute!important;inset:0!important;z-index:1!important;background:linear-gradient(180deg,#f8f0e5b8 0%,#f8f0e5dc 48%,#f8f0e5f5 100%)!important;pointer-events:none!important}
