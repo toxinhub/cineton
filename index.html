@@ -1100,4 +1100,56 @@ update();
   }
 }
 </style>
+<style id="modal-poster-ambient-v1">
+/* Poster ambient — let each poster softly color the modal without changing CineTon's warm identity. */
+.cinemodal{
+  background-color:var(--modal);
+  background-image:linear-gradient(180deg,#f8f0e5f2 0%,#f8f0e5f7 48%,#f8f0e5fb 100%);
+}
+.cinemodal::before{
+  z-index:0 !important;
+  filter:blur(34px) saturate(112%) !important;
+  transform:scale(1.16) !important;
+  opacity:.13 !important;
+  background-position:center !important;
+}
+.cinemodal::after{
+  z-index:1 !important;
+  background:
+    radial-gradient(circle at 18% 12%,color-mix(in srgb,var(--gd) 9%,transparent),transparent 42%),
+    linear-gradient(180deg,#f8f0e5a8 0%,#f8f0e5d9 48%,#f8f0e5f2 100%) !important;
+}
+.cinemodal .m{position:relative;z-index:2}
+.cinemodal .poster-wrap{position:relative}
+.cinemodal .poster-wrap::after{
+  content:"";
+  position:absolute;
+  left:5%;
+  right:5%;
+  bottom:-8px;
+  height:20px;
+  background:var(--modal-bg) center/cover no-repeat;
+  filter:blur(12px) saturate(110%);
+  opacity:.16;
+  transform:scaleY(.42);
+  transform-origin:top center;
+  pointer-events:none;
+  z-index:-1;
+}
+@media(max-width:600px){
+  .cinemodal::before{
+    filter:blur(26px) saturate(108%) !important;
+    transform:scale(1.13) !important;
+    opacity:.10 !important;
+  }
+  .cinemodal::after{
+    background:
+      radial-gradient(circle at 20% 10%,color-mix(in srgb,var(--gd) 7%,transparent),transparent 46%),
+      linear-gradient(180deg,#f8f0e5ae 0%,#f8f0e5dc 48%,#f8f0e5f4 100%) !important;
+  }
+  .cinemodal .poster-wrap::after{
+    bottom:-7px;height:17px;filter:blur(10px) saturate(108%);opacity:.12;
+  }
+}
+</style>
 </body></html>
