@@ -225,12 +225,15 @@ header{position:relative}
 <style id="public-comments-mobile-modal-fix">
 @media(max-width:639px){
   .cinemodal:not(.comments-open){
-    height:auto!important;
+    height:fit-content!important;
     max-height:76vh!important;
+    min-height:0!important;
   }
   .cinemodal:not(.comments-open) .m{
-    height:auto!important;
-    max-height:76vh!important;
+    height:fit-content!important;
+    max-height:calc(76vh - 1px)!important;
+    min-height:0!important;
+    overflow-y:auto!important;
   }
   .cinemodal.comments-open{
     height:91vh!important;
