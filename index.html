@@ -1043,10 +1043,10 @@ update();
 </style>
 <style id="modal-view-motion-v1">
 .cinemodal{transition:opacity .18s ease,transform .20s cubic-bezier(.22,.8,.28,1)!important}
-.cinemodal[data-open-view="grid"]{transform:translateY(6px) scale(.975)}
-.cinemodal[data-open-view="list"]{transform:translateY(4px) scale(.985)}
+.cinemodal[data-open-view="grid"]:not([open]){transform:translateY(6px) scale(.975)}
+.cinemodal[data-open-view="list"]:not([open]){transform:translateY(4px) scale(.985)}
 .cinemodal[data-open-view="grid"][open],.cinemodal[data-open-view="list"][open]{transform:none}
-@media(max-width:600px){.cinemodal[data-open-view="grid"]{transform:translateY(5px) scale(.982)}.cinemodal[data-open-view="list"]{transform:translateY(3px) scale(.988)}}
+@media(max-width:600px){.cinemodal[data-open-view="grid"]:not([open]){transform:translateY(5px) scale(.982)}.cinemodal[data-open-view="list"]:not([open]){transform:translateY(3px) scale(.988)}}
 @media(prefers-reduced-motion:reduce){.cinemodal,.cinemodal[data-open-view="grid"],.cinemodal[data-open-view="list"]{transition:none!important;transform:none!important}}
 </style>
 </body></html>
