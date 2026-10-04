@@ -1088,4 +1088,42 @@ update();
   }
 }
 </style>
-</body></html>
+<style id="modal-content-micro-motion-v1">
+/* Modal content micro-motion — a quiet settle, kept intentionally lightweight. */
+.cinemodal .poster-wrap{
+  transition:opacity .17s ease,transform .18s cubic-bezier(.22,.8,.28,1);
+}
+.cinemodal .modal-side{
+  transition:opacity .18s ease,transform .19s cubic-bezier(.22,.8,.28,1);
+}
+.cinemodal.modal-opening .poster-wrap{
+  opacity:0;
+  transform:translateY(3px);
+}
+.cinemodal.modal-opening .modal-side{
+  opacity:0;
+  transform:translateY(4px);
+}
+@media(max-width:600px){
+  .cinemodal .poster-wrap{
+    transition-duration:.16s,.17s;
+  }
+  .cinemodal .modal-side{
+    transition-duration:.17s,.18s;
+  }
+  .cinemodal.modal-opening .poster-wrap{
+    transform:translateY(2px);
+  }
+  .cinemodal.modal-opening .modal-side{
+    transform:translateY(3px);
+  }
+}
+@media(prefers-reduced-motion:reduce){
+  .cinemodal .poster-wrap,
+  .cinemodal .modal-side{
+    transition:none!important;
+    transform:none!important;
+    opacity:1!important;
+  }
+}
+</style></body></html>
