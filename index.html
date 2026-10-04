@@ -727,4 +727,18 @@ async function loadPublicComments(mediaId,root){const list=root.querySelector('.
   .cinemodal h2{font-size:1.7rem;line-height:.95}
   .cinemodal .subline{font-size:.60rem}
 }
+</style><style id="modal-surrounding-blur-v3">
+/* Modal surrounding layer — make the depth effect perceptible without washing out the warm page. */
+.cinemodal::backdrop{
+  background:color-mix(in srgb,var(--tx) 18%,transparent);
+  backdrop-filter:blur(4px) saturate(102%) !important;
+  -webkit-backdrop-filter:blur(4px) saturate(102%) !important;
+}
+@media(max-width:600px){
+  .cinemodal::backdrop{
+    background:color-mix(in srgb,var(--tx) 18%,transparent);
+    backdrop-filter:blur(3px) saturate(102%) !important;
+    -webkit-backdrop-filter:blur(3px) saturate(102%) !important;
+  }
+}
 </style></body></html>
