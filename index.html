@@ -1164,17 +1164,28 @@ update();
     transition:none!important;
   }
 }
-</style></body></html><style id="modal-close-poster-color-v4">
-.cinemodal{--poster-accent:var(--gd)}
+</style></body></html><style id="modal-close-poster-color-v5">
+/* Poster-derived X — only the glyph is painted from the current modal poster; button surface stays transparent. */
 .cinemodal .x{
-  color:var(--poster-accent)!important;
-  background:transparent!important;
-  transition:color .18s ease,transform .16s ease
+  color:transparent!important;
+  -webkit-text-fill-color:transparent!important;
+  background-color:transparent!important;
+  background-image:var(--poster-close-image)!important;
+  background-repeat:no-repeat!important;
+  background-position:center!important;
+  background-size:cover!important;
+  -webkit-background-clip:text!important;
+  background-clip:text!important;
+  text-shadow:none!important;
+  transition:transform .16s ease,filter .18s ease!important;
 }
 .cinemodal .x::before{display:none!important}
 .cinemodal .x:hover{
-  color:var(--poster-accent)!important;
-  background:transparent!important;
+  color:transparent!important;
+  -webkit-text-fill-color:transparent!important;
+  background-color:transparent!important;
+  background-image:var(--poster-close-image)!important;
+  filter:saturate(1.08) brightness(.96)!important;
 }
-.cinemodal .x:focus-visible{outline-color:var(--poster-accent)!important}
+.cinemodal .x:focus-visible{outline-color:var(--gd)!important}
 </style>
