@@ -104,6 +104,15 @@ header{position:relative}
   background:color-mix(in srgb,var(--sf) 30%,transparent);
   outline:none;
 }
+.public-comments:not(.open){
+  margin-top:5px;
+  margin-bottom:7px;
+}
+.public-comments:not(.open) .public-comments-head{
+  min-height:30px;
+  padding-top:4px;
+  padding-bottom:4px;
+}
 .public-comments-head::after{
   content:"︺";
   color:var(--mu);
@@ -149,6 +158,15 @@ header{position:relative}
   .public-comments{
     margin:10px 15px 13px;
     border-radius:11px;
+  }
+  .public-comments:not(.open){
+    margin-top:4px;
+    margin-bottom:6px;
+  }
+  .public-comments:not(.open) .public-comments-head{
+    min-height:28px;
+    padding-top:3px;
+    padding-bottom:3px;
   }
   .public-comments-head{
     min-height:38px;
