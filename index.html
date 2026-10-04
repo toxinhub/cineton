@@ -796,4 +796,18 @@ body{background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/20
   }
 }
 </style>
+<style id="focus-language-v1">
+/* Unified keyboard focus — warm, visible, consistent across interactive controls. */
+:where(button,a,input,select,textarea,[tabindex]:not([tabindex="-1"])):focus-visible{
+  outline:2px solid color-mix(in srgb,#8b6848 72%,#d6a85f 28%) !important;
+  outline-offset:2px !important;
+  box-shadow:0 0 0 3px color-mix(in srgb,#d6a85f 18%,transparent) !important;
+}
+:where(.c,.tabs button,.views button,.surprise,.select-trigger,#to-top):focus-visible{
+  border-color:#8b6848 !important;
+}
+:where(input,select,textarea):focus-visible{
+  outline-offset:1px !important;
+}
+</style>
 </body></html>
