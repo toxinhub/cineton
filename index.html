@@ -285,14 +285,16 @@ header{position:relative}
     -webkit-backdrop-filter:blur(2px) saturate(102%);
   }
 }
-</style><style id="sticky-bar-backdrop-blur-v1">
+</style>
+<style id="sticky-bar-backdrop-blur-v2">
 .bar{
-  backdrop-filter:blur(6px) saturate(102%);
-  -webkit-backdrop-filter:blur(6px) saturate(102%);
+  background:color-mix(in srgb,var(--bg) 88%,transparent) !important;
+  backdrop-filter:blur(6px) saturate(102%) !important;
+  -webkit-backdrop-filter:blur(6px) saturate(102%) !important;
 }
 @media(max-width:600px){
   .bar{
-    background:color-mix(in srgb,var(--sf) 88%,transparent);
+    background:color-mix(in srgb,var(--sf) 84%,transparent) !important;
     backdrop-filter:blur(2px) saturate(102%) !important;
     -webkit-backdrop-filter:blur(2px) saturate(102%) !important;
   }
