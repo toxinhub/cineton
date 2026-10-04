@@ -1041,12 +1041,51 @@ update();
   }
 }
 </style>
-<style id="modal-view-motion-v1">
-.cinemodal{transition:opacity .18s ease,transform .20s cubic-bezier(.22,.8,.28,1)!important}
-.cinemodal.modal-opening[data-open-view="grid"][open]{opacity:.01;transform:translateY(6px) scale(.975)}
-.cinemodal.modal-opening[data-open-view="list"][open]{opacity:.01;transform:translateY(4px) scale(.985)}
-.cinemodal[data-open-view="grid"][open],.cinemodal[data-open-view="list"][open]{opacity:1;transform:none}
-@media(max-width:600px){.cinemodal.modal-opening[data-open-view="grid"][open]{transform:translateY(5px) scale(.982)}.cinemodal.modal-opening[data-open-view="list"][open]{transform:translateY(3px) scale(.988)}}
-@media(prefers-reduced-motion:reduce){.cinemodal,.cinemodal[data-open-view="grid"],.cinemodal[data-open-view="list"]{transition:none!important;transform:none!important}}
+<style id="modal-view-motion-v2">
+/* Modal motion refinement — softer grid entry, restrained list entry, tiny content settle. */
+.cinemodal{
+  transition:opacity .18s ease,transform .20s cubic-bezier(.22,.8,.28,1)!important;
+}
+.cinemodal.modal-opening[data-open-view="grid"][open]{
+  opacity:.01;
+  transform:translateY(5px) scale(.982);
+}
+.cinemodal.modal-opening[data-open-view="list"][open]{
+  opacity:.01;
+  transform:translateY(3px) scale(.99);
+}
+.cinemodal[data-open-view="grid"][open],
+.cinemodal[data-open-view="list"][open]{
+  opacity:1;
+  transform:none;
+}
+.cinemodal .modal-top{
+  transition:opacity .16s ease,transform .18s cubic-bezier(.22,.8,.28,1);
+}
+.cinemodal.modal-opening .modal-top{
+  opacity:0;
+  transform:translateY(3px);
+}
+@media(max-width:600px){
+  .cinemodal.modal-opening[data-open-view="grid"][open]{
+    transform:translateY(4px) scale(.985);
+  }
+  .cinemodal.modal-opening[data-open-view="list"][open]{
+    transform:translateY(3px) scale(.992);
+  }
+  .cinemodal .modal-top{
+    transition-duration:.15s,.17s;
+  }
+}
+@media(prefers-reduced-motion:reduce){
+  .cinemodal,
+  .cinemodal[data-open-view="grid"],
+  .cinemodal[data-open-view="list"],
+  .cinemodal .modal-top{
+    transition:none!important;
+    transform:none!important;
+    opacity:1!important;
+  }
+}
 </style>
 </body></html>
