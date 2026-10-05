@@ -161,10 +161,27 @@ input,select,textarea{background:#fffaf2;color:var(--text);border-color:var(--li
 #librarySection .libraryTools{grid-template-columns:1fr}
 #librarySection #randomMovieBtn{width:100%}
 }
+</style><style id="admin-header-random-backtotop-v1">
+.top{position:sticky;top:0;z-index:120}
+.top-actions{display:flex;align-items:center;gap:7px}
+.header-random{appearance:none;border:1px solid var(--line);background:var(--surface,#f7f0e5);color:var(--text);border-radius:8px;min-height:30px;padding:5px 9px;font:600 10px/1 Mina,sans-serif;white-space:nowrap;cursor:pointer}
+.header-random:hover{filter:brightness(.98)}
+.header-random:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+.back-to-top{position:fixed;right:16px;bottom:16px;z-index:110;width:36px;height:36px;border:1px solid var(--line);border-radius:9px;background:var(--surface,#f7f0e5);color:var(--text);font:600 18px/1 Inter,sans-serif;box-shadow:0 4px 14px rgba(0,0,0,.10);cursor:pointer;opacity:0;visibility:hidden;transform:translateY(8px);transition:opacity .18s,visibility .18s,transform .18s}
+.back-to-top.show{opacity:1;visibility:visible;transform:translateY(0)}
+.back-to-top:hover{filter:brightness(.98)}
+.back-to-top:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+#editModal::backdrop{background:rgba(35,28,20,.42)}
+@media(max-width:600px){
+ .top{padding:9px 10px}
+ .top-actions{gap:5px}
+ .header-random{min-height:28px;padding:4px 8px;font-size:9px}
+ .back-to-top{right:12px;bottom:12px;width:34px;height:34px}
+}
 </style></head>
 <body>
 <div class="app">
-<header class="top"><div class="brand"><div class="logo">🎬</div><div><h1>CineTon Admin</h1><p>Library management</p></div></div><div id="status" class="status">Not connected</div></header>
+<header class="top"><div class="brand"><div class="logo">🎬</div><div><h1>CineTon Admin</h1><p>Library management</p></div></div><div class="top-actions"><button id="randomMovieBtn" class="header-random" type="button" aria-label="Open a random movie from the library">Random</button><div id="status" class="status">Not connected</div></div></header>
 
 <div class="stats"><div class="stat"><b id="total">—</b><span>Total titles</span></div><div class="stat"><b id="watched">—</b><span>Watched</span></div><div class="stat"><b id="watchlist">—</b><span>Watchlist</span></div></div>
 
@@ -239,9 +256,10 @@ input,select,textarea{background:#fffaf2;color:var(--text);border-color:var(--li
 <section class="panel comment-sector public-comment-sector" data-section="public-comments" id="publicCommentsSection"><div class="head"><div><h2>Public Comments</h2><small class="sector-note">Visitor comments · Moderation</small></div><span id="publicCommentsCount">0 comments</span></div><div class="libraryTools"><input id="publicCommentsSearch" placeholder="Search title, name, comment…"></div><div id="publicCommentsList" class="public-admin-list"></div><div class="public-admin-toolbar"><label><input type="checkbox" id="publicCommentsSelectAll"> <span>Select all</span></label><span id="publicCommentsSelected">0 selected</span><button class="public-admin-bulk-delete" id="publicCommentsDeleteSelected" type="button" disabled>Delete selected</button></div><div id="publicCommentsMsg" class="message hidden"></div></section>
 <section class="panel comment-sector admin-comment-sector" data-section="rating" id="librarySection">
 <div class="head"><div><h2>Rating &amp; Comments</h2><small class="sector-note">Personal rating · Admin notes</small></div><span id="libraryCount">0 titles</span></div>
-<div class="libraryTools"><input id="librarySearch" placeholder="Search title, year, rating, note…"><select id="libraryFilter"><option value="all">All titles</option><option value="watched">Watched</option><option value="watchlist">Watchlist</option><option value="review">Needs review</option></select><button id="randomMovieBtn" class="btn secondary" type="button" aria-label="Open a random movie from the library">Random</button></div>
+<div class="libraryTools"><input id="librarySearch" placeholder="Search title, year, rating, note…"><select id="libraryFilter"><option value="all">All titles</option><option value="watched">Watched</option><option value="watchlist">Watchlist</option><option value="review">Needs review</option></select></div>
 <div id="library" class="library"></div>
 </section>
+<button id="backToTop" class="back-to-top" type="button" aria-label="Back to top" title="Back to top">↑</button>
 <dialog id="editModal" class="admin-modal" aria-labelledby="editTitle">
 <div class="modal-inner"><button id="closeEdit" class="x" type="button" aria-label="Close">×</button>
 <div class="admin-detail"><img id="editPoster" alt=""><div><h2 id="editTitle"></h2><div id="editMeta" class="modal-meta"></div><div class="personal-box" style="margin-top:12px"><h3>Personal Interaction</h3>
@@ -384,6 +402,12 @@ $('#savePersonal').onclick=async()=>{
 };
 $('#closeEdit').onclick=()=>{if(draftDirty&&!confirm('Unsaved changes will be lost. Leave this movie?'))return;$('#editModal').close()};
 $('#editModal').addEventListener('cancel',e=>{if(draftDirty&&!confirm('Unsaved changes will be lost. Leave this movie?'))e.preventDefault()});
+$('#editModal').addEventListener('click',e=>{if(e.target===e.currentTarget){if(draftDirty&&!confirm('Unsaved changes will be lost. Leave this movie?'))return;$('#editModal').close()}});
+const backToTop=$('#backToTop');
+const updateBackToTop=()=>backToTop.classList.toggle('show',window.scrollY>360);
+window.addEventListener('scroll',updateBackToTop,{passive:true});
+backToTop.onclick=()=>window.scrollTo({top:0,behavior:'smooth'});
+updateBackToTop();
 $('#editModal').addEventListener('close',()=>{currentEditIndex=-1;draftDirty=false});
 function switchSection(target){
  if(draftDirty&&!confirm('Unsaved changes will be lost. Switch section?'))return;
