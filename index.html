@@ -1591,3 +1591,12 @@ update();
 }
 .cinemodal .x:focus-visible{outline-color:var(--poster-accent,var(--gd))!important}
 </style>
+<style id="desktop-grid-density-v1">
+/* Desktop grid density — compact the poster scale enough to bring roughly three rows into a normal viewport. */
+@media(min-width:601px){
+  main:not(.list){
+    grid-template-columns:repeat(auto-fill,minmax(156px,1fr));
+    gap:10px;
+  }
+}
+</style>
