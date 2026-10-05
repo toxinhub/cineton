@@ -1,5 +1,91 @@
 <!DOCTYPE html>
-<!-- pages-deploy-trigger: 2026-10-05-modal-motion-clean-v1 -->
+<!-- pages-deploy-trigger: 2026-10-05-public-comments-contrast-v1 -->
+<style id="public-comments-typography-contrast-v1">
+/* Public comments — readable type and stronger warm-theme contrast on desktop + mobile. */
+.public-comments,
+.public-comments-head,
+.public-comments-count,
+.public-comment,
+.public-comment-composer input,
+.public-comment-composer textarea{
+  font-family:"Mina",sans-serif!important;
+}
+.public-comments-head{
+  color:var(--tx)!important;
+  font-size:.68rem!important;
+  line-height:1.35!important;
+  font-weight:700!important;
+  letter-spacing:.045em!important;
+}
+.public-comments-count{
+  color:var(--tx)!important;
+  font-size:.62rem!important;
+  font-weight:500!important;
+  opacity:.9!important;
+}
+.public-comment{
+  color:var(--tx)!important;
+  font-size:.72rem!important;
+  line-height:1.55!important;
+  font-weight:400!important;
+}
+.public-comment-mark{
+  color:var(--mu)!important;
+  opacity:.9!important;
+}
+.public-comment-name{
+  color:var(--tx)!important;
+  font-weight:700!important;
+}
+.public-comment-text{
+  color:var(--tx)!important;
+}
+.public-comments-head::after{
+  color:var(--mu)!important;
+  opacity:1!important;
+}
+.public-comments.open .public-comments-head::after{
+  color:var(--ac)!important;
+}
+.public-comment-composer input,
+.public-comment-composer textarea{
+  color:var(--tx)!important;
+  font-size:.70rem!important;
+  line-height:1.5!important;
+}
+.public-comment-composer input::placeholder,
+.public-comment-composer textarea::placeholder{
+  color:var(--mu)!important;
+  opacity:.9!important;
+}
+.public-comment-submit{
+  color:var(--ac)!important;
+  opacity:1!important;
+}
+@media(max-width:639px){
+  .public-comments-head{
+    font-size:.64rem!important;
+    line-height:1.35!important;
+    letter-spacing:.035em!important;
+  }
+  .public-comments-count{
+    font-size:.59rem!important;
+  }
+  .public-comment{
+    font-size:.68rem!important;
+    line-height:1.52!important;
+  }
+  .public-comment-composer input,
+  .public-comment-composer textarea{
+    font-size:.66rem!important;
+    line-height:1.5!important;
+  }
+  .public-comment-composer input::placeholder,
+  .public-comment-composer textarea::placeholder{
+    opacity:.9!important;
+  }
+}
+</style>
 <style id="desktop-modal-motion-clean-v1">
 /* Desktop modal open/close: intentionally instant. Mobile animation remains untouched. */
 @media(min-width:601px){
