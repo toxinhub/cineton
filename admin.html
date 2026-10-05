@@ -180,7 +180,7 @@ input,select,textarea{background:#fffaf2;color:var(--text);border-color:var(--li
  .back-to-top{bottom:24%;width:34px;height:34px}
 }
 
-.rating-sticky-random{position:sticky;top:0;z-index:100;display:grid;grid-template-rows:1px auto;gap:3px;justify-items:end;min-height:0;margin:-4px 0 6px;padding:4px 0 5px;background:#f4ecdfed;backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);pointer-events:none;border-bottom:1px solid var(--line)}.rating-sticky-random::before{content:"";display:block;width:100%;height:1px;background:var(--line)}.rating-sticky-random #randomMovieBtn{pointer-events:auto;min-width:68px;white-space:nowrap;padding:5px 9px;font-size:10px;line-height:1.1;box-shadow:0 2px 7px rgba(0,0,0,.08)}@media(max-width:600px){.rating-sticky-random{top:0;gap:2px;margin:-3px 0 5px;padding:3px 0 4px}.rating-sticky-random #randomMovieBtn{min-width:64px;min-height:28px;padding:4px 8px;font-size:9px}}</style></head>
+.rating-sticky-random{position:sticky;top:0;z-index:100;display:grid;grid-template-rows:1px auto;gap:3px;justify-items:end;min-height:0;margin:-4px 0 6px;padding:4px 0 5px;background:#f4ecdfed;backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);pointer-events:none;border-bottom:1px solid var(--line)}.rating-sticky-random::before{content:"";display:block;width:100%;height:1px;background:var(--line)}.rating-sticky-random #randomMovieBtn{pointer-events:auto;min-width:68px;white-space:nowrap;padding:5px 9px;font-size:10px;line-height:1.1;box-shadow:0 2px 7px rgba(0,0,0,.08)}@media(max-width:600px){.rating-sticky-random{top:0;gap:2px;margin:-3px 0 5px;padding:3px 0 4px}.rating-sticky-random #randomMovieBtn{min-width:64px;min-height:28px;padding:4px 8px;font-size:9px}}</style><style id="modal-remove-polish">.modal-delete-row{display:flex;justify-content:flex-end;margin:10px 0 0;padding-top:9px;border-top:1px solid var(--line)}.modal-delete-row .btn.danger{font-size:10px;padding:6px 10px}@media(max-width:600px){.modal-delete-row{margin-top:8px;padding-top:8px}.modal-delete-row .btn.danger{min-height:34px}}</style></head>
 <body>
 <div class="app">
 <header class="top"><div class="brand"><div class="logo">🎬</div><div><h1>CineTon Admin</h1><p>Library management</p></div></div><div id="status" class="status">Not connected</div></header>
@@ -265,7 +265,7 @@ input,select,textarea{background:#fffaf2;color:var(--text);border-color:var(--li
 <button id="backToTop" class="back-to-top" type="button" aria-label="Back to top" title="Back to top">↑</button>
 <dialog id="editModal" class="admin-modal" aria-labelledby="editTitle">
 <div class="modal-inner"><button id="closeEdit" class="x" type="button" aria-label="Close">×</button>
-<div class="admin-detail"><img id="editPoster" alt=""><div><h2 id="editTitle"></h2><div id="editMeta" class="modal-meta"></div><div class="modal-status-row"><span id="editStatusLabel" class="modal-status-label"></span><button id="editStatusToggle" class="btn secondary" type="button"></button></div><div class="personal-box" style="margin-top:12px"><h3>Personal Interaction</h3>
+<div class="admin-detail"><img id="editPoster" alt=""><div><h2 id="editTitle"></h2><div id="editMeta" class="modal-meta"></div><div class="modal-status-row"><span id="editStatusLabel" class="modal-status-label"></span><button id="editStatusToggle" class="btn secondary" type="button"></button></div><div class="modal-delete-row"><button id="editDelete" class="btn danger" type="button" aria-label="Remove this title">Remove</button></div><div class="personal-box" style="margin-top:12px"><h3>Personal Interaction</h3>
 <div class="personal-grid"><div class="field"><label for="editRating">My Rating</label><input id="editRating" type="number" min="0" max="10" step="0.5" inputmode="decimal" placeholder="0–10"></div>
 <div class="field"><label for="editComment">Comment</label><textarea id="editComment" placeholder="Write your thoughts about this movie..."></textarea></div></div>
 <div style="margin-top:8px"><button id="loveToggle" class="love-toggle" type="button" aria-pressed="false"><span id="loveIcon">♡</span><span id="loveText">Add Love</span></button></div>
@@ -390,6 +390,19 @@ function openRandomMovie(){
 window.editTitle=openEdit;
 function markDraft(){draftDirty=true;$('#draftState').textContent='Unsaved changes';}
 $('#editRating').addEventListener('input',markDraft);$('#editComment').addEventListener('input',markDraft);
+$('#editDelete').onclick=async()=>{
+ if(currentEditIndex<0)return;
+ const m=data[currentEditIndex];
+ if(!confirm('Remove "'+m.title+'" from the library?'))return;
+ if(!confirm('Are you sure? This action cannot be undone.'))return;
+ try{
+  const i=currentEditIndex,t=m.title;
+  data.splice(i,1);
+  await save('Remove '+t);
+  $('#editModal').close();
+  renderAll();
+ }catch(e){alert(e.message||'Remove failed.');}
+};
 $('#editStatusToggle').onclick=()=>{if(currentEditIndex<0)return;const m=data[currentEditIndex];m.status=m.status==='watched'?'watchlist':'watched';if(m.status==='watched')m.watched_on=new Date().toISOString().slice(0,10);else delete m.watched_on;$('#editStatusLabel').textContent='Status: '+(m.status==='watched'?'Watched':'Watchlist');$('#editStatusToggle').textContent=m.status==='watched'?'Move to Watchlist':'Mark as Watched';$('#editStatusToggle').setAttribute('aria-label',m.status==='watched'?'Move this title to watchlist':'Mark this title as watched');markDraft()};
 $('#loveToggle').onclick=()=>{const b=$('#loveToggle'),next=b.getAttribute('aria-pressed')!=='true';b.setAttribute('aria-pressed',String(next));b.classList.toggle('loved',next);$('#loveIcon').textContent=next?'❤️':'♡';$('#loveText').textContent=next?'Loved':'Add Love';markDraft()};
 $('#savePersonal').onclick=async()=>{
