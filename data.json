@@ -2417,10 +2417,11 @@
   ],
   "my_rating": 8,
   "watched_on": "",
-  "comment": "ভালো লাগার এক এনিমেশন ...",
+  "comment": "সুমিষ্ট একটা এনিমেশন ...",
   "status": "watched",
   "needs_review": false,
-  "added_at": "2026-10-04T04:48:12.187Z"
+  "added_at": "2026-10-04T04:48:12.187Z",
+  "loved": false
  },
  {
   "id": "movie-49521",
