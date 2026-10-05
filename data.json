@@ -1,5 +1,36 @@
 [
  {
+  "id": "movie-581",
+  "type": "movie",
+  "title": "Dances with Wolves",
+  "year": "1990",
+  "poster": "/hw0ZEHAaTqTxSXGVwUFX7uvanSA.jpg",
+  "overview": "Wounded Civil War soldier John Dunbar tries to commit suicide—and becomes a hero instead. As a reward, he's assigned to his dream post, a remote junction on the Western frontier, and soon makes unlikely friends with the local Sioux tribe.",
+  "director": "Kevin Costner",
+  "cast": [
+   "Kevin Costner",
+   "Mary McDonnell",
+   "Graham Greene",
+   "Rodney A. Grant",
+   "Floyd 'Red Crow' Westerman",
+   "Tantoo Cardinal",
+   "Robert Pastorelli",
+   "Charles Rocket"
+  ],
+  "imdb": "8.0",
+  "genres": [
+   "Adventure",
+   "Drama",
+   "Western"
+  ],
+  "my_rating": 8,
+  "watched_on": "",
+  "comment": "লম্বা মুভি কিন্তু, কিন্তু মনযোগ দিউএ দেখলে এক চমৎকার মুভি ও মেইকিং... 👌🏻",
+  "status": "watched",
+  "needs_review": false,
+  "added_at": "2026-10-05T23:22:24.527Z"
+ },
+ {
   "id": "movie-254",
   "type": "movie",
   "title": "King Kong",
