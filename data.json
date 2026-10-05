@@ -7156,7 +7156,7 @@
    "Shahi Kabir"
   ],
   "imdb": "6.5",
-  "my_rating": null,
+  "my_rating": 6,
   "watched_on": "",
   "comment": "",
   "status": "watched",
@@ -7164,7 +7164,8 @@
   "genres": [
    "Drama",
    "Action"
-  ]
+  ],
+  "loved": false
  },
  {
   "id": "movie-541671",
