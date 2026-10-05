@@ -5500,7 +5500,7 @@
    "Aseem Sharma"
   ],
   "imdb": "7.9",
-  "my_rating": 6,
+  "my_rating": 7,
   "watched_on": "",
   "comment": "",
   "status": "watched",
@@ -5509,7 +5509,8 @@
    "Comedy",
    "Drama",
    "Romance"
-  ]
+  ],
+  "loved": false
  },
  {
   "id": "movie-1473354",
