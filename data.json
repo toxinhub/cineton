@@ -3578,7 +3578,7 @@
    "Gila Almagor"
   ],
   "imdb": "7.5",
-  "my_rating": null,
+  "my_rating": 7,
   "watched_on": "",
   "comment": "",
   "status": "watchlist",
@@ -3587,7 +3587,8 @@
    "Drama",
    "History",
    "Thriller"
-  ]
+  ],
+  "loved": false
  },
  {
   "id": "movie-1427387",
