@@ -1454,32 +1454,6 @@
   "added_at": "2026-10-05T14:27:45.828Z"
  },
  {
-  "id": "movie-80938",
-  "type": "movie",
-  "title": "Aavesham",
-  "year": "1994",
-  "poster": "",
-  "overview": "",
-  "director": "Kodi Ramakrishna",
-  "cast": [
-   "Dr. Rajasekhar",
-   "Nagma",
-   "Madhoo",
-   "Rami Reddy",
-   "Rohini"
-  ],
-  "imdb": "7.3",
-  "genres": [
-   "Drama"
-  ],
-  "my_rating": null,
-  "watched_on": "",
-  "comment": "",
-  "status": "watched",
-  "needs_review": true,
-  "added_at": "2026-10-05T14:27:45.120Z"
- },
- {
   "id": "movie-1240463",
   "type": "movie",
   "title": "Kacher Manush Dure Thuiya",
