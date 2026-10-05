@@ -1495,54 +1495,6 @@
   "added_at": "2026-10-05T14:27:45.828Z"
  },
  {
-  "id": "movie-1240463",
-  "type": "movie",
-  "title": "Kacher Manush Dure Thuiya",
-  "year": "2024",
-  "poster": "/ftcDry2KkYDkuZNjhkRQmDTudTl.jpg",
-  "overview": "A Tale of Touch. ‘Kacher Manush Dure Thuiya’: is a story of going away for the needs of life, and returning to the stirring of feelings. This long-distance relationship saga unveils the poignant struggles of lovers separated by thousands of miles – a narrative steeped in the complexities of distance, evoking doubt, mistrust, anger, and resentment, ultimately culminating in separation. It's a poignant portrayal of the profound longing for physical closeness, encapsulated in the simple yet profound act of a hug, bridging the chasm between distant hearts.",
-  "director": "Shihab Shaheen",
-  "cast": [
-   "Pritom Hasan",
-   "Tasnia Farin",
-   "Rupanty Akid",
-   "Samapti Mashuk",
-   "Khalilur Rahman Kadery",
-   "Shirin Alam",
-   "Shubhajit Bhowmik",
-   "Shaheen Sahnewaz"
-  ],
-  "imdb": "7.9",
-  "genres": [
-   "Romance",
-   "Drama"
-  ],
-  "my_rating": null,
-  "watched_on": "",
-  "comment": "",
-  "status": "watched",
-  "needs_review": true,
-  "added_at": "2026-10-05T14:27:44.277Z"
- },
- {
-  "id": "movie-769297",
-  "type": "movie",
-  "title": "Beekeeper",
-  "year": "",
-  "poster": "",
-  "overview": "Dennis van Engelsdorp, former state apiarist for Pennsylvania and current entomology professor at the University of Maryland, is worried that bees-a crucial part of humanity's ecosystem-are dying.",
-  "director": "Steven Cantor",
-  "cast": [],
-  "imdb": "",
-  "genres": [],
-  "my_rating": null,
-  "watched_on": "",
-  "comment": "",
-  "status": "watched",
-  "needs_review": true,
-  "added_at": "2026-10-05T14:27:43.556Z"
- },
- {
   "id": "movie-834664",
   "type": "movie",
   "title": "Anweshippin Kandethum",
