@@ -2195,11 +2195,11 @@
    "Family"
   ],
   "my_rating": null,
-  "watched_on": "",
   "comment": "",
-  "status": "watched",
+  "status": "watchlist",
   "needs_review": true,
-  "added_at": "2026-10-05T14:25:57.898Z"
+  "added_at": "2026-10-05T14:25:57.898Z",
+  "loved": false
  },
  {
   "id": "movie-1063157",
