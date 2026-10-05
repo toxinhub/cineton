@@ -9237,7 +9237,7 @@
    "Yuriko Fuchizaki"
   ],
   "imdb": "8.0",
-  "my_rating": null,
+  "my_rating": 7,
   "watched_on": "",
   "comment": "",
   "status": "watched",
@@ -9246,7 +9246,8 @@
    "Animation",
    "Science Fiction",
    "Action"
-  ]
+  ],
+  "loved": false
  },
  {
   "id": "movie-27205",
