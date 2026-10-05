@@ -462,4 +462,4 @@ $('#publicCommentsDeleteSelected').onclick=async()=>{const ids=selectedPublicCom
 async function deletePublicComment(id){if(!confirm('Delete this public comment permanently?'))return;const msg=$('#publicCommentsMsg'),token=$('#tok').value.trim();if(!token){msg.textContent='Connect GitHub first so the delete can be authorized.';msg.className='message error';return}try{const r=await fetch(PUBLIC_COMMENTS_FN,{method:'DELETE',headers:{apikey:PUBLIC_COMMENTS_KEY,'Content-Type':'application/json','x-github-token':token},body:JSON.stringify({id})});if(!r.ok)throw Error('Delete was not authorized.');await loadPublicCommentsAdmin()}catch(e){msg.textContent=e.message||'Delete failed.';msg.className='message error'}}
 $('#publicCommentsSearch')?.addEventListener('input',loadPublicCommentsAdmin);</script>
 </body>
-</html>@media(max-width:600px){.rating-picker{gap:5px}.rating-choice{min-height:38px;padding:6px 2px;font-size:11px}}
+</html>
