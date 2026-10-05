@@ -1232,30 +1232,32 @@ update();
   }
 }
 </style>
-<style id="desktop-modal-motion-v1">
-/* Desktop modal motion — keep the mobile poster-origin feel, but soften the travel and scale for a larger dialog. */
+<style id="desktop-modal-motion-v4">
+/* Desktop modal motion — mobile-calibrated poster-origin opening, with a controlled close. */
 @media(min-width:601px){
   .cinemodal.modal-origin{
-    transition:opacity .18s ease,transform .22s cubic-bezier(.16,1,.3,1)!important;
     will-change:opacity,transform;
+    transition:opacity .18s ease,transform .20s cubic-bezier(.16,1,.3,1)!important;
   }
   .cinemodal.modal-origin[open]{
-    opacity:.02;
-    transform:translate3d(calc(var(--origin-x,0px) * .14),calc(var(--origin-y,0px) * .14),0) scale(.94)!important;
+    opacity:.01!important;
+    transform:translate3d(calc(var(--origin-x,0px) * .06),calc(var(--origin-y,0px) * .06),0) scale(.97)!important;
   }
   .cinemodal.modal-origin.modal-origin-ready[open]{
-    opacity:1;
+    opacity:1!important;
     transform:none!important;
   }
   .cinemodal.modal-returning[open]{
-    opacity:.02;
-    transform:translate3d(var(--origin-x,0px),var(--origin-y,0px),0) scale(var(--origin-scale,.18))!important;
+    opacity:.01!important;
+    transform:translate3d(calc(var(--origin-x,0px) * .10),calc(var(--origin-y,0px) * .10),0) scale(.97)!important;
+    transition:opacity .13s ease-in,transform .15s cubic-bezier(.7,0,.84,0)!important;
   }
 }
 @media(prefers-reduced-motion:reduce){
   .cinemodal.modal-origin,.cinemodal.modal-origin[open],.cinemodal.modal-origin.modal-origin-ready[open],.cinemodal.modal-returning[open]{
     transition:none!important;
     transform:none!important;
+    opacity:1!important;
   }
 }
 </style>
