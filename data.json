@@ -7880,7 +7880,7 @@
    "Harsha Vardhan"
   ],
   "imdb": "7.9",
-  "my_rating": null,
+  "my_rating": 7,
   "watched_on": "",
   "comment": "",
   "status": "watched",
@@ -7889,7 +7889,8 @@
    "Drama",
    "Romance",
    "Crime"
-  ]
+  ],
+  "loved": false
  },
  {
   "id": "movie-10634",
