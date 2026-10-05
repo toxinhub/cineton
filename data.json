@@ -57,10 +57,11 @@
   ],
   "my_rating": null,
   "watched_on": "",
-  "comment": "",
+  "comment": "টুইস্টটা ভালো ছিল।",
   "status": "watched",
   "needs_review": false,
-  "added_at": "2026-10-05T15:00:52.017Z"
+  "added_at": "2026-10-05T15:00:52.017Z",
+  "loved": false
  },
  {
   "id": "tv-126308",
