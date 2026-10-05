@@ -1808,12 +1808,13 @@
    "Drama",
    "Romance"
   ],
-  "my_rating": null,
+  "my_rating": 8,
   "watched_on": "",
-  "comment": "",
+  "comment": "খুবই ভালো জিনিস।",
   "status": "watched",
   "needs_review": true,
-  "added_at": "2026-10-05T14:27:35.634Z"
+  "added_at": "2026-10-05T14:27:35.634Z",
+  "loved": false
  },
  {
   "id": "movie-33142",
