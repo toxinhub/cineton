@@ -1,21 +1,13 @@
 <!DOCTYPE html>
-<!-- pages-deploy-trigger: 2026-10-05-imdb-glow-warm-v1 -->
-<style id="imdb-rating-glow-warm-v1">
-/* IMDb rating glow — warm IMDb-inspired yellow, restrained for CineTon's palette. */
-.imdb-chip{
-  color:#f2c94c!important;
-  border-color:#f2c94c55!important;
-  box-shadow:0 0 8px #f2c94c24!important;
-}
-.card .imdb-chip,
-.movie-card .imdb-chip{
+<!-- pages-deploy-trigger: 2026-10-05-imdb-grid-glow-v2 -->
+<style id="imdb-grid-rating-glow-v2">
+/* Main grid IMDb badge only. Modal IMDb chip keeps its original theme. */
+.c .bd{
   color:#f2c94c!important;
   text-shadow:0 0 7px #f2c94c2e!important;
 }
 @media(max-width:600px){
-  .imdb-chip{
-    box-shadow:0 0 6px #f2c94c20!important;
-  }
+  .c .bd{text-shadow:0 0 6px #f2c94c20!important}
 }
 </style>
 <style id="mobile-genre-menu-balance-v1">
