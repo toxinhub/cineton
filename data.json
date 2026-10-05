@@ -8661,16 +8661,17 @@
    "Darya Ekamasova"
   ],
   "imdb": "7.4",
-  "my_rating": null,
+  "my_rating": 7,
   "watched_on": "",
-  "comment": "",
+  "comment": "আমার কাছে অদ্ভুত ভাবে ভালো লেগেছিল।",
   "status": "watched",
   "needs_review": false,
   "genres": [
    "Drama",
    "Comedy",
    "Romance"
-  ]
+  ],
+  "loved": false
  },
  {
   "id": "movie-363093",
