@@ -3608,32 +3608,6 @@
   "loved": false
  },
  {
-  "id": "movie-1427387",
-  "type": "movie",
-  "title": "A Team Sport",
-  "year": "",
-  "poster": "",
-  "overview": "",
-  "director": "Alexis Berg, Julien Raison",
-  "cast": [
-   "Courtney Dauwalter",
-   "Kevin Schmidt",
-   "Rob Krar",
-   "Mike Ambrose",
-   "Ashley Dauwalter",
-   "Ben Dauwalter",
-   "Dick Dauwalter",
-   "Steph Lefferts"
-  ],
-  "imdb": "",
-  "my_rating": null,
-  "watched_on": "",
-  "comment": "",
-  "status": "watchlist",
-  "needs_review": true,
-  "genres": []
- },
- {
   "id": "movie-1079310",
   "type": "movie",
   "title": "Holy Cow",
