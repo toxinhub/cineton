@@ -9018,7 +9018,7 @@
    "Pooja Mohanraj"
   ],
   "imdb": "7.8",
-  "my_rating": null,
+  "my_rating": 7,
   "watched_on": "",
   "comment": "",
   "status": "watched",
@@ -9027,7 +9027,8 @@
    "Mystery",
    "Thriller",
    "Comedy"
-  ]
+  ],
+  "loved": false
  },
  {
   "id": "movie-1186350",
