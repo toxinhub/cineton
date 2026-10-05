@@ -9027,7 +9027,7 @@
    "Ajit Koshy"
   ],
   "imdb": "6.7",
-  "my_rating": null,
+  "my_rating": 5,
   "watched_on": "",
   "comment": "",
   "status": "watched",
@@ -9036,7 +9036,8 @@
    "Action",
    "Crime",
    "Thriller"
-  ]
+  ],
+  "loved": false
  },
  {
   "id": "movie-1177623",
