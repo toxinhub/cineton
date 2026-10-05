@@ -1081,12 +1081,13 @@
   "genres": [
    "Drama"
   ],
-  "my_rating": null,
+  "my_rating": 8,
   "watched_on": "",
-  "comment": "",
+  "comment": "এটা এক অদ্ভুত অনুভূতি দিয়েছিল আমাকে, ভালোই ছিল।",
   "status": "watched",
   "needs_review": true,
-  "added_at": "2026-10-05T14:27:57.180Z"
+  "added_at": "2026-10-05T14:27:57.180Z",
+  "loved": false
  },
  {
   "id": "movie-1118224",
