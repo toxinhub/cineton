@@ -136,84 +136,21 @@ input,select,textarea{background:#fffaf2;color:var(--text);border-color:var(--li
   #quickAddSection .selected-group{grid-template-columns:68px minmax(0,1fr);gap:12px}.selected-poster{width:68px!important;height:98px!important}.selected-copy strong{font-size:17px!important}.selected-copy .selected-meta{font-size:11px!important}.selected-copy .selected-state{font-size:10px!important}
   .public-admin-title{font-size:13px}.public-admin-meta{font-size:11px}.public-admin-comment{font-size:12px}
 }
-</style><style id="rating-comments-compact-v1">
-/* Rating & Comments — compact library cards: more titles, less scrolling, easier editing. */
-#librarySection .library{
-  grid-template-columns:repeat(auto-fill,minmax(128px,1fr))!important;
-  gap:8px!important;
-  margin-top:8px!important;
-}
-#librarySection .item{
-  border-radius:9px!important;
-}
-#librarySection .itemPoster{
-  aspect-ratio:2/3!important;
-}
-#librarySection .itemBody{
-  padding:7px!important;
-}
-#librarySection .itemTitle{
-  gap:4px!important;
-}
-#librarySection .itemTitle strong{
-  font-size:11px!important;
-  line-height:1.22!important;
-}
-#librarySection .meta{
-  font-size:9px!important;
-  line-height:1.3!important;
-}
-#librarySection .itemRating{
-  margin-top:2px!important;
-}
-#librarySection .itemActions{
-  padding:0 7px 7px!important;
-  gap:4px!important;
-}
-#librarySection .itemActions button{
-  min-height:30px!important;
-  padding:5px 6px!important;
-  font-size:9px!important;
-}
-@media(min-width:801px){
-  #librarySection .library{
-    grid-template-columns:repeat(auto-fill,minmax(132px,1fr))!important;
-    gap:9px!important;
-  }
-}
-@media(max-width:600px){
-  #librarySection .library{
-    grid-template-columns:repeat(3,minmax(0,1fr))!important;
-    gap:6px!important;
-  }
-  #librarySection .itemBody{
-    padding:6px!important;
-  }
-  #librarySection .itemTitle strong{
-    font-size:10px!important;
-    line-height:1.2!important;
-  }
-  #librarySection .meta{
-    font-size:8px!important;
-  }
-  #librarySection .itemActions{
-    padding:0 6px 6px!important;
-    grid-template-columns:1fr 1fr!important;
-  }
-  #librarySection .itemActions button{
-    min-height:28px!important;
-    padding:4px 5px!important;
-    font-size:8px!important;
-  }
-}
-@media(max-width:380px){
-  #librarySection .library{
-    grid-template-columns:repeat(2,minmax(0,1fr))!important;
-    gap:7px!important;
-  }
-  #librarySection .itemTitle strong{font-size:11px!important}
-  #librarySection .meta{font-size:8.5px!important}
-}
+</style><style id="rating-comments-compact-v2">
+/* Rating & Comments — compact library cards */
+#librarySection .library{grid-template-columns:repeat(auto-fill,minmax(128px,1fr))!important;gap:8px!important;margin-top:8px!important}
+#librarySection .item{border-radius:9px!important}
+#librarySection .itemPoster{aspect-ratio:2/3!important}
+#librarySection .itemBody{padding:7px!important}
+#librarySection .itemTitle{gap:4px!important}
+#librarySection .itemTitle strong{font-size:11px!important;line-height:1.22!important}
+#librarySection .meta{font-size:9px!important;line-height:1.3!important}
+#librarySection .itemRating{margin-top:2px!important}
+#librarySection .itemActions{padding:0 7px 7px!important;gap:4px!important}
+#librarySection .itemActions button{min-height:30px!important;padding:5px 6px!important;font-size:9px!important}
+@media(min-width:801px){#librarySection .library{grid-template-columns:repeat(auto-fill,minmax(132px,1fr))!important;gap:9px!important}}
+@media(max-width:600px){#librarySection .library{grid-template-columns:repeat(3,minmax(0,1fr))!important;gap:6px!important}#librarySection .itemBody{padding:6px!important}#librarySection .itemTitle strong{font-size:10px!important;line-height:1.2!important}#librarySection .meta{font-size:8px!important}#librarySection .itemActions{padding:0 6px 6px!important;grid-template-columns:1fr 1fr!important}#librarySection .itemActions button{min-height:28px!important;padding:4px 5px!important;font-size:8px!important}}
+@media(max-width:380px){#librarySection .library{grid-template-columns:repeat(2,minmax(0,1fr))!important;gap:7px!important}#librarySection .itemTitle strong{font-size:11px!important}#librarySection .meta{font-size:8.5px!important}}
 </style></head>
 <body>
 <div class="app">
