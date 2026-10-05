@@ -8718,16 +8718,17 @@
    "Lee Dong-ho"
   ],
   "imdb": "7.1",
-  "my_rating": null,
+  "my_rating": 7,
   "watched_on": "",
-  "comment": "",
+  "comment": "বাচ্চাকালে দেলহেছিলাম, মারাত্মক লেগেছিল, জীবনের প্রথম মনেস্টার মুভি বোধহয় এটা।",
   "status": "watched",
   "needs_review": false,
   "genres": [
    "Horror",
    "Drama",
    "Science Fiction"
-  ]
+  ],
+  "loved": false
  },
  {
   "id": "movie-6977",
