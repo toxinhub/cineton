@@ -377,6 +377,8 @@ function openEdit(i){
  $('#editStatusLabel').textContent='Status: '+(m.status==='watched'?'Watched':'Watchlist');
  $('#editStatusToggle').textContent=m.status==='watched'?'Move to Watchlist':'Mark as Watched';
  $('#editStatusToggle').setAttribute('aria-label',m.status==='watched'?'Move this title to watchlist':'Mark this title as watched');
+ const ratingField=$('#editRatingPicker').closest('.field');
+ ratingField.hidden=m.status!=='watched';
  $('#editRating').value=m.my_rating??'';
  document.querySelectorAll('#editRatingPicker .rating-choice').forEach(b=>{const selected=String(m.my_rating??'')===b.dataset.rating;b.classList.toggle('selected',selected);b.setAttribute('aria-checked',String(selected));});
  $('#editComment').value=m.comment||'';
@@ -413,7 +415,7 @@ $('#editDelete').onclick=async()=>{
   renderAll();
  }catch(e){alert(e.message||'Remove failed.');}
 };
-$('#editStatusToggle').onclick=()=>{if(currentEditIndex<0)return;const m=data[currentEditIndex];m.status=m.status==='watched'?'watchlist':'watched';if(m.status==='watched')m.watched_on=new Date().toISOString().slice(0,10);else delete m.watched_on;$('#editStatusLabel').textContent='Status: '+(m.status==='watched'?'Watched':'Watchlist');$('#editStatusToggle').textContent=m.status==='watched'?'Move to Watchlist':'Mark as Watched';$('#editStatusToggle').setAttribute('aria-label',m.status==='watched'?'Move this title to watchlist':'Mark this title as watched');markDraft()};
+$('#editStatusToggle').onclick=()=>{if(currentEditIndex<0)return;const m=data[currentEditIndex];m.status=m.status==='watched'?'watchlist':'watched';if(m.status==='watched')m.watched_on=new Date().toISOString().slice(0,10);else delete m.watched_on;$('#editStatusLabel').textContent='Status: '+(m.status==='watched'?'Watched':'Watchlist');$('#editStatusToggle').textContent=m.status==='watched'?'Move to Watchlist':'Mark as Watched';$('#editStatusToggle').setAttribute('aria-label',m.status==='watched'?'Move this title to watchlist':'Mark this title as watched');$('#editRatingPicker').closest('.field').hidden=m.status!=='watched';markDraft()};
 $('#loveToggle').onclick=()=>{const b=$('#loveToggle'),next=b.getAttribute('aria-pressed')!=='true';b.setAttribute('aria-pressed',String(next));b.classList.toggle('loved',next);$('#loveIcon').textContent=next?'❤️':'♡';$('#loveText').textContent=next?'Loved':'Add Love';markDraft()};
 $('#savePersonal').onclick=async()=>{
  if(currentEditIndex<0)return;
@@ -421,7 +423,7 @@ $('#savePersonal').onclick=async()=>{
  let old={...m};
  if(v!==''&&(Number(v)<0||Number(v)>10||!/^(?:\d{1,2})(?:\.\d+)?$/.test(v)))return alert('Rating must be between 0 and 10.');
  try{
-  m.my_rating=v===''?null:+v;
+  if(m.status==='watched')m.my_rating=v===''?null:+v;
   m.comment=$('#editComment').value.trim();
   m.loved=$('#loveToggle').getAttribute('aria-pressed')==='true';
   $('#savePersonal').disabled=true;
