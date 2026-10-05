@@ -601,12 +601,13 @@
    "Science Fiction",
    "Adventure"
   ],
-  "my_rating": null,
+  "my_rating": 8,
   "watched_on": "",
-  "comment": "",
+  "comment": "মিষ্টি একটা এনিমেশন!",
   "status": "watched",
   "needs_review": false,
-  "added_at": "2026-10-05T14:28:11.331Z"
+  "added_at": "2026-10-05T14:28:11.331Z",
+  "loved": false
  },
  {
   "id": "movie-1146577",
