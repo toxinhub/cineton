@@ -172,12 +172,13 @@
    "Drama",
    "Romance"
   ],
-  "my_rating": null,
+  "my_rating": 8,
   "watched_on": "",
   "comment": "",
   "status": "watched",
   "needs_review": false,
-  "added_at": "2026-10-05T14:28:21.839Z"
+  "added_at": "2026-10-05T14:28:21.839Z",
+  "loved": false
  },
  {
   "id": "movie-899112",
