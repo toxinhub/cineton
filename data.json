@@ -568,12 +568,13 @@
    "Family",
    "Drama"
   ],
-  "my_rating": null,
+  "my_rating": 8,
   "watched_on": "",
-  "comment": "",
+  "comment": "আহা, মন জুড়ানো ফ্লিম।",
   "status": "watched",
   "needs_review": false,
-  "added_at": "2026-10-05T14:28:12.043Z"
+  "added_at": "2026-10-05T14:28:12.043Z",
+  "loved": true
  },
  {
   "id": "movie-1184918",
