@@ -2628,7 +2628,7 @@
    "Jana Havlickova"
   ],
   "imdb": "5.9",
-  "my_rating": null,
+  "my_rating": 5,
   "watched_on": "",
   "comment": "প্রথমবার এইটাইপের মুভি দেখেছিলাম, দেখে তো চক্ষু চড়কগাছে উঠেছিল...",
   "status": "watched",
@@ -2636,7 +2636,8 @@
   "added_at": "2026-10-03T18:24:17.293Z",
   "genres": [
    "Horror"
-  ]
+  ],
+  "loved": false
  },
  {
   "id": "movie-1724",
