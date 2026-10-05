@@ -1936,10 +1936,11 @@
   ],
   "my_rating": null,
   "watched_on": "",
-  "comment": "",
+  "comment": "কত হাইপের জিনিস, কতজনের ভালো লাগছে, ব্যবসা সফল মুভি। অথচ আমার কাছে একদমই ভালো লাগেনি।",
   "status": "watched",
   "needs_review": true,
-  "added_at": "2026-10-05T14:26:04.450Z"
+  "added_at": "2026-10-05T14:26:04.450Z",
+  "loved": false
  },
  {
   "id": "movie-117996",
