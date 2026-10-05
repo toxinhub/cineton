@@ -6644,7 +6644,7 @@
    "Will Merrick"
   ],
   "imdb": "7.6",
-  "my_rating": null,
+  "my_rating": 7,
   "watched_on": "",
   "comment": "",
   "status": "watched",
@@ -6652,7 +6652,8 @@
   "genres": [
    "Action",
    "Drama"
-  ]
+  ],
+  "loved": false
  },
  {
   "id": "movie-1065426",
