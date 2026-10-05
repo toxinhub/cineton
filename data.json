@@ -447,10 +447,11 @@
   ],
   "my_rating": null,
   "watched_on": "",
-  "comment": "",
+  "comment": "unexpectedly ভালো ছিল।",
   "status": "watched",
   "needs_review": true,
-  "added_at": "2026-10-05T14:28:14.948Z"
+  "added_at": "2026-10-05T14:28:14.948Z",
+  "loved": false
  },
  {
   "id": "movie-858288",
