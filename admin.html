@@ -266,7 +266,7 @@ input,select,textarea{background:#fffaf2;color:var(--text);border-color:var(--li
 <dialog id="editModal" class="admin-modal" aria-labelledby="editTitle">
 <div class="modal-inner"><button id="closeEdit" class="x" type="button" aria-label="Close">×</button>
 <div class="admin-detail"><img id="editPoster" alt=""><div><h2 id="editTitle"></h2><div id="editMeta" class="modal-meta"></div><div class="modal-status-row"><span id="editStatusLabel" class="modal-status-label"></span><button id="editStatusToggle" class="btn secondary" type="button"></button></div><div class="personal-box" style="margin-top:12px"><h3>Personal Interaction</h3>
-<div class="personal-grid"><div class="field"><label for="editRating">My Rating</label><input id="editRating" type="number" min="0" max="10" step="0.5" inputmode="decimal" placeholder="0–10"></div>
+<div class="personal-grid"><div class="field"><label>My Rating</label><div id="editRatingPicker" class="rating-picker" role="radiogroup" aria-label="My Rating"><button type="button" class="rating-choice" data-rating="0" role="radio" aria-label="Rate 0 out of 10">0</button><button type="button" class="rating-choice" data-rating="1" role="radio" aria-label="Rate 1 out of 10">1</button><button type="button" class="rating-choice" data-rating="2" role="radio" aria-label="Rate 2 out of 10">2</button><button type="button" class="rating-choice" data-rating="3" role="radio" aria-label="Rate 3 out of 10">3</button><button type="button" class="rating-choice" data-rating="4" role="radio" aria-label="Rate 4 out of 10">4</button><button type="button" class="rating-choice" data-rating="5" role="radio" aria-label="Rate 5 out of 10">5</button><button type="button" class="rating-choice" data-rating="6" role="radio" aria-label="Rate 6 out of 10">6</button><button type="button" class="rating-choice" data-rating="7" role="radio" aria-label="Rate 7 out of 10">7</button><button type="button" class="rating-choice" data-rating="8" role="radio" aria-label="Rate 8 out of 10">8</button><button type="button" class="rating-choice" data-rating="9" role="radio" aria-label="Rate 9 out of 10">9</button></div><input id="editRating" type="hidden" value=""></div>
 <div class="field"><label for="editComment">Comment</label><textarea id="editComment" placeholder="Write your thoughts about this movie..."></textarea></div></div>
 <div style="margin-top:8px"><button id="loveToggle" class="love-toggle" type="button" aria-pressed="false"><span id="loveIcon">♡</span><span id="loveText">Add Love</span></button></div>
 </div></div></div>
@@ -369,7 +369,7 @@ function openEdit(i){
  $('#editStatusLabel').textContent='Status: '+(m.status==='watched'?'Watched':'Watchlist');
  $('#editStatusToggle').textContent=m.status==='watched'?'Move to Watchlist':'Mark as Watched';
  $('#editStatusToggle').setAttribute('aria-label',m.status==='watched'?'Move this title to watchlist':'Mark this title as watched');
- $('#editRating').value=m.my_rating??'';
+ $('#editRating').value=m.my_rating??'';\n document.querySelectorAll('#editRatingPicker .rating-choice').forEach(b=>{const selected=String(m.my_rating??'')===b.dataset.rating;b.classList.toggle('selected',selected);b.setAttribute('aria-checked',String(selected));});
  $('#editComment').value=m.comment||'';
  const loved=!!m.loved; $('#loveToggle').classList.toggle('loved',loved); $('#loveToggle').setAttribute('aria-pressed',String(loved)); $('#loveIcon').textContent=loved?'❤️':'♡'; $('#loveText').textContent=loved?'Loved':'Add Love';
  $('#draftState').textContent='';
@@ -389,7 +389,7 @@ function openRandomMovie(){
 }
 window.editTitle=openEdit;
 function markDraft(){draftDirty=true;$('#draftState').textContent='Unsaved changes';}
-$('#editRating').addEventListener('input',markDraft);$('#editComment').addEventListener('input',markDraft);
+document.querySelectorAll('#editRatingPicker .rating-choice').forEach(b=>b.onclick=()=>{const value=b.dataset.rating;$('#editRating').value=value;document.querySelectorAll('#editRatingPicker .rating-choice').forEach(x=>{const selected=x===b;x.classList.toggle('selected',selected);x.setAttribute('aria-checked',String(selected));});markDraft()});\n$('#editRating').addEventListener('input',markDraft);$('#editComment').addEventListener('input',markDraft);
 $('#editDelete').onclick=async()=>{
  if(currentEditIndex<0)return;
  const m=data[currentEditIndex];
