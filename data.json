@@ -1,5 +1,1834 @@
 [
  {
+  "id": "tv-110316",
+  "type": "tv",
+  "title": "Alice in Borderland",
+  "year": "2020",
+  "poster": "/Ac8ruycRXzgcsndTZFK6ouGA0FA.jpg",
+  "overview": "With his two friends, a video-game-obsessed young man finds himself in a strange version of Tokyo where they must compete in dangerous games to win.",
+  "director": "",
+  "cast": [
+   "Kento Yamazaki",
+   "Tao Tsuchiya"
+  ],
+  "imdb": "7.8",
+  "genres": [
+   "Mystery",
+   "Drama",
+   "Action & Adventure"
+  ],
+  "my_rating": null,
+  "watched_on": "",
+  "comment": "",
+  "status": "watched",
+  "needs_review": true,
+  "added_at": "2026-10-05T14:28:22.562Z"
+ },
+ {
+  "id": "movie-21297",
+  "type": "movie",
+  "title": "Wake Up Sid",
+  "year": "2009",
+  "poster": "/1UpgW67W6Do0xizTuE26bMQFLdL.jpg",
+  "overview": "Wake Up Sid! is the story of a lazy Mumbai college student who does absolutely nothing, with a turn of events will Sid realize his potential in this world and become a success in the fast-paced life of Mumbai.",
+  "director": "Ayan Mukerji",
+  "cast": [
+   "Ranbir Kapoor",
+   "Konkona Sen Sharma",
+   "Rahul Khanna",
+   "Anupam Kher",
+   "Supriya Pathak",
+   "Namit Das",
+   "Shikha Talsania",
+   "Kashmera Shah"
+  ],
+  "imdb": "7.6",
+  "genres": [
+   "Comedy",
+   "Drama",
+   "Romance"
+  ],
+  "my_rating": null,
+  "watched_on": "",
+  "comment": "",
+  "status": "watched",
+  "needs_review": false,
+  "added_at": "2026-10-05T14:28:21.839Z"
+ },
+ {
+  "id": "movie-899112",
+  "type": "movie",
+  "title": "Violent Night",
+  "year": "2022",
+  "poster": "/e8CpMgdyihz9Td7amQDqubPuzfN.jpg",
+  "overview": "When a team of mercenaries breaks into a wealthy family compound on Christmas Eve, taking everyone inside hostage, the team isn’t prepared for a surprise combatant: Santa Claus is on the grounds, and he’s about to show why this Nick is no saint.",
+  "director": "Tommy Wirkola",
+  "cast": [
+   "David Harbour",
+   "John Leguizamo",
+   "Beverly D'Angelo",
+   "Alex Hassell",
+   "Alexis Louder",
+   "Edi Patterson",
+   "Cam Gigandet",
+   "Leah Brady"
+  ],
+  "imdb": "6.7",
+  "genres": [
+   "Action",
+   "Comedy",
+   "Fantasy"
+  ],
+  "my_rating": null,
+  "watched_on": "",
+  "comment": "",
+  "status": "watched",
+  "needs_review": false,
+  "added_at": "2026-10-05T14:28:20.801Z"
+ },
+ {
+  "id": "movie-308266",
+  "type": "movie",
+  "title": "War Dogs",
+  "year": "2016",
+  "poster": "/mDcPRjZC1bb6LavFU3gwsWdVfCM.jpg",
+  "overview": "Based on the true story of two young men, David Packouz and Efraim Diveroli, who won a $300 million contract from the Pentagon to arm America's allies in Afghanistan.",
+  "director": "Todd Phillips",
+  "cast": [
+   "Miles Teller",
+   "Jonah Hill",
+   "Ana de Armas",
+   "Bradley Cooper",
+   "Kevin Pollak",
+   "Patrick St. Esprit",
+   "Shaun Toub",
+   "JB Blanc"
+  ],
+  "imdb": "7.1",
+  "genres": [
+   "Comedy",
+   "Crime",
+   "Drama"
+  ],
+  "my_rating": null,
+  "watched_on": "",
+  "comment": "",
+  "status": "watched",
+  "needs_review": false,
+  "added_at": "2026-10-05T14:28:20.079Z"
+ },
+ {
+  "id": "movie-70981",
+  "type": "movie",
+  "title": "Prometheus",
+  "year": "2012",
+  "poster": "/qsYQflQhOuhDpQ0W2aOcwqgDAeI.jpg",
+  "overview": "A team of explorers discover a clue to the origins of mankind on Earth, leading them on a journey to the darkest corners of the universe. There, they must fight a terrifying battle to save the future of the human race.",
+  "director": "Ridley Scott",
+  "cast": [
+   "Noomi Rapace",
+   "Michael Fassbender",
+   "Charlize Theron",
+   "Idris Elba",
+   "Guy Pearce",
+   "Logan Marshall-Green",
+   "Sean Harris",
+   "Rafe Spall"
+  ],
+  "imdb": "7.0",
+  "genres": [
+   "Science Fiction",
+   "Mystery",
+   "Horror"
+  ],
+  "my_rating": null,
+  "watched_on": "",
+  "comment": "",
+  "status": "watched",
+  "needs_review": false,
+  "added_at": "2026-10-05T14:28:19.350Z"
+ },
+ {
+  "id": "movie-76726",
+  "type": "movie",
+  "title": "Chronicle",
+  "year": "2012",
+  "poster": "/kdyrdFIt29FUmLIKvedAc2j4rpo.jpg",
+  "overview": "Three high school students make an incredible discovery, leading to their developing uncanny powers beyond their understanding. As they learn to control their abilities and use them to their advantage, their lives start to spin out of control, and their darker sides begin to take over.",
+  "director": "Josh Trank",
+  "cast": [
+   "Dane DeHaan",
+   "Alex Russell",
+   "Michael B. Jordan",
+   "Michael Kelly",
+   "Ashley Hinshaw",
+   "Bo Petersen",
+   "Anna Wood",
+   "Rudi Malcolm"
+  ],
+  "imdb": "7.0",
+  "genres": [
+   "Science Fiction",
+   "Drama",
+   "Thriller"
+  ],
+  "my_rating": null,
+  "watched_on": "",
+  "comment": "",
+  "status": "watched",
+  "needs_review": false,
+  "added_at": "2026-10-05T14:28:18.624Z"
+ },
+ {
+  "id": "movie-79070",
+  "type": "movie",
+  "title": "Sleepless Night",
+  "year": "2011",
+  "poster": "/tuqivhp6bF6hEqrBtTBi1QYX9dP.jpg",
+  "overview": "Vincent, a police officer, and his partner Manuel steal a large amount of cocaine from José Marciano, a ruthless crime lord who is quick to seek revenge, endangering Vincent's life, career and family.",
+  "director": "Frédéric Jardin",
+  "cast": [
+   "Tomer Sisley",
+   "Serge Riaboukine",
+   "Julien Boisselier",
+   "JoeyStarr",
+   "Laurent Stocker",
+   "Birol Ünel",
+   "Lizzie Brocheré",
+   "Samy Seghir"
+  ],
+  "imdb": "6.6",
+  "genres": [
+   "Drama",
+   "Thriller"
+  ],
+  "my_rating": null,
+  "watched_on": "",
+  "comment": "",
+  "status": "watched",
+  "needs_review": false,
+  "added_at": "2026-10-05T14:28:17.889Z"
+ },
+ {
+  "id": "tv-67744",
+  "type": "tv",
+  "title": "MINDHUNTER",
+  "year": "2017",
+  "poster": "/fbKE87mojpIETWepSbD5Qt741fp.jpg",
+  "overview": "An agent in the FBI's Elite Serial Crime Unit develops profiling techniques as he pursues notorious serial killers and rapists.",
+  "director": "Joe Penhall",
+  "cast": [
+   "Jonathan Groff",
+   "Holt McCallany",
+   "Anna Torv",
+   "Stacey Roca"
+  ],
+  "imdb": "8.6",
+  "genres": [
+   "Drama",
+   "Crime"
+  ],
+  "my_rating": null,
+  "watched_on": "",
+  "comment": "",
+  "status": "watched",
+  "needs_review": true,
+  "added_at": "2026-10-05T14:28:17.136Z"
+ },
+ {
+  "id": "movie-1372604",
+  "type": "movie",
+  "title": "36-24-36",
+  "year": "2024",
+  "poster": "/vq8xrYb6AcAxT4i3MdqtKaZIipZ.jpg",
+  "overview": "Having insecurities of being a plus sized person, Sayra an aspiring event planner falls in love with Tahsir. Sooner the story flows, Sayra confronts her past trauma and her esteems falls at stake. She resolute with self-love, respect and her acceptance towards the society challenging the perception of beauty.",
+  "director": "Rezaur Rahman",
+  "cast": [
+   "Kaarina Kaisar",
+   "Prarthana Fardin Dighi",
+   "Sayed Zaman Shawon",
+   "Golam Kibria Tanvir",
+   "Abu Hurayra Tanvir",
+   "Shahidul Alam Sachchu",
+   "Manosh Bandyopadhyay",
+   "Monira Mithu"
+  ],
+  "imdb": "6.3",
+  "genres": [
+   "Romance",
+   "Comedy"
+  ],
+  "my_rating": null,
+  "watched_on": "",
+  "comment": "",
+  "status": "watched",
+  "needs_review": false,
+  "added_at": "2026-10-05T14:28:16.398Z"
+ },
+ {
+  "id": "movie-1100782",
+  "type": "movie",
+  "title": "Smile 2",
+  "year": "2024",
+  "poster": "/ht8Uv9QPv9y7K0RvUyJIaXOZTfd.jpg",
+  "overview": "About to embark on a new world tour, global pop sensation Skye Riley begins experiencing increasingly terrifying and inexplicable events. Overwhelmed by the escalating horrors and the pressures of fame, Skye is forced to face her dark past to regain control of her life before it spirals out of control.",
+  "director": "Parker Finn",
+  "cast": [
+   "Naomi Scott",
+   "Rosemarie DeWitt",
+   "Lukas Gage",
+   "Miles Gutierrez-Riley",
+   "Peter Jacobson",
+   "Ray Nicholson",
+   "Dylan Gelula",
+   "Raúl Castillo"
+  ],
+  "imdb": "6.7",
+  "genres": [
+   "Horror",
+   "Mystery"
+  ],
+  "my_rating": null,
+  "watched_on": "",
+  "comment": "",
+  "status": "watched",
+  "needs_review": true,
+  "added_at": "2026-10-05T14:28:15.672Z"
+ },
+ {
+  "id": "tv-194764",
+  "type": "tv",
+  "title": "The Penguin",
+  "year": "2024",
+  "poster": "/vOWcqC4oDQws1doDWLO7d3dh5qc.jpg",
+  "overview": "With the city in peril following the seawall's collapse, Oswald \"Oz\" Cobb seeks to fill the power vacuum left by the death of Carmine Falcone and finally give his mother Francis the life he's always promised. But first, Oz must confront his enemies and his own demoralizing reputation as \"the Penguin.\"",
+  "director": "Lauren LeFranc",
+  "cast": [
+   "Colin Farrell",
+   "Cristin Milioti",
+   "Rhenzy Feliz",
+   "Deirdre O'Connell",
+   "Clancy Brown",
+   "Carmen Ejogo",
+   "Shohreh Aghdashloo",
+   "Theo Rossi"
+  ],
+  "imdb": "8.6",
+  "genres": [
+   "Drama",
+   "Crime"
+  ],
+  "my_rating": null,
+  "watched_on": "",
+  "comment": "",
+  "status": "watched",
+  "needs_review": true,
+  "added_at": "2026-10-05T14:28:14.948Z"
+ },
+ {
+  "id": "movie-858288",
+  "type": "movie",
+  "title": "200: Halla Ho",
+  "year": "2021",
+  "poster": "/t6Py6jXrJ1SuHU29DdwxYxEwNtf.jpg",
+  "overview": "Inspired by true events, the film narrates the story of women terrorised by a mobster who gang-raped, robbed, terrorised and murdered 300 families for 15 years until he met his nemesis in a young Dalit girl.",
+  "director": "Sarthak Dasgupta",
+  "cast": [
+   "Amol Palekar",
+   "Barun Sobti",
+   "Ishtiyak Khan",
+   "Sahil Khattar",
+   "Upendra Limaye",
+   "Rinku Rajguru",
+   "Flora Saini",
+   "Indraneil Sengupta"
+  ],
+  "imdb": "7.4",
+  "genres": [
+   "Crime",
+   "Thriller"
+  ],
+  "my_rating": null,
+  "watched_on": "",
+  "comment": "",
+  "status": "watched",
+  "needs_review": true,
+  "added_at": "2026-10-05T14:28:14.220Z"
+ },
+ {
+  "id": "movie-21463",
+  "type": "movie",
+  "title": "Roja",
+  "year": "1992",
+  "poster": "/4vsfaW8actUgPRK79zgGlgpSSeB.jpg",
+  "overview": "Roja, a simple girl from a village in Tamil Nadu, makes desperate efforts to find her husband, Rishi, after he is kidnapped by militants during a secret undercover mission in Kashmir.",
+  "director": "Mani Ratnam",
+  "cast": [
+   "Arvind Swamy",
+   "Madhoo",
+   "Nassar",
+   "Janagaraj",
+   "Pankaj Kapur",
+   "Shiva Rindani",
+   "Vaishnavi",
+   "C. K. Saraswathi"
+  ],
+  "imdb": "8.1",
+  "genres": [
+   "Drama",
+   "Action",
+   "Romance"
+  ],
+  "my_rating": null,
+  "watched_on": "",
+  "comment": "",
+  "status": "watched",
+  "needs_review": false,
+  "added_at": "2026-10-05T14:28:13.513Z"
+ },
+ {
+  "id": "movie-1118031",
+  "type": "movie",
+  "title": "Apocalypse Z: The Beginning of the End",
+  "year": "2024",
+  "poster": "/wIGJnIFQlESkC2rLpfA8EDHqk4g.jpg",
+  "overview": "When a kind of rabies that transforms people into aggressive creatures spreads across the planet, Manel isolates himself at home with his cat, relying on his wits to survive; but soon they must go out in search of food, by land and by sea, dodging many dangers.",
+  "director": "Carles Torrens",
+  "cast": [
+   "Francisco Ortiz",
+   "José María Yázpik",
+   "Berta Vázquez",
+   "Iria del Río",
+   "Marta Poveda",
+   "Amalia Gómez",
+   "María Salgueiro",
+   "Yuri Mykhaylychenko"
+  ],
+  "imdb": "6.1",
+  "genres": [
+   "Drama",
+   "Action",
+   "Horror"
+  ],
+  "my_rating": null,
+  "watched_on": "",
+  "comment": "",
+  "status": "watched",
+  "needs_review": false,
+  "added_at": "2026-10-05T14:28:12.789Z"
+ },
+ {
+  "id": "movie-1136423",
+  "type": "movie",
+  "title": "Meiyazhagan",
+  "year": "2024",
+  "poster": "/ngDEH7YqVaMCAD4LpNxRl6ScJnw.jpg",
+  "overview": "Twenty-two years after losing his home, Arulmozhi Varman returns to his native Thanjavur to attend his cousin's wedding. Amidst the celebrations, Arul is reintroduced to an upbeat man whom he cannot recall. With the help of the unknown man, Arul reconnects with his past.",
+  "director": "C. Prem Kumar",
+  "cast": [
+   "Arvind Swamy",
+   "Karthi",
+   "Rajkiran",
+   "Jayaprakash",
+   "Sri Divya",
+   "Devadarshini",
+   "Swathi Konde",
+   "Rajkumar"
+  ],
+  "imdb": "8.5",
+  "genres": [
+   "Family",
+   "Drama"
+  ],
+  "my_rating": null,
+  "watched_on": "",
+  "comment": "",
+  "status": "watched",
+  "needs_review": false,
+  "added_at": "2026-10-05T14:28:12.043Z"
+ },
+ {
+  "id": "movie-1184918",
+  "type": "movie",
+  "title": "The Wild Robot",
+  "year": "2024",
+  "poster": "/wTnV3PCVW5O92JMrFvvrRcV39RU.jpg",
+  "overview": "After a shipwreck, an intelligent robot called Roz is stranded on an uninhabited island. To survive the harsh environment, Roz bonds with the island's animals and cares for an orphaned baby goose.",
+  "director": "Chris Sanders",
+  "cast": [
+   "Lupita Nyong'o",
+   "Pedro Pascal",
+   "Kit Connor",
+   "Bill Nighy",
+   "Stephanie Hsu",
+   "Matt Berry",
+   "Ving Rhames",
+   "Mark Hamill"
+  ],
+  "imdb": "8.2",
+  "genres": [
+   "Family",
+   "Animation",
+   "Science Fiction",
+   "Adventure"
+  ],
+  "my_rating": null,
+  "watched_on": "",
+  "comment": "",
+  "status": "watched",
+  "needs_review": false,
+  "added_at": "2026-10-05T14:28:11.331Z"
+ },
+ {
+  "id": "movie-1146577",
+  "type": "movie",
+  "title": "CTRL",
+  "year": "2024",
+  "poster": "/eCaaJkJqRA6unsVe5hvtgJq301H.jpg",
+  "overview": "Nella and Joe are the perfect influencer couple. But when he cheats on her, she turns to an AI app to erase him from her life — until it takes control.",
+  "director": "Vikramaditya Motwane",
+  "cast": [
+   "Ananya Panday",
+   "Vihaan Samat",
+   "Aparshakti Khurana",
+   "Devika Vatsa",
+   "Kamakshi Bhat",
+   "Samit Gambhir",
+   "Ravish Desai",
+   "Suchita Trivedi"
+  ],
+  "imdb": "6.2",
+  "genres": [
+   "Thriller",
+   "Drama"
+  ],
+  "my_rating": null,
+  "watched_on": "",
+  "comment": "",
+  "status": "watched",
+  "needs_review": false,
+  "added_at": "2026-10-05T14:28:10.209Z"
+ },
+ {
+  "id": "movie-533535",
+  "type": "movie",
+  "title": "Deadpool & Wolverine",
+  "year": "2024",
+  "poster": "/8cdWjvZQUExUUTzyp4t6EDMubfO.jpg",
+  "overview": "A listless Wade Wilson toils away in civilian life with his days as the morally flexible mercenary, Deadpool, behind him. But when his homeworld faces an existential threat, Wade must reluctantly suit-up again with an even more reluctant Wolverine.",
+  "director": "Shawn Levy",
+  "cast": [
+   "Ryan Reynolds",
+   "Hugh Jackman",
+   "Emma Corrin",
+   "Matthew Macfadyen",
+   "Dafne Keen",
+   "Jon Favreau",
+   "Morena Baccarin",
+   "Rob Delaney"
+  ],
+  "imdb": "7.5",
+  "genres": [
+   "Action",
+   "Comedy",
+   "Science Fiction"
+  ],
+  "my_rating": null,
+  "watched_on": "",
+  "comment": "",
+  "status": "watched",
+  "needs_review": true,
+  "added_at": "2026-10-05T14:28:09.499Z"
+ },
+ {
+  "id": "tv-270908",
+  "type": "tv",
+  "title": "Rockstar",
+  "year": "2005",
+  "poster": "/kb8L9BvXQu2l6KXHCPuhgt0i9O3.jpg",
+  "overview": "Rock Star is a television series produced by Mark Burnett, David Geffen, Lisa Hennessy, and Al Berman in which aspiring singers from around the world competed to become the lead singer of a featured group.[1] It debuted on CBS on July 11, 2005, to mediocre ratings.\n\nThe show was hosted by television personality and commercial spokeswoman Brooke Burke and Jane's Addiction lead guitarist Dave Navarro. In season one Australian rock band INXS chose J.D. Fortune as their new lead singer. For season two, the newly formed supergroup hard rock band, Rock Star Supernova chose Lukas Rossi as the lead singer.",
+  "director": "Mark Burnett",
+  "cast": [
+   "Dave Navarro",
+   "Brooke Burke",
+   "Jason Newsted",
+   "Tommy Lee",
+   "Gilby Clarke",
+   "Dilana",
+   "Toby Rand",
+   "Magni Ásgeirsson"
+  ],
+  "imdb": "",
+  "genres": [
+   "Reality"
+  ],
+  "my_rating": null,
+  "watched_on": "",
+  "comment": "",
+  "status": "watched",
+  "needs_review": true,
+  "added_at": "2026-10-05T14:28:08.697Z"
+ },
+ {
+  "id": "movie-559969",
+  "type": "movie",
+  "title": "El Camino: A Breaking Bad Movie",
+  "year": "2019",
+  "poster": "/ePXuKdXZuJx8hHMNr2yM4jY2L7Z.jpg",
+  "overview": "In the wake of his dramatic escape from captivity, Jesse Pinkman must come to terms with his past in order to forge some kind of future.",
+  "director": "Vince Gilligan",
+  "cast": [
+   "Aaron Paul",
+   "Jesse Plemons",
+   "Charles Baker",
+   "Matt Jones",
+   "Scott MacArthur",
+   "Larry Hankin",
+   "Scott Shepherd",
+   "Tom Bower"
+  ],
+  "imdb": "7.3",
+  "genres": [
+   "Crime",
+   "Drama",
+   "Thriller"
+  ],
+  "my_rating": null,
+  "watched_on": "",
+  "comment": "",
+  "status": "watched",
+  "needs_review": false,
+  "added_at": "2026-10-05T14:28:07.388Z"
+ },
+ {
+  "id": "movie-252178",
+  "type": "movie",
+  "title": "'71",
+  "year": "2014",
+  "poster": "/2ZfUpDXEFQxEyXfzfxGFA9rcbP1.jpg",
+  "overview": "A young British soldier must find his way back to safety after his unit accidentally abandons him during a riot in the streets of Belfast.",
+  "director": "Yann Demange",
+  "cast": [
+   "Jack O'Connell",
+   "Sean Harris",
+   "Paul Anderson",
+   "Sam Reid",
+   "Sam Hazeldine",
+   "Barry Keoghan",
+   "Charlie Murphy",
+   "Richard Dormer"
+  ],
+  "imdb": "7.2",
+  "genres": [
+   "Thriller",
+   "Action",
+   "Drama",
+   "War"
+  ],
+  "my_rating": null,
+  "watched_on": "",
+  "comment": "",
+  "status": "watched",
+  "needs_review": false,
+  "added_at": "2026-10-05T14:28:06.292Z"
+ },
+ {
+  "id": "movie-801688",
+  "type": "movie",
+  "title": "Kalki 2898-AD",
+  "year": "2024",
+  "poster": "/rstcAnBeCkxNQjNp3YXrF6IP1tW.jpg",
+  "overview": "In the year 2898 AD, around 6000 years after Kurukshetra war, Ashwatthama gears up for his final battle of redemption at the sign of hope in a dystopian world and Bhairava, a wisecracking and self-interested bounty hunter, tired of the perilous life becomes the hurdle in the process.",
+  "director": "Nag Ashwin",
+  "cast": [
+   "Amitabh Bachchan",
+   "Prabhas",
+   "Deepika Padukone",
+   "Kamal Haasan",
+   "Saswata Chatterjee",
+   "Shobana",
+   "Rajendra Prasad",
+   "Pasupathy"
+  ],
+  "imdb": "7.0",
+  "genres": [
+   "Drama",
+   "Action",
+   "Fantasy",
+   "Science Fiction"
+  ],
+  "my_rating": null,
+  "watched_on": "",
+  "comment": "",
+  "status": "watched",
+  "needs_review": false,
+  "added_at": "2026-10-05T14:28:05.559Z"
+ },
+ {
+  "id": "movie-1136418",
+  "type": "movie",
+  "title": "Raayan",
+  "year": "2024",
+  "poster": "/dHMbqpG7vZk1iEJaEkCCyixFbos.jpg",
+  "overview": "Raayan, a simpleton patriarch has to protect his family when they inadvertently get muddled in a violent world with whirlpool of murder, debauchery, feud, politics and power, a quagmire that he has repeatedly warned them not to get pulled into.",
+  "director": "Dhanush",
+  "cast": [
+   "Dhanush",
+   "Dushara Vijayan",
+   "Sundeep Kishan",
+   "Kalidas Jayaram",
+   "S. J. Suryah",
+   "Selvaraghavan",
+   "Aparna Balamurali",
+   "Prakash Raj"
+  ],
+  "imdb": "6.5",
+  "genres": [
+   "Action",
+   "Drama",
+   "Thriller"
+  ],
+  "my_rating": null,
+  "watched_on": "",
+  "comment": "",
+  "status": "watched",
+  "needs_review": false,
+  "added_at": "2026-10-05T14:28:04.815Z"
+ },
+ {
+  "id": "movie-5038",
+  "type": "movie",
+  "title": "Vicky Cristina Barcelona",
+  "year": "2008",
+  "poster": "/ekAIg0GSbbHTH7y1GPgWj0brLTW.jpg",
+  "overview": "Two girlfriends on a summer holiday in Spain become enamored with the same painter, unaware that his ex-wife, with whom he has a tempestuous relationship, is about to re-enter the picture.",
+  "director": "Woody Allen",
+  "cast": [
+   "Scarlett Johansson",
+   "Rebecca Hall",
+   "Javier Bardem",
+   "Penélope Cruz",
+   "Christopher Evan Welch",
+   "Chris Messina",
+   "Patricia Clarkson",
+   "Kevin Dunn"
+  ],
+  "imdb": "7.1",
+  "genres": [
+   "Drama",
+   "Romance"
+  ],
+  "my_rating": null,
+  "watched_on": "",
+  "comment": "",
+  "status": "watched",
+  "needs_review": false,
+  "added_at": "2026-10-05T14:28:04.144Z"
+ },
+ {
+  "id": "movie-1166133",
+  "type": "movie",
+  "title": "Bramayugam",
+  "year": "2024",
+  "poster": "/snQLwRrfQAl5YFKVefZq9Lbscki.jpg",
+  "overview": "A folk singer in 17th-century Kerala discovers a mansion. Inside, he encounters an enigmatic cook and a powerful master, setting in motion a chain of events that changes his life.",
+  "director": "Rahul Sadasivan",
+  "cast": [
+   "Arjun Ashokan",
+   "Mammootty",
+   "Sidharth Bharathan",
+   "Manikandan Achari",
+   "Amalda Liz",
+   "Aluva Sheeba Sebastian",
+   "Akash Chandran",
+   "Rafnas Rafeek"
+  ],
+  "imdb": "7.7",
+  "genres": [
+   "Horror",
+   "Thriller",
+   "Drama"
+  ],
+  "my_rating": null,
+  "watched_on": "",
+  "comment": "",
+  "status": "watched",
+  "needs_review": true,
+  "added_at": "2026-10-05T14:28:03.254Z"
+ },
+ {
+  "id": "movie-257321",
+  "type": "movie",
+  "title": "The Ghost of War",
+  "year": "2011",
+  "poster": "",
+  "overview": "The Ghost of War, a short documentary, chronicles the World War II service of the Cunard Line's RMS Queen Mary and the soldiers she carried. This is a story about good men going off to war on a great ship; it is about common experiences, lasting memories and lingering ghosts.",
+  "director": "",
+  "cast": [],
+  "imdb": "",
+  "genres": [
+   "Documentary"
+  ],
+  "my_rating": null,
+  "watched_on": "",
+  "comment": "",
+  "status": "watched",
+  "needs_review": true,
+  "added_at": "2026-10-05T14:28:02.502Z"
+ },
+ {
+  "id": "movie-142",
+  "type": "movie",
+  "title": "Brokeback Mountain",
+  "year": "2005",
+  "poster": "/aByfQOQBNa4CMFwIgq3QrqY2ZHh.jpg",
+  "overview": "In 1960s Wyoming, two men develop a strong emotional and sexual relationship that endures as a lifelong connection complicating their lives as they get married and start families of their own.",
+  "director": "Ang Lee",
+  "cast": [
+   "Heath Ledger",
+   "Jake Gyllenhaal",
+   "Michelle Williams",
+   "Anne Hathaway",
+   "Randy Quaid",
+   "Linda Cardellini",
+   "Anna Faris",
+   "David Harbour"
+  ],
+  "imdb": "7.7",
+  "genres": [
+   "Drama",
+   "Romance"
+  ],
+  "my_rating": null,
+  "watched_on": "",
+  "comment": "",
+  "status": "watched",
+  "needs_review": false,
+  "added_at": "2026-10-05T14:28:01.775Z"
+ },
+ {
+  "id": "movie-472221",
+  "type": "movie",
+  "title": "The Goat Life",
+  "year": "2024",
+  "poster": "/l7z3Skv1xLASnUt0whC4IInaXt0.jpg",
+  "overview": "Indian migrant worker Najeeb Muhammad goes to Saudi Arabia to earn money. However, in a twist of fate, he finds himself living a slave-like existence, herding goats in the middle of the desert.",
+  "director": "Blessy",
+  "cast": [
+   "Prithviraj Sukumaran",
+   "K R  Gokul",
+   "Jimmy Jean-Louis",
+   "Talib Al Balushi",
+   "Rik Aby",
+   "Robin Das",
+   "Amala Paul",
+   "Shobha Mohan"
+  ],
+  "imdb": "7.1",
+  "genres": [
+   "Drama",
+   "Adventure"
+  ],
+  "my_rating": null,
+  "watched_on": "",
+  "comment": "",
+  "status": "watched",
+  "needs_review": false,
+  "added_at": "2026-10-05T14:28:01.048Z"
+ },
+ {
+  "id": "movie-1134055",
+  "type": "movie",
+  "title": "Kill Shot",
+  "year": "2023",
+  "poster": "/5kCEHZnUeAZFJvE3l8K5OYjIwjj.jpg",
+  "overview": "Posing as hunters, a group of terrorists are in search of $100 million that was stolen and lost in a plane crash en route from Afghanistan.",
+  "director": "Ari Novak",
+  "cast": [
+   "Rachel Cook",
+   "Rib Hillis",
+   "Rob MacDonald",
+   "Mara Ohara",
+   "Mark Murphy",
+   "Xian Mikol",
+   "Kensley Allen",
+   "Todd Gordon"
+  ],
+  "imdb": "3.3",
+  "genres": [
+   "Action"
+  ],
+  "my_rating": null,
+  "watched_on": "",
+  "comment": "",
+  "status": "watched",
+  "needs_review": false,
+  "added_at": "2026-10-05T14:28:00.329Z"
+ },
+ {
+  "id": "movie-297",
+  "type": "movie",
+  "title": "Meet Joe Black",
+  "year": "1998",
+  "poster": "/fDPAjvfPMomkKF7cMRmL5Anak61.jpg",
+  "overview": "Bill Parrish has it all - success, wealth and power. Days before his 65th birthday, he receives a visit from a mysterious stranger, Joe Black, who soon reveals himself as Death. In exchange for extra time, Bill agrees to serve as Joe's earthly guide. But will he regret his choice when Joe unexpectedly falls in love with Bill's beautiful daughter Susan?",
+  "director": "Martin Brest",
+  "cast": [
+   "Brad Pitt",
+   "Anthony Hopkins",
+   "Claire Forlani",
+   "Jake Weber",
+   "Marcia Gay Harden",
+   "Jeffrey Tambor",
+   "David S. Howard",
+   "Lois Kelly-Miller"
+  ],
+  "imdb": "7.2",
+  "genres": [
+   "Fantasy",
+   "Drama",
+   "Romance"
+  ],
+  "my_rating": null,
+  "watched_on": "",
+  "comment": "",
+  "status": "watched",
+  "needs_review": false,
+  "added_at": "2026-10-05T14:27:59.486Z"
+ },
+ {
+  "id": "movie-1008409",
+  "type": "movie",
+  "title": "The Bikeriders",
+  "year": "2024",
+  "poster": "/ApMuukdDAOR2rgaFDZIcjfigi64.jpg",
+  "overview": "After a chance encounter, headstrong Kathy is drawn to Benny, member of Midwestern motorcycle club the Vandals. As the club transforms into a dangerous underworld of violence, Benny must choose between Kathy and his loyalty to the club.",
+  "director": "Jeff Nichols",
+  "cast": [
+   "Jodie Comer",
+   "Austin Butler",
+   "Tom Hardy",
+   "Michael Shannon",
+   "Mike Faist",
+   "Boyd Holbrook",
+   "Damon Herriman",
+   "Beau Knapp"
+  ],
+  "imdb": "6.6",
+  "genres": [
+   "Crime",
+   "Drama"
+  ],
+  "my_rating": null,
+  "watched_on": "",
+  "comment": "",
+  "status": "watched",
+  "needs_review": true,
+  "added_at": "2026-10-05T14:27:58.755Z"
+ },
+ {
+  "id": "movie-1285247",
+  "type": "movie",
+  "title": "Murder Company",
+  "year": "2024",
+  "poster": "/eUjzUUFm1dEUR6U4r0C6s9L2FEd.jpg",
+  "overview": "In the midst of the D-Day invasion, a group of US soldiers are given orders to smuggle a member of the French Resistance behind enemy lines to assassinate a high-value Nazi target.",
+  "director": "Shane Dax Taylor",
+  "cast": [
+   "Kelsey Grammer",
+   "William Moseley",
+   "Joe Anderson",
+   "Gilles Marini",
+   "Pooch Hall"
+  ],
+  "imdb": "3.7",
+  "genres": [
+   "War",
+   "Action"
+  ],
+  "my_rating": null,
+  "watched_on": "",
+  "comment": "",
+  "status": "watched",
+  "needs_review": true,
+  "added_at": "2026-10-05T14:27:58.031Z"
+ },
+ {
+  "id": "tv-94028",
+  "type": "tv",
+  "title": "RIPLEY",
+  "year": "2024",
+  "poster": "/rpSo8z9alultGVTqQ3dkLEyU8xx.jpg",
+  "overview": "A grifter in 1960s New York is hired to convince a wealthy man's son to return home from Italy and begins a life of deceit, fraud and murder.",
+  "director": "Steven Zaillian",
+  "cast": [
+   "Andrew Scott",
+   "Dakota Fanning",
+   "Johnny Flynn"
+  ],
+  "imdb": "8.1",
+  "genres": [
+   "Drama"
+  ],
+  "my_rating": null,
+  "watched_on": "",
+  "comment": "",
+  "status": "watched",
+  "needs_review": true,
+  "added_at": "2026-10-05T14:27:57.180Z"
+ },
+ {
+  "id": "movie-1118224",
+  "type": "movie",
+  "title": "Maharaja",
+  "year": "2024",
+  "poster": "/s0m4TM1XRAftQStgKpw024RvkJo.jpg",
+  "overview": "A barber seeks vengeance after his home is burglarized, cryptically telling police his \"Lakshmi\" has been taken, leaving them uncertain if it's a person or object, jeer at his request until they learn what they're really looking for.",
+  "director": "Nithilan Saminathan",
+  "cast": [
+   "Vijay Sethupathi",
+   "Anurag Kashyap",
+   "Sachana Namidass",
+   "Natarajan Subramaniam",
+   "Abhirami",
+   "Mamta Mohandas",
+   "Aruldoss",
+   "Munishkanth"
+  ],
+  "imdb": "8.3",
+  "genres": [
+   "Action",
+   "Thriller",
+   "Mystery"
+  ],
+  "my_rating": null,
+  "watched_on": "",
+  "comment": "",
+  "status": "watched",
+  "needs_review": false,
+  "added_at": "2026-10-05T14:27:56.441Z"
+ },
+ {
+  "id": "movie-508883",
+  "type": "movie",
+  "title": "The Boy and the Heron",
+  "year": "2023",
+  "poster": "/f4oZTcfGrVTXKTWg157AwikXqmP.jpg",
+  "overview": "While the Second World War rages, the teenage Mahito, haunted by his mother's tragic death, is relocated from Tokyo to the serene rural home of his new stepmother Natsuko, a woman who bears a striking resemblance to the boy's mother.  As he tries to adjust, this strange new world grows even stranger following the appearance of a persistent gray heron, who perplexes and bedevils Mahito, dubbing him the \"long-awaited one.\"",
+  "director": "Hayao Miyazaki",
+  "cast": [
+   "Soma Santoki",
+   "Masaki Suda",
+   "Ko Shibasaki",
+   "Aimyon",
+   "Yoshino Kimura",
+   "Takuya Kimura",
+   "Keiko Takeshita",
+   "Jun Fubuki"
+  ],
+  "imdb": "7.3",
+  "genres": [
+   "Animation",
+   "Fantasy",
+   "Drama"
+  ],
+  "my_rating": null,
+  "watched_on": "",
+  "comment": "",
+  "status": "watched",
+  "needs_review": false,
+  "added_at": "2026-10-05T14:27:55.712Z"
+ },
+ {
+  "id": "movie-786892",
+  "type": "movie",
+  "title": "Furiosa: A Mad Max Saga",
+  "year": "2024",
+  "poster": "/iADOJ8Zymht2JPMoy3R7xceZprc.jpg",
+  "overview": "As the world falls, young Furiosa is snatched from the Green Place of Many Mothers into the hands of a great biker horde led by the warlord Dementus. Sweeping through the wasteland, they encounter the citadel presided over by Immortan Joe. The two tyrants wage war for dominance, and Furiosa must survive many trials as she puts together the means to find her way home.",
+  "director": "George Miller",
+  "cast": [
+   "Anya Taylor-Joy",
+   "Chris Hemsworth",
+   "Tom Burke",
+   "Alyla Browne",
+   "George Shevtsov",
+   "Lachy Hulme",
+   "John Howard",
+   "Angus Sampson"
+  ],
+  "imdb": "7.5",
+  "genres": [
+   "Action",
+   "Science Fiction",
+   "Adventure"
+  ],
+  "my_rating": null,
+  "watched_on": "",
+  "comment": "",
+  "status": "watched",
+  "needs_review": false,
+  "added_at": "2026-10-05T14:27:54.960Z"
+ },
+ {
+  "id": "movie-11321",
+  "type": "movie",
+  "title": "Seven Pounds",
+  "year": "2008",
+  "poster": "/85zUipgVy2QbvAJ6djZXYaGckMv.jpg",
+  "overview": "An IRS agent with a fateful secret embarks on an extraordinary journey of redemption by forever changing the lives of seven strangers.",
+  "director": "Gabriele Muccino",
+  "cast": [
+   "Will Smith",
+   "Rosario Dawson",
+   "Woody Harrelson",
+   "Michael Ealy",
+   "Barry Pepper",
+   "Elpidia Carrillo",
+   "Robinne Lee",
+   "Bill Smitrovich"
+  ],
+  "imdb": "7.6",
+  "genres": [
+   "Drama"
+  ],
+  "my_rating": null,
+  "watched_on": "",
+  "comment": "",
+  "status": "watched",
+  "needs_review": true,
+  "added_at": "2026-10-05T14:27:54.217Z"
+ },
+ {
+  "id": "movie-10591",
+  "type": "movie",
+  "title": "The Girl Next Door",
+  "year": "2004",
+  "poster": "/5mVyFHSY2rSsNgD4NfEwV82HigU.jpg",
+  "overview": "Exceptionally ambitious high schooler Matthew has aspirations for a career in politics when he falls in love with his gorgeous 19-year-old neighbor, Danielle. But Matthew's bright future is jeopardized when he finds Danielle was once a porn star. As Danielle's past catches up with her, Matthew's love for her forces him to re-evaluate his goals.",
+  "director": "Luke Greenfield",
+  "cast": [
+   "Emile Hirsch",
+   "Elisha Cuthbert",
+   "Timothy Olyphant",
+   "Christopher Rodriguez Marquette",
+   "Paul Dano",
+   "James Remar",
+   "Timothy Bottoms",
+   "Donna Bullock"
+  ],
+  "imdb": "6.7",
+  "genres": [
+   "Comedy",
+   "Romance"
+  ],
+  "my_rating": null,
+  "watched_on": "",
+  "comment": "",
+  "status": "watched",
+  "needs_review": false,
+  "added_at": "2026-10-05T14:27:53.544Z"
+ },
+ {
+  "id": "movie-838209",
+  "type": "movie",
+  "title": "Exhuma",
+  "year": "2024",
+  "poster": "/6dasJ58GGFcC62H9KuukAryltUp.jpg",
+  "overview": "After tracing the origin of a disturbing supernatural affliction to a wealthy family's ancestral gravesite, a team of paranormal experts relocates the remains—and soon discovers what happens to those who dare to mess with the wrong grave.",
+  "director": "Jang Jae-hyun",
+  "cast": [
+   "Choi Min-sik",
+   "Kim Go-eun",
+   "Yoo Hai-jin",
+   "Lee Do-hyun",
+   "Kim Jae-chul",
+   "Jeon Jin-gi",
+   "Kim Sun-young",
+   "Kim Ji-an"
+  ],
+  "imdb": "6.9",
+  "genres": [
+   "Mystery",
+   "Horror",
+   "Thriller"
+  ],
+  "my_rating": null,
+  "watched_on": "",
+  "comment": "",
+  "status": "watched",
+  "needs_review": false,
+  "added_at": "2026-10-05T14:27:52.816Z"
+ },
+ {
+  "id": "movie-8363",
+  "type": "movie",
+  "title": "Superbad",
+  "year": "2007",
+  "poster": "/ek8e8txUyUwd2BNqj6lFEerJfbq.jpg",
+  "overview": "Two co-dependent high school seniors are forced to deal with separation anxiety after their plan to stage a booze-soaked party goes awry.",
+  "director": "Greg Mottola",
+  "cast": [
+   "Jonah Hill",
+   "Michael Cera",
+   "Christopher Mintz-Plasse",
+   "Bill Hader",
+   "Seth Rogen",
+   "Martha MacIsaac",
+   "Emma Stone",
+   "Aviva Baumann"
+  ],
+  "imdb": "7.6",
+  "genres": [
+   "Comedy"
+  ],
+  "my_rating": null,
+  "watched_on": "",
+  "comment": "",
+  "status": "watched",
+  "needs_review": false,
+  "added_at": "2026-10-05T14:27:52.086Z"
+ },
+ {
+  "id": "movie-1624183",
+  "type": "movie",
+  "title": "Blackout",
+  "year": "2026",
+  "poster": "/gFy3I3hJeLKKJt8EGpc1ZbGTwoH.jpg",
+  "overview": "After a nuclear strike devastates California, a group of veterans and criminals trapped in a warehouse must fight to survive marauders, radiation, and each other in a world where the line between good and evil is gone.",
+  "director": "LeeAnne Bauer, David M. Parks",
+  "cast": [
+   "LeeAnne Bauer",
+   "Mike Ferguson",
+   "Twana Barnett",
+   "Omar Moustafa Ghonim",
+   "Mario Daggett",
+   "Trent James",
+   "Chetavious Davis",
+   "Vu Mai"
+  ],
+  "imdb": "4.0",
+  "genres": [
+   "Action",
+   "Thriller"
+  ],
+  "my_rating": null,
+  "watched_on": "",
+  "comment": "",
+  "status": "watched",
+  "needs_review": true,
+  "added_at": "2026-10-05T14:27:51.364Z"
+ },
+ {
+  "id": "movie-501929",
+  "type": "movie",
+  "title": "The Mitchells vs. the Machines",
+  "year": "2021",
+  "poster": "/mI2Di7HmskQQ34kz0iau6J1vr70.jpg",
+  "overview": "A quirky, dysfunctional family's road trip is upended when they find themselves in the middle of the robot apocalypse and suddenly become humanity's unlikeliest last hope.",
+  "director": "Mike Rianda",
+  "cast": [
+   "Abbi Jacobson",
+   "Danny McBride",
+   "Maya Rudolph",
+   "Mike Rianda",
+   "Eric Andre",
+   "Olivia Colman",
+   "Fred Armisen",
+   "Beck Bennett"
+  ],
+  "imdb": "7.6",
+  "genres": [
+   "Animation",
+   "Adventure",
+   "Comedy"
+  ],
+  "my_rating": null,
+  "watched_on": "",
+  "comment": "",
+  "status": "watched",
+  "needs_review": true,
+  "added_at": "2026-10-05T14:27:50.647Z"
+ },
+ {
+  "id": "movie-1121330",
+  "type": "movie",
+  "title": "8 A.M. Metro",
+  "year": "2023",
+  "poster": "/fRPfT9sQzMSbDMH8c1qxVWFy8zT.jpg",
+  "overview": "Two strangers inadvertently bump into each other in the metro and strike up an unlikely friendship, and in the process find themselves and each other.",
+  "director": "Raj Rachakonda",
+  "cast": [
+   "Saiyami Kher",
+   "Gulshan Devaiah",
+   "Nimisha Nair",
+   "Rajiv Kumar Aneja",
+   "Umesh Kamat",
+   "Kalpika Ganesh",
+   "Dheer Charan Shrivastav",
+   "Moin Jaan"
+  ],
+  "imdb": "7.7",
+  "genres": [
+   "Drama"
+  ],
+  "my_rating": null,
+  "watched_on": "",
+  "comment": "",
+  "status": "watched",
+  "needs_review": true,
+  "added_at": "2026-10-05T14:27:49.915Z"
+ },
+ {
+  "id": "movie-165195",
+  "type": "movie",
+  "title": "Kaalpurush",
+  "year": "2005",
+  "poster": "/hd0wnyIaqCCmn7DWHneOWktlvoh.jpg",
+  "overview": "A man struggles with his memories of his powerful father.",
+  "director": "Buddhadeb Dasgupta",
+  "cast": [
+   "Mithun Chakraborty",
+   "Rahul Bose",
+   "Sameera Reddy",
+   "Laboni Sarkar",
+   "Sudipta Chakraborty",
+   "Sagnik Chowdhury",
+   "Tapasya Sengupta",
+   "Sunil Mukherjee"
+  ],
+  "imdb": "7.1",
+  "genres": [
+   "Drama"
+  ],
+  "my_rating": null,
+  "watched_on": "",
+  "comment": "",
+  "status": "watched",
+  "needs_review": true,
+  "added_at": "2026-10-05T14:27:49.130Z"
+ },
+ {
+  "id": "movie-614933",
+  "type": "movie",
+  "title": "Atlas",
+  "year": "2024",
+  "poster": "/bcM2Tl5HlsvPBnL8DKP9Ie6vU4r.jpg",
+  "overview": "A brilliant counterterrorism analyst with a deep distrust of AI discovers it might be her only hope when a mission to capture a renegade robot goes awry.",
+  "director": "Brad Peyton",
+  "cast": [
+   "Jennifer Lopez",
+   "Simu Liu",
+   "Sterling K. Brown",
+   "Gregory James Cohan",
+   "Abraham Popoola",
+   "Lana Parrilla",
+   "Mark Strong",
+   "Briella Guiza"
+  ],
+  "imdb": "5.6",
+  "genres": [
+   "Science Fiction",
+   "Action"
+  ],
+  "my_rating": null,
+  "watched_on": "",
+  "comment": "",
+  "status": "watched",
+  "needs_review": true,
+  "added_at": "2026-10-05T14:27:48.416Z"
+ },
+ {
+  "id": "movie-4347",
+  "type": "movie",
+  "title": "Atonement",
+  "year": "2007",
+  "poster": "/hMRIyBjPzxaSXWM06se3OcNjIQa.jpg",
+  "overview": "A young girl irrevocably changes the course of several lives when she accuses her older sister's lover of a crime he did not commit.",
+  "director": "Joe Wright",
+  "cast": [
+   "James McAvoy",
+   "Keira Knightley",
+   "Saoirse Ronan",
+   "Romola Garai",
+   "Vanessa Redgrave",
+   "Brenda Blethyn",
+   "Juno Temple",
+   "Benedict Cumberbatch"
+  ],
+  "imdb": "7.8",
+  "genres": [
+   "Drama",
+   "Romance"
+  ],
+  "my_rating": null,
+  "watched_on": "",
+  "comment": "",
+  "status": "watched",
+  "needs_review": true,
+  "added_at": "2026-10-05T14:27:47.544Z"
+ },
+ {
+  "id": "movie-823464",
+  "type": "movie",
+  "title": "Godzilla x Kong: The New Empire",
+  "year": "2024",
+  "poster": "/z1p34vh7dEOnLDmyCrlUVLuoDzd.jpg",
+  "overview": "Following their explosive showdown, Godzilla and Kong must reunite against a colossal undiscovered threat hidden within our world, challenging their very existence – and our own.",
+  "director": "Adam Wingard",
+  "cast": [
+   "Rebecca Hall",
+   "Brian Tyree Henry",
+   "Dan Stevens",
+   "Kaylee Hottle",
+   "Alex Ferns",
+   "Fala Chen",
+   "Rachel House",
+   "Ron Smyck"
+  ],
+  "imdb": "6.0",
+  "genres": [
+   "Action",
+   "Adventure",
+   "Science Fiction"
+  ],
+  "my_rating": null,
+  "watched_on": "",
+  "comment": "",
+  "status": "watched",
+  "needs_review": true,
+  "added_at": "2026-10-05T14:27:46.607Z"
+ },
+ {
+  "id": "movie-747375",
+  "type": "movie",
+  "title": "Shogun",
+  "year": "1968",
+  "poster": "",
+  "overview": "Short film.",
+  "director": "Roger Hullaert, Willy Verlinden",
+  "cast": [
+   "Luc Monheim",
+   "Yen Pernath",
+   "Els Weyns"
+  ],
+  "imdb": "7.2",
+  "genres": [
+   "Drama"
+  ],
+  "my_rating": null,
+  "watched_on": "",
+  "comment": "",
+  "status": "watched",
+  "needs_review": true,
+  "added_at": "2026-10-05T14:27:45.828Z"
+ },
+ {
+  "id": "movie-80938",
+  "type": "movie",
+  "title": "Aavesham",
+  "year": "1994",
+  "poster": "",
+  "overview": "",
+  "director": "Kodi Ramakrishna",
+  "cast": [
+   "Dr. Rajasekhar",
+   "Nagma",
+   "Madhoo",
+   "Rami Reddy",
+   "Rohini"
+  ],
+  "imdb": "7.3",
+  "genres": [
+   "Drama"
+  ],
+  "my_rating": null,
+  "watched_on": "",
+  "comment": "",
+  "status": "watched",
+  "needs_review": true,
+  "added_at": "2026-10-05T14:27:45.120Z"
+ },
+ {
+  "id": "movie-1240463",
+  "type": "movie",
+  "title": "Kacher Manush Dure Thuiya",
+  "year": "2024",
+  "poster": "/ftcDry2KkYDkuZNjhkRQmDTudTl.jpg",
+  "overview": "A Tale of Touch. ‘Kacher Manush Dure Thuiya’: is a story of going away for the needs of life, and returning to the stirring of feelings. This long-distance relationship saga unveils the poignant struggles of lovers separated by thousands of miles – a narrative steeped in the complexities of distance, evoking doubt, mistrust, anger, and resentment, ultimately culminating in separation. It's a poignant portrayal of the profound longing for physical closeness, encapsulated in the simple yet profound act of a hug, bridging the chasm between distant hearts.",
+  "director": "Shihab Shaheen",
+  "cast": [
+   "Pritom Hasan",
+   "Tasnia Farin",
+   "Rupanty Akid",
+   "Samapti Mashuk",
+   "Khalilur Rahman Kadery",
+   "Shirin Alam",
+   "Shubhajit Bhowmik",
+   "Shaheen Sahnewaz"
+  ],
+  "imdb": "7.9",
+  "genres": [
+   "Romance",
+   "Drama"
+  ],
+  "my_rating": null,
+  "watched_on": "",
+  "comment": "",
+  "status": "watched",
+  "needs_review": true,
+  "added_at": "2026-10-05T14:27:44.277Z"
+ },
+ {
+  "id": "movie-769297",
+  "type": "movie",
+  "title": "Beekeeper",
+  "year": "",
+  "poster": "",
+  "overview": "Dennis van Engelsdorp, former state apiarist for Pennsylvania and current entomology professor at the University of Maryland, is worried that bees-a crucial part of humanity's ecosystem-are dying.",
+  "director": "Steven Cantor",
+  "cast": [],
+  "imdb": "",
+  "genres": [],
+  "my_rating": null,
+  "watched_on": "",
+  "comment": "",
+  "status": "watched",
+  "needs_review": true,
+  "added_at": "2026-10-05T14:27:43.556Z"
+ },
+ {
+  "id": "movie-834664",
+  "type": "movie",
+  "title": "Anweshippin Kandethum",
+  "year": "2024",
+  "poster": "/i32ooxvEsy5V6hDucB7hsELT9Vo.jpg",
+  "overview": "A team of four expert policemen go through extreme trials and tribulations to find the killer of a young woman.",
+  "director": "Darwin Kuriakose",
+  "cast": [
+   "Tovino Thomas",
+   "Vineeth Thattil David",
+   "Siddique",
+   "Pramod Veliyanad",
+   "Indrans",
+   "Baburaj",
+   "Shammi Thilakan",
+   "Ramya Suvi"
+  ],
+  "imdb": "7.4",
+  "genres": [
+   "Crime",
+   "Thriller",
+   "Drama"
+  ],
+  "my_rating": null,
+  "watched_on": "",
+  "comment": "",
+  "status": "watched",
+  "needs_review": true,
+  "added_at": "2026-10-05T14:27:42.845Z"
+ },
+ {
+  "id": "movie-1069945",
+  "type": "movie",
+  "title": "Manjummel Boys",
+  "year": "2024",
+  "poster": "/bswrtewwthpsh6nABiqKevU4UBI.jpg",
+  "overview": "A carefree vacation turns into a desperate race against time when a group of lifelong friends must unite to save one of their own from a notoriously perilous, uncharted abyss deep within the Guna Caves.",
+  "director": "Chidambaram",
+  "cast": [
+   "Soubin Shahir",
+   "Sreenath Bhasi",
+   "Balu Varghese",
+   "Ganapathi S. Poduval",
+   "Lal Jr.",
+   "Deepak Parambol",
+   "Abhiram Radhakrishnan",
+   "Arun Kurian"
+  ],
+  "imdb": "8.2",
+  "genres": [
+   "Adventure",
+   "Thriller",
+   "Drama"
+  ],
+  "my_rating": null,
+  "watched_on": "",
+  "comment": "",
+  "status": "watched",
+  "needs_review": true,
+  "added_at": "2026-10-05T14:27:42.135Z"
+ },
+ {
+  "id": "movie-957926",
+  "type": "movie",
+  "title": "Aattam",
+  "year": "2024",
+  "poster": "/gjptPp7YlX1oy9yCjEpOdlrRisL.jpg",
+  "overview": "After a party amongst a theatre group, their sole actress, Anjali is subjected to a crime from one of the men in the group. A meeting is called for. In trying to reach a consensus, stories unravel, suspicions surface and clamour ensues.",
+  "director": "Anand Ekarshi",
+  "cast": [
+   "Zarin Shihab",
+   "Vinay Forrt",
+   "Kalabhavan Shajon",
+   "Selvaraj Raghavan VR",
+   "Sijin Sijeesh",
+   "Aji Thiruvamkulam",
+   "Nandan Unni",
+   "Madan Babu K."
+  ],
+  "imdb": "8.2",
+  "genres": [
+   "Drama"
+  ],
+  "my_rating": null,
+  "watched_on": "",
+  "comment": "",
+  "status": "watched",
+  "needs_review": true,
+  "added_at": "2026-10-05T14:27:41.378Z"
+ },
+ {
+  "id": "movie-1187619",
+  "type": "movie",
+  "title": "Shaitaan",
+  "year": "2024",
+  "poster": "/oRvFzcagAcC6Q317xtV7QXzwBnj.jpg",
+  "overview": "Kabir and his family's fun weekend retreat takes terrifying turn when an intruder takes over the control of the  body of his teenage daughter, putting her at the mercy of his increasingly sinister orders.",
+  "director": "Vikas Bahl",
+  "cast": [
+   "Ajay Devgn",
+   "R. Madhavan",
+   "Janki Bodiwala",
+   "Jyothika",
+   "Anngad Raaj"
+  ],
+  "imdb": "6.5",
+  "genres": [
+   "Thriller",
+   "Horror"
+  ],
+  "my_rating": null,
+  "watched_on": "",
+  "comment": "",
+  "status": "watched",
+  "needs_review": true,
+  "added_at": "2026-10-05T14:27:40.638Z"
+ },
+ {
+  "id": "movie-930564",
+  "type": "movie",
+  "title": "Saltburn",
+  "year": "2023",
+  "poster": "/zGTfMwG112BC66mpaveVxoWPOaB.jpg",
+  "overview": "Struggling to find his place at Oxford University, student Oliver Quick finds himself drawn into the world of the charming and aristocratic Felix Catton, who invites him to Saltburn, his eccentric family's sprawling estate, for a summer never to be forgotten.",
+  "director": "Emerald Fennell",
+  "cast": [
+   "Barry Keoghan",
+   "Jacob Elordi",
+   "Rosamund Pike",
+   "Richard E. Grant",
+   "Alison Oliver",
+   "Archie Madekwe",
+   "Carey Mulligan",
+   "Paul Rhys"
+  ],
+  "imdb": "7.0",
+  "genres": [
+   "Drama",
+   "Comedy",
+   "Thriller"
+  ],
+  "my_rating": null,
+  "watched_on": "",
+  "comment": "",
+  "status": "watched",
+  "needs_review": true,
+  "added_at": "2026-10-05T14:27:39.656Z"
+ },
+ {
+  "id": "movie-940721",
+  "type": "movie",
+  "title": "Godzilla Minus One",
+  "year": "2023",
+  "poster": "/2E2WTX0TJEflAged6kzErwqX1kt.jpg",
+  "overview": "In postwar Japan, Godzilla brings new devastation to an already scorched landscape. With no military intervention or government help in sight, the survivors must join together in the face of despair and fight back against an unrelenting horror.",
+  "director": "Takashi Yamazaki",
+  "cast": [
+   "Ryunosuke Kamiki",
+   "Minami Hamabe",
+   "Yuki Yamada",
+   "Munetaka Aoki",
+   "Hidetaka Yoshioka",
+   "Sakura Ando",
+   "Kuranosuke Sasaki",
+   "Sae Nagatani"
+  ],
+  "imdb": "7.7",
+  "genres": [
+   "Science Fiction",
+   "Horror",
+   "Action"
+  ],
+  "my_rating": null,
+  "watched_on": "",
+  "comment": "",
+  "status": "watched",
+  "needs_review": true,
+  "added_at": "2026-10-05T14:27:38.874Z"
+ },
+ {
+  "id": "movie-13161",
+  "type": "movie",
+  "title": "Big Stan",
+  "year": "2007",
+  "poster": "/zS1uUwKEFcd8ak0NTXxw97DlbAa.jpg",
+  "overview": "A weak con man panics when he learns he's going to prison for fraud. He hires a mysterious martial arts guru who helps transform him into a martial arts expert who can fight off inmates who want to hurt or love him.",
+  "director": "Rob Schneider",
+  "cast": [
+   "Rob Schneider",
+   "David Carradine",
+   "Jennifer Morrison",
+   "Scott Wilson",
+   "Tsuyoshi Abe",
+   "Henry Gibson",
+   "M. Emmet Walsh",
+   "Sally Kirkland"
+  ],
+  "imdb": "6.2",
+  "genres": [
+   "Comedy",
+   "Crime"
+  ],
+  "my_rating": null,
+  "watched_on": "",
+  "comment": "",
+  "status": "watched",
+  "needs_review": true,
+  "added_at": "2026-10-05T14:27:38.133Z"
+ },
+ {
+  "id": "movie-85350",
+  "type": "movie",
+  "title": "Boyhood",
+  "year": "2014",
+  "poster": "/2BvtvDUyxiMJ4dmKfiQf4qdOHQN.jpg",
+  "overview": "The film tells a story of a divorced couple trying to raise their young son. The story follows the boy for twelve years, from first grade at age 6 through 12th grade at age 17-18, and examines his relationship with his parents as he grows.",
+  "director": "Richard Linklater",
+  "cast": [
+   "Ellar Coltrane",
+   "Patricia Arquette",
+   "Ethan Hawke",
+   "Lorelei Linklater",
+   "Libby Villari",
+   "Marco Perella",
+   "Brad Hawkins",
+   "Jamie Howard"
+  ],
+  "imdb": "7.9",
+  "genres": [
+   "Drama"
+  ],
+  "my_rating": null,
+  "watched_on": "",
+  "comment": "",
+  "status": "watched",
+  "needs_review": true,
+  "added_at": "2026-10-05T14:27:37.389Z"
+ },
+ {
+  "id": "movie-560016",
+  "type": "movie",
+  "title": "Monkey Man",
+  "year": "2024",
+  "poster": "/4lhR4L2vzzjl68P1zJyCH755Oz4.jpg",
+  "overview": "Kid is an anonymous young man who ekes out a meager living in an underground fight club where, night after night, wearing a gorilla mask, he is beaten bloody by more popular fighters for cash. After years of suppressed rage, Kid discovers a way to infiltrate the enclave of the city’s sinister elite. As his childhood trauma boils over, his mysteriously scarred hands unleash an explosive campaign of retribution to settle the score with the men who took everything from him.",
+  "director": "Dev Patel",
+  "cast": [
+   "Dev Patel",
+   "Sikandar Kher",
+   "Makrand Deshpande",
+   "Pitobash",
+   "Vipin Sharma",
+   "Ashwini Kalsekar",
+   "Sobhita Dhulipala",
+   "Adithi Kalkunte"
+  ],
+  "imdb": "6.8",
+  "genres": [
+   "Thriller",
+   "Crime",
+   "Action"
+  ],
+  "my_rating": null,
+  "watched_on": "",
+  "comment": "",
+  "status": "watched",
+  "needs_review": true,
+  "added_at": "2026-10-05T14:27:36.632Z"
+ },
+ {
+  "id": "movie-1163194",
+  "type": "movie",
+  "title": "Lost Ladies",
+  "year": "2024",
+  "poster": "/yXt07MYeiyQRzS69PMHy0BPjCGP.jpg",
+  "overview": "In 2001, somewhere in rural India, two young brides get accidentally swapped on a train. In the ensuing chaos, they both encounter a host of colourful characters, resulting in hilarious and unexpected consequences.",
+  "director": "Kiran Rao",
+  "cast": [
+   "Nitanshi Goel",
+   "Pratibha Ranta",
+   "Sparsh Shrivastava",
+   "Ravi Kishan",
+   "Chhaya Kadam",
+   "Geeta Agrawal Sharma",
+   "Pankaj Sharma",
+   "Abeer Sandeep Jain"
+  ],
+  "imdb": "8.3",
+  "genres": [
+   "Comedy",
+   "Drama",
+   "Romance"
+  ],
+  "my_rating": null,
+  "watched_on": "",
+  "comment": "",
+  "status": "watched",
+  "needs_review": true,
+  "added_at": "2026-10-05T14:27:35.634Z"
+ },
+ {
+  "id": "movie-33142",
+  "type": "movie",
+  "title": "Vivah",
+  "year": "2006",
+  "poster": "/e5zFYX3hW1TNeFCzRw7ET2DxRPm.jpg",
+  "overview": "Poonam, a traditionally brought-up young woman, is to marry Prem, a groom chosen by her uncle. Poonam and Prem's faith and love are to be tested however, when an accident occurs and Poonam might be scarred for life.",
+  "director": "Sooraj Barjatya",
+  "cast": [
+   "Shahid Kapoor",
+   "Amrita Rao",
+   "Anupam Kher",
+   "Seema Biswas",
+   "Alok Nath",
+   "Manoj Joshi",
+   "Samir Soni",
+   "Mohnish Behl"
+  ],
+  "imdb": "6.7",
+  "genres": [
+   "Romance",
+   "Drama"
+  ],
+  "my_rating": null,
+  "watched_on": "",
+  "comment": "",
+  "status": "watched",
+  "needs_review": true,
+  "added_at": "2026-10-05T14:27:34.885Z"
+ },
+ {
   "id": "tv-250390",
   "type": "tv",
   "title": "Rumi",
