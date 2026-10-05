@@ -369,7 +369,8 @@ function openEdit(i){
  $('#editStatusLabel').textContent='Status: '+(m.status==='watched'?'Watched':'Watchlist');
  $('#editStatusToggle').textContent=m.status==='watched'?'Move to Watchlist':'Mark as Watched';
  $('#editStatusToggle').setAttribute('aria-label',m.status==='watched'?'Move this title to watchlist':'Mark this title as watched');
- $('#editRating').value=m.my_rating??'';\n document.querySelectorAll('#editRatingPicker .rating-choice').forEach(b=>{const selected=String(m.my_rating??'')===b.dataset.rating;b.classList.toggle('selected',selected);b.setAttribute('aria-checked',String(selected));});
+ $('#editRating').value=m.my_rating??'';
+ document.querySelectorAll('#editRatingPicker .rating-choice').forEach(b=>{const selected=String(m.my_rating??'')===b.dataset.rating;b.classList.toggle('selected',selected);b.setAttribute('aria-checked',String(selected));});
  $('#editComment').value=m.comment||'';
  const loved=!!m.loved; $('#loveToggle').classList.toggle('loved',loved); $('#loveToggle').setAttribute('aria-pressed',String(loved)); $('#loveIcon').textContent=loved?'❤️':'♡'; $('#loveText').textContent=loved?'Loved':'Add Love';
  $('#draftState').textContent='';
@@ -389,7 +390,8 @@ function openRandomMovie(){
 }
 window.editTitle=openEdit;
 function markDraft(){draftDirty=true;$('#draftState').textContent='Unsaved changes';}
-document.querySelectorAll('#editRatingPicker .rating-choice').forEach(b=>b.onclick=()=>{const value=b.dataset.rating;$('#editRating').value=value;document.querySelectorAll('#editRatingPicker .rating-choice').forEach(x=>{const selected=x===b;x.classList.toggle('selected',selected);x.setAttribute('aria-checked',String(selected));});markDraft()});\n$('#editRating').addEventListener('input',markDraft);$('#editComment').addEventListener('input',markDraft);
+document.querySelectorAll('#editRatingPicker .rating-choice').forEach(b=>b.onclick=()=>{const value=b.dataset.rating;$('#editRating').value=value;document.querySelectorAll('#editRatingPicker .rating-choice').forEach(x=>{const selected=x===b;x.classList.toggle('selected',selected);x.setAttribute('aria-checked',String(selected));});markDraft()});
+$('#editRating').addEventListener('input',markDraft);$('#editComment').addEventListener('input',markDraft);
 $('#editDelete').onclick=async()=>{
  if(currentEditIndex<0)return;
  const m=data[currentEditIndex];
