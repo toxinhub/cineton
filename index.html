@@ -1479,7 +1479,33 @@ update();
     gap:10px 8px;
   }
 }
-</style></body></html><style id="modal-rating-chip-soft-square">
+</style><style id="desktop-header-title-hires-v1">
+/* Desktop header title — cleaner vector-like rasterization and a refined cinema finish.
+   Mobile remains completely untouched. */
+@media(min-width:601px){
+  header .home-brand h1{
+    -webkit-font-smoothing:antialiased;
+    -moz-osx-font-smoothing:grayscale;
+    text-rendering:geometricPrecision;
+    font-synthesis:none;
+    -webkit-text-stroke:.012em transparent;
+    transform:translate3d(0,0,0);
+    backface-visibility:hidden;
+    -webkit-backface-visibility:hidden;
+    filter:contrast(1.015);
+  }
+  header .home-brand h1 > span:last-child{
+    display:inline-block;
+    transform:translate3d(0,0,0);
+    backface-visibility:hidden;
+    -webkit-backface-visibility:hidden;
+    text-shadow:
+      0 .012em 0 color-mix(in srgb,currentColor 18%,transparent),
+      0 0 .018em color-mix(in srgb,currentColor 10%,transparent);
+  }
+}
+</style>
+</body></html><style id="modal-rating-chip-soft-square">
 .cinemodal .chips .imdb-chip,
 .cinemodal .chips .my-chip{
   border-radius:2px!important;
