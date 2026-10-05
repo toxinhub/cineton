@@ -1505,7 +1505,33 @@ update();
   }
 }
 </style>
-</body></html><style id="modal-rating-chip-soft-square">
+</body></html><style id="desktop-soft-square-radius-v1">
+/* Desktop surface geometry — restrained 2px corners for a sharper editorial cinema grid.
+   Mobile remains completely untouched. Intentional pills/circles stay unchanged. */
+@media(min-width:601px){
+  .c,
+  .skel,
+  .cinemodal,
+  .cinemodal .m img,
+  .bar,
+  .surprise,
+  .stat,
+  .bar input,
+  .select-trigger,
+  .select-menu,
+  .select-menu button,
+  .views button,
+  .public-comments,
+  .public-comment,
+  .public-comment-composer{
+    border-radius:2px!important;
+  }
+
+  .public-comment-resize{
+    border-radius:2px!important;
+  }
+}
+</style><style id="modal-rating-chip-soft-square">
 .cinemodal .chips .imdb-chip,
 .cinemodal .chips .my-chip{
   border-radius:2px!important;
