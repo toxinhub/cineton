@@ -1,5 +1,35 @@
 <!DOCTYPE html>
-<!-- pages-deploy-trigger: 2026-10-05-public-comments-desktop-balance-v2 -->
+<!-- pages-deploy-trigger: 2026-10-05-mobile-genre-menu-balance-v1 -->
+<style id="mobile-genre-menu-balance-v1">
+/* Mobile genre menu — keep every option inside the viewport and prevent text overflow. */
+@media(max-width:600px){
+  .bar>.select-wrap{
+    min-width:0!important;
+    max-width:100%!important;
+  }
+  .bar>.select-wrap .select-menu{
+    left:0!important;
+    right:auto!important;
+    width:max-content!important;
+    min-width:140px!important;
+    max-width:calc(100vw - 24px)!important;
+    box-sizing:border-box!important;
+    overflow-x:hidden!important;
+  }
+  .bar>.select-wrap .select-menu button{
+    min-width:0!important;
+    max-width:100%!important;
+    box-sizing:border-box!important;
+    white-space:normal!important;
+    overflow-wrap:anywhere!important;
+    word-break:break-word!important;
+  }
+  .bar>.select-wrap .select-menu button::after{
+    flex:0 0 auto!important;
+    margin-left:8px!important;
+  }
+}
+</style>
 <style id="public-comments-typography-contrast-v2">
 /* Public comments — balanced desktop hierarchy with stronger warm-theme contrast. */
 .public-comments{
