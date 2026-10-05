@@ -1164,6 +1164,71 @@ update();
     transition:none!important;
   }
 }
+</style><style id="mobile-sticky-two-line-v1">
+/* Mobile sticky controls — keep the bar to two compact rows while scrolling. */
+@media(max-width:600px){
+  .bar{
+    grid-template-columns:minmax(0,1fr) minmax(0,1fr) auto auto;
+    gap:5px;
+  }
+  .bar input{
+    grid-column:1/-1;
+    width:100%;
+  }
+  .bar>.select-wrap{
+    width:auto;
+    min-width:0;
+  }
+  .bar>.select-wrap .select-trigger{
+    width:100%;
+    min-width:0;
+    padding-left:7px;
+    padding-right:6px;
+    font-size:.64rem;
+    overflow:hidden;
+    white-space:nowrap;
+  }
+  .bar>.select-wrap .select-trigger span{
+    margin-left:auto;
+    flex:none;
+  }
+  .bar .surprise{
+    grid-column:auto;
+    min-width:0;
+    width:auto;
+    height:30px;
+    min-height:30px;
+    padding:5px 7px;
+    font-size:.56rem;
+  }
+  .bar .views{
+    grid-column:auto;
+    justify-self:end;
+    gap:3px;
+  }
+  .bar .views button{
+    width:30px;
+    min-width:30px;
+    height:30px;
+    min-height:30px;
+    padding:5px;
+  }
+  .bar.scroll-compact{
+    grid-template-columns:minmax(0,1fr) minmax(0,1fr) auto auto;
+  }
+  .bar.scroll-compact .surprise{
+    min-height:28px;
+    height:28px;
+    padding-top:4px;
+    padding-bottom:4px;
+  }
+  .bar.scroll-compact .views button{
+    min-width:28px;
+    min-height:28px;
+    height:28px;
+    padding:4px;
+  }
+}
 </style></body></html><style id="modal-rating-chip-soft-square">
 .cinemodal .chips .imdb-chip,
 .cinemodal .chips .my-chip{
