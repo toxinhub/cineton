@@ -2067,12 +2067,13 @@
    "Horror",
    "Thriller"
   ],
-  "my_rating": null,
+  "my_rating": 5,
   "watched_on": "",
   "comment": "",
   "status": "watched",
   "needs_review": true,
-  "added_at": "2026-10-05T14:26:00.734Z"
+  "added_at": "2026-10-05T14:26:00.734Z",
+  "loved": false
  },
  {
   "id": "tv-82452",
