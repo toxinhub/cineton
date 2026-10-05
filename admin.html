@@ -151,6 +151,16 @@ input,select,textarea{background:#fffaf2;color:var(--text);border-color:var(--li
 @media(min-width:801px){#librarySection .library{grid-template-columns:repeat(auto-fill,minmax(132px,1fr))!important;gap:9px!important}}
 @media(max-width:600px){#librarySection .library{grid-template-columns:repeat(3,minmax(0,1fr))!important;gap:6px!important}#librarySection .itemBody{padding:6px!important}#librarySection .itemTitle strong{font-size:10px!important;line-height:1.2!important}#librarySection .meta{font-size:8px!important}#librarySection .itemActions{padding:0 6px 6px!important;grid-template-columns:1fr 1fr!important}#librarySection .itemActions button{min-height:28px!important;padding:4px 5px!important;font-size:8px!important}}
 @media(max-width:380px){#librarySection .library{grid-template-columns:repeat(2,minmax(0,1fr))!important;gap:7px!important}#librarySection .itemTitle strong{font-size:11px!important}#librarySection .meta{font-size:8.5px!important}}
+</style><style id="rating-comments-random-v1">
+#librarySection .libraryTools{grid-template-columns:minmax(0,1fr) 150px auto;align-items:stretch}
+#librarySection #randomMovieBtn{min-width:76px;white-space:nowrap}
+#librarySection .itemPoster{cursor:pointer;transition:transform .14s,filter .14s}
+#librarySection .itemPoster:hover{filter:brightness(.97)}
+#librarySection .itemPoster:focus-visible{outline:2px solid var(--accent);outline-offset:-2px}
+@media(max-width:600px){
+#librarySection .libraryTools{grid-template-columns:1fr}
+#librarySection #randomMovieBtn{width:100%}
+}
 </style></head>
 <body>
 <div class="app">
@@ -229,7 +239,7 @@ input,select,textarea{background:#fffaf2;color:var(--text);border-color:var(--li
 <section class="panel comment-sector public-comment-sector" data-section="public-comments" id="publicCommentsSection"><div class="head"><div><h2>Public Comments</h2><small class="sector-note">Visitor comments · Moderation</small></div><span id="publicCommentsCount">0 comments</span></div><div class="libraryTools"><input id="publicCommentsSearch" placeholder="Search title, name, comment…"></div><div id="publicCommentsList" class="public-admin-list"></div><div class="public-admin-toolbar"><label><input type="checkbox" id="publicCommentsSelectAll"> <span>Select all</span></label><span id="publicCommentsSelected">0 selected</span><button class="public-admin-bulk-delete" id="publicCommentsDeleteSelected" type="button" disabled>Delete selected</button></div><div id="publicCommentsMsg" class="message hidden"></div></section>
 <section class="panel comment-sector admin-comment-sector" data-section="rating" id="librarySection">
 <div class="head"><div><h2>Rating &amp; Comments</h2><small class="sector-note">Personal rating · Admin notes</small></div><span id="libraryCount">0 titles</span></div>
-<div class="libraryTools"><input id="librarySearch" placeholder="Search title, year, rating, note…"><select id="libraryFilter"><option value="all">All titles</option><option value="watched">Watched</option><option value="watchlist">Watchlist</option><option value="review">Needs review</option></select></div>
+<div class="libraryTools"><input id="librarySearch" placeholder="Search title, year, rating, note…"><select id="libraryFilter"><option value="all">All titles</option><option value="watched">Watched</option><option value="watchlist">Watchlist</option><option value="review">Needs review</option></select><button id="randomMovieBtn" class="btn secondary" type="button" aria-label="Open a random movie from the library">Random</button></div>
 <div id="library" class="library"></div>
 </section>
 <dialog id="editModal" class="admin-modal" aria-labelledby="editTitle">
@@ -300,7 +310,7 @@ function renderLibrary(){
  });
  $('#library').innerHTML=rows.length?rows.map(({m,i})=>{
   const poster=m.poster?'https://image.tmdb.org/t/p/w342'+m.poster:'';
-  return '<article class="item">'+(poster?'<img class="itemPoster" src="'+esc(poster)+'" alt="">':'<div class="itemPoster"></div>')+
+  return '<article class="item">'+(poster?'<img class="itemPoster" src="'+esc(poster)+'" alt="" role="button" tabindex="0" aria-label="Edit '+esc(m.title)+'" onclick="editTitle('+i+')" onkeydown="if(event.key===\\'Enter\\'||event.key===\\' \'){event.preventDefault();editTitle('+i+')}" title="Edit">':'<div class="itemPoster" role="button" tabindex="0" aria-label="Edit '+esc(m.title)+'" onclick="editTitle('+i+')" onkeydown="if(event.key===\\'Enter\\'||event.key===\\' \'){event.preventDefault();editTitle('+i+')}" title="Edit"></div>')+
   '<div class="itemBody"><div class="itemTitle"><strong>'+esc(m.title)+'</strong>'+(m.loved?'<span class="itemLove" aria-label="Loved">♥</span>':'')+'</div>'+
   '<div class="meta">'+esc(m.year||'')+' · IMDb '+esc(m.imdb||'—')+'</div>'+
   '<div class="meta itemRating">'+(m.my_rating!==null&&m.my_rating!==undefined&&m.my_rating!==''?'★ '+esc(m.my_rating)+'/10':'No rating')+'</div>'+
@@ -341,6 +351,18 @@ function openEdit(i){
  $('#draftState').textContent='';
  d.showModal();
 }
+function openRandomMovie(){
+ if(!data.length){alert('No titles are available in the library.');return;}
+ if(draftDirty&&!confirm('Unsaved changes will be lost. Open a random movie?'))return;
+ const i=Math.floor(Math.random()*data.length);
+ renderLibrary();
+ requestAnimationFrame(()=>{
+   const cards=Array.from(document.querySelectorAll('#library .item'));
+   const card=cards.find(x=>x.querySelector('[onclick="editTitle('+i+')"]'));
+   if(card)card.scrollIntoView({behavior:'smooth',block:'center'});
+   openEdit(i);
+ });
+}
 window.editTitle=openEdit;
 function markDraft(){draftDirty=true;$('#draftState').textContent='Unsaved changes';}
 $('#editRating').addEventListener('input',markDraft);$('#editComment').addEventListener('input',markDraft);
@@ -372,7 +394,7 @@ function switchSection(target){
 document.querySelectorAll('.admin-nav button').forEach(b=>b.onclick=()=>switchSection(b.dataset.target));
 window.addEventListener('beforeunload',e=>{if(draftDirty){e.preventDefault();e.returnValue=''}});
 document.querySelectorAll('.panel[data-section]').forEach(p=>p.classList.toggle('active',p.dataset.section==='connection'));
-$('#librarySearch').oninput=renderLibrary;$('#libraryFilter').onchange=renderLibrary;
+$('#librarySearch').oninput=renderLibrary;$('#libraryFilter').onchange=renderLibrary;$('#randomMovieBtn').onclick=openRandomMovie;
 if($('#repo').value&&$('#tok').value)load().then(async()=>{setConnection('ok','Saved GitHub connection restored.');if($('#tmdb').value.trim()&&data.some(m=>!Array.isArray(m.genres)||m.genres.length===0))await syncGenres(true)}).catch(()=>setConnection('idle','Saved credentials found. Click Connect GitHub to verify.'));
 const PUBLIC_COMMENTS_API="https://osplbqpgxrfovjrumsnb.supabase.co",PUBLIC_COMMENTS_KEY="sb_"+"publishable_"+"tcBaC8FqwlcFFw-IwKmiVA_y67PZNPX",PUBLIC_COMMENTS_FN=PUBLIC_COMMENTS_API+"/functions/v1/public-comments";const PUBLIC_TITLE_FALLBACK={"movie-377880":"100% Love","movie-49521":"Man of Steel"};
 async function loadPublicCommentsAdmin(){const list=$('#publicCommentsList'),msg=$('#publicCommentsMsg'),q=($('#publicCommentsSearch')?.value||'').trim().toLocaleLowerCase();try{if(!data.length){if($('#repo').value.trim()&&$('#tok').value.trim()){try{await load()}catch{await loadPublicLibraryFallback()}}else{await loadPublicLibraryFallback()}}const r=await fetch(PUBLIC_COMMENTS_API+'/rest/v1/public_comments?select=id,media_item_id,name,comment,created_at&order=created_at.desc',{headers:{apikey:PUBLIC_COMMENTS_KEY,Accept:'application/json'}});if(!r.ok)throw Error('Could not load public comments.');const rows=await r.json(),byId=new Map(data.map(m=>[String(m.id).trim(),m])),filtered=rows.filter(x=>{const key=String(x.media_item_id||'').trim(),m=byId.get(key),hay=[m?.title||key,x.name||'',x.comment].join(' ').toLocaleLowerCase();return !q||hay.includes(q)});$('#publicCommentsCount').textContent=rows.length+' comment'+(rows.length===1?'':'s');list.innerHTML=filtered.length?filtered.map(x=>{const key=String(x.media_item_id||'').trim(),m=byId.get(key),mTitle=m&&m.title?m.title:(PUBLIC_TITLE_FALLBACK[key]||'Title not found'),when=new Date(x.created_at).toLocaleString(undefined,{dateStyle:'medium',timeStyle:'short'});return '<article class="public-admin-row" data-comment-id="'+esc(x.id)+'"><div class="public-admin-check"><input type="checkbox" class="public-comment-check" aria-label="Select comment"></div><div><div class="public-admin-title">'+esc(mTitle)+'</div><div class="public-admin-meta">ID: '+esc(key)+' · '+esc(m?.type==='tv'?'TV / Show':'Movie')+' · '+esc(x.name||'Anonymous')+' · '+esc(when)+'</div><div class="public-admin-comment">'+esc(x.comment)+'</div></div><div class="public-admin-actions"><button class="public-admin-edit" type="button" data-edit-comment="'+esc(x.id)+'">Edit</button><button class="public-admin-delete" type="button" data-comment-id="'+esc(x.id)+'">Delete</button></div></article>'}).join(''):'<div class="hint">No public comments found.</div>';list.querySelectorAll('.public-admin-delete').forEach(b=>b.onclick=()=>deletePublicComment(b.dataset.commentId));list.querySelectorAll('[data-edit-comment]').forEach(b=>b.onclick=()=>editPublicComment(b.dataset.editComment));list.querySelectorAll('.public-comment-check').forEach(b=>b.onchange=updatePublicSelection);updatePublicSelection();msg.className='message hidden'}catch(e){msg.textContent=e.message||'Could not load public comments.';msg.className='message error'}}
