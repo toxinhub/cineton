@@ -6916,7 +6916,7 @@
    "Delzad Hiwale"
   ],
   "imdb": "7.8",
-  "my_rating": null,
+  "my_rating": 7,
   "watched_on": "",
   "comment": "",
   "status": "watched",
@@ -6924,7 +6924,8 @@
   "genres": [
    "Comedy",
    "Drama"
-  ]
+  ],
+  "loved": false
  },
  {
   "id": "movie-15975",
