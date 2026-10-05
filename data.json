@@ -7335,7 +7335,7 @@
    "Dan Baily"
   ],
   "imdb": "4.9",
-  "my_rating": null,
+  "my_rating": 6,
   "watched_on": "",
   "comment": "",
   "status": "watched",
@@ -7344,7 +7344,8 @@
    "Horror",
    "Thriller",
    "Crime"
-  ]
+  ],
+  "loved": false
  },
  {
   "id": "movie-505951",
