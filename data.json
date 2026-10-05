@@ -1917,12 +1917,13 @@
    "Action",
    "Family"
   ],
-  "my_rating": null,
+  "my_rating": 5,
   "watched_on": "",
   "comment": "",
   "status": "watched",
   "needs_review": true,
-  "added_at": "2026-10-05T14:26:05.124Z"
+  "added_at": "2026-10-05T14:26:05.124Z",
+  "loved": false
  },
  {
   "id": "movie-1149791",
