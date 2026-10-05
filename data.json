@@ -1,5 +1,36 @@
 [
  {
+  "id": "movie-254",
+  "type": "movie",
+  "title": "King Kong",
+  "year": "2005",
+  "poster": "/6a2HY6UmD7XiDD3NokgaBAXEsD2.jpg",
+  "overview": "In 1933 New York, an overly ambitious movie producer coerces his cast and hired ship crew to travel to mysterious Skull Island, where they encounter Kong, a giant ape who is immediately smitten with the leading lady.",
+  "director": "Peter Jackson",
+  "cast": [
+   "Naomi Watts",
+   "Adrien Brody",
+   "Jack Black",
+   "Andy Serkis",
+   "Colin Hanks",
+   "Thomas Kretschmann",
+   "Jamie Bell",
+   "Kyle Chandler"
+  ],
+  "imdb": "7.2",
+  "genres": [
+   "Adventure",
+   "Drama",
+   "Action"
+  ],
+  "my_rating": 8,
+  "watched_on": "",
+  "comment": "এটা একটা ইমোশন! মুভিটা দেখার আগেই ডায়নোসর vs কং এর ফাইট সিন বাটন ফোনে দেখছিলাম, কী ভয়াবহ রোমাঞ্চকর এডভেঞ্চার একশন। বাচ্চা কালে দারুণ এক অনুভূতি দিয়েছিল। এখনো ভাবলে চমৎকার লাগে।",
+  "status": "watched",
+  "needs_review": false,
+  "added_at": "2026-10-05T21:00:36.370Z"
+ },
+ {
   "id": "movie-608195",
   "type": "movie",
   "title": "Ghosts of War",
