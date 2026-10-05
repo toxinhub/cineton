@@ -7060,7 +7060,7 @@
    "Danny Huston"
   ],
   "imdb": "7.9",
-  "my_rating": null,
+  "my_rating": 7,
   "watched_on": "",
   "comment": "",
   "status": "watched",
@@ -7069,7 +7069,8 @@
    "Science Fiction",
    "Thriller",
    "Action"
-  ]
+  ],
+  "loved": false
  },
  {
   "id": "movie-1171101",
