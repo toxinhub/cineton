@@ -2269,37 +2269,6 @@
   "added_at": "2026-10-05T14:25:55.065Z"
  },
  {
-  "id": "movie-123",
-  "type": "movie",
-  "title": "The Lord of the Rings",
-  "year": "1978",
-  "poster": "/liW0mjvTyLs7UCumaHhx3PpU4VT.jpg",
-  "overview": "Young Hobbit Frodo Baggins is thrown into an amazing adventure when he's tasked with destroying the One Ring, created by the dark lord Sauron. Frodo must travel in a small fellowship of nine warriors and accomplices. But it won't be an easy journey for the Fellowship of the Ring, on the ultimate quest to rid Middle-earth of evil.",
-  "director": "Ralph Bakshi",
-  "cast": [
-   "Christopher Guard",
-   "William Squire",
-   "Michael Scholes",
-   "John Hurt",
-   "Simon Chandler",
-   "Dominic Guard",
-   "Michael Graham Cox",
-   "Anthony Daniels"
-  ],
-  "imdb": "6.2",
-  "genres": [
-   "Adventure",
-   "Animation",
-   "Fantasy"
-  ],
-  "my_rating": null,
-  "watched_on": "",
-  "comment": "",
-  "status": "watched",
-  "needs_review": true,
-  "added_at": "2026-10-05T14:25:53.877Z"
- },
- {
   "id": "tv-111188",
   "type": "tv",
   "title": "Scam 1992: The Harshad Mehta Story",
