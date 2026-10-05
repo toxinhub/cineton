@@ -310,7 +310,7 @@ function renderLibrary(){
  });
  $('#library').innerHTML=rows.length?rows.map(({m,i})=>{
   const poster=m.poster?'https://image.tmdb.org/t/p/w342'+m.poster:'';
-  return '<article class="item">'+(poster?'<img class="itemPoster" src="'+esc(poster)+'" alt="" role="button" tabindex="0" aria-label="Edit '+esc(m.title)+'" onclick="editTitle('+i+')" onkeydown="if(event.key===\\'Enter\\'||event.key===\\' \'){event.preventDefault();editTitle('+i+')}" title="Edit">':'<div class="itemPoster" role="button" tabindex="0" aria-label="Edit '+esc(m.title)+'" onclick="editTitle('+i+')" onkeydown="if(event.key===\\'Enter\\'||event.key===\\' \'){event.preventDefault();editTitle('+i+')}" title="Edit"></div>')+
+  return '<article class="item">'+(poster?'<img class="itemPoster" src="'+esc(poster)+'" alt="" role="button" tabindex="0" aria-label="Edit '+esc(m.title)+'" onclick="editTitle('+i+')" onkeydown="if(event.key===\'Enter\'||event.key===\' \'){event.preventDefault();editTitle('+i+')}" title="Edit">':'<div class="itemPoster" role="button" tabindex="0" aria-label="Edit '+esc(m.title)+'" onclick="editTitle('+i+')" onkeydown="if(event.key===\'Enter\'||event.key===\' \'){event.preventDefault();editTitle('+i+')}" title="Edit"></div>')+
   '<div class="itemBody"><div class="itemTitle"><strong>'+esc(m.title)+'</strong>'+(m.loved?'<span class="itemLove" aria-label="Loved">♥</span>':'')+'</div>'+
   '<div class="meta">'+esc(m.year||'')+' · IMDb '+esc(m.imdb||'—')+'</div>'+
   '<div class="meta itemRating">'+(m.my_rating!==null&&m.my_rating!==undefined&&m.my_rating!==''?'★ '+esc(m.my_rating)+'/10':'No rating')+'</div>'+
