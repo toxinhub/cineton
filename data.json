@@ -9102,7 +9102,7 @@
    "Vijayaraghavan"
   ],
   "imdb": "7.0",
-  "my_rating": null,
+  "my_rating": 6,
   "watched_on": "",
   "comment": "",
   "status": "watched",
@@ -9110,7 +9110,8 @@
   "genres": [
    "Action",
    "Thriller"
-  ]
+  ],
+  "loved": false
  },
  {
   "id": "movie-857598",
