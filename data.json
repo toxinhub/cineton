@@ -1,5 +1,37 @@
 [
  {
+  "id": "movie-608195",
+  "type": "movie",
+  "title": "Ghosts of War",
+  "year": "2020",
+  "poster": "/jR2SSICqmyaVV4lcR3PfNldJBPc.jpg",
+  "overview": "A group of World War II American soldiers encounter a supernatural enemy as they occupy a French castle previously under Nazi control.",
+  "director": "Eric Bress",
+  "cast": [
+   "Brenton Thwaites",
+   "Theo Rossi",
+   "Skylar Astin",
+   "Kyle Gallner",
+   "Alan Ritchson",
+   "Billy Zane",
+   "Shaun Toub",
+   "Matthew Reese"
+  ],
+  "imdb": "5.6",
+  "genres": [
+   "Horror",
+   "Thriller",
+   "War",
+   "Science Fiction"
+  ],
+  "my_rating": null,
+  "watched_on": "",
+  "comment": "",
+  "status": "watched",
+  "needs_review": false,
+  "added_at": "2026-10-05T15:00:52.017Z"
+ },
+ {
   "id": "tv-126308",
   "type": "tv",
   "title": "Shōgun",
