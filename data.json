@@ -8739,16 +8739,17 @@
    "Barry Corbin"
   ],
   "imdb": "8.2",
-  "my_rating": null,
+  "my_rating": 7,
   "watched_on": "",
-  "comment": "",
+  "comment": "খাসা",
   "status": "watched",
   "needs_review": false,
   "genres": [
    "Crime",
    "Thriller",
    "Western"
-  ]
+  ],
+  "loved": false
  },
  {
   "id": "movie-2503",
