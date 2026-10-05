@@ -9226,15 +9226,16 @@
    "Ellora Torchia"
   ],
   "imdb": "7.0",
-  "my_rating": null,
+  "my_rating": 7,
   "watched_on": "",
-  "comment": "",
+  "comment": "দেখতে দেখতে বিরক্তি লাগে, সেই সাথে আবার যখন শেষ করি তখন ভালোই লাগে।",
   "status": "watched",
   "needs_review": false,
   "genres": [
    "Comedy",
    "Drama"
-  ]
+  ],
+  "loved": false
  },
  {
   "id": "movie-149",
