@@ -1229,6 +1229,34 @@ update();
     padding:4px;
   }
 }
+</style><style id="modal-poster-balanced-v1">
+/* Modal poster sizing — balanced desktop scale based on the mobile 2:3 proportion. */
+@media(min-width:601px){
+  .cinemodal .modal-top{
+    grid-template-columns:180px minmax(0,1fr);
+    gap:18px;
+    padding:18px;
+  }
+  .cinemodal .m img{
+    width:180px;
+    max-height:270px;
+    aspect-ratio:2/3;
+    border-radius:4px;
+  }
+}
+@media(max-width:600px){
+  .cinemodal .modal-top{
+    grid-template-columns:86px minmax(0,1fr);
+    gap:11px;
+    padding:13px;
+  }
+  .cinemodal .m img{
+    width:86px;
+    max-height:128px;
+    aspect-ratio:2/3;
+    border-radius:4px;
+  }
+}
 </style><style id="poster-layout-refinement-v1">
 /* Poster layout refinement — keep the 2:3 cinema ratio while balancing card width, gaps and crop behavior. */
 .ci img,.ci .ph{
