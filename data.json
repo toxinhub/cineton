@@ -706,35 +706,6 @@
   "loved": false
  },
  {
-  "id": "tv-270908",
-  "type": "tv",
-  "title": "Rockstar",
-  "year": "2005",
-  "poster": "/kb8L9BvXQu2l6KXHCPuhgt0i9O3.jpg",
-  "overview": "Rock Star is a television series produced by Mark Burnett, David Geffen, Lisa Hennessy, and Al Berman in which aspiring singers from around the world competed to become the lead singer of a featured group.[1] It debuted on CBS on July 11, 2005, to mediocre ratings.\n\nThe show was hosted by television personality and commercial spokeswoman Brooke Burke and Jane's Addiction lead guitarist Dave Navarro. In season one Australian rock band INXS chose J.D. Fortune as their new lead singer. For season two, the newly formed supergroup hard rock band, Rock Star Supernova chose Lukas Rossi as the lead singer.",
-  "director": "Mark Burnett",
-  "cast": [
-   "Dave Navarro",
-   "Brooke Burke",
-   "Jason Newsted",
-   "Tommy Lee",
-   "Gilby Clarke",
-   "Dilana",
-   "Toby Rand",
-   "Magni Ásgeirsson"
-  ],
-  "imdb": "",
-  "genres": [
-   "Reality"
-  ],
-  "my_rating": null,
-  "watched_on": "",
-  "comment": "",
-  "status": "watched",
-  "needs_review": true,
-  "added_at": "2026-10-05T14:28:08.697Z"
- },
- {
   "id": "movie-559969",
   "type": "movie",
   "title": "El Camino: A Breaking Bad Movie",
