@@ -1229,7 +1229,33 @@ update();
     padding:4px;
   }
 }
-</style><style id="modal-poster-balanced-v1">
+</style><style id="modal-content-height-v1">
+/* Modal height follows its content on desktop; scrolling remains page-level when needed. */
+@media(min-width:601px){
+  .cinemodal{
+    height:auto!important;
+    max-height:none!important;
+  }
+  .cinemodal .m{
+    height:auto!important;
+    max-height:none!important;
+    overflow:visible!important;
+    scrollbar-gutter:auto!important;
+  }
+}
+@media(max-width:600px){
+  .cinemodal .m{
+    scrollbar-width:none!important;
+    -ms-overflow-style:none!important;
+  }
+  .cinemodal .m::-webkit-scrollbar{
+    display:none!important;
+    width:0!important;
+    height:0!important;
+  }
+}
+</style>
+<style id="modal-poster-balanced-v1">
 /* Modal poster sizing — balanced desktop scale based on the mobile 2:3 proportion. */
 @media(min-width:601px){
   .cinemodal .modal-top{
