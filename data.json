@@ -8523,16 +8523,17 @@
    "Stephen Dunlevy"
   ],
   "imdb": "8.1",
-  "my_rating": null,
+  "my_rating": 8,
   "watched_on": "",
-  "comment": "",
+  "comment": "A fine farewell for a superhero saga. 👌🏻",
   "status": "watched",
   "needs_review": false,
   "genres": [
    "Action",
    "Drama",
    "Science Fiction"
-  ]
+  ],
+  "loved": false
  },
  {
   "id": "movie-41188",
