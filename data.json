@@ -1475,12 +1475,13 @@
    "Drama",
    "Romance"
   ],
-  "my_rating": null,
+  "my_rating": 7,
   "watched_on": "",
-  "comment": "",
+  "comment": "তুমি আমার প্রিয় ট্রমা...",
   "status": "watched",
   "needs_review": true,
-  "added_at": "2026-10-05T14:27:47.544Z"
+  "added_at": "2026-10-05T14:27:47.544Z",
+  "loved": false
  },
  {
   "id": "movie-823464",
