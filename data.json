@@ -6587,7 +6587,7 @@
    "Laurie Metcalf"
   ],
   "imdb": "",
-  "my_rating": null,
+  "my_rating": 6,
   "watched_on": "",
   "comment": "",
   "status": "watched",
@@ -6595,7 +6595,8 @@
   "genres": [
    "Crime",
    "Drama"
-  ]
+  ],
+  "loved": false
  },
  {
   "id": "movie-388",
