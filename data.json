@@ -1,5 +1,35 @@
 [
  {
+  "id": "movie-1084812",
+  "type": "movie",
+  "title": "Aavesham",
+  "year": "2024",
+  "poster": "/k5RWPaNjgRcNvGoawYaQHQwyctI.jpg",
+  "overview": "Three college freshmen in Bangalore befriend an eccentric gangster to get revenge on their senior bullies.",
+  "director": "Jithu Madhavan",
+  "cast": [
+   "Fahadh Faasil",
+   "Hipster",
+   "Mithun Jai Sankar",
+   "Roshan Shanavas",
+   "Sajin Gopu",
+   "Midhun Midhutty",
+   "Krishna Kumar",
+   "Freestyle Krishna"
+  ],
+  "imdb": "7.8",
+  "genres": [
+   "Comedy",
+   "Action"
+  ],
+  "my_rating": 7,
+  "watched_on": "",
+  "comment": "",
+  "status": "watched",
+  "needs_review": false,
+  "added_at": "2026-10-05T14:57:57.675Z"
+ },
+ {
   "id": "tv-110316",
   "type": "tv",
   "title": "Alice in Borderland",
