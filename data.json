@@ -8482,7 +8482,7 @@
    "Rajesh Sharma"
   ],
   "imdb": "7.4",
-  "my_rating": null,
+  "my_rating": 7,
   "watched_on": "",
   "comment": "",
   "status": "watched",
@@ -8491,7 +8491,8 @@
    "Drama",
    "Comedy",
    "Thriller"
-  ]
+  ],
+  "loved": false
  },
  {
   "id": "movie-263115",
