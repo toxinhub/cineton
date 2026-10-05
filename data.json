@@ -2339,12 +2339,13 @@
    "Crime",
    "Drama"
   ],
-  "my_rating": null,
+  "my_rating": 7,
   "watched_on": "",
   "comment": "",
   "status": "watched",
   "needs_review": true,
-  "added_at": "2026-10-05T14:25:53.159Z"
+  "added_at": "2026-10-05T14:25:53.159Z",
+  "loved": false
  },
  {
   "id": "tv-225180",
