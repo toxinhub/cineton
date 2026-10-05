@@ -1001,10 +1001,11 @@
   ],
   "my_rating": null,
   "watched_on": "",
-  "comment": "",
+  "comment": "এক অদ্ভুত ফ্লিম!",
   "status": "watched",
   "needs_review": false,
-  "added_at": "2026-10-05T14:27:59.486Z"
+  "added_at": "2026-10-05T14:27:59.486Z",
+  "loved": false
  },
  {
   "id": "movie-1008409",
