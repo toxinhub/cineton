@@ -6852,7 +6852,7 @@
    "Vijay Raaz"
   ],
   "imdb": "5.7",
-  "my_rating": null,
+  "my_rating": 6,
   "watched_on": "",
   "comment": "",
   "status": "watched",
@@ -6861,7 +6861,8 @@
    "Comedy",
    "Drama",
    "Romance"
-  ]
+  ],
+  "loved": false
  },
  {
   "id": "movie-1234821",
