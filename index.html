@@ -1545,6 +1545,60 @@ update();
   }
 }
 </style>
+
+<style id="public-comment-balance-v1">
+/* Public comment refinement — match modal reading scale and keep the submit glyph visually bare. */
+.public-comment-text{
+  font-size:.80rem!important;
+  line-height:1.50!important;
+}
+.public-comment-submit{
+  appearance:none!important;
+  -webkit-appearance:none!important;
+  width:24px!important;
+  height:24px!important;
+  min-width:24px!important;
+  min-height:24px!important;
+  margin:0!important;
+  padding:0!important;
+  border:0!important;
+  border-radius:0!important;
+  background:transparent!important;
+  background-image:none!important;
+  box-shadow:none!important;
+  color:var(--ac)!important;
+  font:400 18px/1 Arial,sans-serif!important;
+  display:grid!important;
+  place-items:center!important;
+  cursor:pointer;
+}
+.public-comment-submit:hover,
+.public-comment-submit:active{
+  background:transparent!important;
+  border:0!important;
+  box-shadow:none!important;
+}
+.public-comment-submit:focus-visible{
+  background:transparent!important;
+  border:0!important;
+  box-shadow:none!important;
+  outline:2px solid color-mix(in srgb,var(--gd) 72%,transparent)!important;
+  outline-offset:2px!important;
+}
+@media(max-width:639px){
+  .public-comment-text{
+    font-size:.72rem!important;
+    line-height:1.48!important;
+  }
+  .public-comment-submit{
+    width:24px!important;
+    height:24px!important;
+    min-width:24px!important;
+    min-height:24px!important;
+    font-size:18px!important;
+  }
+}
+</style>
 </body></html><style id="desktop-soft-square-radius-v1">
 /* Desktop surface geometry — restrained 2px corners for a sharper editorial cinema grid.
    Mobile remains completely untouched. Intentional pills/circles stay unchanged. */
