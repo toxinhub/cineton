@@ -9318,13 +9318,14 @@
   "imdb": "8.7",
   "my_rating": 9,
   "watched_on": "2026-10-02",
-  "comment": "",
+  "comment": "আকাশ ছাড়িয়ে মহাকাশে, \nমহাকাশ ছাড়িয়ে ভিন্ন গ্যালাক্সিতে... 👌🏻",
   "status": "watched",
   "needs_review": false,
   "genres": [
    "Adventure",
    "Drama",
    "Science Fiction"
-  ]
+  ],
+  "loved": false
  }
 ]
