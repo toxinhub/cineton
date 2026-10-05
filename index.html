@@ -1026,17 +1026,17 @@ window.addEventListener('scroll',()=>{if(!ticking){ticking=true;requestAnimation
 update();
 })();
 </script><style id="sticky-bar-backdrop-blur-v6">
-/* Sticky bar — preserve the warm translucent surface and blur after compact-mode overrides. */
+/* Sticky bar — preserve the warm translucent surface with a lighter blur. */
 .bar{
   background:color-mix(in srgb,var(--sf) 76%,transparent) !important;
-  backdrop-filter:blur(7px) saturate(102%) !important;
-  -webkit-backdrop-filter:blur(8px) saturate(102%) !important;
+  backdrop-filter:blur(2px) saturate(102%) !important;
+  -webkit-backdrop-filter:blur(4px) saturate(102%) !important;
 }
 @media(max-width:600px){
   .bar{
     background:color-mix(in srgb,var(--sf) 74%,transparent) !important;
-    backdrop-filter:blur(2px) saturate(102%) !important;
-    -webkit-backdrop-filter:blur(4px) saturate(102%) !important;
+    backdrop-filter:blur(1px) saturate(102%) !important;
+    -webkit-backdrop-filter:blur(2px) saturate(102%) !important;
   }
 }
 </style><style id="view-toggle-visual-fix-v1">
