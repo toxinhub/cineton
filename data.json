@@ -414,12 +414,13 @@
    "Horror",
    "Mystery"
   ],
-  "my_rating": null,
+  "my_rating": 6,
   "watched_on": "",
-  "comment": "",
+  "comment": "প্রথমটার মত ভয়াবহ লাগেনি আমার কাছে।",
   "status": "watched",
   "needs_review": true,
-  "added_at": "2026-10-05T14:28:15.672Z"
+  "added_at": "2026-10-05T14:28:15.672Z",
+  "loved": false
  },
  {
   "id": "tv-194764",
