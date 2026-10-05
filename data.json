@@ -1295,12 +1295,13 @@
   "genres": [
    "Comedy"
   ],
-  "my_rating": null,
+  "my_rating": 7,
   "watched_on": "",
-  "comment": "",
+  "comment": "superb!",
   "status": "watched",
   "needs_review": false,
-  "added_at": "2026-10-05T14:27:52.086Z"
+  "added_at": "2026-10-05T14:27:52.086Z",
+  "loved": false
  },
  {
   "id": "movie-1624183",
