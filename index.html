@@ -1164,7 +1164,25 @@ update();
     transition:none!important;
   }
 }
-</style></body></html><style id="modal-close-poster-color-v7">
+</style></body></html><style id="modal-rating-chip-soft-square">
+.cinemodal .chips .imdb-chip,
+.cinemodal .chips .my-chip{
+  border-radius:7px!important;
+  padding:3px 7px!important;
+  border-width:1px!important;
+  border-color:color-mix(in srgb,var(--line-strong) 62%,transparent)!important;
+  background:color-mix(in srgb,var(--sf) 38%,transparent)!important;
+  box-shadow:none!important;
+  font-weight:500!important;
+}
+@media(max-width:600px){
+  .cinemodal .chips .imdb-chip,
+  .cinemodal .chips .my-chip{
+    border-radius:6px!important;
+    padding:3px 6px!important;
+  }
+}
+</style><style id="modal-close-poster-color-v7">
 /* Keep the modal close control transparent; only the X glyph receives the poster-derived solid color. */
 .cinemodal .x{
   color:var(--poster-accent,var(--gd))!important;
