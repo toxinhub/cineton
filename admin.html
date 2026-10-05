@@ -161,28 +161,28 @@ input,select,textarea{background:#fffaf2;color:var(--text);border-color:var(--li
 #librarySection .libraryTools{grid-template-columns:1fr}
 #librarySection #randomMovieBtn{width:100%}
 }
-</style><style id="admin-header-random-backtotop-v1">
+</style><style id="admin-header-random-backtotop-v2">
 .top{position:relative;z-index:1}
-.admin-sticky-actions{position:sticky;top:0;z-index:120;display:flex;justify-content:flex-end;align-items:center;min-height:0;padding:4px 0;pointer-events:none}
-.header-random{pointer-events:auto;appearance:none;border:1px solid var(--line);background:var(--surface,#f7f0e5);color:var(--text);border-radius:7px;min-height:28px;padding:4px 9px;font:600 10px/1 Mina,sans-serif;white-space:nowrap;cursor:pointer;box-shadow:0 2px 8px rgba(0,0,0,.07)}
-.header-random:hover{filter:brightness(.98)}
-.header-random:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
-.back-to-top{position:fixed;right:16px;bottom:16px;z-index:110;width:36px;height:36px;border:1px solid var(--line);border-radius:9px;background:var(--surface,#f7f0e5);color:var(--text);font:600 18px/1 Inter,sans-serif;box-shadow:0 4px 14px rgba(0,0,0,.10);cursor:pointer;opacity:0;visibility:hidden;transform:translateY(8px);transition:opacity .18s,visibility .18s,transform .18s}
-.back-to-top.show{opacity:1;visibility:visible;transform:translateY(0)}
-.back-to-top:hover{filter:brightness(.98)}
+#librarySection .libraryTools{grid-template-columns:minmax(0,1fr) 150px auto;align-items:stretch}
+#librarySection #randomMovieBtn{min-width:76px;white-space:nowrap}
+#librarySection .modal-status-row{display:flex;align-items:center;justify-content:space-between;gap:8px;margin:10px 0 2px;padding:7px 0;border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
+#librarySection .modal-status-label{color:var(--muted);font-size:10px}
+#editStatusToggle{min-height:30px;padding:5px 9px;font-size:10px}
+.back-to-top{position:fixed;right:50%;bottom:28%;z-index:110;width:36px;height:36px;border:1px solid var(--line2);border-radius:50%;background:rgba(255,255,255,.07);backdrop-filter:blur(4px);-webkit-backdrop-filter:blur(4px);color:var(--text);font:600 18px/1 Inter,sans-serif;box-shadow:0 4px 14px rgba(0,0,0,.10);cursor:pointer;opacity:0;visibility:hidden;transform:translate(50%,8px);transition:opacity .18s,visibility .18s,transform .18s}
+.back-to-top.show{opacity:1;visibility:visible;transform:translate(50%,0)}
+.back-to-top:hover{background:rgba(255,255,255,.11)}
 .back-to-top:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
 #editModal::backdrop{background:rgba(35,28,20,.42)}
 @media(max-width:600px){
- .top{padding:9px 10px}
- .admin-sticky-actions{padding:3px 0}
- .header-random{min-height:27px;padding:4px 8px;font-size:9px}
- .back-to-top{right:12px;bottom:12px;width:34px;height:34px}
+ #librarySection .libraryTools{grid-template-columns:1fr 1fr}
+ #librarySection .libraryTools input{grid-column:1/-1}
+ #librarySection #randomMovieBtn{width:100%}
+ .back-to-top{bottom:24%;width:34px;height:34px}
 }
 </style></head>
 <body>
 <div class="app">
 <header class="top"><div class="brand"><div class="logo">🎬</div><div><h1>CineTon Admin</h1><p>Library management</p></div></div><div id="status" class="status">Not connected</div></header>
-<div class="admin-sticky-actions"><button id="randomMovieBtn" class="header-random" type="button" aria-label="Open a random movie from the library">Random</button></div>
 
 <div class="stats"><div class="stat"><b id="total">—</b><span>Total titles</span></div><div class="stat"><b id="watched">—</b><span>Watched</span></div><div class="stat"><b id="watchlist">—</b><span>Watchlist</span></div></div>
 
@@ -257,13 +257,13 @@ input,select,textarea{background:#fffaf2;color:var(--text);border-color:var(--li
 <section class="panel comment-sector public-comment-sector" data-section="public-comments" id="publicCommentsSection"><div class="head"><div><h2>Public Comments</h2><small class="sector-note">Visitor comments · Moderation</small></div><span id="publicCommentsCount">0 comments</span></div><div class="libraryTools"><input id="publicCommentsSearch" placeholder="Search title, name, comment…"></div><div id="publicCommentsList" class="public-admin-list"></div><div class="public-admin-toolbar"><label><input type="checkbox" id="publicCommentsSelectAll"> <span>Select all</span></label><span id="publicCommentsSelected">0 selected</span><button class="public-admin-bulk-delete" id="publicCommentsDeleteSelected" type="button" disabled>Delete selected</button></div><div id="publicCommentsMsg" class="message hidden"></div></section>
 <section class="panel comment-sector admin-comment-sector" data-section="rating" id="librarySection">
 <div class="head"><div><h2>Rating &amp; Comments</h2><small class="sector-note">Personal rating · Admin notes</small></div><span id="libraryCount">0 titles</span></div>
-<div class="libraryTools"><input id="librarySearch" placeholder="Search title, year, rating, note…"><select id="libraryFilter"><option value="all">All titles</option><option value="watched">Watched</option><option value="watchlist">Watchlist</option><option value="review">Needs review</option></select></div>
+<div class="libraryTools"><input id="librarySearch" placeholder="Search title, year, rating, note…"><select id="libraryFilter"><option value="all">All titles</option><option value="watched">Watched</option><option value="watchlist">Watchlist</option><option value="review">Needs review</option></select><button id="randomMovieBtn" class="btn secondary" type="button" aria-label="Open a random movie from the library">Random</button></div>
 <div id="library" class="library"></div>
 </section>
 <button id="backToTop" class="back-to-top" type="button" aria-label="Back to top" title="Back to top">↑</button>
 <dialog id="editModal" class="admin-modal" aria-labelledby="editTitle">
 <div class="modal-inner"><button id="closeEdit" class="x" type="button" aria-label="Close">×</button>
-<div class="admin-detail"><img id="editPoster" alt=""><div><h2 id="editTitle"></h2><div id="editMeta" class="modal-meta"></div><div class="personal-box" style="margin-top:12px"><h3>Personal Interaction</h3>
+<div class="admin-detail"><img id="editPoster" alt=""><div><h2 id="editTitle"></h2><div id="editMeta" class="modal-meta"></div><div class="modal-status-row"><span id="editStatusLabel" class="modal-status-label"></span><button id="editStatusToggle" class="btn secondary" type="button"></button></div><div class="personal-box" style="margin-top:12px"><h3>Personal Interaction</h3>
 <div class="personal-grid"><div class="field"><label for="editRating">My Rating</label><input id="editRating" type="number" min="0" max="10" step="0.5" inputmode="decimal" placeholder="0–10"></div>
 <div class="field"><label for="editComment">Comment</label><textarea id="editComment" placeholder="Write your thoughts about this movie..."></textarea></div></div>
 <div style="margin-top:8px"><button id="loveToggle" class="love-toggle" type="button" aria-pressed="false"><span id="loveIcon">♡</span><span id="loveText">Add Love</span></button></div>
@@ -364,6 +364,9 @@ function openEdit(i){
  $('#editPoster').src=m.poster?'https://image.tmdb.org/t/p/w342'+m.poster:'';
  $('#editTitle').textContent=m.title;
  $('#editMeta').textContent=(m.year||'')+' · '+(m.type==='tv'?'TV / Show':'Movie')+' · IMDb '+(m.imdb||'—');
+ $('#editStatusLabel').textContent='Status: '+(m.status==='watched'?'Watched':'Watchlist');
+ $('#editStatusToggle').textContent=m.status==='watched'?'Move to Watchlist':'Mark as Watched';
+ $('#editStatusToggle').setAttribute('aria-label',m.status==='watched'?'Move this title to watchlist':'Mark this title as watched');
  $('#editRating').value=m.my_rating??'';
  $('#editComment').value=m.comment||'';
  const loved=!!m.loved; $('#loveToggle').classList.toggle('loved',loved); $('#loveToggle').setAttribute('aria-pressed',String(loved)); $('#loveIcon').textContent=loved?'❤️':'♡'; $('#loveText').textContent=loved?'Loved':'Add Love';
@@ -385,6 +388,7 @@ function openRandomMovie(){
 window.editTitle=openEdit;
 function markDraft(){draftDirty=true;$('#draftState').textContent='Unsaved changes';}
 $('#editRating').addEventListener('input',markDraft);$('#editComment').addEventListener('input',markDraft);
+$('#editStatusToggle').onclick=()=>{if(currentEditIndex<0)return;const m=data[currentEditIndex];m.status=m.status==='watched'?'watchlist':'watched';if(m.status==='watched')m.watched_on=new Date().toISOString().slice(0,10);else delete m.watched_on;$('#editStatusLabel').textContent='Status: '+(m.status==='watched'?'Watched':'Watchlist');$('#editStatusToggle').textContent=m.status==='watched'?'Move to Watchlist':'Mark as Watched';$('#editStatusToggle').setAttribute('aria-label',m.status==='watched'?'Move this title to watchlist':'Mark this title as watched');markDraft()};
 $('#loveToggle').onclick=()=>{const b=$('#loveToggle'),next=b.getAttribute('aria-pressed')!=='true';b.setAttribute('aria-pressed',String(next));b.classList.toggle('loved',next);$('#loveIcon').textContent=next?'❤️':'♡';$('#loveText').textContent=next?'Loved':'Add Love';markDraft()};
 $('#savePersonal').onclick=async()=>{
  if(currentEditIndex<0)return;
