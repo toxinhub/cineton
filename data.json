@@ -822,12 +822,13 @@
    "Fantasy",
    "Science Fiction"
   ],
-  "my_rating": null,
+  "my_rating": 7,
   "watched_on": "",
   "comment": "",
   "status": "watched",
   "needs_review": false,
-  "added_at": "2026-10-05T14:28:05.559Z"
+  "added_at": "2026-10-05T14:28:05.559Z",
+  "loved": false
  },
  {
   "id": "movie-1136418",
