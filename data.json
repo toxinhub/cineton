@@ -1181,12 +1181,13 @@
    "Science Fiction",
    "Adventure"
   ],
-  "my_rating": null,
+  "my_rating": 5,
   "watched_on": "",
-  "comment": "",
+  "comment": "না সেভাবে ভালো লাগেনি।",
   "status": "watched",
   "needs_review": false,
-  "added_at": "2026-10-05T14:27:54.960Z"
+  "added_at": "2026-10-05T14:27:54.960Z",
+  "loved": false
  },
  {
   "id": "movie-11321",
