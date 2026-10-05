@@ -1229,6 +1229,27 @@ update();
     padding:4px;
   }
 }
+</style><style id="poster-layout-refinement-v1">
+/* Poster layout refinement — keep the 2:3 cinema ratio while balancing card width, gaps and crop behavior. */
+.ci img,.ci .ph{
+  width:100%;
+  aspect-ratio:2/3;
+  object-fit:cover;
+  object-position:center;
+}
+.ci img{transform:scale(1.001)}
+@media(min-width:601px){
+  main{
+    grid-template-columns:repeat(auto-fill,minmax(186px,1fr));
+    gap:12px;
+  }
+}
+@media(max-width:600px){
+  main{
+    grid-template-columns:repeat(2,minmax(0,1fr));
+    gap:10px 8px;
+  }
+}
 </style></body></html><style id="modal-rating-chip-soft-square">
 .cinemodal .chips .imdb-chip,
 .cinemodal .chips .my-chip{
