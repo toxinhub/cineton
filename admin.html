@@ -188,6 +188,7 @@ input,select,textarea{background:#fffaf2;color:var(--text);border-color:var(--li
 <div class="stats"><div class="stat"><b id="total">—</b><span>Total titles</span></div><div class="stat"><b id="watched">—</b><span>Watched</span></div><div class="stat"><b id="watchlist">—</b><span>Watchlist</span></div></div>
 
 <div class="admin-sticky-bar"><nav class="admin-nav" aria-label="Admin sections"><button type="button" data-target="connection" class="active">Connection</button><button type="button" data-target="genres">Genres</button><button type="button" data-target="add">Add New</button><button type="button" data-target="rating">Rating &amp; Comments</button><button type="button" data-target="public-comments">Public Comments</button></nav>
+<div class="rating-sticky-random"><button id="randomMovieBtn" class="btn secondary" type="button" aria-label="Open a random movie from the library">Random</button></div></div>
 <div class="grid">
 <section class="panel" data-section="connection" id="connectionSection">
 <div class="head"><h2>Connection</h2><span>Technical configuration</span></div>
@@ -259,7 +260,6 @@ input,select,textarea{background:#fffaf2;color:var(--text);border-color:var(--li
 <section class="panel comment-sector admin-comment-sector" data-section="rating" id="librarySection">
 <div class="head"><div><h2>Rating &amp; Comments</h2><small class="sector-note">Personal rating · Admin notes</small></div><span id="libraryCount">0 titles</span></div>
 <div class="libraryTools"><input id="librarySearch" placeholder="Search title, year, rating, note…"><select id="libraryFilter"><option value="all">All titles</option><option value="watched">Watched</option><option value="watchlist">Watchlist</option><option value="review">Needs review</option></select></div>
-</nav><div class="rating-sticky-random"><button id="randomMovieBtn" class="btn secondary" type="button" aria-label="Open a random movie from the library">Random</button></div></div>
 <div id="library" class="library"></div>
 </section>
 <button id="backToTop" class="back-to-top" type="button" aria-label="Back to top" title="Back to top">↑</button>
