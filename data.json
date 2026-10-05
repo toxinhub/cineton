@@ -1880,12 +1880,13 @@
    "Drama",
    "Action & Adventure"
   ],
-  "my_rating": null,
+  "my_rating": 6,
   "watched_on": "",
-  "comment": "",
+  "comment": "কনসেপ্ট ও শুরুটা ভালো ছিল, শেষে কেমন তাল হারালো।",
   "status": "watched",
   "needs_review": true,
-  "added_at": "2026-10-05T14:26:05.820Z"
+  "added_at": "2026-10-05T14:26:05.820Z",
+  "loved": false
  },
  {
   "id": "movie-1011985",
