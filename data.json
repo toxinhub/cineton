@@ -1,5 +1,34 @@
 [
  {
+  "id": "tv-126308",
+  "type": "tv",
+  "title": "Shōgun",
+  "year": "2024",
+  "poster": "/7O4iVfOMQmdCSxhOg1WnzG1AgYT.jpg",
+  "overview": "In Japan in the year 1600, at the dawn of a century-defining civil war, Lord Yoshii Toranaga is fighting for his life as his enemies on the Council of Regents unite against him, when a mysterious European ship is found marooned in a nearby fishing village.",
+  "director": "Rachel Kondo, Justin Marks",
+  "cast": [
+   "Hiroyuki Sanada",
+   "Cosmo Jarvis",
+   "Anna Sawai",
+   "Tadanobu Asano",
+   "Takehiro Hira",
+   "Tommy Bastow",
+   "Fumi Nikaido"
+  ],
+  "imdb": "8.6",
+  "genres": [
+   "Drama",
+   "War & Politics"
+  ],
+  "my_rating": 7,
+  "watched_on": "",
+  "comment": "",
+  "status": "watched",
+  "needs_review": false,
+  "added_at": "2026-10-05T14:59:19.687Z"
+ },
+ {
   "id": "movie-1084812",
   "type": "movie",
   "title": "Aavesham",
