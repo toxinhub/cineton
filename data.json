@@ -353,12 +353,13 @@
    "Drama",
    "Crime"
   ],
-  "my_rating": null,
+  "my_rating": 8,
   "watched_on": "",
-  "comment": "",
+  "comment": "কী মারাত্মক জিনিস, অথচ আর কন্টিনিউ করল না...",
   "status": "watched",
   "needs_review": true,
-  "added_at": "2026-10-05T14:28:17.136Z"
+  "added_at": "2026-10-05T14:28:17.136Z",
+  "loved": false
  },
  {
   "id": "movie-1372604",
