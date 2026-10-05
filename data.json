@@ -848,26 +848,6 @@
   "added_at": "2026-10-05T14:28:03.254Z"
  },
  {
-  "id": "movie-257321",
-  "type": "movie",
-  "title": "The Ghost of War",
-  "year": "2011",
-  "poster": "",
-  "overview": "The Ghost of War, a short documentary, chronicles the World War II service of the Cunard Line's RMS Queen Mary and the soldiers she carried. This is a story about good men going off to war on a great ship; it is about common experiences, lasting memories and lingering ghosts.",
-  "director": "",
-  "cast": [],
-  "imdb": "",
-  "genres": [
-   "Documentary"
-  ],
-  "my_rating": null,
-  "watched_on": "",
-  "comment": "",
-  "status": "watched",
-  "needs_review": true,
-  "added_at": "2026-10-05T14:28:02.502Z"
- },
- {
   "id": "movie-142",
   "type": "movie",
   "title": "Brokeback Mountain",
