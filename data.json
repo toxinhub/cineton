@@ -1,5 +1,553 @@
 [
  {
+  "id": "tv-250390",
+  "type": "tv",
+  "title": "Rumi",
+  "year": "2024",
+  "poster": "/iXOL5XEgfMptYsxozNq8rWVQZhi.jpg",
+  "overview": "Rumi, a CIB officer, loses his sight and his job in a near-fatal accident. He starts having nightmares of strange events, one of which shockingly translates to reality in a gruesome murder. Now, the blind detective must decipher his nightmares to unravel the mystery behind the violent crime!",
+  "director": "Vicky Zahed",
+  "cast": [
+   "Chanchal Chowdhury",
+   "Reekita Nondine Shimu",
+   "Shajal Noor",
+   "Afia Tabassum Borno",
+   "Shahadat Hossain",
+   "Deepa Khandakar",
+   "Shampa Reza",
+   "Abdullah Al Sentu"
+  ],
+  "imdb": "6.8",
+  "genres": [
+   "Crime",
+   "Drama",
+   "Action & Adventure"
+  ],
+  "my_rating": null,
+  "watched_on": "",
+  "comment": "",
+  "status": "watched",
+  "needs_review": true,
+  "added_at": "2026-10-05T14:26:05.820Z"
+ },
+ {
+  "id": "movie-1011985",
+  "type": "movie",
+  "title": "Kung Fu Panda 4",
+  "year": "2024",
+  "poster": "/kDp1vUBnMpe8ak4rjgl3cLELqjU.jpg",
+  "overview": "Po is gearing up to become the spiritual leader of his Valley of Peace, but also needs someone to take his place as Dragon Warrior. As such, he will train a new kung fu practitioner for the spot and will encounter a villain called the Chameleon who conjures villains from the past.",
+  "director": "Mike Mitchell",
+  "cast": [
+   "Jack Black",
+   "Awkwafina",
+   "Viola Davis",
+   "Dustin Hoffman",
+   "Bryan Cranston",
+   "James Hong",
+   "Ian McShane",
+   "Ke Huy Quan"
+  ],
+  "imdb": "6.3",
+  "genres": [
+   "Animation",
+   "Comedy",
+   "Adventure",
+   "Action",
+   "Family"
+  ],
+  "my_rating": null,
+  "watched_on": "",
+  "comment": "",
+  "status": "watched",
+  "needs_review": true,
+  "added_at": "2026-10-05T14:26:05.124Z"
+ },
+ {
+  "id": "movie-1149791",
+  "type": "movie",
+  "title": "Premalu",
+  "year": "2024",
+  "poster": "/uPpmBjY3znUqGY8kYwI5xvOrSc0.jpg",
+  "overview": "Sachin, a carefree graduate, crosses paths with Reenu, a spirited IT professional, in Hyderabad. As their friendship deepens, unspoken feelings, career ambitions and life choices challenge their bond.",
+  "director": "Girish A. D.",
+  "cast": [
+   "Naslen",
+   "Mamitha Baiju",
+   "Sangeeth Prathap",
+   "Shyam Mohan",
+   "Akhila Bhargavan",
+   "Meenakshi Raveendran",
+   "Mathew Thomas",
+   "Althaf Salim"
+  ],
+  "imdb": "7.8",
+  "genres": [
+   "Romance",
+   "Comedy"
+  ],
+  "my_rating": null,
+  "watched_on": "",
+  "comment": "",
+  "status": "watched",
+  "needs_review": true,
+  "added_at": "2026-10-05T14:26:04.450Z"
+ },
+ {
+  "id": "movie-117996",
+  "type": "movie",
+  "title": "The Roadhouse Murder",
+  "year": "1932",
+  "poster": "/rralQqTrUEoFKclCdkhQRA0mC8N.jpg",
+  "overview": "After he stumbles across a murder, a young reporter devises an elaborate scene to keep his newspaper stories about the crime front-page news.",
+  "director": "J. Walter Ruben",
+  "cast": [
+   "Dorothy Jordan",
+   "Eric Linden",
+   "Purnell Pratt",
+   "Roscoe Ates",
+   "David Landau",
+   "Bruce Cabot",
+   "Phyllis Clare",
+   "Gustav von Seyffertitz"
+  ],
+  "imdb": "5.2",
+  "genres": [
+   "Thriller"
+  ],
+  "my_rating": null,
+  "watched_on": "",
+  "comment": "",
+  "status": "watched",
+  "needs_review": true,
+  "added_at": "2026-10-05T14:26:03.632Z"
+ },
+ {
+  "id": "movie-374720",
+  "type": "movie",
+  "title": "Dunkirk",
+  "year": "2017",
+  "poster": "/b4Oe15CGLL61Ped0RAS9JpqdmCt.jpg",
+  "overview": "The story of the miraculous evacuation of Allied soldiers from Belgium, Britain, Canada and France, who were cut off and surrounded by the German army from the beaches and harbour of Dunkirk between May 26th and June 4th 1940 during World War II.",
+  "director": "Christopher Nolan",
+  "cast": [
+   "Fionn Whitehead",
+   "Tom Hardy",
+   "Mark Rylance",
+   "Kenneth Branagh",
+   "Cillian Murphy",
+   "Barry Keoghan",
+   "Harry Styles",
+   "Aneurin Barnard"
+  ],
+  "imdb": "7.8",
+  "genres": [
+   "War",
+   "Action",
+   "Drama"
+  ],
+  "my_rating": null,
+  "watched_on": "",
+  "comment": "",
+  "status": "watched",
+  "needs_review": true,
+  "added_at": "2026-10-05T14:26:02.889Z"
+ },
+ {
+  "id": "movie-264660",
+  "type": "movie",
+  "title": "Ex Machina",
+  "year": "2015",
+  "poster": "/dmJW8IAKHKxFNiUnoDR7JfsK7Rp.jpg",
+  "overview": "Caleb, a coder at the world's largest internet company, wins a competition to spend a week at a private mountain retreat belonging to Nathan, the reclusive CEO of the company. But when Caleb arrives at the remote location he finds that he will have to participate in a strange and fascinating experiment in which he must interact with the world's first true artificial intelligence, housed in the body of a beautiful robot girl.",
+  "director": "Alex Garland",
+  "cast": [
+   "Domhnall Gleeson",
+   "Alicia Vikander",
+   "Oscar Isaac",
+   "Sonoya Mizuno",
+   "Corey Johnson",
+   "Claire Selby",
+   "Symara A. Templeman",
+   "Gana Bayarsaikhan"
+  ],
+  "imdb": "7.7",
+  "genres": [
+   "Drama",
+   "Science Fiction"
+  ],
+  "my_rating": null,
+  "watched_on": "",
+  "comment": "",
+  "status": "watched",
+  "needs_review": true,
+  "added_at": "2026-10-05T14:26:01.456Z"
+ },
+ {
+  "id": "movie-840889",
+  "type": "movie",
+  "title": "Stopmotion",
+  "year": "2024",
+  "poster": "/kWzWZEctPcZ0dATbtcYy6lIJgGj.jpg",
+  "overview": "Ella Blake, a stop-motion animator struggling to control her demons after the loss of her overbearing mother, embarks upon the creation of a film that becomes the battleground for her sanity. As Ella’s mind starts to fracture, the characters in her project take on a life of their own.",
+  "director": "Robert Morgan",
+  "cast": [
+   "Aisling Franciosi",
+   "Stella Gonet",
+   "Tom York",
+   "Therica Wilson-Read",
+   "Bridgitta Roy",
+   "Caoilinn Springall",
+   "Alex Freeborn",
+   "James Swanton"
+  ],
+  "imdb": "5.6",
+  "genres": [
+   "Horror",
+   "Thriller"
+  ],
+  "my_rating": null,
+  "watched_on": "",
+  "comment": "",
+  "status": "watched",
+  "needs_review": true,
+  "added_at": "2026-10-05T14:26:00.734Z"
+ },
+ {
+  "id": "tv-82452",
+  "type": "tv",
+  "title": "Avatar: The Last Airbender",
+  "year": "2024",
+  "poster": "/lzZpWEaqzP0qVA5nkCc5ASbNcSy.jpg",
+  "overview": "A young boy known as the Avatar must master the four elemental powers to save a world at war — and fight a ruthless enemy bent on stopping him.",
+  "director": "Albert Kim",
+  "cast": [
+   "Gordon Cormier",
+   "Kiawentiio",
+   "Ian Ousley",
+   "Dallas Liu",
+   "Miyako"
+  ],
+  "imdb": "7.2",
+  "genres": [
+   "Action & Adventure",
+   "Sci-Fi & Fantasy",
+   "Drama",
+   "Family"
+  ],
+  "my_rating": null,
+  "watched_on": "",
+  "comment": "",
+  "status": "watched",
+  "needs_review": true,
+  "added_at": "2026-10-05T14:26:00.010Z"
+ },
+ {
+  "id": "movie-1017338",
+  "type": "movie",
+  "title": "Hidayah",
+  "year": "2023",
+  "poster": "/gukSJNCDL2Xx8XB9PE5bL5qBOBQ.jpg",
+  "overview": "Bahri, a young man who lives in Mekarsari Village. One day, Bahri realized that something was wrong in Mekarsari Village. Out of curiosity, he also found out what was really going on in the village where he lived.",
+  "director": "Monty Tiwa, Dedy Kopola",
+  "cast": [
+   "Ajil Ditto",
+   "Givina",
+   "Fanny Ghassani",
+   "Alif Joerg",
+   "Unique Priscilla",
+   "Dewi Yull",
+   "Iskak Khivano",
+   "Baby Niken"
+  ],
+  "imdb": "",
+  "genres": [
+   "Horror",
+   "Drama"
+  ],
+  "my_rating": null,
+  "watched_on": "",
+  "comment": "",
+  "status": "watched",
+  "needs_review": true,
+  "added_at": "2026-10-05T14:25:59.306Z"
+ },
+ {
+  "id": "movie-571610",
+  "type": "movie",
+  "title": "Majili",
+  "year": "2019",
+  "poster": "/nr2H4EUAzX8WyiPQ8IjNbUgkn7h.jpg",
+  "overview": "Poorna fails to appreciate the blessings in his life due to his unfulfilled dream of a cricket career and a failed romance that changes him.",
+  "director": "Shiva Nirvana",
+  "cast": [
+   "Naga Chaitanya Akkineni",
+   "Samantha Ruth Prabhu",
+   "Divyansha Kaushik",
+   "Rao Ramesh",
+   "Posani Krishna Murali",
+   "Atul Kulkarni",
+   "Subbaraju",
+   "Rajshri Nair"
+  ],
+  "imdb": "7.2",
+  "genres": [
+   "Drama",
+   "Romance"
+  ],
+  "my_rating": null,
+  "watched_on": "",
+  "comment": "",
+  "status": "watched",
+  "needs_review": true,
+  "added_at": "2026-10-05T14:25:58.609Z"
+ },
+ {
+  "id": "tv-211224",
+  "type": "tv",
+  "title": "The Nice Guy",
+  "year": "2025",
+  "poster": "/mVOKlZ6Ix5OfXHsyuaQp4nEDE6n.jpg",
+  "overview": "Seok-cheol, the eldest son in a family of three generations of gangsters, navigates the tumultuous ups and downs of life with tears and laughter, all to protect his family, career, and love.",
+  "director": "Kim Woon-kyeong, Hyo-seok Kim",
+  "cast": [
+   "Lee Dong-wook",
+   "Lee Sung-kyung",
+   "Ryu Hye-young",
+   "Oh Na-ra",
+   "Park Hoon",
+   "Cheon Ho-jin",
+   "Park Myung-shin",
+   "Park Won-sang"
+  ],
+  "imdb": "6.5",
+  "genres": [
+   "Drama",
+   "Family"
+  ],
+  "my_rating": null,
+  "watched_on": "",
+  "comment": "",
+  "status": "watched",
+  "needs_review": true,
+  "added_at": "2026-10-05T14:25:57.898Z"
+ },
+ {
+  "id": "movie-1063157",
+  "type": "movie",
+  "title": "Kida",
+  "year": "2023",
+  "poster": "/kaihZH3P23B9ty4Xk7mRlLiMtPO.jpg",
+  "overview": "A grandfather decides to sell a goat to generate some money to buy a new dress that his grandson wants for Deepavali. But the goat goes missing, dashing not just his hopes but those of a few others in the village.",
+  "director": "Ra Venkat",
+  "cast": [
+   "Kaali Venkat",
+   "'Poo' Ram",
+   "Paandiyamma",
+   "Vijaya",
+   "Deepan"
+  ],
+  "imdb": "7.5",
+  "genres": [
+   "Drama",
+   "Family"
+  ],
+  "my_rating": null,
+  "watched_on": "",
+  "comment": "",
+  "status": "watched",
+  "needs_review": true,
+  "added_at": "2026-10-05T14:25:57.081Z"
+ },
+ {
+  "id": "tv-29513",
+  "type": "tv",
+  "title": "The 12th Man",
+  "year": "2006",
+  "poster": "",
+  "overview": "Unaired pilot by Dan Fogelman.",
+  "director": "",
+  "cast": [],
+  "imdb": "",
+  "genres": [
+   "Talk"
+  ],
+  "my_rating": null,
+  "watched_on": "",
+  "comment": "",
+  "status": "watched",
+  "needs_review": true,
+  "added_at": "2026-10-05T14:25:56.146Z"
+ },
+ {
+  "id": "tv-90966",
+  "type": "tv",
+  "title": "Gullak",
+  "year": "2019",
+  "poster": "/arn3mvRYSrEqO7vaKbH8QxM8EEK.jpg",
+  "overview": "Set in quaint by-lanes in the heart of India, Gullak is a collection of disarming and relatable tales of the Mishra family.",
+  "director": "Nikhil Vijay, Shreyansh Pandey",
+  "cast": [
+   "Jameel Khan",
+   "Geetanjali Kulkarni",
+   "Harsh Mayar",
+   "Shivankit Singh Parihar",
+   "Sunita Rajwar",
+   "Anant Joshi"
+  ],
+  "imdb": "9.1",
+  "genres": [
+   "Comedy",
+   "Drama",
+   "Family"
+  ],
+  "my_rating": null,
+  "watched_on": "",
+  "comment": "",
+  "status": "watched",
+  "needs_review": true,
+  "added_at": "2026-10-05T14:25:55.783Z"
+ },
+ {
+  "id": "tv-63351",
+  "type": "tv",
+  "title": "Narcos",
+  "year": "2015",
+  "poster": "/rTmal9fDbwh5F0waol2hq35U4ah.jpg",
+  "overview": "A gritty chronicle of the war against Colombia's infamously violent and powerful drug cartels.",
+  "director": "Chris Brancato, Doug Miro, Carlo Bernard",
+  "cast": [
+   "Pedro Pascal",
+   "Matias Varela",
+   "Damián Alcázar",
+   "Francisco Denis",
+   "Alberto Ammann",
+   "Pêpê Rapazote",
+   "Arturo Castro",
+   "Michael Stahl-David"
+  ],
+  "imdb": "8.7",
+  "genres": [
+   "Crime",
+   "Drama"
+  ],
+  "my_rating": null,
+  "watched_on": "",
+  "comment": "",
+  "status": "watched",
+  "needs_review": true,
+  "added_at": "2026-10-05T14:25:55.065Z"
+ },
+ {
+  "id": "movie-467349",
+  "type": "movie",
+  "title": "Hobbit Love Is the Greatest Love",
+  "year": "2007",
+  "poster": "",
+  "overview": "A desktop video in five parts that modestly propose ways of existing with or against history and politics.",
+  "director": "Steve Reinke",
+  "cast": [],
+  "imdb": "",
+  "genres": [],
+  "my_rating": null,
+  "watched_on": "",
+  "comment": "",
+  "status": "watched",
+  "needs_review": true,
+  "added_at": "2026-10-05T14:25:54.204Z"
+ },
+ {
+  "id": "movie-123",
+  "type": "movie",
+  "title": "The Lord of the Rings",
+  "year": "1978",
+  "poster": "/liW0mjvTyLs7UCumaHhx3PpU4VT.jpg",
+  "overview": "Young Hobbit Frodo Baggins is thrown into an amazing adventure when he's tasked with destroying the One Ring, created by the dark lord Sauron. Frodo must travel in a small fellowship of nine warriors and accomplices. But it won't be an easy journey for the Fellowship of the Ring, on the ultimate quest to rid Middle-earth of evil.",
+  "director": "Ralph Bakshi",
+  "cast": [
+   "Christopher Guard",
+   "William Squire",
+   "Michael Scholes",
+   "John Hurt",
+   "Simon Chandler",
+   "Dominic Guard",
+   "Michael Graham Cox",
+   "Anthony Daniels"
+  ],
+  "imdb": "6.2",
+  "genres": [
+   "Adventure",
+   "Animation",
+   "Fantasy"
+  ],
+  "my_rating": null,
+  "watched_on": "",
+  "comment": "",
+  "status": "watched",
+  "needs_review": true,
+  "added_at": "2026-10-05T14:25:53.877Z"
+ },
+ {
+  "id": "tv-111188",
+  "type": "tv",
+  "title": "Scam 1992: The Harshad Mehta Story",
+  "year": "2020",
+  "poster": "/fiimZ9Xt5cPTPHNrbS4QautBXpU.jpg",
+  "overview": "Set in 1980's & 90's Bombay, Scam 1992 follows the life of Harshad Mehta - a stockbroker who single-handedly took the stock market to dizzying heights & his catastrophic downfall. Being directed by National Award-winning filmmaker Hansal Mehta, the series is based on journalist Debashis Basu & Sucheta Dalal's book \"The Scam\".",
+  "director": "Hansal Mehta",
+  "cast": [
+   "Pratik Gandhi",
+   "Shreya Dhanwanthary",
+   "Anjali Barot",
+   "Hemant Kher",
+   "Chirag Vohra",
+   "Jay Upadhyay",
+   "Satish Kaushik",
+   "K.K. Raina"
+  ],
+  "imdb": "9.2",
+  "genres": [
+   "Crime",
+   "Drama"
+  ],
+  "my_rating": null,
+  "watched_on": "",
+  "comment": "",
+  "status": "watched",
+  "needs_review": true,
+  "added_at": "2026-10-05T14:25:53.159Z"
+ },
+ {
+  "id": "tv-225180",
+  "type": "tv",
+  "title": "BLUE EYE SAMURAI",
+  "year": "2023",
+  "poster": "/fXm3JT4WLQVnwukdvghtAblc1wc.jpg",
+  "overview": "Driven by a dream of revenge against those who made her an outcast in Edo-period Japan, a young warrior cuts a bloody path toward her destiny.",
+  "director": "Amber Noizumi, Michael Green",
+  "cast": [
+   "Maya Erskine",
+   "George Takei",
+   "Masi Oka",
+   "Cary-Hiroyuki Tagawa",
+   "Brenda Song",
+   "Darren Barnet",
+   "Randall Park",
+   "Kenneth Branagh"
+  ],
+  "imdb": "8.7",
+  "genres": [
+   "Action & Adventure",
+   "Animation"
+  ],
+  "my_rating": null,
+  "watched_on": "",
+  "comment": "",
+  "status": "watched",
+  "needs_review": true,
+  "added_at": "2026-10-05T14:25:52.249Z"
+ },
+ {
   "id": "tv-34307",
   "type": "tv",
   "title": "Shameless",
