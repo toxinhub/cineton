@@ -2364,12 +2364,13 @@
    "Drama",
    "Comedy"
   ],
-  "my_rating": 7.5,
+  "my_rating": 7,
   "watched_on": "",
   "comment": "এ এক বিচিত্র জার্নি...",
   "status": "watched",
   "needs_review": false,
-  "added_at": "2026-10-04T04:58:48.584Z"
+  "added_at": "2026-10-04T04:58:48.584Z",
+  "loved": false
  },
  {
   "id": "movie-508943",
