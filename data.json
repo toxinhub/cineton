@@ -5488,13 +5488,14 @@
   "imdb": "6.7",
   "my_rating": 7,
   "watched_on": "",
-  "comment": "",
+  "comment": "সিডনির একটা জাতের মুভি ছিল এটা।",
   "status": "watched",
   "needs_review": false,
   "genres": [
    "Mystery",
    "Thriller"
-  ]
+  ],
+  "loved": false
  },
  {
   "id": "movie-15977",
