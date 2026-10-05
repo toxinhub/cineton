@@ -8607,7 +8607,7 @@
    "Richard E. Grant"
   ],
   "imdb": "7.4",
-  "my_rating": null,
+  "my_rating": 7,
   "watched_on": "",
   "comment": "",
   "status": "watched",
@@ -8616,7 +8616,8 @@
    "Romance",
    "Fantasy",
    "Animation"
-  ]
+  ],
+  "loved": false
  },
  {
   "id": "movie-1064213",
