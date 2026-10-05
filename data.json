@@ -1113,12 +1113,13 @@
    "Thriller",
    "Mystery"
   ],
-  "my_rating": null,
+  "my_rating": 8,
   "watched_on": "",
-  "comment": "",
+  "comment": "চমৎকার!!",
   "status": "watched",
   "needs_review": false,
-  "added_at": "2026-10-05T14:27:56.441Z"
+  "added_at": "2026-10-05T14:27:56.441Z",
+  "loved": false
  },
  {
   "id": "movie-508883",
