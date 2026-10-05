@@ -1717,12 +1717,13 @@
    "Comedy",
    "Crime"
   ],
-  "my_rating": null,
+  "my_rating": 7,
   "watched_on": "",
-  "comment": "",
+  "comment": "এন্টারটেইন ছিল ভালোই।",
   "status": "watched",
   "needs_review": true,
-  "added_at": "2026-10-05T14:27:38.133Z"
+  "added_at": "2026-10-05T14:27:38.133Z",
+  "loved": false
  },
  {
   "id": "movie-85350",
