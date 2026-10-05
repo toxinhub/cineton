@@ -1839,12 +1839,13 @@
    "Romance",
    "Drama"
   ],
-  "my_rating": null,
+  "my_rating": 7,
   "watched_on": "",
-  "comment": "",
+  "comment": "বিবাহ আলোচনা",
   "status": "watched",
   "needs_review": true,
-  "added_at": "2026-10-05T14:27:34.885Z"
+  "added_at": "2026-10-05T14:27:34.885Z",
+  "loved": false
  },
  {
   "id": "tv-250390",
