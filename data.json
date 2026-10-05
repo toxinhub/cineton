@@ -4402,14 +4402,15 @@
   "imdb": "",
   "my_rating": 7,
   "watched_on": "",
-  "comment": "",
+  "comment": "The making and action were good.",
   "status": "watched",
   "needs_review": false,
   "genres": [
    "Crime",
    "Action",
    "Thriller"
-  ]
+  ],
+  "loved": false
  },
  {
   "id": "movie-1628448",
