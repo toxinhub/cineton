@@ -1572,12 +1572,13 @@
    "Thriller",
    "Drama"
   ],
-  "my_rating": null,
+  "my_rating": 7,
   "watched_on": "",
   "comment": "",
   "status": "watched",
   "needs_review": true,
-  "added_at": "2026-10-05T14:27:42.135Z"
+  "added_at": "2026-10-05T14:27:42.135Z",
+  "loved": false
  },
  {
   "id": "movie-957926",
