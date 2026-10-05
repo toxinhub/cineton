@@ -7791,7 +7791,7 @@
    "Aditya Pancholi"
   ],
   "imdb": "7.3",
-  "my_rating": null,
+  "my_rating": 6,
   "watched_on": "",
   "comment": "",
   "status": "watched",
@@ -7800,7 +7800,8 @@
    "History",
    "Romance",
    "Drama"
-  ]
+  ],
+  "loved": false
  },
  {
   "id": "movie-20492",
