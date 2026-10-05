@@ -2186,26 +2186,6 @@
   "added_at": "2026-10-05T14:25:57.081Z"
  },
  {
-  "id": "movie-29513",
-  "type": "movie",
-  "title": "The 12th Man",
-  "year": "2006",
-  "poster": "",
-  "overview": "Unaired pilot by Dan Fogelman.",
-  "director": "",
-  "cast": [],
-  "imdb": "",
-  "genres": [
-   "Talk"
-  ],
-  "my_rating": null,
-  "watched_on": "",
-  "comment": "",
-  "status": "watched",
-  "needs_review": true,
-  "added_at": "2026-10-05T14:25:56.146Z"
- },
- {
   "id": "tv-90966",
   "type": "tv",
   "title": "Gullak",
