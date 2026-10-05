@@ -1531,7 +1531,29 @@ update();
     border-radius:2px!important;
   }
 }
-</style><style id="modal-rating-chip-soft-square">
+<style id="mobile-soft-square-radius-v1">
+/* Mobile surface geometry — match the desktop 2px editorial corners while preserving intentional pills/circles. */
+@media(max-width:600px){
+  .c,
+  .skel,
+  .cinemodal,
+  .cinemodal .m img,
+  .bar,
+  .surprise,
+  .stat,
+  .bar input,
+  .select-trigger,
+  .select-menu,
+  .select-menu button,
+  .views button,
+  .public-comments,
+  .public-comment,
+  .public-comment-composer,
+  .public-comment-resize{
+    border-radius:2px!important;
+  }
+}
+</style></style><style id="modal-rating-chip-soft-square">
 .cinemodal .chips .imdb-chip,
 .cinemodal .chips .my-chip{
   border-radius:2px!important;
