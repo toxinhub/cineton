@@ -179,6 +179,10 @@ input,select,textarea{background:#fffaf2;color:var(--text);border-color:var(--li
  #librarySection #randomMovieBtn{width:100%}
  .back-to-top{bottom:24%;width:34px;height:34px}
 }
+
+.rating-sticky-random{position:sticky;top:8px;z-index:100;display:flex;justify-content:flex-end;align-items:center;min-height:0;margin:-2px 0 6px;pointer-events:none}
+.rating-sticky-random #randomMovieBtn{pointer-events:auto;min-width:76px;white-space:nowrap;box-shadow:0 3px 10px rgba(0,0,0,.10)}
+@media(max-width:600px){.rating-sticky-random{top:6px;margin:-2px 0 6px}.rating-sticky-random #randomMovieBtn{min-height:30px;padding:5px 9px}}
 </style></head>
 <body>
 <div class="app">
@@ -257,7 +261,8 @@ input,select,textarea{background:#fffaf2;color:var(--text);border-color:var(--li
 <section class="panel comment-sector public-comment-sector" data-section="public-comments" id="publicCommentsSection"><div class="head"><div><h2>Public Comments</h2><small class="sector-note">Visitor comments · Moderation</small></div><span id="publicCommentsCount">0 comments</span></div><div class="libraryTools"><input id="publicCommentsSearch" placeholder="Search title, name, comment…"></div><div id="publicCommentsList" class="public-admin-list"></div><div class="public-admin-toolbar"><label><input type="checkbox" id="publicCommentsSelectAll"> <span>Select all</span></label><span id="publicCommentsSelected">0 selected</span><button class="public-admin-bulk-delete" id="publicCommentsDeleteSelected" type="button" disabled>Delete selected</button></div><div id="publicCommentsMsg" class="message hidden"></div></section>
 <section class="panel comment-sector admin-comment-sector" data-section="rating" id="librarySection">
 <div class="head"><div><h2>Rating &amp; Comments</h2><small class="sector-note">Personal rating · Admin notes</small></div><span id="libraryCount">0 titles</span></div>
-<div class="libraryTools"><input id="librarySearch" placeholder="Search title, year, rating, note…"><select id="libraryFilter"><option value="all">All titles</option><option value="watched">Watched</option><option value="watchlist">Watchlist</option><option value="review">Needs review</option></select><button id="randomMovieBtn" class="btn secondary" type="button" aria-label="Open a random movie from the library">Random</button></div>
+<div class="libraryTools"><input id="librarySearch" placeholder="Search title, year, rating, note…"><select id="libraryFilter"><option value="all">All titles</option><option value="watched">Watched</option><option value="watchlist">Watchlist</option><option value="review">Needs review</option></select></div>
+<div class="rating-sticky-random"><button id="randomMovieBtn" class="btn secondary" type="button" aria-label="Open a random movie from the library">Random</button></div>
 <div id="library" class="library"></div>
 </section>
 <button id="backToTop" class="back-to-top" type="button" aria-label="Back to top" title="Back to top">↑</button>
