@@ -1515,30 +1515,6 @@
   "added_at": "2026-10-05T14:27:46.607Z"
  },
  {
-  "id": "movie-747375",
-  "type": "movie",
-  "title": "Shogun",
-  "year": "1968",
-  "poster": "",
-  "overview": "Short film.",
-  "director": "Roger Hullaert, Willy Verlinden",
-  "cast": [
-   "Luc Monheim",
-   "Yen Pernath",
-   "Els Weyns"
-  ],
-  "imdb": "7.2",
-  "genres": [
-   "Drama"
-  ],
-  "my_rating": null,
-  "watched_on": "",
-  "comment": "",
-  "status": "watched",
-  "needs_review": true,
-  "added_at": "2026-10-05T14:27:45.828Z"
- },
- {
   "id": "movie-834664",
   "type": "movie",
   "title": "Anweshippin Kandethum",
