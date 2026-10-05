@@ -1,76 +1,80 @@
 <!DOCTYPE html>
-<!-- pages-deploy-trigger: 2026-10-05-public-comments-contrast-v1 -->
-<style id="public-comments-typography-contrast-v1">
-/* Public comments — readable type and stronger warm-theme contrast on desktop + mobile. */
-.public-comments,
-.public-comments-head,
-.public-comments-count,
-.public-comment,
-.public-comment-composer input,
-.public-comment-composer textarea{
-  font-family:"Mina",sans-serif!important;
+<!-- pages-deploy-trigger: 2026-10-05-public-comments-desktop-balance-v2 -->
+<style id="public-comments-typography-contrast-v2">
+/* Public comments — balanced desktop hierarchy with stronger warm-theme contrast. */
+.public-comments{
+  border-color:color-mix(in srgb,var(--tx) 34%,var(--line-strong))!important;
+  background:color-mix(in srgb,var(--sf) 52%,var(--modal))!important;
 }
 .public-comments-head{
   color:var(--tx)!important;
-  font-size:.68rem!important;
+  font-family:"Mina",sans-serif!important;
+  font-size:.70rem!important;
   line-height:1.35!important;
   font-weight:700!important;
-  letter-spacing:.045em!important;
+  letter-spacing:.035em!important;
 }
 .public-comments-count{
   color:var(--tx)!important;
-  font-size:.62rem!important;
-  font-weight:500!important;
-  opacity:.9!important;
+  font-size:.63rem!important;
+  font-weight:600!important;
+  opacity:1!important;
 }
 .public-comment{
   color:var(--tx)!important;
-  font-size:.72rem!important;
-  line-height:1.55!important;
+  font-family:"Mina",sans-serif!important;
+  font-size:.74rem!important;
+  line-height:1.56!important;
   font-weight:400!important;
+  background:color-mix(in srgb,var(--modal) 72%,var(--sf))!important;
+  border:1px solid color-mix(in srgb,var(--line-strong) 76%,transparent);
 }
 .public-comment-mark{
-  color:var(--mu)!important;
-  opacity:.9!important;
-}
-.public-comment-name{
   color:var(--tx)!important;
-  font-weight:700!important;
+  opacity:.82!important;
 }
+.public-comment-name,
 .public-comment-text{
   color:var(--tx)!important;
 }
+.public-comment-name{font-weight:700!important}
 .public-comments-head::after{
-  color:var(--mu)!important;
-  opacity:1!important;
+  color:var(--tx)!important;
+  opacity:.9!important;
 }
 .public-comments.open .public-comments-head::after{
   color:var(--ac)!important;
+  opacity:1!important;
+}
+.public-comment-composer{
+  border-color:color-mix(in srgb,var(--tx) 28%,var(--ac))!important;
+  background:color-mix(in srgb,var(--modal) 88%,var(--sf))!important;
 }
 .public-comment-composer input,
 .public-comment-composer textarea{
   color:var(--tx)!important;
-  font-size:.70rem!important;
-  line-height:1.5!important;
+  font-family:"Mina",sans-serif!important;
+  font-size:.72rem!important;
+  line-height:1.52!important;
 }
 .public-comment-composer input::placeholder,
 .public-comment-composer textarea::placeholder{
   color:var(--mu)!important;
-  opacity:.9!important;
+  opacity:1!important;
 }
 .public-comment-submit{
   color:var(--ac)!important;
   opacity:1!important;
 }
 @media(max-width:639px){
+  .public-comments{
+    border-color:var(--line-strong)!important;
+  }
   .public-comments-head{
     font-size:.64rem!important;
-    line-height:1.35!important;
     letter-spacing:.035em!important;
   }
-  .public-comments-count{
-    font-size:.59rem!important;
-  }
+  .public-comments-count{font-size:.59rem!important}
   .public-comment{
     font-size:.68rem!important;
     line-height:1.52!important;
@@ -79,10 +83,6 @@
   .public-comment-composer textarea{
     font-size:.66rem!important;
     line-height:1.5!important;
-  }
-  .public-comment-composer input::placeholder,
-  .public-comment-composer textarea::placeholder{
-    opacity:.9!important;
   }
 }
 </style>
