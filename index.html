@@ -1203,7 +1203,34 @@ update();
     transition:none!important;
   }
 }
-</style><style id="mobile-sticky-two-line-v1">
+</style><style id="desktop-modal-motion-v1">
+/* Desktop modal motion — keep the mobile poster-origin feel, but soften the travel and scale for a larger dialog. */
+@media(min-width:601px){
+  .cinemodal.modal-origin{
+    transition:opacity .18s ease,transform .22s cubic-bezier(.16,1,.3,1)!important;
+    will-change:opacity,transform;
+  }
+  .cinemodal.modal-origin[open]{
+    opacity:.02;
+    transform:translate3d(calc(var(--origin-x,0px) * .14),calc(var(--origin-y,0px) * .14),0) scale(.94)!important;
+  }
+  .cinemodal.modal-origin.modal-origin-ready[open]{
+    opacity:1;
+    transform:none!important;
+  }
+  .cinemodal.modal-returning[open]{
+    opacity:.02;
+    transform:translate3d(var(--origin-x,0px),var(--origin-y,0px),0) scale(var(--origin-scale,.18))!important;
+  }
+}
+@media(prefers-reduced-motion:reduce){
+  .cinemodal.modal-origin,.cinemodal.modal-origin[open],.cinemodal.modal-origin.modal-origin-ready[open],.cinemodal.modal-returning[open]{
+    transition:none!important;
+    transform:none!important;
+  }
+}
+</style>
+<style id="mobile-sticky-two-line-v1">
 /* Mobile sticky controls — keep the bar to two compact rows while scrolling. */
 @media(max-width:600px){
   .bar{
