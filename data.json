@@ -8449,7 +8449,7 @@
    "Michael Wright"
   ],
   "imdb": "6.2",
-  "my_rating": null,
+  "my_rating": 6,
   "watched_on": "",
   "comment": "",
   "status": "watched",
@@ -8459,7 +8459,8 @@
    "Comedy",
    "Crime",
    "Thriller"
-  ]
+  ],
+  "loved": false
  },
  {
   "id": "movie-823219",
