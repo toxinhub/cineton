@@ -8914,7 +8914,7 @@
    "Baiju Santhosh"
   ],
   "imdb": "6.7",
-  "my_rating": null,
+  "my_rating": 6,
   "watched_on": "",
   "comment": "",
   "status": "watched",
@@ -8922,7 +8922,8 @@
   "genres": [
    "Comedy",
    "Family"
-  ]
+  ],
+  "loved": false
  },
  {
   "id": "movie-1189518",
