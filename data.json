@@ -7907,7 +7907,7 @@
    "Paula Jai Parker"
   ],
   "imdb": "7.2",
-  "my_rating": null,
+  "my_rating": 6,
   "watched_on": "",
   "comment": "",
   "status": "watched",
@@ -7915,7 +7915,8 @@
   "genres": [
    "Comedy",
    "Drama"
-  ]
+  ],
+  "loved": false
  },
  {
   "id": "movie-668489",
