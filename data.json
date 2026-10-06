@@ -1670,12 +1670,13 @@
    "Comedy",
    "Thriller"
   ],
-  "my_rating": null,
+  "my_rating": 6,
   "watched_on": "",
   "comment": "",
   "status": "watched",
   "needs_review": true,
-  "added_at": "2026-10-05T14:27:39.656Z"
+  "added_at": "2026-10-05T14:27:39.656Z",
+  "loved": false
  },
  {
   "id": "movie-940721",
