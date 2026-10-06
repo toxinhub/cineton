@@ -1878,7 +1878,7 @@ update();
   };
 
   const syncPublicRatings=async()=>{
-    const ids=[...new Set((window.D||[]).map(m=>String(m.id)).filter(Boolean))];
+    const ids=[...new Set(D.map(m=>String(m.id)).filter(Boolean))];
     if(!ids.length)return;
     try{
       const data=await rpc("get_public_ratings_batch",{
@@ -2011,11 +2011,19 @@ update();
 
   const observer=new MutationObserver(()=>{
     wirePoster();
+    trySyncPublicRatings?.();
   });
   observer.observe(document.body,{childList:true,subtree:true});
   wirePoster();
   syncOpenRatings();
-  setTimeout(syncPublicRatings,0);
+  let publicRatingsBatchLoaded=false;
+  const trySyncPublicRatings=()=>{
+    if(publicRatingsBatchLoaded || !D.length)return;
+    publicRatingsBatchLoaded=true;
+    syncPublicRatings();
+  };
+  setTimeout(trySyncPublicRatings,0);
+  setTimeout(trySyncPublicRatings,500);
 
   document.addEventListener("click",ev=>{
     const dialog=ev.target.closest(".cinemodal");
