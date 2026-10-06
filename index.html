@@ -1822,13 +1822,13 @@ update();
     else chips.appendChild(chip);
   };
 
-  const loadRating=async(dialog,mediaId)=>{
+  const loadRating=async(dialog,mediaId,apply=true)=>{
     try{
       const data=await rpc("get_public_rating",{
         p_media_item_id:String(mediaId),
         p_client_id:clientId
       });
-      updateChip(dialog,data);
+      if(apply)updateChip(dialog,data);
       return data;
     }catch{
       return null;
