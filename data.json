@@ -7090,7 +7090,7 @@
    "Shravani"
   ],
   "imdb": "6.4",
-  "my_rating": null,
+  "my_rating": 6,
   "watched_on": "",
   "comment": "",
   "status": "watched",
@@ -7099,7 +7099,8 @@
    "Crime",
    "Thriller",
    "Drama"
-  ]
+  ],
+  "loved": false
  },
  {
   "id": "movie-1449364",
