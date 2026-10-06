@@ -9174,16 +9174,17 @@
    "Derek Jacobi"
   ],
   "imdb": "6.4",
-  "my_rating": null,
+  "my_rating": 5,
   "watched_on": "",
-  "comment": "",
+  "comment": "না বানালেও চলত...",
   "status": "watched",
   "needs_review": false,
   "genres": [
    "Action",
    "Adventure",
    "Drama"
-  ]
+  ],
+  "loved": false
  },
  {
   "id": "movie-1013850",
