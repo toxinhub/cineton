@@ -197,7 +197,7 @@ button:active,a:active,[role="button"]:active,summary:active{background-image:no
 
 <div class="stats"><div class="stat"><b id="total">—</b><span>Total titles</span></div><div class="stat"><b id="watched">—</b><span>Watched</span></div><div class="stat"><b id="watchlist">—</b><span>Watchlist</span></div></div>
 
-<div class="admin-sticky-bar"><nav class="admin-nav" aria-label="Admin sections"><button type="button" data-target="connection" class="active">Connection</button><button type="button" data-target="genres">Genres</button><button type="button" data-target="add">Add New</button><button type="button" data-target="rating">Rating &amp; Comments</button><button type="button" data-target="public-comments">Public Comments</button><button type="button" data-target="tools">Library Tools</button></nav>
+<div class="admin-sticky-bar"><nav class="admin-nav" aria-label="Admin sections"><button type="button" data-target="connection" class="active">Connection</button><button type="button" data-target="genres">Genres</button><button type="button" data-target="add">Add New</button><button type="button" data-target="rating">Rating &amp; Comments</button><button type="button" data-target="public-comments">Public Comments</button></nav>
 <div class="rating-sticky-random"><button id="randomMovieBtn" class="btn secondary" type="button" aria-label="Open a random movie from the library">Random</button></div></div>
 <div class="grid">
 <section class="panel" data-section="connection" id="connectionSection">
@@ -221,6 +221,12 @@ button:active,a:active,[role="button"]:active,summary:active{background-image:no
 <div class="actions"><button class="btn" id="connect">Connect GitHub</button><button class="btn secondary" id="clearKeys" type="button">Clear saved keys</button></div>
 <div id="connMsg" class="message">GitHub connection is required to load and save your library.</div>
 </details>
+</section>
+<section class="panel library-tools-panel" data-section="tools" id="libraryHealthSection">
+<div class="head"><div><h2>Library Tools</h2><small class="sector-note">Health · Integrity · Backup &amp; Restore</small></div><span id="healthSummary">Ready</span></div>
+<div class="tool-card"><div class="tool-card-head"><div><strong>Needs Attention</strong><small>Titles with missing or questionable library data</small></div><button id="scanAttentionBtn" class="btn secondary" type="button">Scan</button></div><div id="attentionSummary" class="tool-summary">Run a scan to check the library.</div><div id="attentionList" class="tool-list hidden"></div></div>
+<div class="tool-card"><div class="tool-card-head"><div><strong>Data Integrity Check</strong><small>Validate IDs, statuses, duplicates and core fields</small></div><button id="integrityBtn" class="btn secondary" type="button">Check Library</button></div><div id="integritySummary" class="tool-summary">No check has been run yet.</div><div id="integrityList" class="tool-list hidden"></div></div>
+<div class="tool-card"><div class="tool-card-head"><div><strong>Backup &amp; Restore</strong><small>Export or safely import your CineTon library JSON</small></div></div><div class="backup-actions"><button id="exportBackupBtn" class="btn" type="button">Export Backup</button><label class="btn secondary backup-file-label" for="importBackupFile">Import Backup</label><input id="importBackupFile" type="file" accept=".json,application/json" hidden></div><div id="backupPreview" class="message hidden"></div><div id="backupMsg" class="message hidden"></div><div class="hint backup-note">Library data only. Public Comments are stored separately.</div></div>
 </section>
 
 <section class="panel" data-section="genres" id="genresSection">
@@ -266,12 +272,7 @@ button:active,a:active,[role="button"]:active,summary:active{background-image:no
 </div>
 </section>
 
-<section class="panel library-tools-panel" data-section="tools" id="libraryHealthSection">
-<div class="head"><div><h2>Library Tools</h2><small class="sector-note">Health · Integrity · Backup &amp; Restore</small></div><span id="healthSummary">Ready</span></div>
-<div class="tool-card"><div class="tool-card-head"><div><strong>Needs Attention</strong><small>Titles with missing or questionable library data</small></div><button id="scanAttentionBtn" class="btn secondary" type="button">Scan</button></div><div id="attentionSummary" class="tool-summary">Run a scan to check the library.</div><div id="attentionList" class="tool-list hidden"></div></div>
-<div class="tool-card"><div class="tool-card-head"><div><strong>Data Integrity Check</strong><small>Validate IDs, statuses, duplicates and core fields</small></div><button id="integrityBtn" class="btn secondary" type="button">Check Library</button></div><div id="integritySummary" class="tool-summary">No check has been run yet.</div><div id="integrityList" class="tool-list hidden"></div></div>
-<div class="tool-card"><div class="tool-card-head"><div><strong>Backup &amp; Restore</strong><small>Export or safely import your CineTon library JSON</small></div></div><div class="backup-actions"><button id="exportBackupBtn" class="btn" type="button">Export Backup</button><label class="btn secondary backup-file-label" for="importBackupFile">Import Backup</label><input id="importBackupFile" type="file" accept=".json,application/json" hidden></div><div id="backupPreview" class="message hidden"></div><div id="backupMsg" class="message hidden"></div><div class="hint backup-note">Library data only. Public Comments are stored separately.</div></div>
-</section>
+
 <section class="panel comment-sector public-comment-sector" data-section="public-comments" id="publicCommentsSection"><div class="head"><div><h2>Public Comments</h2><small class="sector-note">Visitor comments · Moderation</small></div><span id="publicCommentsCount">0 comments</span></div><div class="libraryTools"><input id="publicCommentsSearch" placeholder="Search title, name, comment…"></div><div id="publicCommentsList" class="public-admin-list"></div><div class="public-admin-toolbar"><label><input type="checkbox" id="publicCommentsSelectAll"> <span>Select all</span></label><span id="publicCommentsSelected">0 selected</span><button class="public-admin-bulk-delete" id="publicCommentsDeleteSelected" type="button" disabled>Delete selected</button></div><div id="publicCommentsMsg" class="message hidden"></div></section>
 <section class="panel comment-sector admin-comment-sector" data-section="rating" id="librarySection">
 <div class="head"><div><h2>Rating &amp; Comments</h2><small class="sector-note">Personal rating · Admin notes</small></div><span id="libraryCount">0 titles</span></div>
