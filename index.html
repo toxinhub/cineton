@@ -564,6 +564,14 @@ const pic=(m,eager=false)=>m.poster?`<img loading="${eager?'eager':'lazy'}" deco
       rating.textContent='★ '+String(m.my_rating)+'/10';
       info.appendChild(rating);
     }
+    const publicRating=window.cinetonPublicRatings?.get(String(m.id));
+    if(publicRating){
+      const rating=document.createElement('span');
+      rating.className='public-rating-card';
+      rating.textContent='Public Rating '+publicRating+'/10';
+      rating.setAttribute('aria-label','Public Rating '+publicRating+' out of 10');
+      info.appendChild(rating);
+    }
     card.appendChild(info);
     frag.appendChild(card);
   });
@@ -1734,6 +1742,19 @@ update();
   color:var(--mu)!important;
   border-color:color-mix(in srgb,var(--line-strong) 62%,transparent)!important;
 }
+.public-rating-card{
+  display:inline-flex;
+  align-items:center;
+  margin-top:5px;
+  color:var(--mu);
+  font-size:.66rem;
+  line-height:1.2;
+  font-weight:600;
+  letter-spacing:.01em;
+}
+@media(max-width:600px){
+  .public-rating-card{font-size:.64rem}
+}
 @media(max-width:600px){
   .cineton-rating-layer{
     padding:12px;
@@ -1822,17 +1843,55 @@ update();
     else chips.appendChild(chip);
   };
 
+  const publicRatings=new Map();
+  window.cinetonPublicRatings=publicRatings;
+
+  const updatePublicRatingCards=(mediaId,value)=>{
+    const card=document.querySelector('.c[data-id="'+CSS.escape(String(mediaId))+'"]');
+    if(!card)return;
+    const info=card.querySelector('.ci');
+    if(!info)return;
+    info.querySelector('.public-rating-card')?.remove();
+    if(!value)return;
+    const rating=document.createElement('span');
+    rating.className='public-rating-card';
+    rating.textContent='Public Rating '+value+'/10';
+    rating.setAttribute('aria-label','Public Rating '+value+' out of 10');
+    info.appendChild(rating);
+  };
+
   const loadRating=async(dialog,mediaId,apply=true)=>{
     try{
       const data=await rpc("get_public_rating",{
         p_media_item_id:String(mediaId),
         p_client_id:clientId
       });
+      const value=formatRating(data?.public_rating);
+      if(value)publicRatings.set(String(mediaId),value);
+      else publicRatings.delete(String(mediaId));
       if(apply)updateChip(dialog,data);
+      updatePublicRatingCards(mediaId,value);
       return data;
     }catch{
       return null;
     }
+  };
+
+  const syncPublicRatings=async()=>{
+    const ids=[...new Set((window.D||[]).map(m=>String(m.id)).filter(Boolean))];
+    if(!ids.length)return;
+    try{
+      const data=await rpc("get_public_ratings_batch",{
+        p_media_item_ids:ids,
+        p_client_id:clientId
+      });
+      const rows=Array.isArray(data)?data:[];
+      rows.forEach(row=>{
+        const value=formatRating(row?.public_rating);
+        if(value)publicRatings.set(String(row.media_item_id),value);
+      });
+      rows.forEach(row=>updatePublicRatingCards(row.media_item_id,formatRating(row?.public_rating)));
+    }catch{}
   };
 
   const closeLayer=layer=>{
@@ -1876,7 +1935,10 @@ update();
             p_client_id:clientId,
             p_rating:n
           });
+          const value=formatRating(data?.public_rating);
+          if(value)publicRatings.set(String(mediaId),value);
           updateChip(dialog,data);
+          updatePublicRatingCards(mediaId,value);
           closeLayer(layer);
         }catch{
           grid.querySelectorAll("button").forEach(b=>b.disabled=false);
@@ -1953,6 +2015,7 @@ update();
   observer.observe(document.body,{childList:true,subtree:true});
   wirePoster();
   syncOpenRatings();
+  setTimeout(syncPublicRatings,0);
 
   document.addEventListener("click",ev=>{
     const dialog=ev.target.closest(".cinemodal");
