@@ -510,12 +510,13 @@
    "Crime",
    "Thriller"
   ],
-  "my_rating": null,
+  "my_rating": 7,
   "watched_on": "",
   "comment": "",
   "status": "watched",
   "needs_review": true,
-  "added_at": "2026-10-05T14:28:14.220Z"
+  "added_at": "2026-10-05T14:28:14.220Z",
+  "loved": false
  },
  {
   "id": "movie-21463",
