@@ -6255,7 +6255,7 @@
    "Cara Gee"
   ],
   "imdb": "6.7",
-  "my_rating": null,
+  "my_rating": 6,
   "watched_on": "",
   "comment": "",
   "status": "watched",
@@ -6264,7 +6264,8 @@
    "Adventure",
    "Family",
    "Drama"
-  ]
+  ],
+  "loved": false
  },
  {
   "id": "movie-1062722",
