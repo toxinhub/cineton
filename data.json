@@ -7638,7 +7638,7 @@
    "Gopalkrishna Deshpande"
   ],
   "imdb": "8.2",
-  "my_rating": null,
+  "my_rating": 7,
   "watched_on": "",
   "comment": "",
   "status": "watched",
@@ -7646,7 +7646,8 @@
   "genres": [
    "Romance",
    "Drama"
-  ]
+  ],
+  "loved": false
  },
  {
   "id": "movie-23168",
