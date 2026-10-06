@@ -421,12 +421,13 @@
    "Romance",
    "Comedy"
   ],
-  "my_rating": null,
+  "my_rating": 6,
   "watched_on": "",
   "comment": "",
   "status": "watched",
   "needs_review": false,
-  "added_at": "2026-10-05T14:28:16.398Z"
+  "added_at": "2026-10-05T14:28:16.398Z",
+  "loved": false
  },
  {
   "id": "movie-1100782",
