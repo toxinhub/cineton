@@ -172,12 +172,13 @@
    "Drama",
    "Action & Adventure"
   ],
-  "my_rating": null,
+  "my_rating": 7,
   "watched_on": "",
-  "comment": "",
+  "comment": "হ্যা চমৎকার ছিল বটে!",
   "status": "watched",
   "needs_review": true,
-  "added_at": "2026-10-05T14:28:22.562Z"
+  "added_at": "2026-10-05T14:28:22.562Z",
+  "loved": false
  },
  {
   "id": "movie-21297",
