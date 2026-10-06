@@ -2027,12 +2027,13 @@
    "Action",
    "Drama"
   ],
-  "my_rating": null,
+  "my_rating": 7,
   "watched_on": "",
   "comment": "",
   "status": "watched",
   "needs_review": true,
-  "added_at": "2026-10-05T14:26:02.889Z"
+  "added_at": "2026-10-05T14:26:02.889Z",
+  "loved": false
  },
  {
   "id": "movie-264660",
