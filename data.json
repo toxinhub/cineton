@@ -1219,12 +1219,13 @@
   "genres": [
    "Drama"
   ],
-  "my_rating": null,
+  "my_rating": 7,
   "watched_on": "",
   "comment": "",
   "status": "watched",
   "needs_review": true,
-  "added_at": "2026-10-05T14:27:54.217Z"
+  "added_at": "2026-10-05T14:27:54.217Z",
+  "loved": false
  },
  {
   "id": "movie-10591",
