@@ -1599,7 +1599,64 @@ update();
   }
 }
 </style>
-</body></html><style id="desktop-soft-square-radius-v1">
+
+<style id="modal-title-google-search-v1">
+/* Modal title — open a Google search for the current title without adding visible link styling. */
+.cinemodal .detail-head h2.modal-title-search{
+  cursor:pointer;
+  text-decoration:none!important;
+  -webkit-text-decoration:none!important;
+  color:inherit;
+  transition:color .16s ease;
+}
+.cinemodal .detail-head h2.modal-title-search:hover,
+.cinemodal .detail-head h2.modal-title-search:focus-visible{
+  color:var(--ac);
+  text-decoration:none!important;
+}
+.cinemodal .detail-head h2.modal-title-search:focus-visible{
+  outline:2px solid var(--gd);
+  outline-offset:3px;
+}
+</style>
+<script id="modal-title-google-search-v1">
+(()=> {
+  const wireTitleSearch = () => {
+    document.querySelectorAll('.cinemodal .detail-head h2').forEach(title => {
+      if (title.dataset.googleSearchWired === 'true') return;
+      const query = title.textContent.trim();
+      if (!query) return;
+
+      title.dataset.googleSearchWired = 'true';
+      title.classList.add('modal-title-search');
+      title.setAttribute('role','link');
+      title.setAttribute('tabindex','0');
+      title.setAttribute('aria-label',`Search Google for ${query}`);
+
+      const openSearch = () => {
+        window.open(
+          'https://www.google.com/search?q=' + encodeURIComponent(query),
+          '_blank',
+          'noopener,noreferrer'
+        );
+      };
+
+      title.addEventListener('click', openSearch);
+      title.addEventListener('keydown', event => {
+        if (event.key === 'Enter' || event.key === ' ') {
+          event.preventDefault();
+          openSearch();
+        }
+      });
+    });
+  };
+
+  const observer = new MutationObserver(wireTitleSearch);
+  observer.observe(document.body, {childList:true, subtree:true});
+  wireTitleSearch();
+})();
+</script>
+\n</body></html><style id="desktop-soft-square-radius-v1">
 /* Desktop surface geometry — restrained 2px corners for a sharper editorial cinema grid.
    Mobile remains completely untouched. Intentional pills/circles stay unchanged. */
 @media(min-width:601px){
