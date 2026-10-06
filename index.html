@@ -1703,20 +1703,23 @@ update();
 \n
 <!-- Cineton public rating layer -->
 <style id="public-rating-layer-v1">
-/* Anonymous Public Rating — premium, restrained interaction layer. */
+/* Anonymous Public Rating — warm translucent glass, limited to the rating layer. */
 .cinemodal .modal-top .poster-wrap img{cursor:pointer}
 .cineton-rating-layer{
   position:absolute;inset:0;z-index:80;display:grid;place-items:center;padding:18px;
-  background:color-mix(in srgb,var(--modal) 24%,transparent);
-  backdrop-filter:blur(4px) brightness(.94);-webkit-backdrop-filter:blur(4px) brightness(.94);
+  background:color-mix(in srgb,var(--modal) 18%,transparent);
+  backdrop-filter:blur(8px) saturate(108%);-webkit-backdrop-filter:blur(8px) saturate(108%);
   animation:cinetonRatingLayerIn .20s cubic-bezier(.22,.8,.25,1) both;
 }
 .cineton-rating-card{
   width:min(312px,calc(100% - 24px));padding:17px;
-  border:1px solid color-mix(in srgb,var(--tx) 20%,var(--line-strong));
-  border-radius:10px;
-  background:linear-gradient(145deg,color-mix(in srgb,var(--modal) 97%,var(--sf)),color-mix(in srgb,var(--sf) 88%,var(--modal)));
-  box-shadow:0 16px 40px #00000022,0 1px 0 #fff4 inset;
+  border:1px solid color-mix(in srgb,var(--tx) 18%,transparent);
+  border-radius:11px;
+  background:linear-gradient(135deg,
+    color-mix(in srgb,var(--sf) 58%,transparent),
+    color-mix(in srgb,var(--modal) 48%,transparent));
+  box-shadow:0 18px 42px #00000028,0 1px 0 #fff5 inset;
+  backdrop-filter:blur(16px) saturate(112%);-webkit-backdrop-filter:blur(16px) saturate(112%);
   animation:cinetonRatingCardIn .24s cubic-bezier(.22,.8,.25,1) both;
 }
 .cineton-rating-grid{
@@ -1725,24 +1728,31 @@ update();
 .cineton-rating-number{
   appearance:none;-webkit-appearance:none;min-width:0;aspect-ratio:1;margin:0;padding:0;
   display:grid;place-items:center;
-  border:1px solid color-mix(in srgb,var(--tx) 15%,var(--line-strong));
+  border:1px solid color-mix(in srgb,var(--tx) 13%,transparent);
   border-radius:7px;
-  background:linear-gradient(145deg,color-mix(in srgb,var(--sf) 82%,transparent),color-mix(in srgb,var(--modal) 70%,transparent));
+  background:linear-gradient(145deg,
+    color-mix(in srgb,var(--sf) 42%,transparent),
+    color-mix(in srgb,var(--modal) 34%,transparent));
   color:var(--tx);font:600 .86rem/1 "Mina",sans-serif;cursor:pointer;
-  box-shadow:0 1px 0 #fff4 inset,0 2px 5px #0000000b;
+  box-shadow:0 1px 0 #fff4 inset,0 3px 8px #0000000c;
+  backdrop-filter:blur(7px);-webkit-backdrop-filter:blur(7px);
   transition:transform .16s cubic-bezier(.22,.8,.25,1),background .16s ease,border-color .16s ease,color .16s ease,box-shadow .16s ease;
 }
 .cineton-rating-number:hover,.cineton-rating-number:focus-visible{
   transform:translateY(-1px);
-  background:linear-gradient(145deg,color-mix(in srgb,var(--ac) 14%,var(--sf)),color-mix(in srgb,var(--modal) 88%,var(--sf)));
-  border-color:color-mix(in srgb,var(--ac) 52%,var(--line-strong));color:var(--ac);
-  outline:none;box-shadow:0 0 0 2px color-mix(in srgb,var(--gd) 17%,transparent),0 4px 10px #00000014;
+  background:linear-gradient(145deg,
+    color-mix(in srgb,var(--ac) 18%,var(--sf)),
+    color-mix(in srgb,var(--modal) 48%,transparent));
+  border-color:color-mix(in srgb,var(--ac) 52%,transparent);color:var(--ac);
+  outline:none;box-shadow:0 0 0 2px color-mix(in srgb,var(--gd) 15%,transparent),0 5px 12px #00000018;
 }
 .cineton-rating-number:active{transform:translateY(0) scale(.95)}
 .cineton-rating-number.is-selected{
-  background:linear-gradient(145deg,color-mix(in srgb,var(--ac) 25%,var(--sf)),color-mix(in srgb,var(--modal) 82%,var(--sf)));
-  border-color:color-mix(in srgb,var(--ac) 48%,var(--line-strong));color:var(--ac);
-  box-shadow:0 1px 0 #fff5 inset,0 3px 10px color-mix(in srgb,var(--ac) 12%,transparent);
+  background:linear-gradient(145deg,
+    color-mix(in srgb,var(--ac) 27%,var(--sf)),
+    color-mix(in srgb,var(--modal) 48%,transparent));
+  border-color:color-mix(in srgb,var(--ac) 52%,transparent);color:var(--ac);
+  box-shadow:0 1px 0 #fff5 inset,0 3px 11px color-mix(in srgb,var(--ac) 14%,transparent);
   animation:cinetonRatingSelected .22s cubic-bezier(.22,.8,.25,1) both;
 }
 .cineton-rating-number:disabled{cursor:wait;opacity:.62}
@@ -1751,8 +1761,8 @@ update();
 @keyframes cinetonRatingCardIn{from{opacity:0;transform:translateY(5px) scale(.985)}to{opacity:1;transform:none}}
 @keyframes cinetonRatingSelected{from{transform:scale(.92)}60%{transform:scale(1.035)}to{transform:scale(1)}}
 @media(max-width:600px){
-  .cineton-rating-layer{padding:12px;backdrop-filter:blur(3px) brightness(.95);-webkit-backdrop-filter:blur(3px) brightness(.95)}
-  .cineton-rating-card{width:min(286px,calc(100% - 16px));padding:14px;border-radius:8px}
+  .cineton-rating-layer{padding:12px;backdrop-filter:blur(6px) saturate(106%);-webkit-backdrop-filter:blur(6px) saturate(106%)}
+  .cineton-rating-card{width:min(286px,calc(100% - 16px));padding:14px;border-radius:9px}
   .cineton-rating-grid{gap:6px}
   .cineton-rating-number{font-size:.80rem;border-radius:6px}
 }
