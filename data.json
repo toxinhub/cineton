@@ -6461,7 +6461,7 @@
    "Alejandro Edda"
   ],
   "imdb": "7.1",
-  "my_rating": null,
+  "my_rating": 6,
   "watched_on": "",
   "comment": "",
   "status": "watched",
@@ -6470,7 +6470,8 @@
    "Comedy",
    "Crime",
    "Drama"
-  ]
+  ],
+  "loved": false
  },
  {
   "id": "movie-1513875",
