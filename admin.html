@@ -19,7 +19,8 @@
  .panel{padding:20px}
 }
 @media(max-width:600px){
- .admin-nav button{min-height:40px;padding:8px 5px;font-size:11px}
+ .admin-nav{display:flex!important;align-items:stretch!important;flex-wrap:nowrap!important;gap:3px!important;overflow:hidden!important}
+ .admin-nav button{flex:1 1 0!important;min-width:0!important;width:auto!important;min-height:40px;height:40px;padding:7px 3px!important;font-size:10px!important;line-height:1.1;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
  .head h2{font-size:14px}.head span{font-size:9px}
  .searchbar{grid-template-columns:minmax(0,1fr) auto;gap:5px}
  .searchbar .btn{min-width:66px}
