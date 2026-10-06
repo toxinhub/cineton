@@ -1563,12 +1563,13 @@
    "Thriller",
    "Drama"
   ],
-  "my_rating": null,
+  "my_rating": 6,
   "watched_on": "",
   "comment": "",
   "status": "watched",
   "needs_review": true,
-  "added_at": "2026-10-05T14:27:42.845Z"
+  "added_at": "2026-10-05T14:27:42.845Z",
+  "loved": false
  },
  {
   "id": "movie-1069945",
