@@ -7726,7 +7726,7 @@
    "Adain Bradley"
   ],
   "imdb": "7.1",
-  "my_rating": null,
+  "my_rating": 6,
   "watched_on": "",
   "comment": "",
   "status": "watched",
@@ -7734,7 +7734,8 @@
   "genres": [
    "War",
    "Action"
-  ]
+  ],
+  "loved": false
  },
  {
   "id": "movie-189",
