@@ -8307,7 +8307,7 @@
    "Harry Trevaldwyn"
   ],
   "imdb": "7.7",
-  "my_rating": null,
+  "my_rating": 7,
   "watched_on": "",
   "comment": "",
   "status": "watched",
@@ -8317,7 +8317,8 @@
    "Family",
    "Action",
    "Adventure"
-  ]
+  ],
+  "loved": false
  },
  {
   "id": "movie-493922",
