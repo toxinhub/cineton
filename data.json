@@ -8255,7 +8255,7 @@
    "Robert Taylor"
   ],
   "imdb": "6.6",
-  "my_rating": null,
+  "my_rating": 6,
   "watched_on": "",
   "comment": "",
   "status": "watched",
@@ -8264,7 +8264,8 @@
    "Romance",
    "Comedy",
    "Crime"
-  ]
+  ],
+  "loved": false
  },
  {
   "id": "movie-1087192",
