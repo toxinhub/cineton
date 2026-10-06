@@ -1805,6 +1805,7 @@ update();
   };
 
   const formatRating=v=>{
+    if(v===null || v===undefined || v==="") return "";
     const n=Number(v);
     return Number.isFinite(n)?n.toFixed(1):"";
   };
@@ -1949,6 +1950,33 @@ update();
       closeLayer(layer);
     }
   },true);
+
+  const wireDynamicPosters=()=>{
+    document.querySelectorAll(".cinemodal .modal-top .poster-wrap img").forEach(img=>{
+      if(img.dataset.publicRatingWired==="true")return;
+      const dialog=img.closest(".cinemodal");
+      if(!dialog)return;
+      img.dataset.publicRatingWired="true";
+      img.setAttribute("role","button");
+      img.setAttribute("tabindex","0");
+      img.setAttribute("aria-label","Open public rating");
+      const open=()=>{
+        const mediaId=dialog.dataset.sourceMovieId;
+        if(mediaId)openRatingLayer(dialog,mediaId);
+      };
+      img.addEventListener("click",open);
+      img.addEventListener("keydown",ev=>{
+        if(ev.key==="Enter"||ev.key===" "){
+          ev.preventDefault();
+          open();
+        }
+      });
+    });
+  };
+
+  const posterObserver=new MutationObserver(wireDynamicPosters);
+  posterObserver.observe(document.body,{childList:true,subtree:true});
+  wireDynamicPosters();
 
   window.cinetonLoadPublicRating=loadRating;
 })();
@@ -2122,17 +2150,20 @@ update();
 .public-love{
   color:inherit;
 }
-</style><style id="modal-rating-layout-v2">
-.cinemodal .chips{display:flex!important;flex-direction:column!important;align-items:flex-start!important;flex-wrap:nowrap!important;gap:6px!important;overflow:visible!important}
-.cinemodal .modal-rating-main{display:flex;align-items:center;gap:6px;width:100%;flex-wrap:nowrap;overflow-x:auto;scrollbar-width:none;-ms-overflow-style:none}
+</style><style id="modal-rating-layout-v3">
+.cinemodal .chips{display:flex!important;flex-direction:column!important;align-items:flex-start!important;flex-wrap:nowrap!important;gap:4px!important;overflow:visible!important}
+.cinemodal .modal-rating-main{display:flex;align-items:center;gap:5px;width:100%;flex-wrap:nowrap;overflow-x:auto;scrollbar-width:none;-ms-overflow-style:none}
 .cinemodal .modal-rating-main::-webkit-scrollbar{display:none;width:0;height:0}
 .cinemodal .modal-rating-main .imdb-chip,.cinemodal .modal-rating-main .my-chip,.cinemodal .modal-rating-main .love-chip{flex:0 0 auto!important;white-space:nowrap!important}
 .cinemodal .modal-public-rating-slot{display:block;min-height:0}
 .cinemodal .modal-public-rating-slot .cineton-public-rating-chip{display:inline-flex;flex:0 0 auto!important;white-space:nowrap!important}
 @media(min-width:640px){
- .cinemodal .chips{flex-direction:row!important;align-items:center!important;flex-wrap:nowrap!important;gap:6px!important;overflow-x:auto!important;scrollbar-width:none}
+ .cinemodal .chips{flex-direction:row!important;align-items:center!important;flex-wrap:nowrap!important;gap:5px!important;overflow-x:auto!important;scrollbar-width:none}
  .cinemodal .modal-rating-main{width:auto;flex:0 0 auto;overflow:visible}
  .cinemodal .modal-public-rating-slot{flex:0 0 auto}
 }
-@media(max-width:639px){.cinemodal .modal-rating-main{gap:5px}.cinemodal .modal-public-rating-slot{width:100%}}
+@media(max-width:639px){
+ .cinemodal .modal-rating-main{gap:4px}
+ .cinemodal .modal-public-rating-slot{width:100%}
+}
 </style>
