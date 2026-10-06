@@ -1660,7 +1660,293 @@ update();
   wireTitleSearch();
 })();
 </script>
-\n</body></html><style id="desktop-soft-square-radius-v1">
+\n
+<!-- Cineton public rating layer -->
+<style id="public-rating-layer-v1">
+/* Anonymous Public Rating — poster-triggered, numbers-only focus card. */
+.cinemodal .modal-top .poster-wrap img{
+  cursor:pointer;
+}
+.cineton-rating-layer{
+  position:absolute;
+  inset:0;
+  z-index:80;
+  display:grid;
+  place-items:center;
+  padding:18px;
+  background:color-mix(in srgb,var(--modal) 18%,transparent);
+  backdrop-filter:blur(3px) brightness(.96);
+  -webkit-backdrop-filter:blur(3px) brightness(.96);
+}
+.cineton-rating-card{
+  width:min(312px,calc(100% - 24px));
+  padding:16px;
+  border:1px solid color-mix(in srgb,var(--tx) 18%,var(--line-strong));
+  border-radius:8px;
+  background:color-mix(in srgb,var(--modal) 94%,var(--sf));
+  box-shadow:0 18px 46px #0003;
+}
+.cineton-rating-grid{
+  display:grid;
+  grid-template-columns:repeat(5,minmax(0,1fr));
+  gap:7px;
+}
+.cineton-rating-number{
+  appearance:none;
+  -webkit-appearance:none;
+  min-width:0;
+  aspect-ratio:1;
+  margin:0;
+  padding:0;
+  display:grid;
+  place-items:center;
+  border:1px solid color-mix(in srgb,var(--tx) 18%,var(--line-strong));
+  border-radius:5px;
+  background:color-mix(in srgb,var(--sf) 68%,transparent);
+  color:var(--tx);
+  font:600 .86rem/1 "Mina",sans-serif;
+  cursor:pointer;
+  box-shadow:0 1px 0 #fff3 inset;
+  transition:background .14s ease,border-color .14s ease,color .14s ease,transform .12s ease,box-shadow .14s ease;
+}
+.cineton-rating-number:hover,
+.cineton-rating-number:focus-visible{
+  background:color-mix(in srgb,var(--ac) 13%,var(--sf));
+  border-color:color-mix(in srgb,var(--ac) 58%,var(--line-strong));
+  color:var(--ac);
+  outline:none;
+  box-shadow:0 0 0 2px color-mix(in srgb,var(--gd) 22%,transparent);
+}
+.cineton-rating-number:active{
+  transform:scale(.95);
+}
+.cineton-rating-number.is-selected{
+  background:var(--ac);
+  border-color:var(--ac);
+  color:#fff9f1;
+  box-shadow:0 1px 0 #fff4 inset,0 3px 10px #5b42251f;
+}
+.cineton-rating-number:disabled{
+  cursor:wait;
+  opacity:.62;
+}
+.cineton-public-rating-chip{
+  color:var(--ac)!important;
+  border-color:color-mix(in srgb,var(--ac) 38%,var(--line-strong))!important;
+}
+@media(max-width:600px){
+  .cineton-rating-layer{
+    padding:12px;
+    backdrop-filter:blur(2.5px) brightness(.97);
+    -webkit-backdrop-filter:blur(2.5px) brightness(.97);
+  }
+  .cineton-rating-card{
+    width:min(286px,calc(100% - 16px));
+    padding:13px;
+    border-radius:6px;
+  }
+  .cineton-rating-grid{
+    gap:6px;
+  }
+  .cineton-rating-number{
+    font-size:.80rem;
+    border-radius:4px;
+  }
+}
+@media(prefers-reduced-motion:reduce){
+  .cineton-rating-number{transition:none}
+}
+</style>
+<script id="public-rating-layer-v1">
+(()=> {
+  const CT_PUBLIC_RATINGS={
+    url:"https://osplbqpgxrfovjrumsnb.supabase.co",
+    key:"sb_"+"publishable_"+"tcBaC8FqwlcFFw-IwKmiVA_y67PZNPX"
+  };
+
+  const getClientId=()=>{
+    const key="cineton-public-rating-client";
+    try{
+      let id=localStorage.getItem(key);
+      if(id && /^[0-9a-f-]{36}$/i.test(id)) return id;
+      id=crypto.randomUUID();
+      localStorage.setItem(key,id);
+      return id;
+    }catch{
+      try{
+        let id=sessionStorage.getItem(key);
+        if(id && /^[0-9a-f-]{36}$/i.test(id)) return id;
+        id=crypto.randomUUID();
+        sessionStorage.setItem(key,id);
+        return id;
+      }catch{
+        return crypto.randomUUID();
+      }
+    }
+  };
+
+  const clientId=getClientId();
+
+  const rpc=async(name,body)=>{
+    const r=await fetch(CT_PUBLIC_RATINGS.url+"/rest/v1/rpc/"+name,{
+      method:"POST",
+      headers:{
+        apikey:CT_PUBLIC_RATINGS.key,
+        "Content-Type":"application/json",
+        Accept:"application/json"
+      },
+      body:JSON.stringify(body)
+    });
+    if(!r.ok) throw new Error("Public rating request failed.");
+    const data=await r.json();
+    return Array.isArray(data)?(data[0]||{}):(data||{});
+  };
+
+  const formatRating=v=>{
+    const n=Number(v);
+    return Number.isFinite(n)?n.toFixed(1):"";
+  };
+
+  const updateChip=(dialog,data)=>{
+    const chips=dialog.querySelector(".chips");
+    if(!chips)return;
+    chips.querySelector(".cineton-public-rating-chip")?.remove();
+    const value=formatRating(data?.public_rating);
+    if(!value)return;
+    const chip=document.createElement("span");
+    chip.className="my-chip cineton-public-rating-chip";
+    chip.setAttribute("aria-label","Public Rating "+value+" out of 10");
+    chip.textContent="Public Rating "+value+"/10";
+    const my=chips.querySelector(".my-chip:not(.cineton-public-rating-chip)");
+    if(my) my.insertAdjacentElement("afterend",chip);
+    else chips.appendChild(chip);
+  };
+
+  const loadRating=async(dialog,mediaId)=>{
+    try{
+      const data=await rpc("get_public_rating",{
+        p_media_item_id:String(mediaId),
+        p_client_id:clientId
+      });
+      updateChip(dialog,data);
+      return data;
+    }catch{
+      return null;
+    }
+  };
+
+  const closeLayer=layer=>{
+    if(!layer)return;
+    const dialog=layer.closest(".cinemodal");
+    layer.remove();
+    dialog?.querySelector(".modal-top .poster-wrap img")?.focus?.({preventScroll:true});
+  };
+
+  const openRatingLayer=async(dialog,mediaId)=>{
+    if(dialog.querySelector(".cineton-rating-layer"))return;
+
+    const current=await loadRating(dialog,mediaId);
+    const layer=document.createElement("div");
+    layer.className="cineton-rating-layer";
+    layer.setAttribute("role","presentation");
+
+    const card=document.createElement("div");
+    card.className="cineton-rating-card";
+    card.setAttribute("role","dialog");
+    card.setAttribute("aria-modal","true");
+    card.setAttribute("aria-label","Choose a public rating from 1 to 10");
+
+    const grid=document.createElement("div");
+    grid.className="cineton-rating-grid";
+
+    const currentRating=Number(current?.own_rating);
+    for(let n=1;n<=10;n++){
+      const button=document.createElement("button");
+      button.type="button";
+      button.className="cineton-rating-number"+(n===currentRating?" is-selected":"");
+      button.textContent=String(n);
+      button.setAttribute("aria-label","Rate "+n+" out of 10");
+      if(n===currentRating)button.setAttribute("aria-pressed","true");
+      button.addEventListener("click",async()=>{
+        grid.querySelectorAll("button").forEach(b=>b.disabled=true);
+        button.classList.add("is-selected");
+        button.setAttribute("aria-pressed","true");
+        try{
+          const data=await rpc("submit_public_rating",{
+            p_media_item_id:String(mediaId),
+            p_client_id:clientId,
+            p_rating:n
+          });
+          updateChip(dialog,data);
+          closeLayer(layer);
+        }catch{
+          grid.querySelectorAll("button").forEach(b=>b.disabled=false);
+        }
+      });
+      grid.appendChild(button);
+    }
+
+    card.appendChild(grid);
+    layer.appendChild(card);
+    dialog.appendChild(layer);
+
+    layer.addEventListener("click",ev=>{
+      if(ev.target===layer)closeLayer(layer);
+    });
+    layer.addEventListener("keydown",ev=>{
+      if(ev.key==="Escape"){
+        ev.preventDefault();
+        ev.stopPropagation();
+        closeLayer(layer);
+      }
+    });
+
+    const focusButton=grid.querySelector(".is-selected")||grid.querySelector("button");
+    requestAnimationFrame(()=>focusButton?.focus({preventScroll:true}));
+  };
+
+  const wirePoster=()=>{
+    document.querySelectorAll(".cinemodal .modal-top .poster-wrap img").forEach(img=>{
+      if(img.dataset.publicRatingWired==="true")return;
+      const dialog=img.closest(".cinemodal");
+      if(!dialog)return;
+      img.dataset.publicRatingWired="true";
+      img.setAttribute("role","button");
+      img.setAttribute("tabindex","0");
+      img.setAttribute("aria-label","Open public rating");
+      const open=()=>{
+        const mediaId=dialog.dataset.sourceMovieId;
+        if(mediaId)openRatingLayer(dialog,mediaId);
+      };
+      img.addEventListener("click",open);
+      img.addEventListener("keydown",ev=>{
+        if(ev.key==="Enter"||ev.key===" "){
+          ev.preventDefault();
+          open();
+        }
+      });
+    });
+  };
+
+  const observer=new MutationObserver(()=>{
+    wirePoster();
+  });
+  observer.observe(document.body,{childList:true,subtree:true});
+  wirePoster();
+
+  document.addEventListener("click",ev=>{
+    const dialog=ev.target.closest(".cinemodal");
+    if(!dialog)return;
+    const layer=dialog.querySelector(".cineton-rating-layer");
+    if(layer && ev.target.closest(".cinemodal .x")){
+      closeLayer(layer);
+    }
+  },true);
+
+  window.cinetonLoadPublicRating=loadRating;
+})();
+</script>
+</body></html><style id="desktop-soft-square-radius-v1">
 /* Desktop surface geometry — restrained 2px corners for a sharper editorial cinema grid.
    Mobile remains completely untouched. Intentional pills/circles stay unchanged. */
 @media(min-width:601px){
