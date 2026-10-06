@@ -214,6 +214,11 @@ button:active,a:active,[role="button"]:active,summary:active{background-image:no
 .backup-content{padding:0 11px 11px;border-top:1px solid #77583b20}
 .backup-content .backup-actions{margin-top:10px}
 @media(max-width:600px){.backup-box{margin-top:11px}.backup-box summary{min-height:42px;padding:9px 10px}.backup-content{padding:0 10px 10px}.backup-content .backup-actions{display:grid;grid-template-columns:1fr 1fr;gap:6px}.backup-content .backup-actions .btn{width:100%;text-align:center;padding:8px 7px}}
+</style><style id="connection-header-one-line">
+.connection-head{display:flex;align-items:center;justify-content:space-between;gap:10px;flex-wrap:nowrap}
+.connection-head h2{margin:0;white-space:nowrap}
+.connection-head span{white-space:nowrap;margin-left:auto}
+@media(max-width:600px){.connection-head{gap:7px}.connection-head h2{font-size:18px}.connection-head span{font-size:9px}}
 </style></style></head>
 <body>
 <div class="app">
@@ -225,7 +230,7 @@ button:active,a:active,[role="button"]:active,summary:active{background-image:no
 <div class="rating-sticky-random"><button id="randomMovieBtn" class="btn secondary" type="button" aria-label="Open a random movie from the library">Random</button></div></div>
 <div class="grid">
 <section class="panel" data-section="connection" id="connectionSection">
-<div class="head"><h2>Connection</h2><span>Services &amp; Backup</span></div>
+<div class="head connection-head"><h2>Connection</h2><span>Services &amp; Backup</span></div>
 <div class="tech-label"><span>Technical configuration</span><small>Services connected to your CineTon library</small></div>
 <div class="connection-overview">
 <div class="connection-card"><div><strong>GitHub</strong><small id="repoSummary">Not connected</small></div><button class="configure" type="button" onclick="document.getElementById('connectionConfig').open=true">Configure</button></div>
