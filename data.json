@@ -8165,14 +8165,15 @@
    "Kip Pardue"
   ],
   "imdb": "7.8",
-  "my_rating": null,
+  "my_rating": 7,
   "watched_on": "",
   "comment": "",
   "status": "watched",
   "needs_review": false,
   "genres": [
    "Drama"
-  ]
+  ],
+  "loved": false
  },
  {
   "id": "movie-616",
