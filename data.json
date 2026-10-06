@@ -8821,7 +8821,7 @@
    "Monique Gabriela Curnen"
   ],
   "imdb": "9.1",
-  "my_rating": null,
+  "my_rating": 8,
   "watched_on": "",
   "comment": "",
   "status": "watched",
@@ -8830,7 +8830,8 @@
    "Action",
    "Thriller",
    "Crime"
-  ]
+  ],
+  "loved": false
  },
  {
   "id": "movie-46418",
