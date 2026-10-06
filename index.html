@@ -1845,7 +1845,6 @@ update();
   const openRatingLayer=async(dialog,mediaId)=>{
     if(dialog.querySelector(".cineton-rating-layer"))return;
 
-    const current=await loadRating(dialog,mediaId);
     const layer=document.createElement("div");
     layer.className="cineton-rating-layer";
     layer.setAttribute("role","presentation");
@@ -1859,7 +1858,7 @@ update();
     const grid=document.createElement("div");
     grid.className="cineton-rating-grid";
 
-    const currentRating=Number(current?.own_rating);
+    const currentRating=0;
     for(let n=1;n<=10;n++){
       const button=document.createElement("button");
       button.type="button";
@@ -1903,6 +1902,26 @@ update();
 
     const focusButton=grid.querySelector(".is-selected")||grid.querySelector("button");
     requestAnimationFrame(()=>focusButton?.focus({preventScroll:true}));
+
+    loadRating(dialog,mediaId).then(data=>{
+      const own=Number(data?.own_rating);
+      grid.querySelectorAll("button").forEach(b=>{
+        const n=Number(b.textContent);
+        const selected=n===own;
+        b.classList.toggle("is-selected",selected);
+        if(selected)b.setAttribute("aria-pressed","true");
+        else b.removeAttribute("aria-pressed");
+      });
+    });
+  };
+
+  const syncOpenRatings=()=>{
+    document.querySelectorAll(".cinemodal[open]").forEach(dialog=>{
+      const mediaId=dialog.dataset.sourceMovieId;
+      if(!mediaId || dialog.dataset.publicRatingLoadedFor===mediaId)return;
+      dialog.dataset.publicRatingLoadedFor=mediaId;
+      loadRating(dialog,mediaId);
+    });
   };
 
   const wirePoster=()=>{
@@ -1933,6 +1952,7 @@ update();
   });
   observer.observe(document.body,{childList:true,subtree:true});
   wirePoster();
+  syncOpenRatings();
 
   document.addEventListener("click",ev=>{
     const dialog=ev.target.closest(".cinemodal");
