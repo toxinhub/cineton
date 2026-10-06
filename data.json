@@ -8448,9 +8448,9 @@
   "director": "Gints Zilbalodis",
   "cast": [],
   "imdb": "7.9",
-  "my_rating": null,
+  "my_rating": 8,
   "watched_on": "",
-  "comment": "",
+  "comment": "Sit down and enjoy the flow...",
   "status": "watched",
   "needs_review": false,
   "genres": [
@@ -8458,7 +8458,8 @@
    "Animation",
    "Family",
    "Fantasy"
-  ]
+  ],
+  "loved": false
  },
  {
   "id": "movie-1244068",
