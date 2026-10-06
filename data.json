@@ -6878,7 +6878,7 @@
    "Christopher Fulford"
   ],
   "imdb": "6.6",
-  "my_rating": null,
+  "my_rating": 5,
   "watched_on": "",
   "comment": "",
   "status": "watched",
@@ -6887,7 +6887,8 @@
    "Horror",
    "Thriller",
    "Science Fiction"
-  ]
+  ],
+  "loved": false
  },
  {
   "id": "movie-456570",
