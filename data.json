@@ -8874,7 +8874,7 @@
    "Smita Jaykar"
   ],
   "imdb": "7.5",
-  "my_rating": null,
+  "my_rating": 6,
   "watched_on": "",
   "comment": "",
   "status": "watched",
@@ -8882,7 +8882,8 @@
   "genres": [
    "Drama",
    "Romance"
-  ]
+  ],
+  "loved": false
  },
  {
   "id": "movie-890138",
