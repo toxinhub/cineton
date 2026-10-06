@@ -6159,14 +6159,15 @@
    "Dadhi Pandey"
   ],
   "imdb": "7.9",
-  "my_rating": null,
+  "my_rating": 6,
   "watched_on": "",
   "comment": "",
   "status": "watched",
   "needs_review": false,
   "genres": [
    "Drama"
-  ]
+  ],
+  "loved": false
  },
  {
   "id": "movie-1242898",
