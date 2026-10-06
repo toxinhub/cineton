@@ -429,10 +429,17 @@ function openEdit(i){
  $('#draftState').textContent='';
  d.showModal();
 }
+let randomHistory=[];
 function openRandomMovie(){
  if(!data.length){alert('No titles are available in the library.');return;}
  if(draftDirty&&!confirm('Unsaved changes will be lost. Open a random movie?'))return;
- const i=Math.floor(Math.random()*data.length);
+ // Always select from the complete library, independent of search/filter state.
+ const available=data.map((_,idx)=>idx).filter(idx=>!randomHistory.includes(idx));
+ const pool=available.length?available:data.map((_,idx)=>idx);
+ const i=pool[Math.floor(Math.random()*pool.length)];
+ randomHistory.push(i);
+ const historyLimit=Math.min(10,Math.max(0,data.length-1));
+ if(randomHistory.length>historyLimit)randomHistory=randomHistory.slice(-historyLimit);
  renderLibrary();
  requestAnimationFrame(()=>{
    const cards=Array.from(document.querySelectorAll('#library .item'));
