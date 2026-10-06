@@ -535,3 +535,21 @@ $('#importBackupFile').onchange=async e=>{
 </script>
 </body>
 </html>
+<style id="admin-submit-balance">
+/* Balanced admin action buttons */
+.actions{align-items:stretch}
+.actions>.btn{min-height:38px;display:inline-flex;align-items:center;justify-content:center;line-height:1.15}
+.actions>.btn:not(.secondary):not(.danger){min-width:132px}
+#quickAddSection .actions.add-actions .btn{min-width:0}
+#bulkAddSection .actions .btn{min-width:150px}
+.modal-actions-row>.btn{min-height:38px;display:inline-flex;align-items:center;justify-content:center}
+.searchbar>.btn,.bulkTools>.btn{min-height:38px;display:inline-flex;align-items:center;justify-content:center}
+@media(max-width:600px){
+ .actions{gap:7px}
+ .actions>.btn{min-height:40px;padding:9px 12px}
+ .actions>.btn:not(.secondary):not(.danger){min-width:0}
+ #quickAddSection .actions.add-actions .btn,#bulkAddSection .actions .btn{flex:1;min-width:0}
+ .modal-actions-row>.btn{min-height:40px}
+ .searchbar>.btn,.bulkTools>.btn{min-height:40px}
+}
+</style>
