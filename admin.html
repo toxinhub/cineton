@@ -204,6 +204,16 @@ button:active,a:active,[role="button"]:active,summary:active{background-image:no
  .admin-sticky-bar .admin-nav{grid-template-columns:repeat(2,minmax(0,1fr));gap:4px!important}
  .admin-sticky-bar .admin-nav button:nth-child(n){grid-column:auto;height:36px;min-height:36px;font-size:11px!important}
 }
+</style><style id="backup-inline-balance">
+.backup-box{margin-top:12px;border:1px solid #77583b2b;border-radius:12px;background:#77583b08;overflow:hidden}
+.backup-box summary{display:flex;align-items:center;justify-content:space-between;gap:10px;cursor:pointer;list-style:none;padding:10px 11px;font:600 11px/1.2 Mina,sans-serif;color:var(--text)}
+.backup-box summary::-webkit-details-marker{display:none}
+.backup-box summary::after{content:'+';font:600 15px/1 Inter,sans-serif;color:var(--muted)}
+.backup-box[open] summary::after{content:'−'}
+.backup-box summary small{margin-left:auto;color:var(--muted);font:400 9px/1.2 Inter,sans-serif}
+.backup-content{padding:0 11px 11px;border-top:1px solid #77583b20}
+.backup-content .backup-actions{margin-top:10px}
+@media(max-width:600px){.backup-box{margin-top:11px}.backup-box summary{min-height:42px;padding:9px 10px}.backup-content{padding:0 10px 10px}.backup-content .backup-actions{display:grid;grid-template-columns:1fr 1fr;gap:6px}.backup-content .backup-actions .btn{width:100%;text-align:center;padding:8px 7px}}
 </style></style></head>
 <body>
 <div class="app">
@@ -215,7 +225,7 @@ button:active,a:active,[role="button"]:active,summary:active{background-image:no
 <div class="rating-sticky-random"><button id="randomMovieBtn" class="btn secondary" type="button" aria-label="Open a random movie from the library">Random</button></div></div>
 <div class="grid">
 <section class="panel" data-section="connection" id="connectionSection">
-<div class="head"><h2>Connection</h2><span>Technical configuration</span></div>
+<div class="head"><h2>Connection</h2><span>Services &amp; Backup</span></div>
 <div class="tech-label"><span>Technical configuration</span><small>Services connected to your CineTon library</small></div>
 <div class="connection-overview">
 <div class="connection-card"><div><strong>GitHub</strong><small id="repoSummary">Not connected</small></div><button class="configure" type="button" onclick="document.getElementById('connectionConfig').open=true">Configure</button></div>
@@ -236,12 +246,14 @@ button:active,a:active,[role="button"]:active,summary:active{background-image:no
 <div id="connMsg" class="message">GitHub connection is required to load and save your library.</div>
 </details>
 </section>
-<div class="library-tools-inline" id="libraryHealthSection">
-<div class="head"><div><h2>Library Tools</h2><small class="sector-note">Health · Integrity · Backup &amp; Restore</small></div><span id="healthSummary">Ready</span></div>
-<div class="tool-card"><div class="tool-card-head"><div><strong>Needs Attention</strong><small>Titles with missing or questionable library data</small></div><button id="scanAttentionBtn" class="btn secondary" type="button">Scan</button></div><div id="attentionSummary" class="tool-summary">Run a scan to check the library.</div><div id="attentionList" class="tool-list hidden"></div></div>
-<div class="tool-card"><div class="tool-card-head"><div><strong>Data Integrity Check</strong><small>Validate IDs, statuses, duplicates and core fields</small></div><button id="integrityBtn" class="btn secondary" type="button">Check Library</button></div><div id="integritySummary" class="tool-summary">No check has been run yet.</div><div id="integrityList" class="tool-list hidden"></div></div>
-<div class="tool-card"><div class="tool-card-head"><div><strong>Backup &amp; Restore</strong><small>Export or safely import your CineTon library JSON</small></div></div><div class="backup-actions"><button id="exportBackupBtn" class="btn" type="button">Export Backup</button><label class="btn secondary backup-file-label" for="importBackupFile">Import Backup</label><input id="importBackupFile" type="file" accept=".json,application/json" hidden></div><div id="backupPreview" class="message hidden"></div><div id="backupMsg" class="message hidden"></div><div class="hint backup-note">Library data only. Public Comments are stored separately.</div></div>
+<details class="backup-box" id="backupTools">
+<summary><span>Backup &amp; Restore</span><small>Library JSON</small></summary>
+<div class="backup-content">
+<div class="backup-actions"><button id="exportBackupBtn" class="btn" type="button">Export Backup</button><label class="btn secondary backup-file-label" for="importBackupFile">Import Backup</label><input id="importBackupFile" type="file" accept=".json,application/json" hidden></div>
+<div id="backupPreview" class="message hidden"></div><div id="backupMsg" class="message hidden"></div>
+<div class="hint backup-note">Library data only. Public Comments are stored separately.</div>
 </div>
+</details></div>
 
 <section class="panel" data-section="genres" id="genresSection">
 <div class="head"><h2>Genres</h2><span>TMDB metadata</span></div>
@@ -485,35 +497,6 @@ async function editPublicComment(id){const row=document.querySelector('.public-a
 $('#publicCommentsDeleteSelected').onclick=async()=>{const ids=selectedPublicCommentIds();if(!ids.length)return;if(!confirm('Warning: '+ids.length+' selected public comment'+(ids.length===1?'':'s')+' will be permanently deleted. Continue?'))return;if(!confirm('Are you sure? This action cannot be undone.'))return;const btn=$('#publicCommentsDeleteSelected'),token=$('#tok').value.trim(),msg=$('#publicCommentsMsg');if(!token){msg.textContent='Connect GitHub first so the delete can be authorized.';msg.className='message error';return}btn.disabled=true;try{for(const id of ids){const r=await fetch(PUBLIC_COMMENTS_FN,{method:'DELETE',headers:{apikey:PUBLIC_COMMENTS_KEY,'Content-Type':'application/json','x-github-token':token},body:JSON.stringify({id})});if(!r.ok)throw Error('One or more comments could not be deleted.')}await loadPublicCommentsAdmin()}catch(e){msg.textContent=e.message||'Bulk delete failed.';msg.className='message error';updatePublicSelection()}finally{btn.disabled=false;updatePublicSelection()}};
 async function deletePublicComment(id){if(!confirm('Warning: This public comment will be permanently deleted. Continue?'))return;if(!confirm('Are you sure? This action cannot be undone.'))return;const msg=$('#publicCommentsMsg'),token=$('#tok').value.trim();if(!token){msg.textContent='Connect GitHub first so the delete can be authorized.';msg.className='message error';return}try{const r=await fetch(PUBLIC_COMMENTS_FN,{method:'DELETE',headers:{apikey:PUBLIC_COMMENTS_KEY,'Content-Type':'application/json','x-github-token':token},body:JSON.stringify({id})});if(!r.ok)throw Error('Delete was not authorized.');await loadPublicCommentsAdmin()}catch(e){msg.textContent=e.message||'Delete failed.';msg.className='message error'}}
 $('#publicCommentsSearch')?.addEventListener('input',loadPublicCommentsAdmin);
-function libraryHealthScan(){
- const issues=[],integrity=[],seen=new Map();
- data.forEach((m,i)=>{
-  const title=m?.title||'Untitled',id=String(m?.id??'').trim(),type=m?.type,status=m?.status,reasons=[];
-  if(!m?.poster)reasons.push('Missing poster');
-  if(!String(m?.year??'').trim())reasons.push('Missing year');
-  if(!Array.isArray(m?.genres)||!m.genres.length)reasons.push('Missing genres');
-  if(status==='watched'&&(m.my_rating===null||m.my_rating===undefined||m.my_rating===''))reasons.push('Watched title has no rating');
-  if(reasons.length)issues.push({i,title,reasons});
-  if(!id)integrity.push({i,title,reasons:['Missing ID']});
-  else if(seen.has(id))integrity.push({i,title,reasons:['Duplicate ID with '+(data[seen.get(id)]?.title||'another title')]});else seen.set(id,i);
-  if(type!=='movie'&&type!=='tv')integrity.push({i,title,reasons:['Invalid type']});
-  if(status!=='watched'&&status!=='watchlist')integrity.push({i,title,reasons:['Invalid status']});
-  if(type&&id&&!id.startsWith(type+'-'))integrity.push({i,title,reasons:['ID/type mismatch']});
-  if(m?.my_rating!==null&&m?.my_rating!==undefined&&m?.my_rating!==''&&(typeof m.my_rating!=='number'||m.my_rating<0||m.my_rating>10))integrity.push({i,title,reasons:['Invalid rating']});
- });
- const possible=new Map();
- data.forEach((m,i)=>{const k=(String(m?.title||'').trim().toLocaleLowerCase()+'|'+String(m?.year||'').trim());if(k!=='|'&&!possible.has(k))possible.set(k,i);else if(k!=='|')integrity.push({i,title:m?.title||'Untitled',reasons:['Possible duplicate title/year']});});
- return{issues,integrity};
-}
-function renderHealthList(id,rows,limit=30){
- const el=$(id);if(!rows.length){el.classList.add('hidden');el.innerHTML='';return}el.classList.remove('hidden');el.innerHTML=rows.slice(0,limit).map(x=>'<div class="tool-row"><div><strong>'+esc(x.title)+'</strong><small>'+esc(x.reasons.join(' · '))+'</small></div><span class="tool-badge">'+(x.i+1)+'</span></div>').join('')+(rows.length>limit?'<div class="hint">Showing '+limit+' of '+rows.length+' affected titles.</div>':'');
-}
-function runHealthScan(){
- const r=libraryHealthScan(),a=$('#attentionSummary'),i=$('#integritySummary'),total=r.issues.length+r.integrity.length;
- a.textContent=r.issues.length?(r.issues.length+' title'+(r.issues.length===1?' needs':'s need')+' attention.'):'✓ No attention items found.';a.className='tool-summary '+(r.issues.length?'warn':'ok');
- i.textContent=r.integrity.length?(r.integrity.length+' integrity issue'+(r.integrity.length===1?'':'s')+' found.'):'✓ Library integrity looks good.';i.className='tool-summary '+(r.integrity.length?'error':'ok');
- renderHealthList('#attentionList',r.issues);renderHealthList('#integrityList',r.integrity);$('#healthSummary').textContent=total?(total+' issue'+(total===1?'':'s')):'All clear';return r;
-}
 function exportLibraryBackup(){
  if(!Array.isArray(data)||!data.length)return alert('There is no library data to export.');
  const payload={format:'cineton-library-backup',version:1,exported_at:new Date().toISOString(),title_count:data.length,data};
