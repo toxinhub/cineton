@@ -1624,8 +1624,12 @@ update();
   const wireTitleSearch = () => {
     document.querySelectorAll('.cinemodal .detail-head h2').forEach(title => {
       if (title.dataset.googleSearchWired === 'true') return;
-      const query = title.textContent.trim();
-      if (!query) return;
+      const titleText = title.textContent.trim();
+      if (!titleText) return;
+
+      const subline = title.closest('.detail-head')?.querySelector('.subline');
+      const year = subline?.textContent.trim().match(/^(\\d{4})/)?.[1] || '';
+      const query = year ? titleText + ' ' + year : titleText;
 
       title.dataset.googleSearchWired = 'true';
       title.classList.add('modal-title-search');
