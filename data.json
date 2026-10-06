@@ -8583,7 +8583,7 @@
    "Neil Bhoopalam"
   ],
   "imdb": "7.3",
-  "my_rating": null,
+  "my_rating": 6,
   "watched_on": "",
   "comment": "",
   "status": "watched",
@@ -8592,7 +8592,8 @@
    "History",
    "Action",
    "Drama"
-  ]
+  ],
+  "loved": false
  },
  {
   "id": "movie-3933",
