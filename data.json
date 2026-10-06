@@ -8349,7 +8349,7 @@
    "Jagjeet Sandhu"
   ],
   "imdb": "7.0",
-  "my_rating": null,
+  "my_rating": 6,
   "watched_on": "",
   "comment": "",
   "status": "watched",
@@ -8357,7 +8357,8 @@
   "genres": [
    "Thriller",
    "Drama"
-  ]
+  ],
+  "loved": false
  },
  {
   "id": "movie-2056",
