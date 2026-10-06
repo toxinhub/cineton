@@ -1861,7 +1861,7 @@ update();
       if(layer.isConnected)layer.remove();
       dialog?.querySelector(".modal-top .poster-wrap img")?.focus?.({preventScroll:true});
     };
-    window.setTimeout(done,160);
+    window.setTimeout(done,260);
   };
 
   const openRatingLayer=async(dialog,mediaId)=>{
@@ -2077,18 +2077,18 @@ update();
 
 /* Fast selection: other numbers clear away while the picked number returns to the poster. */
 .cineton-rating-layer.is-closing{
-  animation:cinetonRatingLayerOut .14s ease-in both!important;
+  animation:cinetonRatingLayerOut .22s ease-in both!important;
   pointer-events:none!important;
 }
 .cineton-rating-layer.is-closing .cineton-rating-card{
-  animation:cinetonRatingCardToPoster .16s cubic-bezier(.32,.72,.4,1) both!important;
+  animation:cinetonRatingCardToPoster .26s cubic-bezier(.32,.72,.4,1) both!important;
 }
 .cineton-rating-layer.is-closing .cineton-rating-grid{overflow:visible}
 .cineton-rating-layer.is-closing .cineton-rating-number:not(.is-picked){
-  animation:cinetonRatingOthersOut .13s ease-in both!important;
+  animation:cinetonRatingOthersOut .21s ease-in both!important;
 }
 .cineton-rating-layer.is-closing .cineton-rating-number.is-picked{
-  animation:cinetonRatingPickedToPoster .16s cubic-bezier(.32,.72,.4,1) both!important;
+  animation:cinetonRatingPickedToPoster .26s cubic-bezier(.32,.72,.4,1) both!important;
 }
 @keyframes cinetonRatingLayerFast{from{opacity:0}to{opacity:1}}
 @keyframes cinetonRatingCardFromPoster{
