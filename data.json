@@ -1279,12 +1279,13 @@
    "Horror",
    "Thriller"
   ],
-  "my_rating": null,
+  "my_rating": 6,
   "watched_on": "",
   "comment": "",
   "status": "watched",
   "needs_review": false,
-  "added_at": "2026-10-05T14:27:52.816Z"
+  "added_at": "2026-10-05T14:27:52.816Z",
+  "loved": false
  },
  {
   "id": "movie-8363",
