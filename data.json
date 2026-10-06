@@ -8041,7 +8041,7 @@
    "Noemi Gonzalez"
   ],
   "imdb": "5.7",
-  "my_rating": null,
+  "my_rating": 5,
   "watched_on": "",
   "comment": "",
   "status": "watched",
@@ -8050,7 +8050,8 @@
    "Action",
    "Crime",
    "Thriller"
-  ]
+  ],
+  "loved": false
  },
  {
   "id": "movie-9040",
