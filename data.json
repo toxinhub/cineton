@@ -7251,7 +7251,7 @@
    "April Telek"
   ],
   "imdb": "6.7",
-  "my_rating": null,
+  "my_rating": 6,
   "watched_on": "",
   "comment": "",
   "status": "watched",
@@ -7259,7 +7259,8 @@
   "genres": [
    "Horror",
    "Mystery"
-  ]
+  ],
+  "loved": false
  },
  {
   "id": "movie-1396122",
