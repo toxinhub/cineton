@@ -1851,11 +1851,17 @@ update();
     }
   };
 
-  const closeLayer=layer=>{
-    if(!layer)return;
+  const closeLayer=(layer,pickedButton=null)=>{
+    if(!layer || layer.dataset.closing==="true")return;
     const dialog=layer.closest(".cinemodal");
-    layer.remove();
-    dialog?.querySelector(".modal-top .poster-wrap img")?.focus?.({preventScroll:true});
+    layer.dataset.closing="true";
+    if(pickedButton)pickedButton.classList.add("is-picked");
+    layer.classList.add("is-closing");
+    const done=()=>{
+      if(layer.isConnected)layer.remove();
+      dialog?.querySelector(".modal-top .poster-wrap img")?.focus?.({preventScroll:true});
+    };
+    window.setTimeout(done,160);
   };
 
   const openRatingLayer=async(dialog,mediaId)=>{
@@ -1883,9 +1889,26 @@ update();
       button.setAttribute("aria-label","Rate "+n+" out of 10");
       if(n===currentRating)button.setAttribute("aria-pressed","true");
       button.addEventListener("click",async()=>{
+        if(layer.dataset.closing==="true")return;
         grid.querySelectorAll("button").forEach(b=>b.disabled=true);
         button.classList.add("is-selected");
         button.setAttribute("aria-pressed","true");
+
+        // Start the visual return immediately; do not make the animation wait for the network.
+        const posterCenter=poster ? poster.getBoundingClientRect() : null;
+        if(posterCenter){
+          const br=button.getBoundingClientRect();
+          button.style.setProperty("--to-poster-x",(posterCenter.left+posterCenter.width/2)-(br.left+br.width/2)+"px");
+          button.style.setProperty("--to-poster-y",(posterCenter.top+posterCenter.height/2)-(br.top+br.height/2)+"px");
+        }
+        grid.querySelectorAll("button").forEach((b,i)=>{
+          if(b!==button){
+            const direction=i<5?-1:1;
+            b.style.setProperty("--exit-x",(direction*(8+Math.abs(i-4.5)*2))+"px");
+          }
+        });
+        closeLayer(layer,button);
+
         try{
           const data=await rpc("submit_public_rating",{
             p_media_item_id:String(mediaId),
@@ -1893,9 +1916,8 @@ update();
             p_rating:n
           });
           updateChip(dialog,data);
-          closeLayer(layer);
         }catch{
-          grid.querySelectorAll("button").forEach(b=>b.disabled=false);
+          // The layer has already closed visually; the next open will reload the saved rating.
         }
       });
       grid.appendChild(button);
@@ -1904,6 +1926,23 @@ update();
     card.appendChild(grid);
     layer.appendChild(card);
     dialog.appendChild(layer);
+
+    // Align the card's motion origin with the poster center so the opening feels poster-born.
+    const poster=dialog.querySelector(".modal-top .poster-wrap img");
+    if(poster){
+      const pr=poster.getBoundingClientRect();
+      const dr=dialog.getBoundingClientRect();
+      layer.style.setProperty("--poster-x", (pr.left + pr.width/2 - dr.left) + "px");
+      layer.style.setProperty("--poster-y", (pr.top + pr.height/2 - dr.top) + "px");
+    }
+
+    const cardRect=card.getBoundingClientRect();
+    const dialogRect=dialog.getBoundingClientRect();
+    const posterCenterX=Number.parseFloat(layer.style.getPropertyValue("--poster-x"));
+    const posterCenterY=Number.parseFloat(layer.style.getPropertyValue("--poster-y"));
+    if(Number.isFinite(posterCenterX) && Number.isFinite(posterCenterY)){
+      card.style.transformOrigin=(posterCenterX+dialogRect.left-cardRect.left)+"px "+(posterCenterY+dialogRect.top-cardRect.top)+"px";
+    }
 
     layer.addEventListener("click",ev=>{
       if(ev.target===layer)closeLayer(layer);
@@ -1994,48 +2033,63 @@ update();
 })();
 </script>
 
-<style id="public-rating-number-polish-v2">
-/* Public rating 1–10 buttons — subtle selection, refined press feedback, balanced numerals, and clear keyboard focus. */
-.cineton-rating-number{
-  font-variant-numeric:tabular-nums;
-  text-rendering:geometricPrecision;
-  -webkit-font-smoothing:antialiased;
-  -moz-osx-font-smoothing:grayscale;
-  font-weight:600!important;
-  line-height:1!important;
-  transition:transform .14s cubic-bezier(.22,.8,.25,1),background .16s ease,border-color .16s ease,color .16s ease,box-shadow .16s ease;
+<style id="public-rating-motion-v3">
+/* Public rating motion — fast, poster-origin opening and quick poster-return selection. */
+.cineton-rating-layer{
+  animation:cinetonRatingLayerFast .12s ease-out both!important;
 }
-.cineton-rating-number.is-selected{
-  background:linear-gradient(145deg,
-    color-mix(in srgb,var(--ac) 19%,var(--sf)),
-    color-mix(in srgb,var(--modal) 45%,transparent));
-  border-color:color-mix(in srgb,var(--ac) 42%,transparent);
-  color:var(--ac);
-  box-shadow:0 1px 0 #fff7 inset,0 2px 8px color-mix(in srgb,var(--ac) 11%,transparent);
-  animation:cinetonRatingSelectedSubtle .18s cubic-bezier(.22,.8,.25,1) both;
+.cineton-rating-card{
+  transform-origin:center;
+  animation:cinetonRatingCardFromPoster .16s cubic-bezier(.22,.8,.25,1) both!important;
 }
-.cineton-rating-number:focus-visible{
-  transform:none;
-  outline:2px solid color-mix(in srgb,var(--gd) 72%,transparent)!important;
-  outline-offset:2px;
-  box-shadow:0 0 0 1px color-mix(in srgb,var(--gd) 18%,transparent),0 3px 9px #00000012!important;
+.cineton-rating-layer.is-closing{
+  animation:cinetonRatingLayerOut .14s ease-in both!important;
+  pointer-events:none!important;
 }
-@media(hover:hover){
-  .cineton-rating-number:hover:not(:focus-visible){
-    transform:translateY(-1px);
-  }
+.cineton-rating-layer.is-closing .cineton-rating-card{
+  animation:cinetonRatingCardToPoster .16s cubic-bezier(.32,.72,.4,1) both!important;
 }
-.cineton-rating-number:active{
-  transform:translateY(0) scale(.94);
-  transition-duration:.08s;
+.cineton-rating-layer.is-closing .cineton-rating-grid{
+  overflow:visible;
 }
-@keyframes cinetonRatingSelectedSubtle{
-  from{transform:scale(.97)}
-  65%{transform:scale(1.012)}
-  to{transform:scale(1)}
+.cineton-rating-layer.is-closing .cineton-rating-number:not(.is-picked){
+  animation:cinetonRatingOthersOut .13s ease-in both!important;
+}
+.cineton-rating-layer.is-closing .cineton-rating-number.is-picked{
+  animation:cinetonRatingPickedToPoster .16s cubic-bezier(.32,.72,.4,1) both!important;
+}
+@keyframes cinetonRatingLayerFast{
+  from{opacity:0}
+  to{opacity:1}
+}
+@keyframes cinetonRatingCardFromPoster{
+  from{opacity:0;transform:translateY(2px) scale(.86)}
+  to{opacity:1;transform:none}
+}
+@keyframes cinetonRatingLayerOut{
+  from{opacity:1}
+  to{opacity:0}
+}
+@keyframes cinetonRatingCardToPoster{
+  from{opacity:1;transform:none}
+  to{opacity:0;transform:scale(.86)}
+}
+@keyframes cinetonRatingOthersOut{
+  from{opacity:1;transform:translateY(0) scale(1)}
+  to{opacity:0;transform:translate(var(--exit-x,0),2px) scale(.78)}
+}
+@keyframes cinetonRatingPickedToPoster{
+  from{opacity:1;transform:scale(1)}
+  to{opacity:0;transform:translate(var(--to-poster-x,0),var(--to-poster-y,0)) scale(.08)}
 }
 @media(prefers-reduced-motion:reduce){
-  .cineton-rating-number.is-selected{animation:none}
+  .cineton-rating-layer,
+  .cineton-rating-card,
+  .cineton-rating-layer.is-closing,
+  .cineton-rating-layer.is-closing .cineton-rating-card,
+  .cineton-rating-layer.is-closing .cineton-rating-number{
+    animation:none!important;
+  }
 }
 </style>
 </body></html><style id="desktop-soft-square-radius-v1">
