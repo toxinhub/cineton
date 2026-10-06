@@ -1628,7 +1628,7 @@ update();
       if (!titleText) return;
 
       const subline = title.closest('.detail-head')?.querySelector('.subline');
-      const year = subline?.textContent.trim().match(/^(\\d{4})/)?.[1] || '';
+      const year = subline?.textContent.trim().match(/^(\d{4})/)?.[1] || '';
       const query = year ? titleText + ' ' + year : titleText;
 
       title.dataset.googleSearchWired = 'true';
