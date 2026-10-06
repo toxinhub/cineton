@@ -187,6 +187,9 @@ html,body,*{-webkit-tap-highlight-color:transparent}
 button,a,[role="button"],summary,input,select,textarea{-webkit-tap-highlight-color:transparent}
 button:focus:not(:focus-visible),a:focus:not(:focus-visible),[role="button"]:focus:not(:focus-visible),summary:focus:not(:focus-visible){outline:none}
 button:active,a:active,[role="button"]:active,summary:active{background-image:none}
+</style><style id="library-tools-v1">
+.library-tools-panel{font-family:Mina,system-ui,sans-serif}.tool-card{border:1px solid var(--line);border-radius:12px;background:#fffaf2;padding:11px;margin-top:9px}.tool-card-head{display:flex;align-items:center;justify-content:space-between;gap:10px}.tool-card-head strong{display:block;font-size:12px;font-weight:700}.tool-card-head small{display:block;margin-top:2px;color:var(--muted);font-size:9px;line-height:1.35}.tool-card-head .btn{font-size:10px;padding:7px 10px;white-space:nowrap}.tool-summary{margin-top:9px;padding:8px 9px;border:1px solid var(--line);border-radius:9px;background:#fffdf8;color:var(--muted);font-size:10px}.tool-summary.ok{color:var(--ok);border-color:#55785f35}.tool-summary.warn{color:var(--warn);border-color:#8a6a3535}.tool-summary.error{color:var(--danger);border-color:#9b514f35}.tool-list{display:grid;gap:5px;margin-top:6px}.tool-row{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:8px;align-items:center;padding:7px 8px;border-bottom:1px solid var(--line);font-size:10px}.tool-row:last-child{border-bottom:0}.tool-row strong{display:block;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.tool-row small{display:block;color:var(--muted);margin-top:2px;line-height:1.35}.tool-badge{font-size:9px;padding:3px 6px;border-radius:7px;background:#77583b0b;color:var(--accent);white-space:nowrap}.backup-actions{display:flex;gap:6px;flex-wrap:wrap;margin-top:9px}.backup-actions .btn{font-size:10px;padding:8px 11px}.backup-file-label{cursor:pointer}.backup-note{display:block;margin-top:8px}
+@media(max-width:600px){.tool-card{padding:10px}.tool-card-head{align-items:flex-start}.tool-card-head .btn{padding:7px 9px}.backup-actions{display:grid;grid-template-columns:1fr 1fr}.backup-actions .btn{width:100%;text-align:center}}
 </style></head>
 <body>
 <div class="app">
@@ -194,7 +197,7 @@ button:active,a:active,[role="button"]:active,summary:active{background-image:no
 
 <div class="stats"><div class="stat"><b id="total">—</b><span>Total titles</span></div><div class="stat"><b id="watched">—</b><span>Watched</span></div><div class="stat"><b id="watchlist">—</b><span>Watchlist</span></div></div>
 
-<div class="admin-sticky-bar"><nav class="admin-nav" aria-label="Admin sections"><button type="button" data-target="connection" class="active">Connection</button><button type="button" data-target="genres">Genres</button><button type="button" data-target="add">Add New</button><button type="button" data-target="rating">Rating &amp; Comments</button><button type="button" data-target="public-comments">Public Comments</button></nav>
+<div class="admin-sticky-bar"><nav class="admin-nav" aria-label="Admin sections"><button type="button" data-target="connection" class="active">Connection</button><button type="button" data-target="genres">Genres</button><button type="button" data-target="add">Add New</button><button type="button" data-target="rating">Rating &amp; Comments</button><button type="button" data-target="public-comments">Public Comments</button><button type="button" data-target="tools">Library Tools</button></nav>
 <div class="rating-sticky-random"><button id="randomMovieBtn" class="btn secondary" type="button" aria-label="Open a random movie from the library">Random</button></div></div>
 <div class="grid">
 <section class="panel" data-section="connection" id="connectionSection">
@@ -263,6 +266,12 @@ button:active,a:active,[role="button"]:active,summary:active{background-image:no
 </div>
 </section>
 
+<section class="panel library-tools-panel" data-section="tools" id="libraryHealthSection">
+<div class="head"><div><h2>Library Tools</h2><small class="sector-note">Health · Integrity · Backup &amp; Restore</small></div><span id="healthSummary">Ready</span></div>
+<div class="tool-card"><div class="tool-card-head"><div><strong>Needs Attention</strong><small>Titles with missing or questionable library data</small></div><button id="scanAttentionBtn" class="btn secondary" type="button">Scan</button></div><div id="attentionSummary" class="tool-summary">Run a scan to check the library.</div><div id="attentionList" class="tool-list hidden"></div></div>
+<div class="tool-card"><div class="tool-card-head"><div><strong>Data Integrity Check</strong><small>Validate IDs, statuses, duplicates and core fields</small></div><button id="integrityBtn" class="btn secondary" type="button">Check Library</button></div><div id="integritySummary" class="tool-summary">No check has been run yet.</div><div id="integrityList" class="tool-list hidden"></div></div>
+<div class="tool-card"><div class="tool-card-head"><div><strong>Backup &amp; Restore</strong><small>Export or safely import your CineTon library JSON</small></div></div><div class="backup-actions"><button id="exportBackupBtn" class="btn" type="button">Export Backup</button><label class="btn secondary backup-file-label" for="importBackupFile">Import Backup</label><input id="importBackupFile" type="file" accept=".json,application/json" hidden></div><div id="backupPreview" class="message hidden"></div><div id="backupMsg" class="message hidden"></div><div class="hint backup-note">Library data only. Public Comments are stored separately.</div></div>
+</section>
 <section class="panel comment-sector public-comment-sector" data-section="public-comments" id="publicCommentsSection"><div class="head"><div><h2>Public Comments</h2><small class="sector-note">Visitor comments · Moderation</small></div><span id="publicCommentsCount">0 comments</span></div><div class="libraryTools"><input id="publicCommentsSearch" placeholder="Search title, name, comment…"></div><div id="publicCommentsList" class="public-admin-list"></div><div class="public-admin-toolbar"><label><input type="checkbox" id="publicCommentsSelectAll"> <span>Select all</span></label><span id="publicCommentsSelected">0 selected</span><button class="public-admin-bulk-delete" id="publicCommentsDeleteSelected" type="button" disabled>Delete selected</button></div><div id="publicCommentsMsg" class="message hidden"></div></section>
 <section class="panel comment-sector admin-comment-sector" data-section="rating" id="librarySection">
 <div class="head"><div><h2>Rating &amp; Comments</h2><small class="sector-note">Personal rating · Admin notes</small></div><span id="libraryCount">0 titles</span></div>
@@ -460,6 +469,57 @@ $('#publicCommentsSelectAll').onchange=()=>{document.querySelectorAll('.public-c
 async function editPublicComment(id){const row=document.querySelector('.public-admin-row[data-comment-id="'+CSS.escape(id)+'"]'),body=row?.children[1],current=row?.querySelector('.public-admin-comment')?.textContent||'';if(!body)return;if(row.querySelector('.public-admin-edit-box'))return;const box=document.createElement('div');box.className='public-admin-edit-box';box.innerHTML='<textarea maxlength="1000" aria-label="Edit comment"></textarea><div class="public-admin-edit-actions"><button class="btn" type="button" data-save-edit>Save</button><button class="btn secondary" type="button" data-cancel-edit>Cancel</button></div>';body.appendChild(box);const ta=box.querySelector('textarea');ta.value=current;ta.focus();box.querySelector('[data-cancel-edit]').onclick=()=>box.remove();box.querySelector('[data-save-edit]').onclick=async()=>{const token=$('#tok').value.trim(),comment=ta.value.trim(),save=box.querySelector('[data-save-edit]');if(!token)return alert('Connect GitHub first so the edit can be authorized.');if(!comment)return alert('Comment cannot be empty.');save.disabled=true;try{const r=await fetch(PUBLIC_COMMENTS_FN,{method:'PATCH',headers:{apikey:PUBLIC_COMMENTS_KEY,'Content-Type':'application/json','x-github-token':token},body:JSON.stringify({id,comment})});const j=await r.json().catch(()=>({}));if(!r.ok)throw Error(j.error||'Edit failed.');await loadPublicCommentsAdmin()}catch(e){alert(e.message||'Edit failed.')}finally{save.disabled=false}}}
 $('#publicCommentsDeleteSelected').onclick=async()=>{const ids=selectedPublicCommentIds();if(!ids.length)return;if(!confirm('Warning: '+ids.length+' selected public comment'+(ids.length===1?'':'s')+' will be permanently deleted. Continue?'))return;if(!confirm('Are you sure? This action cannot be undone.'))return;const btn=$('#publicCommentsDeleteSelected'),token=$('#tok').value.trim(),msg=$('#publicCommentsMsg');if(!token){msg.textContent='Connect GitHub first so the delete can be authorized.';msg.className='message error';return}btn.disabled=true;try{for(const id of ids){const r=await fetch(PUBLIC_COMMENTS_FN,{method:'DELETE',headers:{apikey:PUBLIC_COMMENTS_KEY,'Content-Type':'application/json','x-github-token':token},body:JSON.stringify({id})});if(!r.ok)throw Error('One or more comments could not be deleted.')}await loadPublicCommentsAdmin()}catch(e){msg.textContent=e.message||'Bulk delete failed.';msg.className='message error';updatePublicSelection()}finally{btn.disabled=false;updatePublicSelection()}};
 async function deletePublicComment(id){if(!confirm('Warning: This public comment will be permanently deleted. Continue?'))return;if(!confirm('Are you sure? This action cannot be undone.'))return;const msg=$('#publicCommentsMsg'),token=$('#tok').value.trim();if(!token){msg.textContent='Connect GitHub first so the delete can be authorized.';msg.className='message error';return}try{const r=await fetch(PUBLIC_COMMENTS_FN,{method:'DELETE',headers:{apikey:PUBLIC_COMMENTS_KEY,'Content-Type':'application/json','x-github-token':token},body:JSON.stringify({id})});if(!r.ok)throw Error('Delete was not authorized.');await loadPublicCommentsAdmin()}catch(e){msg.textContent=e.message||'Delete failed.';msg.className='message error'}}
-$('#publicCommentsSearch')?.addEventListener('input',loadPublicCommentsAdmin);</script>
+$('#publicCommentsSearch')?.addEventListener('input',loadPublicCommentsAdmin);
+function libraryHealthScan(){
+ const issues=[],integrity=[],seen=new Map();
+ data.forEach((m,i)=>{
+  const title=m?.title||'Untitled',id=String(m?.id??'').trim(),type=m?.type,status=m?.status,reasons=[];
+  if(!m?.poster)reasons.push('Missing poster');
+  if(!String(m?.year??'').trim())reasons.push('Missing year');
+  if(!Array.isArray(m?.genres)||!m.genres.length)reasons.push('Missing genres');
+  if(status==='watched'&&(m.my_rating===null||m.my_rating===undefined||m.my_rating===''))reasons.push('Watched title has no rating');
+  if(reasons.length)issues.push({i,title,reasons});
+  if(!id)integrity.push({i,title,reasons:['Missing ID']});
+  else if(seen.has(id))integrity.push({i,title,reasons:['Duplicate ID with '+(data[seen.get(id)]?.title||'another title')]);else seen.set(id,i);
+  if(type!=='movie'&&type!=='tv')integrity.push({i,title,reasons:['Invalid type']});
+  if(status!=='watched'&&status!=='watchlist')integrity.push({i,title,reasons:['Invalid status']});
+  if(type&&id&&!id.startsWith(type+'-'))integrity.push({i,title,reasons:['ID/type mismatch']});
+  if(m?.my_rating!==null&&m?.my_rating!==undefined&&m?.my_rating!==''&&(typeof m.my_rating!=='number'||m.my_rating<0||m.my_rating>10))integrity.push({i,title,reasons:['Invalid rating']});
+ });
+ const possible=new Map();
+ data.forEach((m,i)=>{const k=(String(m?.title||'').trim().toLocaleLowerCase()+'|'+String(m?.year||'').trim());if(k!=='|'&&!possible.has(k))possible.set(k,i);else if(k!=='|')integrity.push({i,title:m?.title||'Untitled',reasons:['Possible duplicate title/year']});});
+ return{issues,integrity};
+}
+function renderHealthList(id,rows,limit=30){
+ const el=$(id);if(!rows.length){el.classList.add('hidden');el.innerHTML='';return}el.classList.remove('hidden');el.innerHTML=rows.slice(0,limit).map(x=>'<div class="tool-row"><div><strong>'+esc(x.title)+'</strong><small>'+esc(x.reasons.join(' · '))+'</small></div><span class="tool-badge">'+(x.i+1)+'</span></div>').join('')+(rows.length>limit?'<div class="hint">Showing '+limit+' of '+rows.length+' affected titles.</div>':'');
+}
+function runHealthScan(){
+ const r=libraryHealthScan(),a=$('#attentionSummary'),i=$('#integritySummary'),total=r.issues.length+r.integrity.length;
+ a.textContent=r.issues.length?(r.issues.length+' title'+(r.issues.length===1?' needs':'s need')+' attention.'):'✓ No attention items found.';a.className='tool-summary '+(r.issues.length?'warn':'ok');
+ i.textContent=r.integrity.length?(r.integrity.length+' integrity issue'+(r.integrity.length===1?'':'s')+' found.'):'✓ Library integrity looks good.';i.className='tool-summary '+(r.integrity.length?'error':'ok');
+ renderHealthList('#attentionList',r.issues);renderHealthList('#integrityList',r.integrity);$('#healthSummary').textContent=total?(total+' issue'+(total===1?'':'s')):'All clear';return r;
+}
+function exportLibraryBackup(){
+ if(!Array.isArray(data)||!data.length)return alert('There is no library data to export.');
+ const payload={format:'cineton-library-backup',version:1,exported_at:new Date().toISOString(),title_count:data.length,data};
+ const blob=new Blob([JSON.stringify(payload,null,2)],{type:'application/json'}),url=URL.createObjectURL(blob),a=document.createElement('a');
+ a.href=url;a.download='cineton-library-backup-'+new Date().toISOString().slice(0,10)+'.json';document.body.appendChild(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(url),1000);
+ $('#backupMsg').textContent='✓ Backup exported · '+data.length+' titles';$('#backupMsg').className='message ok';
+}
+$('#scanAttentionBtn').onclick=runHealthScan;$('#integrityBtn').onclick=runHealthScan;$('#exportBackupBtn').onclick=exportLibraryBackup;
+$('#importBackupFile').onchange=async e=>{
+ const file=e.target.files?.[0];if(!file)return;const preview=$('#backupPreview'),msg=$('#backupMsg');preview.className='message';msg.className='message hidden';preview.textContent='Reading backup…';
+ try{
+  const parsed=JSON.parse(await file.text()),incoming=Array.isArray(parsed)?parsed:parsed?.data;if(!Array.isArray(incoming)||!incoming.length)throw Error('This is not a valid CineTon library backup.');
+  const old=data;data=incoming;const check=libraryHealthScan();data=old;
+  const critical=check.integrity.filter(x=>x.reasons.some(v=>['Missing ID','Invalid type','Invalid status','ID/type mismatch','Invalid rating'].includes(v)));
+  preview.innerHTML='<strong>'+esc(file.name)+'</strong> · '+incoming.length+' titles'+(critical.length?' · '+critical.length+' critical issue'+(critical.length===1?'':'s'):' · validation passed')+(check.issues.length?' · '+check.issues.length+' attention item'+(check.issues.length===1?'':'s'):'');
+  if(critical.length)throw Error('Backup contains '+critical.length+' critical data issue'+(critical.length===1?'':'s')+'.');
+  if(!fileSha)throw Error('Connect GitHub before restoring a backup.');
+  if(!confirm('Restore '+incoming.length+' titles from this backup? Your current library will be replaced. Continue?'))return;
+  data=incoming;try{await save('Restore library backup · '+incoming.length+' titles');draftDirty=false;msg.textContent='✓ Backup restored successfully · '+data.length+' titles';msg.className='message ok';renderAll();runHealthScan()}catch(err){data=old;throw err}
+ }catch(err){preview.textContent=err.message||'Could not read this backup.';preview.className='message error'}finally{e.target.value=''}
+};
+</script>
 </body>
 </html>
