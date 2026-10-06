@@ -8142,7 +8142,7 @@
    "Evan Hengst"
   ],
   "imdb": "6.5",
-  "my_rating": null,
+  "my_rating": 6,
   "watched_on": "",
   "comment": "",
   "status": "watched",
@@ -8151,7 +8151,8 @@
    "Action",
    "Comedy",
    "Thriller"
-  ]
+  ],
+  "loved": false
  },
  {
   "id": "movie-10637",
