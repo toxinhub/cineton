@@ -2178,12 +2178,13 @@
    "Drama",
    "Romance"
   ],
-  "my_rating": null,
+  "my_rating": 6,
   "watched_on": "",
   "comment": "",
   "status": "watched",
   "needs_review": true,
-  "added_at": "2026-10-05T14:25:58.609Z"
+  "added_at": "2026-10-05T14:25:58.609Z",
+  "loved": false
  },
  {
   "id": "tv-211224",
