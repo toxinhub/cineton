@@ -8415,7 +8415,7 @@
    "Romi Park"
   ],
   "imdb": "6.2",
-  "my_rating": null,
+  "my_rating": 6,
   "watched_on": "",
   "comment": "",
   "status": "watched",
@@ -8424,7 +8424,8 @@
    "Animation",
    "Action",
    "Science Fiction"
-  ]
+  ],
+  "loved": false
  },
  {
   "id": "movie-9416",
