@@ -480,7 +480,7 @@ function libraryHealthScan(){
   if(status==='watched'&&(m.my_rating===null||m.my_rating===undefined||m.my_rating===''))reasons.push('Watched title has no rating');
   if(reasons.length)issues.push({i,title,reasons});
   if(!id)integrity.push({i,title,reasons:['Missing ID']});
-  else if(seen.has(id))integrity.push({i,title,reasons:['Duplicate ID with '+(data[seen.get(id)]?.title||'another title')]);else seen.set(id,i);
+  else if(seen.has(id))integrity.push({i,title,reasons:['Duplicate ID with '+(data[seen.get(id)]?.title||'another title')]});else seen.set(id,i);
   if(type!=='movie'&&type!=='tv')integrity.push({i,title,reasons:['Invalid type']});
   if(status!=='watched'&&status!=='watchlist')integrity.push({i,title,reasons:['Invalid status']});
   if(type&&id&&!id.startsWith(type+'-'))integrity.push({i,title,reasons:['ID/type mismatch']});
