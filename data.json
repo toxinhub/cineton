@@ -8789,7 +8789,7 @@
    "Ravi Khanvilkar"
   ],
   "imdb": "6.8",
-  "my_rating": null,
+  "my_rating": 7,
   "watched_on": "",
   "comment": "",
   "status": "watched",
@@ -8797,7 +8797,8 @@
   "genres": [
    "Action",
    "Animation"
-  ]
+  ],
+  "loved": false
  },
  {
   "id": "movie-155",
