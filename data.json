@@ -1526,12 +1526,13 @@
    "Adventure",
    "Science Fiction"
   ],
-  "my_rating": null,
+  "my_rating": 6,
   "watched_on": "",
   "comment": "",
   "status": "watched",
   "needs_review": true,
-  "added_at": "2026-10-05T14:27:46.607Z"
+  "added_at": "2026-10-05T14:27:46.607Z",
+  "loved": false
  },
  {
   "id": "movie-834664",
