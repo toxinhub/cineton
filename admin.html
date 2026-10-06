@@ -190,7 +190,21 @@ button:active,a:active,[role="button"]:active,summary:active{background-image:no
 </style><style id="library-tools-v1">
 .library-tools-panel{font-family:Mina,system-ui,sans-serif}.tool-card{border:1px solid var(--line);border-radius:12px;background:#fffaf2;padding:11px;margin-top:9px}.tool-card-head{display:flex;align-items:center;justify-content:space-between;gap:10px}.tool-card-head strong{display:block;font-size:12px;font-weight:700}.tool-card-head small{display:block;margin-top:2px;color:var(--muted);font-size:9px;line-height:1.35}.tool-card-head .btn{font-size:10px;padding:7px 10px;white-space:nowrap}.tool-summary{margin-top:9px;padding:8px 9px;border:1px solid var(--line);border-radius:9px;background:#fffdf8;color:var(--muted);font-size:10px}.tool-summary.ok{color:var(--ok);border-color:#55785f35}.tool-summary.warn{color:var(--warn);border-color:#8a6a3535}.tool-summary.error{color:var(--danger);border-color:#9b514f35}.tool-list{display:grid;gap:5px;margin-top:6px}.tool-row{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:8px;align-items:center;padding:7px 8px;border-bottom:1px solid var(--line);font-size:10px}.tool-row:last-child{border-bottom:0}.tool-row strong{display:block;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.tool-row small{display:block;color:var(--muted);margin-top:2px;line-height:1.35}.tool-badge{font-size:9px;padding:3px 6px;border-radius:7px;background:#77583b0b;color:var(--accent);white-space:nowrap}.backup-actions{display:flex;gap:6px;flex-wrap:wrap;margin-top:9px}.backup-actions .btn{font-size:10px;padding:8px 11px}.backup-file-label{cursor:pointer}.backup-note{display:block;margin-top:8px}
 @media(max-width:600px){.tool-card{padding:10px}.tool-card-head{align-items:flex-start}.tool-card-head .btn{padding:7px 9px}.backup-actions{display:grid;grid-template-columns:1fr 1fr}.backup-actions .btn{width:100%;text-align:center}}
-</style></head>
+<style id="library-tools-inline-balance">
+.library-tools-inline{margin-top:12px;padding-top:12px;border-top:1px solid var(--line);}
+.library-tools-inline .head{margin-bottom:9px}
+@media(max-width:600px){
+ .library-tools-inline{margin-top:11px;padding-top:11px}
+ .admin-sticky-bar .admin-nav{display:grid!important;grid-template-columns:repeat(6,minmax(0,1fr));gap:4px!important}
+ .admin-sticky-bar .admin-nav button{min-width:0;width:100%;height:38px;min-height:38px;padding:6px 2px!important;font-size:10px!important;line-height:1.1;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+ .admin-sticky-bar .admin-nav button:nth-child(-n+3){grid-column:span 2}
+ .admin-sticky-bar .admin-nav button:nth-child(n+4){grid-column:span 3}
+}
+@media(max-width:360px){
+ .admin-sticky-bar .admin-nav{grid-template-columns:repeat(2,minmax(0,1fr));gap:4px!important}
+ .admin-sticky-bar .admin-nav button:nth-child(n){grid-column:auto;height:36px;min-height:36px;font-size:11px!important}
+}
+</style></style></head>
 <body>
 <div class="app">
 <header class="top"><div class="brand"><div class="logo">🎬</div><div><h1>CineTon Admin</h1><p>Library management</p></div></div><div id="status" class="status">Not connected</div></header>
@@ -222,12 +236,12 @@ button:active,a:active,[role="button"]:active,summary:active{background-image:no
 <div id="connMsg" class="message">GitHub connection is required to load and save your library.</div>
 </details>
 </section>
-<section class="panel library-tools-panel" data-section="tools" id="libraryHealthSection">
+<div class="library-tools-inline" id="libraryHealthSection">
 <div class="head"><div><h2>Library Tools</h2><small class="sector-note">Health · Integrity · Backup &amp; Restore</small></div><span id="healthSummary">Ready</span></div>
 <div class="tool-card"><div class="tool-card-head"><div><strong>Needs Attention</strong><small>Titles with missing or questionable library data</small></div><button id="scanAttentionBtn" class="btn secondary" type="button">Scan</button></div><div id="attentionSummary" class="tool-summary">Run a scan to check the library.</div><div id="attentionList" class="tool-list hidden"></div></div>
 <div class="tool-card"><div class="tool-card-head"><div><strong>Data Integrity Check</strong><small>Validate IDs, statuses, duplicates and core fields</small></div><button id="integrityBtn" class="btn secondary" type="button">Check Library</button></div><div id="integritySummary" class="tool-summary">No check has been run yet.</div><div id="integrityList" class="tool-list hidden"></div></div>
 <div class="tool-card"><div class="tool-card-head"><div><strong>Backup &amp; Restore</strong><small>Export or safely import your CineTon library JSON</small></div></div><div class="backup-actions"><button id="exportBackupBtn" class="btn" type="button">Export Backup</button><label class="btn secondary backup-file-label" for="importBackupFile">Import Backup</label><input id="importBackupFile" type="file" accept=".json,application/json" hidden></div><div id="backupPreview" class="message hidden"></div><div id="backupMsg" class="message hidden"></div><div class="hint backup-note">Library data only. Public Comments are stored separately.</div></div>
-</section>
+</div>
 
 <section class="panel" data-section="genres" id="genresSection">
 <div class="head"><h2>Genres</h2><span>TMDB metadata</span></div>
