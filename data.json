@@ -6100,7 +6100,7 @@
    "Ben Whishaw"
   ],
   "imdb": "7.1",
-  "my_rating": null,
+  "my_rating": 6,
   "watched_on": "",
   "comment": "",
   "status": "watched",
@@ -6109,7 +6109,8 @@
    "Comedy",
    "Drama",
    "Romance"
-  ]
+  ],
+  "loved": false
  },
  {
   "id": "movie-13183",
