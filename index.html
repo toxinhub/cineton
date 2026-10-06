@@ -1993,6 +1993,51 @@ update();
   window.cinetonLoadPublicRating=loadRating;
 })();
 </script>
+
+<style id="public-rating-number-polish-v2">
+/* Public rating 1–10 buttons — subtle selection, refined press feedback, balanced numerals, and clear keyboard focus. */
+.cineton-rating-number{
+  font-variant-numeric:tabular-nums;
+  text-rendering:geometricPrecision;
+  -webkit-font-smoothing:antialiased;
+  -moz-osx-font-smoothing:grayscale;
+  font-weight:600!important;
+  line-height:1!important;
+  transition:transform .14s cubic-bezier(.22,.8,.25,1),background .16s ease,border-color .16s ease,color .16s ease,box-shadow .16s ease;
+}
+.cineton-rating-number.is-selected{
+  background:linear-gradient(145deg,
+    color-mix(in srgb,var(--ac) 19%,var(--sf)),
+    color-mix(in srgb,var(--modal) 45%,transparent));
+  border-color:color-mix(in srgb,var(--ac) 42%,transparent);
+  color:var(--ac);
+  box-shadow:0 1px 0 #fff7 inset,0 2px 8px color-mix(in srgb,var(--ac) 11%,transparent);
+  animation:cinetonRatingSelectedSubtle .18s cubic-bezier(.22,.8,.25,1) both;
+}
+.cineton-rating-number:focus-visible{
+  transform:none;
+  outline:2px solid color-mix(in srgb,var(--gd) 72%,transparent)!important;
+  outline-offset:2px;
+  box-shadow:0 0 0 1px color-mix(in srgb,var(--gd) 18%,transparent),0 3px 9px #00000012!important;
+}
+@media(hover:hover){
+  .cineton-rating-number:hover:not(:focus-visible){
+    transform:translateY(-1px);
+  }
+}
+.cineton-rating-number:active{
+  transform:translateY(0) scale(.94);
+  transition-duration:.08s;
+}
+@keyframes cinetonRatingSelectedSubtle{
+  from{transform:scale(.97)}
+  65%{transform:scale(1.012)}
+  to{transform:scale(1)}
+}
+@media(prefers-reduced-motion:reduce){
+  .cineton-rating-number.is-selected{animation:none}
+}
+</style>
 </body></html><style id="desktop-soft-square-radius-v1">
 /* Desktop surface geometry — restrained 2px corners for a sharper editorial cinema grid.
    Mobile remains completely untouched. Intentional pills/circles stay unchanged. */
