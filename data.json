@@ -8066,7 +8066,7 @@
    "John Medici"
   ],
   "imdb": "7.7",
-  "my_rating": null,
+  "my_rating": 6,
   "watched_on": "",
   "comment": "",
   "status": "watched",
@@ -8075,7 +8075,8 @@
    "Crime",
    "Drama",
    "History"
-  ]
+  ],
+  "loved": false
  },
  {
   "id": "movie-1251551",
