@@ -2034,7 +2034,39 @@ update();
 </script>
 
 <style id="public-rating-motion-v3">
-/* Public rating motion — fast, poster-origin opening and quick poster-return selection. */
+/* Public rating buttons — polished typography/focus plus fast poster-origin motion. */
+.cineton-rating-number{
+  font-variant-numeric:tabular-nums;
+  text-rendering:geometricPrecision;
+  -webkit-font-smoothing:antialiased;
+  -moz-osx-font-smoothing:grayscale;
+  font-weight:600!important;
+  line-height:1!important;
+  transition:transform .14s cubic-bezier(.22,.8,.25,1),background .16s ease,border-color .16s ease,color .16s ease,box-shadow .16s ease;
+}
+.cineton-rating-number.is-selected{
+  background:linear-gradient(145deg,
+    color-mix(in srgb,var(--ac) 19%,var(--sf)),
+    color-mix(in srgb,var(--modal) 45%,transparent));
+  border-color:color-mix(in srgb,var(--ac) 42%,transparent);
+  color:var(--ac);
+  box-shadow:0 1px 0 #fff7 inset,0 2px 8px color-mix(in srgb,var(--ac) 11%,transparent);
+}
+.cineton-rating-number:focus-visible{
+  transform:none;
+  outline:2px solid color-mix(in srgb,var(--gd) 72%,transparent)!important;
+  outline-offset:2px;
+  box-shadow:0 0 0 1px color-mix(in srgb,var(--gd) 18%,transparent),0 3px 9px #00000012!important;
+}
+@media(hover:hover){
+  .cineton-rating-number:hover:not(:focus-visible){transform:translateY(-1px)}
+}
+.cineton-rating-number:active{
+  transform:translateY(0) scale(.94);
+  transition-duration:.08s;
+}
+
+/* Fast opening: the card visually grows out from the poster's center. */
 .cineton-rating-layer{
   animation:cinetonRatingLayerFast .12s ease-out both!important;
 }
@@ -2042,6 +2074,8 @@ update();
   transform-origin:center;
   animation:cinetonRatingCardFromPoster .16s cubic-bezier(.22,.8,.25,1) both!important;
 }
+
+/* Fast selection: other numbers clear away while the picked number returns to the poster. */
 .cineton-rating-layer.is-closing{
   animation:cinetonRatingLayerOut .14s ease-in both!important;
   pointer-events:none!important;
@@ -2049,27 +2083,19 @@ update();
 .cineton-rating-layer.is-closing .cineton-rating-card{
   animation:cinetonRatingCardToPoster .16s cubic-bezier(.32,.72,.4,1) both!important;
 }
-.cineton-rating-layer.is-closing .cineton-rating-grid{
-  overflow:visible;
-}
+.cineton-rating-layer.is-closing .cineton-rating-grid{overflow:visible}
 .cineton-rating-layer.is-closing .cineton-rating-number:not(.is-picked){
   animation:cinetonRatingOthersOut .13s ease-in both!important;
 }
 .cineton-rating-layer.is-closing .cineton-rating-number.is-picked{
   animation:cinetonRatingPickedToPoster .16s cubic-bezier(.32,.72,.4,1) both!important;
 }
-@keyframes cinetonRatingLayerFast{
-  from{opacity:0}
-  to{opacity:1}
-}
+@keyframes cinetonRatingLayerFast{from{opacity:0}to{opacity:1}}
 @keyframes cinetonRatingCardFromPoster{
   from{opacity:0;transform:translateY(2px) scale(.86)}
   to{opacity:1;transform:none}
 }
-@keyframes cinetonRatingLayerOut{
-  from{opacity:1}
-  to{opacity:0}
-}
+@keyframes cinetonRatingLayerOut{from{opacity:1}to{opacity:0}}
 @keyframes cinetonRatingCardToPoster{
   from{opacity:1;transform:none}
   to{opacity:0;transform:scale(.86)}
@@ -2090,6 +2116,7 @@ update();
   .cineton-rating-layer.is-closing .cineton-rating-number{
     animation:none!important;
   }
+  .cineton-rating-number{transition:none}
 }
 </style>
 </body></html><style id="desktop-soft-square-radius-v1">
