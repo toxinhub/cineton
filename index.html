@@ -1707,8 +1707,8 @@ update();
 .cinemodal .modal-top .poster-wrap img{cursor:pointer}
 .cineton-rating-layer{
   position:absolute;inset:0;z-index:80;display:grid;place-items:center;padding:18px;
-  background:color-mix(in srgb,var(--modal) 18%,transparent);
-  backdrop-filter:blur(8px) saturate(108%);-webkit-backdrop-filter:blur(8px) saturate(108%);
+  background:color-mix(in srgb,var(--modal) 10%,transparent);
+  backdrop-filter:blur(2px) saturate(104%);-webkit-backdrop-filter:blur(2px) saturate(104%);
   animation:cinetonRatingLayerIn .20s cubic-bezier(.22,.8,.25,1) both;
 }
 .cineton-rating-card{
@@ -1719,7 +1719,7 @@ update();
     color-mix(in srgb,var(--sf) 58%,transparent),
     color-mix(in srgb,var(--modal) 48%,transparent));
   box-shadow:0 18px 42px #00000028,0 1px 0 #fff5 inset;
-  backdrop-filter:blur(16px) saturate(112%);-webkit-backdrop-filter:blur(16px) saturate(112%);
+  backdrop-filter:blur(10px) saturate(110%);-webkit-backdrop-filter:blur(10px) saturate(110%);
   animation:cinetonRatingCardIn .24s cubic-bezier(.22,.8,.25,1) both;
 }
 .cineton-rating-grid{
@@ -1761,7 +1761,7 @@ update();
 @keyframes cinetonRatingCardIn{from{opacity:0;transform:translateY(5px) scale(.985)}to{opacity:1;transform:none}}
 @keyframes cinetonRatingSelected{from{transform:scale(.92)}60%{transform:scale(1.035)}to{transform:scale(1)}}
 @media(max-width:600px){
-  .cineton-rating-layer{padding:12px;backdrop-filter:blur(6px) saturate(106%);-webkit-backdrop-filter:blur(6px) saturate(106%)}
+  .cineton-rating-layer{padding:12px;background:color-mix(in srgb,var(--modal) 7%,transparent);backdrop-filter:blur(1px) saturate(102%);-webkit-backdrop-filter:blur(1px) saturate(102%)}
   .cineton-rating-card{width:min(286px,calc(100% - 16px));padding:14px;border-radius:9px}
   .cineton-rating-grid{gap:6px}
   .cineton-rating-number{font-size:.80rem;border-radius:6px}
