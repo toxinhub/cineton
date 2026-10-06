@@ -8579,7 +8579,7 @@
    "Sharat Saxena"
   ],
   "imdb": "6.8",
-  "my_rating": null,
+  "my_rating": 6,
   "watched_on": "",
   "comment": "",
   "status": "watched",
@@ -8588,7 +8588,8 @@
    "Comedy",
    "Thriller",
    "Romance"
-  ]
+  ],
+  "loved": false
  },
  {
   "id": "movie-1196943",
