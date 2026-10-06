@@ -1325,36 +1325,6 @@
   "loved": false
  },
  {
-  "id": "movie-1624183",
-  "type": "movie",
-  "title": "Blackout",
-  "year": "2026",
-  "poster": "/gFy3I3hJeLKKJt8EGpc1ZbGTwoH.jpg",
-  "overview": "After a nuclear strike devastates California, a group of veterans and criminals trapped in a warehouse must fight to survive marauders, radiation, and each other in a world where the line between good and evil is gone.",
-  "director": "LeeAnne Bauer, David M. Parks",
-  "cast": [
-   "LeeAnne Bauer",
-   "Mike Ferguson",
-   "Twana Barnett",
-   "Omar Moustafa Ghonim",
-   "Mario Daggett",
-   "Trent James",
-   "Chetavious Davis",
-   "Vu Mai"
-  ],
-  "imdb": "4.0",
-  "genres": [
-   "Action",
-   "Thriller"
-  ],
-  "my_rating": null,
-  "watched_on": "",
-  "comment": "",
-  "status": "watched",
-  "needs_review": true,
-  "added_at": "2026-10-05T14:27:51.364Z"
- },
- {
   "id": "movie-501929",
   "type": "movie",
   "title": "The Mitchells vs. the Machines",
