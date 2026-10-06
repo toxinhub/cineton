@@ -7587,7 +7587,7 @@
    "Master Hridhay"
   ],
   "imdb": "8.1",
-  "my_rating": null,
+  "my_rating": 7,
   "watched_on": "",
   "comment": "",
   "status": "watched",
@@ -7595,7 +7595,8 @@
   "genres": [
    "Drama",
    "Romance"
-  ]
+  ],
+  "loved": false
  },
  {
   "id": "movie-1168102",
