@@ -7034,14 +7034,15 @@
    "Sofia Bertolotto"
   ],
   "imdb": "7.7",
-  "my_rating": null,
+  "my_rating": 7,
   "watched_on": "",
   "comment": "",
   "status": "watched",
   "needs_review": false,
   "genres": [
    "Drama"
-  ]
+  ],
+  "loved": false
  },
  {
   "id": "movie-9693",
