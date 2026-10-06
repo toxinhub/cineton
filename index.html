@@ -1728,31 +1728,31 @@ update();
 .cineton-rating-number{
   appearance:none;-webkit-appearance:none;min-width:0;aspect-ratio:1;margin:0;padding:0;
   display:grid;place-items:center;
-  border:1px solid color-mix(in srgb,var(--tx) 13%,transparent);
+  border:1px solid color-mix(in srgb,var(--tx) 16%,transparent);
   border-radius:7px;
   background:linear-gradient(145deg,
-    color-mix(in srgb,var(--sf) 42%,transparent),
-    color-mix(in srgb,var(--modal) 34%,transparent));
+    color-mix(in srgb,var(--sf) 52%,transparent),
+    color-mix(in srgb,var(--modal) 42%,transparent));
   color:var(--tx);font:600 .86rem/1 "Mina",sans-serif;cursor:pointer;
-  box-shadow:0 1px 0 #fff4 inset,0 3px 8px #0000000c;
-  backdrop-filter:blur(7px);-webkit-backdrop-filter:blur(7px);
-  transition:transform .16s cubic-bezier(.22,.8,.25,1),background .16s ease,border-color .16s ease,color .16s ease,box-shadow .16s ease;
+  box-shadow:0 1px 0 #fff6 inset,0 2px 7px #00000010;
+  backdrop-filter:blur(4px);-webkit-backdrop-filter:blur(4px);
+  transition:transform .15s cubic-bezier(.22,.8,.25,1),background .15s ease,border-color .15s ease,color .15s ease,box-shadow .15s ease;
 }
-.cineton-rating-number:hover,.cineton-rating-number:focus-visible{
-  transform:translateY(-1px);
+ .cineton-rating-number:hover,.cineton-rating-number:focus-visible{
+  transform:translateY(-1px) scale(1.015);
   background:linear-gradient(145deg,
     color-mix(in srgb,var(--ac) 18%,var(--sf)),
     color-mix(in srgb,var(--modal) 48%,transparent));
   border-color:color-mix(in srgb,var(--ac) 52%,transparent);color:var(--ac);
-  outline:none;box-shadow:0 0 0 2px color-mix(in srgb,var(--gd) 15%,transparent),0 5px 12px #00000018;
+  outline:none;box-shadow:0 0 0 1px color-mix(in srgb,var(--gd) 18%,transparent),0 5px 12px #00000016;
 }
-.cineton-rating-number:active{transform:translateY(0) scale(.95)}
+.cineton-rating-number:active{transform:translateY(0) scale(.96)}
 .cineton-rating-number.is-selected{
   background:linear-gradient(145deg,
     color-mix(in srgb,var(--ac) 27%,var(--sf)),
     color-mix(in srgb,var(--modal) 48%,transparent));
   border-color:color-mix(in srgb,var(--ac) 52%,transparent);color:var(--ac);
-  box-shadow:0 1px 0 #fff5 inset,0 3px 11px color-mix(in srgb,var(--ac) 14%,transparent);
+  box-shadow:0 1px 0 #fff7 inset,0 3px 11px color-mix(in srgb,var(--ac) 16%,transparent),0 0 0 1px color-mix(in srgb,var(--ac) 12%,transparent);
   animation:cinetonRatingSelected .22s cubic-bezier(.22,.8,.25,1) both;
 }
 .cineton-rating-number:disabled{cursor:wait;opacity:.62}
