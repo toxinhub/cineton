@@ -609,11 +609,18 @@ header{position:relative}
 .suggestion-note{margin:7px 0 0;color:#92877d;font:400 .54rem/1.35 "Mina",sans-serif}
 .suggestion-list{display:grid;gap:0}
 .suggestion-empty{padding:24px 8px;text-align:center;color:#9f9285;font:.66rem/1.5 "Mina",sans-serif}
-.suggestion-item{display:grid;grid-template-columns:34px minmax(0,1fr);gap:8px;padding:11px 0;border-bottom:1px dashed #d8c8ae25}
-.suggestion-item:first-child{padding-top:4px}
-.suggestion-number{color:#caa36e;font:600 .66rem/1.45 "Mina",sans-serif;text-align:right;font-variant-numeric:tabular-nums}
-.suggestion-title-text{margin:0;color:#f7efe5;font:400 .76rem/1.45 "Mina",sans-serif;overflow-wrap:anywhere}
-.suggestion-time{display:block;margin-top:2px;color:#978b80;font:400 .52rem/1.25 "Mina",sans-serif;font-variant-numeric:tabular-nums}
+.suggestion-group{margin:0 0 28px}
+.suggestion-group:last-child{margin-bottom:0}
+.suggestion-date-row{display:grid;grid-template-columns:34px minmax(0,1fr);gap:8px;align-items:center;margin:0 0 4px}
+.suggestion-date-line{display:block;height:1px;background:#d8c8ae25}
+.suggestion-date{justify-self:start;padding-left:1px;color:#81776d;font:600 .58rem/1.2 "Mina",sans-serif;letter-spacing:.02em;font-variant-numeric:tabular-nums}
+.suggestion-item{display:grid;grid-template-columns:34px minmax(0,1fr);gap:8px;padding:9px 0}
+.suggestion-item-content{min-width:0;border-left:1px solid #d8c8ae1c;padding-left:14px}
+.suggestion-item-main{display:flex;align-items:baseline;justify-content:space-between;gap:14px;min-width:0}
+.suggestion-number{color:#caa36e;font:700 .68rem/1.45 "Mina",sans-serif;text-align:right;font-variant-numeric:tabular-nums;padding-top:1px}
+.suggestion-title-text{margin:0;color:#f7efe5;font:500 .84rem/1.42 "Mina",sans-serif;overflow-wrap:anywhere;min-width:0}
+.suggestion-time{display:block;flex:0 0 auto;margin:0;color:#958b81;font:400 .56rem/1.25 "Mina",sans-serif;font-variant-numeric:tabular-nums;white-space:nowrap;opacity:.9}
+.suggestion-item+.suggestion-item .suggestion-item-content{border-top:1px dashed #d8c8ae25;padding-top:9px}
 .suggestion-message{min-height:15px;margin:5px 0 0;color:#caa36e;font:.55rem/1.3 "Mina",sans-serif}
 @media(max-width:600px){
   .nav-bar{padding:12px 12px 9px;gap:10px}
@@ -629,15 +636,26 @@ header{position:relative}
   .suggestion-compose-row{display:block}
   .suggestion-compose textarea{width:100%;min-height:52px;font-size:.68rem}
   .suggestion-submit{width:100%;margin-top:7px;min-height:34px}
-  .suggestion-item{grid-template-columns:28px minmax(0,1fr);gap:7px;padding:10px 0}
-  .suggestion-title-text{font-size:.69rem}
-  .suggestion-time{font-size:.50rem}
+  .suggestion-group{margin-bottom:26px}
+  .suggestion-date-row{grid-template-columns:28px minmax(0,1fr);gap:7px;margin-bottom:3px}
+  .suggestion-date{font-size:.55rem}
+  .suggestion-item{grid-template-columns:28px minmax(0,1fr);gap:7px;padding:8px 0}
+  .suggestion-item-content{padding-left:11px}
+  .suggestion-item-main{gap:10px;align-items:baseline}
+  .suggestion-number{font-size:.64rem}
+  .suggestion-title-text{font-size:.76rem;line-height:1.4}
+  .suggestion-time{font-size:.53rem;opacity:.86}
+  .suggestion-item+.suggestion-item .suggestion-item-content{padding-top:8px}
 }
 @media(max-width:380px){
   .suggest-me-btn span{display:none}
   .suggest-me-btn{padding-inline:7px}
   .suggestions-head{padding-left:38px}
   .suggestions-body{padding-left:38px}
+  .suggestion-item-main{gap:7px}
+  .suggestion-title-text{font-size:.73rem}
+  .suggestion-time{font-size:.51rem}
+  .suggestion-item-content{padding-left:10px}
 }
 </style></head><body><header><a class="home-brand" href="./index.html" aria-label="Home"><h1><span class="title-mark" aria-hidden="true">🎬</span><span>CineTon</span></h1></a><p class="sub">Some of the films I've watched. Rest of the drama? I'm living it...</p><div class="social-links" aria-label="Social media"><a class="social-btn" href="https://www.facebook.com/share/1BznJkcQVk/" target="_blank" rel="noopener noreferrer" aria-label="Facebook" title="Facebook"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M13.5 21v-8h2.7l.4-3h-3.1V8.1c0-.87.24-1.46 1.5-1.46h1.7V4a20 20 0 0 0-2.48-.13c-2.45 0-4.12 1.5-4.12 4.24V10H7.3v3h2.8v8h3.4Z"/></svg></a><a class="social-btn" href="https://www.instagram.com/tonmoybelieve?stkn=bTFndTYzbGs3eXI5" target="_blank" rel="noopener noreferrer" aria-label="Instagram" title="Instagram"><svg viewBox="0 0 24 24" aria-hidden="true" fill="none"><rect x="3.5" y="3.5" width="17" height="17" rx="5" fill="none" stroke="currentColor" stroke-width="1.8"/><circle cx="12" cy="12" r="4" fill="none" stroke="currentColor" stroke-width="1.8"/><circle cx="17.4" cy="6.7" r="1.1" fill="currentColor" stroke="none"/></svg></a></div></header><div id="top-sentinel" aria-hidden="true"></div><div class="nav-bar"><div class="tabs"><button id="t-watched" class="on">Watched</button><button id="t-watchlist">Watchlist</button></div><button id="suggestMeBtn" class="suggest-me-btn" type="button" aria-haspopup="dialog" aria-controls="suggestionsDialog"><span aria-hidden="true">✦</span> Suggest Me</button></div><div class="stats-row"><div id="stats" class="stats" aria-label="Statistics"></div></div><div class="bar"><input id="q" type="search" placeholder="Search title, actor or director…" aria-label="Search"><div class="select-wrap"><button class="select-trigger" id="ge-trigger" type="button" aria-haspopup="listbox" aria-expanded="false">All genres <span>></span></button><div class="select-menu" id="ge-menu" role="listbox" aria-label="Genre"><button type="button" role="option" data-value="all" aria-selected="true">All genres</button></div></div><div class="select-wrap"><button class="select-trigger" id="so-trigger" type="button" aria-haspopup="listbox" aria-expanded="false">Newest first <span>></span></button><div class="select-menu" id="so-menu" role="listbox" aria-label="Sort"><button type="button" role="option" data-value="new" aria-selected="true">Newest first</button><button type="button" role="option" data-value="my">My rating</button><button type="button" role="option" data-value="im">IMDb rating</button><button type="button" role="option" data-value="yr">Release year</button><button type="button" role="option" data-value="az">Title (A–Z)</button></div></div><select id="ty" aria-hidden="true" tabindex="-1"><option value="all">All types</option><option value="movie">Movie</option><option value="tv">TV / Show</option></select><select id="ge" aria-hidden="true" tabindex="-1"><option value="all">All genres</option></select><select id="so" aria-hidden="true" tabindex="-1"><option value="new">Newest first</option><option value="my">My rating</option><option value="im">IMDb rating</option><option value="yr">Release year</option><option value="az">Title (A–Z)</option></select><button id="surprise" class="surprise" type="button" aria-label="Surprise Me" title="Open a random title">🎲 <span>Surprise Me</span></button><div class="views" role="group" aria-label="View"><button id="v-grid" class="on" aria-label="Grid view" title="Grid view">▦</button><button id="v-list" aria-label="List view" title="List view">☷</button></div><div id="person-filter" class="person-filter-bar" aria-live="polite"><span id="person-filter-label"></span><button class="clear-person" id="clear-person" type="button" aria-label="Clear person filter">×</button></div></div><main id="g" aria-live="polite"></main><dialog id="d" class="cinemodal"><button class="x" onclick="d.close()" aria-label="Close">✕</button><div class="m" id="mb"></div></dialog><script>
 const $=s=>document.querySelector(s),d=$('#d'),IMG='https://image.tmdb.org/t/p/w500';const topSentinel=document.querySelector('#top-sentinel');const toTop=document.createElement('button');toTop.id='to-top';toTop.type='button';toTop.setAttribute('aria-label','Back to top');toTop.title='Back to top';toTop.textContent='⋏';document.body.appendChild(toTop);let topTicking=false;const updateTop=()=>{if(topTicking)return;topTicking=true;requestAnimationFrame(()=>{toTop.classList.toggle('show',window.scrollY>500);topTicking=false})};toTop.addEventListener('click',()=>{window.scrollTo({top:0,left:0,behavior:'smooth'});toTop.classList.remove('show')});window.addEventListener('scroll',updateTop,{passive:true});updateTop();function initSelect(key){const w=document.querySelector('#'+key+'-trigger').parentElement,t=w.querySelector('.select-menu'),native=$('#'+key),trigger=w.querySelector('.select-trigger');if(w.dataset.selectInit==='1')return;w.dataset.selectInit='1';t.addEventListener('click',ev=>{const o=ev.target.closest('[role="option"]');if(!o||!t.contains(o))return;native.value=o.dataset.value;native.dispatchEvent(new Event('input',{bubbles:true}));t.querySelectorAll('[role="option"]').forEach(x=>x.setAttribute('aria-selected',x===o));trigger.firstChild.textContent=o.textContent+' ';closeSelect(w)});trigger.onclick=ev=>{ev.stopPropagation();document.querySelectorAll('.select-wrap.open').forEach(x=>{if(x!==w)closeSelect(x)});w.classList.toggle('open');trigger.setAttribute('aria-expanded',w.classList.contains('open'))};}function closeSelect(w){w.classList.remove('open');w.querySelector('.select-trigger').setAttribute('aria-expanded','false')}document.addEventListener('click',()=>document.querySelectorAll('.select-wrap.open').forEach(closeSelect));initSelect('ge');initSelect('so');const e=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));let D=[],tab='watched',view=localStorage.getItem('cineton-view')||'grid',statFilter='all',personFilter=null,personFilterType='';function skeleton(){const g=$('#g');g.innerHTML=Array.from({length:12},()=>'<div class="skel" aria-hidden="true"></div>').join('')}skeleton();fetch('data.json?v=20261006-2',{cache:'no-store'}).then(r=>{if(!r.ok)throw Error('HTTP '+r.status);return r.json()}).then(x=>{D=x;populateGenres();render()}).catch(()=>$('#g').innerHTML='<p class="empty">Couldn’t load your library.</p>');function populateGenres(){const names=[...new Set(D.flatMap(m=>Array.isArray(m.genres)?m.genres:[]).filter(Boolean))].sort((a,b)=>a.localeCompare(b));const s=$('#ge'),menu=$('#ge-menu'),current=s.value||'all';s.innerHTML='<option value="all">All genres</option>'+names.map(g=>'<option value="'+e(g)+'">'+e(g)+'</option>').join('');menu.innerHTML='<button type="button" role="option" data-value="all">All genres</button>'+names.map(g=>'<button type="button" role="option" data-value="'+e(g)+'">'+e(g)+'</button>').join('');const selected=[...s.options].some(o=>o.value===current)?current:'all';s.value=selected;menu.querySelectorAll('[role="option"]').forEach(o=>o.setAttribute('aria-selected',o.dataset.value===selected));const chosen=s.options[s.selectedIndex]?.textContent||'All genres';$('#ge-trigger').firstChild.textContent=chosen+' ';initSelect('ge')}
@@ -2245,7 +2263,17 @@ update();
   document.body.appendChild(dialog);
   const list=dialog.querySelector(".suggestion-list"),form=dialog.querySelector("form"),input=dialog.querySelector("#suggestionInput"),submit=dialog.querySelector(".suggestion-submit"),msg=dialog.querySelector(".suggestion-message");
   const render=rows=>{
-    list.innerHTML=rows.length?rows.map((x,i)=>'<article class="suggestion-item"><div class="suggestion-number">'+(i+1)+'.</div><div><p class="suggestion-title-text">'+esc(x.title)+'</p><time class="suggestion-time" datetime="'+esc(x.created_at)+'">'+esc(formatWhen(x.created_at))+'</time></div></article>').join(''):'<div class="suggestion-empty">No suggestions yet. Be the first to suggest something.</div>';
+    if(!rows.length){list.innerHTML='<div class="suggestion-empty">No suggestions yet. Be the first to suggest something.</div>';return;}
+    const groups=[];
+    rows.forEach((x,i)=>{
+      const d=new Date(x.created_at),key=Number.isNaN(d.getTime())?'unknown':d.toLocaleDateString(undefined,{year:'numeric',month:'2-digit',day:'2-digit'});
+      let g=groups[groups.length-1];
+      if(!g||g.key!==key){g={key,date:d,items:[]};groups.push(g);}
+      g.items.push({x,number:i+1,date:d});
+    });
+    const dateLabel=d=>Number.isNaN(d.getTime())?'':d.toLocaleDateString(undefined,{month:'short',day:'numeric'});
+    const timeLabel=d=>Number.isNaN(d.getTime())?'':d.toLocaleTimeString(undefined,{hour:'numeric',minute:'2-digit',hour12:true});
+    list.innerHTML=groups.map(g=>'<section class="suggestion-group"><div class="suggestion-date-row"><span class="suggestion-date-line" aria-hidden="true"></span><time class="suggestion-date" datetime="'+(Number.isNaN(g.date.getTime())?'':esc(g.date.toISOString()))+'">'+esc(dateLabel(g.date))+'</time></div>'+g.items.map(({x,number,date})=>'<article class="suggestion-item"><div class="suggestion-number">'+number+'.</div><div class="suggestion-item-content"><div class="suggestion-item-main"><p class="suggestion-title-text">'+esc(x.title)+'</p><time class="suggestion-time" datetime="'+esc(x.created_at)+'">'+esc(timeLabel(date))+'</time></div></div></article>').join('')+'</section>').join('');
   };
   const load=async()=>{
     list.innerHTML='<div class="suggestion-empty">Loading suggestions…</div>';
