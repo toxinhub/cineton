@@ -2336,7 +2336,52 @@ update();
   text-shadow:none!important;
   font-variant-emoji:emoji!important;
 }
-</style><style id="love-responsive-emoji-v1">.cinemodal .chips .love-chip .love-desktop-emoji{display:inline}.cinemodal .chips .love-chip .love-mobile-emoji{display:none}@media(max-width:600px){.cinemodal .chips .love-chip .love-desktop-emoji{display:none}.cinemodal .chips .love-chip .love-mobile-emoji{display:inline}}</style><style id="modal-rating-layout-v4">
+</style><style id="grid-list-love-heart-restore-v1">
+/* Restore the grid/list Love icon independently from the modal emoji. */
+.cineton-love-heart{
+  display:inline-flex!important;
+  align-items:center!important;
+  justify-content:center!important;
+  width:.9em!important;
+  height:.9em!important;
+  vertical-align:-.1em!important;
+  flex:0 0 auto!important;
+  line-height:1!important;
+  font-size:inherit!important;
+  color:inherit!important;
+}
+.cineton-love-heart svg{
+  display:block!important;
+  width:100%!important;
+  height:100%!important;
+  overflow:visible!important;
+  flex:0 0 auto!important;
+}
+.cineton-love-heart path{
+  fill:#f4a6b8!important;
+  stroke:#a54d45!important;
+  stroke-width:1.05!important;
+  stroke-linejoin:round!important;
+}
+main.list .cineton-love-heart{
+  width:.9em!important;
+  height:.9em!important;
+  vertical-align:-.1em!important;
+}
+@media(max-width:600px){
+  main:not(.list) .cineton-love-heart{
+    width:.9em!important;
+    height:.9em!important;
+  }
+  main.list .cineton-love-heart{
+    width:.86em!important;
+    height:.86em!important;
+    vertical-align:-.09em!important;
+  }
+  .cineton-love-heart path{stroke-width:1!important}
+}
+</style>
+<style id="love-responsive-emoji-v1">.cinemodal .chips .love-chip .love-desktop-emoji{display:inline}.cinemodal .chips .love-chip .love-mobile-emoji{display:none}@media(max-width:600px){.cinemodal .chips .love-chip .love-desktop-emoji{display:none}.cinemodal .chips .love-chip .love-mobile-emoji{display:inline}}</style><style id="modal-rating-layout-v4">
 .cinemodal .chips{display:flex!important;flex-direction:column!important;align-items:flex-start!important;flex-wrap:nowrap!important;gap:2px!important;overflow:visible!important}
 .cinemodal .modal-rating-main{display:flex;align-items:center;gap:2px;width:100%;flex-wrap:nowrap;overflow-x:auto;scrollbar-width:none;-ms-overflow-style:none}
 .cinemodal .modal-rating-main::-webkit-scrollbar{display:none;width:0;height:0}
