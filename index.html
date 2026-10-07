@@ -2076,7 +2076,8 @@ update();
 }
 .cineton-rating-card{
   transform-origin:center;
-  animation:cinetonRatingCardFromPoster .16s cubic-bezier(.22,.72,.28,1) both!important;
+  will-change:transform,opacity;
+  animation:cinetonRatingCardFromPoster .14s cubic-bezier(.16,.78,.24,1) both!important;
 }
 
 /* Fast selection: other numbers clear away while the picked number returns to the poster. */
@@ -2096,9 +2097,9 @@ update();
 }
 @keyframes cinetonRatingLayerFast{from{opacity:0}to{opacity:1}}
 @keyframes cinetonRatingCardFromPoster{
-  from{opacity:0;transform:translate(var(--poster-dx,0),var(--poster-dy,0)) scale(.92)}
-  68%{opacity:1;transform:translate(calc(var(--poster-dx,0)*.12),calc(var(--poster-dy,0)*.12)) scale(1.01)}
-  to{opacity:1;transform:none}
+  from{opacity:0;transform:translate3d(var(--poster-dx,0),var(--poster-dy,0),0) scale(.94)}
+  72%{opacity:1;transform:translate3d(calc(var(--poster-dx,0)*.08),calc(var(--poster-dy,0)*.08),0) scale(1.005)}
+  to{opacity:1;transform:translate3d(0,0,0) scale(1)}
 }
 @keyframes cinetonRatingLayerOut{from{opacity:1}to{opacity:0}}
 @keyframes cinetonRatingCardToPoster{
