@@ -2297,7 +2297,7 @@ update();
     input.style.backgroundImage="";
   };
   const updateGhost=()=>{
-    const raw=input.value.replace(/\s+/g," ").trim();
+    const raw=input.value.split(/\r?\n/)[0].replace(/\s+/g," ").trim();
     const q=normalizeTitle(raw);
     if(!q){clearGhost();return}
     const match=libraryRows.find(m=>{
@@ -2361,12 +2361,16 @@ update();
   dialog.addEventListener("close",()=>document.body.classList.remove("suggestions-modal-open"));
   dialog.addEventListener("click",e=>{if(e.target===dialog)dialog.close()});
   form.addEventListener("submit",async e=>{
-    e.preventDefault();const title=input.value.replace(/\s+/g," ").trim();if(!title)return;
+    e.preventDefault();
+    const titles=input.value.split(/\r?\n/).map(line=>line.replace(/^\s*\d+\s*[.)-]\s*/,"").replace(/\s+/g," ").trim()).filter(Boolean);
+    if(!titles.length)return;
+    const unique=titles.slice(0,10);
     submit.disabled=true;msg.textContent="Saving…";
     try{
-      const r=await fetch(API,{method:"POST",headers:{apikey:KEY,"Content-Type":"application/json"},body:JSON.stringify({title})});
+      const r=await fetch(API,{method:"POST",headers:{apikey:KEY,"Content-Type":"application/json"},body:JSON.stringify({titles:unique})});
       const j=await r.json().catch(()=>({}));if(!r.ok)throw Error(j.error||"Could not save suggestion.");
-      input.value="";input.style.backgroundImage="";input.classList.remove("suggestion-ghost");msg.textContent="Suggestion added.";
+      input.value="";input.style.backgroundImage="";input.classList.remove("suggestion-ghost");
+      msg.textContent=unique.length>1?unique.length+" suggestions added.":"Suggestion added.";
       await load();
       setTimeout(()=>{msg.textContent=""},1800);
     }catch(err){msg.textContent=err.message||"Could not save suggestion.";}
