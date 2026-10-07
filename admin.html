@@ -344,6 +344,10 @@ button:active,a:active,[role="button"]:active,summary:active{background-image:no
         <h3 id="imdbRandomTitle"></h3>
         <div id="imdbRandomMeta" class="modal-meta"></div>
         <div id="imdbRandomRating" class="imdb-random-rating"></div>
+        <div id="imdbRandomCredits" class="imdb-random-credits hidden">
+          <div><span>Director</span><strong id="imdbRandomDirector"></strong></div>
+          <div><span>Cast</span><strong id="imdbRandomCast"></strong></div>
+        </div>
         <p id="imdbRandomOverview"></p>
       </div>
     </div>
@@ -567,6 +571,9 @@ async function pickImdbRandom(){
     const imdb=m.imdb?('IMDb '+m.imdb):'IMDb rating unavailable';
     const tmdb=Number(candidate.vote_average)?' · TMDB '+Number(candidate.vote_average).toFixed(1):'';
     $('#imdbRandomRating').textContent=imdb+tmdb;
+    $('#imdbRandomDirector').textContent=m.director||'Not available';
+    $('#imdbRandomCast').textContent=(m.cast||[]).slice(0,4).join(', ')||'Not available';
+    $('#imdbRandomCredits').classList.remove('hidden');
     $('#imdbRandomOverview').textContent=m.overview||'No overview available.';
     $('#imdbRandomCategory').textContent=candidate._discovery_category;
     $('#imdbRandomResult').classList.remove('hidden');
@@ -765,6 +772,27 @@ $('#importBackupFile').onchange=async e=>{
 .imdb-watched-fields label{display:grid;gap:3px;color:var(--muted);font:600 9px/1.1 Mina,sans-serif}
 .imdb-watched-fields select,.imdb-watched-fields input{width:100%;min-height:32px;padding:6px 8px;border:1px solid var(--line2);border-radius:7px;background:var(--panel);color:var(--text);font:500 10px/1.2 Mina,sans-serif;box-sizing:border-box}
 @media(max-width:600px){.imdb-watched-details{margin-top:8px;padding:7px}.imdb-watched-fields{grid-template-columns:82px minmax(0,1fr);gap:6px}.imdb-watched-fields select,.imdb-watched-fields input{min-height:34px;font-size:10px;padding:6px 7px}}
+</style>
+
+<style id="imdb-random-modern-v2">
+.imdb-random-result{grid-template-columns:168px minmax(0,1fr)!important;gap:17px!important}
+.imdb-random-copy{padding-top:1px!important}
+.imdb-random-copy h3{font-size:28px!important;letter-spacing:-.01em!important;margin-bottom:5px!important}
+.imdb-random-rating{margin-top:6px!important}
+.imdb-random-credits{display:grid;gap:5px;margin-top:9px;padding-top:8px;border-top:1px solid var(--line)}
+.imdb-random-credits div{display:grid;grid-template-columns:54px minmax(0,1fr);gap:7px;align-items:baseline;min-width:0}
+.imdb-random-credits span{font:600 8px/1.2 Mina,sans-serif;text-transform:uppercase;letter-spacing:.04em;color:var(--muted)}
+.imdb-random-credits strong{min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;font:500 10px/1.25 Mina,sans-serif;color:var(--text)}
+.imdb-random-copy p{margin-top:9px!important}
+@media(max-width:600px){
+ .imdb-random-result{grid-template-columns:100px minmax(0,1fr)!important;gap:11px!important}
+ .imdb-random-poster{width:100px!important}
+ .imdb-random-copy h3{font-size:22px!important}
+ .imdb-random-credits{margin-top:7px;padding-top:6px;gap:4px}
+ .imdb-random-credits div{grid-template-columns:46px minmax(0,1fr);gap:5px}
+ .imdb-random-credits span{font-size:7px}
+ .imdb-random-credits strong{font-size:9px}
+}
 </style>
 </html>
 <style id="admin-submit-balance">
