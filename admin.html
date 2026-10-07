@@ -1384,6 +1384,39 @@ $('#importBackupFile').onchange=async e=>{
   #editModal.admin-modal h2{font-size:23px!important}
 }
 </style>
+
+<style id="imdb-random-title-poster-balance-v11">
+/* IMDb Random: compact single-line heading + balanced mobile poster. */
+.imdb-random-modal .imdb-random-head h2{
+  font-size:18px!important;
+  line-height:1!important;
+  white-space:nowrap!important;
+  margin:0 38px 2px 0!important;
+}
+@media(max-width:600px){
+  .imdb-random-modal .imdb-random-head h2{
+    font-size:15px!important;
+    line-height:1!important;
+    white-space:nowrap!important;
+  }
+  .imdb-random-modal .imdb-random-result{
+    grid-template-columns:112px minmax(0,1fr)!important;
+    column-gap:11px!important;
+  }
+  .imdb-random-modal .imdb-random-result > .imdb-random-poster{
+    width:112px!important;
+  }
+}
+@media(max-width:380px){
+  .imdb-random-modal .imdb-random-result{
+    grid-template-columns:100px minmax(0,1fr)!important;
+    column-gap:9px!important;
+  }
+  .imdb-random-modal .imdb-random-result > .imdb-random-poster{
+    width:100px!important;
+  }
+}
+</style>
 </html>
 <style id="library-random-polish-v1">
 /* Library Random — simple, calm and clearly separated from IMDb discovery. */
