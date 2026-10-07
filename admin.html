@@ -493,7 +493,7 @@ function openRandomMovie(){
    openEdit(i);
  });
 }
-let imdbRandomPool=[],imdbRandomHistory=[],imdbRandomCurrent=null,imdbRandomBusy=false;
+let imdbRandomPool=[],imdbRandomHistory=[],imdbRandomSeenKeys=(()=>{try{const v=JSON.parse(SS.getItem('ct_imdb_random_seen')||'[]');return Array.isArray(v)?v:[]}catch{return []}})(),imdbRandomCurrent=null,imdbRandomBusy=false;
 
 async function discoverImdbPool(){
   if(imdbRandomPool.length)return imdbRandomPool;
