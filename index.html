@@ -1993,7 +1993,7 @@ update();
       if(layer.isConnected)layer.remove();
       dialog?.querySelector(".modal-top .poster-wrap img")?.focus?.({preventScroll:true});
     };
-    window.setTimeout(done,260);
+    window.setTimeout(done,165);
   };
 
   const openRatingLayer=async(dialog,mediaId)=>{
@@ -2082,19 +2082,17 @@ update();
 
     // Drive opening with the browser's compositor animation API for deterministic 500ms timing.
     const reducedMotion=window.matchMedia?.("(prefers-reduced-motion: reduce)").matches;
-    const openingDuration=reducedMotion?0:90;
-    const posterDx=card.style.getPropertyValue("--poster-dx")||"0px";
-    const posterDy=card.style.getPropertyValue("--poster-dy")||"0px";
+    const openingDuration=reducedMotion?0:220;
     layer.animate(
       [{opacity:0},{opacity:1}],
-      {duration:openingDuration,easing:"ease-out",fill:"both"}
+      {duration:openingDuration,easing:"cubic-bezier(.22,.8,.25,1)",fill:"both"}
     );
     card.animate(
       [
-        {opacity:0,transform:"translate3d("+posterDx+","+posterDy+",0) scale(.97)"},
+        {opacity:0,transform:"translate3d(0,42px,0) scale(.84)"},
         {opacity:1,transform:"translate3d(0,0,0) scale(1)"}
       ],
-      {duration:openingDuration,easing:"cubic-bezier(.2,.7,.25,1)",fill:"both"}
+      {duration:openingDuration,easing:"cubic-bezier(.16,1,.3,1)",fill:"both"}
     );
 
     layer.addEventListener("click",ev=>{
@@ -2769,6 +2767,51 @@ main.list .cineton-love-heart{
     aspect-ratio:2 / 3!important;
     object-fit:cover!important;
     box-sizing:border-box!important;
+  }
+}
+</style>
+
+<style id="public-rating-motion-bottom-top-v2">
+/* Public rating panel motion: rise from below on open; lift toward the top on close. */
+.cineton-rating-layer.is-closing{
+  animation:cinetonRatingLayerOutFast .15s cubic-bezier(.4,0,1,1) both!important;
+}
+.cineton-rating-layer.is-closing .cineton-rating-card{
+  animation:cinetonRatingCardToTopFast .165s cubic-bezier(.4,0,1,1) both!important;
+}
+.cineton-rating-layer.is-closing .cineton-rating-number:not(.is-picked){
+  animation:cinetonRatingNumberToTopFast .14s cubic-bezier(.4,0,1,1) both!important;
+}
+.cineton-rating-layer.is-closing .cineton-rating-number.is-picked{
+  animation:cinetonRatingNumberToTopFast .15s cubic-bezier(.4,0,1,1) both!important;
+}
+@keyframes cinetonRatingLayerOutFast{
+  from{opacity:1}
+  to{opacity:0}
+}
+@keyframes cinetonRatingCardToTopFast{
+  from{opacity:1;transform:translate3d(0,0,0) scale(1)}
+  to{opacity:0;transform:translate3d(0,-54px,0) scale(.82)}
+}
+@keyframes cinetonRatingNumberToTopFast{
+  from{opacity:1;transform:translate3d(0,0,0) scale(1)}
+  to{opacity:0;transform:translate3d(0,-34px,0) scale(.78)}
+}
+@media(max-width:600px){
+  @keyframes cinetonRatingCardToTopFast{
+    from{opacity:1;transform:translate3d(0,0,0) scale(1)}
+    to{opacity:0;transform:translate3d(0,-46px,0) scale(.82)}
+  }
+  @keyframes cinetonRatingNumberToTopFast{
+    from{opacity:1;transform:translate3d(0,0,0) scale(1)}
+    to{opacity:0;transform:translate3d(0,-28px,0) scale(.78)}
+  }
+}
+@media(prefers-reduced-motion:reduce){
+  .cineton-rating-layer.is-closing,
+  .cineton-rating-layer.is-closing .cineton-rating-card,
+  .cineton-rating-layer.is-closing .cineton-rating-number{
+    animation:none!important;
   }
 }
 </style>
