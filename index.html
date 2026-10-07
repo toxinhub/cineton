@@ -2685,3 +2685,34 @@ main.list .cineton-love-heart{
   }
 }
 </style>
+
+<style id="modal-poster-balanced-final-v2">
+/* Slightly larger modal poster — preserve the existing layout and all other features. */
+@media(min-width:601px){
+  .cinemodal .modal-top{
+    grid-template-columns:190px minmax(0,1fr)!important;
+    gap:18px!important;
+  }
+  .cinemodal .m img{
+    width:190px!important;
+    max-height:285px!important;
+    aspect-ratio:2/3!important;
+    padding:0!important;
+  }
+}
+@media(max-width:600px){
+  .cinemodal .modal-top{
+    grid-template-columns:94px minmax(0,1fr)!important;
+    gap:11px!important;
+    padding:13px!important;
+  }
+  .cinemodal .m img{
+    width:94px!important;
+    max-width:94px!important;
+    max-height:141px!important;
+    min-height:0!important;
+    aspect-ratio:2/3!important;
+    padding:0!important;
+  }
+}
+</style>
