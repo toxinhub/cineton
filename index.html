@@ -2250,6 +2250,17 @@ update();
 </style>
 <style id="love-heart-universal-v2">/* Keep the modal love reaction as a native pink emoji on desktop and mobile. */
 .cinemodal .chips .love-chip{font-family:"Apple Color Emoji","Segoe UI Emoji","Noto Color Emoji","Noto Emoji",sans-serif!important;font-style:normal!important;font-weight:400!important;color:initial!important;-webkit-text-fill-color:initial!important;text-shadow:none!important;font-variant-emoji:emoji!important;}
+</style><style id="public-suggestions-ghost-v1">
+/* Existing suggestion textarea only: library-match ghost text is painted into its background. */
+.suggestion-compose textarea.suggestion-ghost{
+  background-color:#120f0d!important;
+  background-repeat:no-repeat!important;
+  background-position:9px 8px!important;
+  background-size:auto auto!important;
+}
+@media(max-width:600px){
+  .suggestion-compose textarea.suggestion-ghost{background-position:9px 8px!important}
+}
 </style><script id="public-suggestions-v1">
 (()=>{
   const API="https://osplbqpgxrfovjrumsnb.supabase.co/functions/v1/public-suggestions",KEY="sb_publishable_tcBaC8FqwlcFFw-IwKmiVA_y67PZNPX";
@@ -2264,6 +2275,37 @@ update();
   dialog.innerHTML='<div class="suggestions-shell"><div class="suggestions-head"><div><p class="suggestions-kicker">Visitor Suggestions</p></div><button class="suggestions-close" type="button" aria-label="Close">×</button></div><div class="suggestions-body"><form class="suggestion-compose"><label for="suggestionInput">Have a movie or series in mind? Leave it here.</label><div class="suggestion-compose-row"><textarea id="suggestionInput" maxlength="240" required placeholder="Write a movie or series title…"></textarea><button class="suggestion-submit" type="submit">Suggest</button></div><p class="suggestion-note">• No account needed.<br>• Suggestions are public and cannot be edited after submission.</p><div class="suggestion-message" aria-live="polite"></div></form><div class="suggestion-list" aria-live="polite"></div></div></div>';
   document.body.appendChild(dialog);
   const list=dialog.querySelector(".suggestion-list"),form=dialog.querySelector("form"),input=dialog.querySelector("#suggestionInput"),submit=dialog.querySelector(".suggestion-submit"),msg=dialog.querySelector(".suggestion-message");
+  let libraryRows=[];
+  const normalizeTitle=v=>String(v??"").normalize("NFKD").replace(/[\\u0300-\\u036f]/g,"").toLocaleLowerCase().replace(/[^\\p{L}\\p{N}]+/gu," ").trim();
+  const ghostSvgText=(text,color="#cdbfaf")=>{
+    const svg='<svg xmlns="http://www.w3.org/2000/svg" width="900" height="48"><text x="0" y="32" fill="'+color+'" fill-opacity=".22" font-family="Mina, sans-serif" font-size="14">'+String(text).replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;").replace(/"/g,"&quot;").replace(/'/g,"&apos;")+'</text></svg>';
+    return 'url("data:image/svg+xml;charset=UTF-8,'+encodeURIComponent(svg)+'")';
+  };
+  const updateGhost=()=>{
+    const raw=input.value.replace(/\\s+/g," ").trim(),q=normalizeTitle(raw);
+    if(!q){input.classList.remove("suggestion-ghost");input.style.backgroundImage="";return}
+    const tokens=q.split(/\\s+/).filter(Boolean);
+    const match=libraryRows.find(m=>{
+      const t=normalizeTitle(m.title);
+      return t && tokens.every(token=>t.includes(token));
+    });
+    if(!match){input.classList.remove("suggestion-ghost");input.style.backgroundImage="";return}
+    const label=String(match.title||"").trim();
+    input.classList.add("suggestion-ghost");
+    input.style.backgroundImage=ghostSvgText(label);
+  };
+  const loadLibrary=async()=>{
+    try{
+      const r=await fetch("data.json",{cache:"no-store"});
+      if(!r.ok)throw Error();
+      const j=await r.json();
+      libraryRows=Array.isArray(j)?j.filter(x=>x&&x.title):[];
+      updateGhost();
+    }catch{libraryRows=[];updateGhost();}
+  };
+  input.addEventListener("input",updateGhost);
+  input.addEventListener("keydown",e=>{if(e.key==="Escape"){input.style.backgroundImage="";input.classList.remove("suggestion-ghost")}});
+
   const render=rows=>{
     if(!rows.length){list.innerHTML='<div class="suggestion-empty">No suggestions yet. Be the first to suggest something.</div>';return;}
     const groups=[];
@@ -2282,7 +2324,7 @@ update();
     try{const r=await fetch(API,{cache:"no-store",headers:{apikey:KEY,Accept:"application/json"}});if(!r.ok)throw Error();const j=await r.json();render(Array.isArray(j.suggestions)?j.suggestions:[]);}
     catch{list.innerHTML='<div class="suggestion-empty">Suggestions are temporarily unavailable.</div>';}
   };
-  btn.addEventListener("click",()=>{if(!dialog.open){dialog.showModal();document.body.classList.add("suggestions-modal-open")}load();requestAnimationFrame(()=>input.focus({preventScroll:true}));});
+  btn.addEventListener("click",()=>{if(!dialog.open){dialog.showModal();document.body.classList.add("suggestions-modal-open")}loadLibrary();load();requestAnimationFrame(()=>{input.focus({preventScroll:true});updateGhost()});});
   dialog.querySelector(".suggestions-close").addEventListener("click",()=>dialog.close());
   dialog.addEventListener("close",()=>document.body.classList.remove("suggestions-modal-open"));
   dialog.addEventListener("click",e=>{if(e.target===dialog)dialog.close()});
@@ -2292,7 +2334,7 @@ update();
     try{
       const r=await fetch(API,{method:"POST",headers:{apikey:KEY,"Content-Type":"application/json"},body:JSON.stringify({title})});
       const j=await r.json().catch(()=>({}));if(!r.ok)throw Error(j.error||"Could not save suggestion.");
-      input.value="";msg.textContent="Suggestion added.";
+      input.value="";input.style.backgroundImage="";input.classList.remove("suggestion-ghost");msg.textContent="Suggestion added.";
       await load();
       setTimeout(()=>{msg.textContent=""},1800);
     }catch(err){msg.textContent=err.message||"Could not save suggestion.";}
