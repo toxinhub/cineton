@@ -229,7 +229,7 @@ button:active,a:active,[role="button"]:active,summary:active{background-image:no
 <div class="stats"><div class="stat"><b id="total">—</b><span>Total titles</span></div><div class="stat"><b id="watched">—</b><span>Watched</span></div><div class="stat"><b id="watchlist">—</b><span>Watchlist</span></div></div>
 
 <div class="admin-sticky-bar"><nav class="admin-nav" aria-label="Admin sections"><button type="button" data-target="connection" class="active">Connection</button><button type="button" data-target="genres">Genres</button><button type="button" data-target="add">Add New</button><button type="button" data-target="rating">Rating &amp; Comments</button><button type="button" data-target="public-comments">Public Comments</button></nav>
-<div class="rating-sticky-random"><button id="randomMovieBtn" class="btn secondary" type="button" aria-label="Open a random movie from the library">Random</button></div></div>
+<div class="rating-sticky-random"><div class="random-actions"><button id="randomMovieBtn" class="btn secondary" type="button" aria-label="Open a random movie from the library">Random</button><button id="imdbRandomBtn" class="btn" type="button" aria-label="Discover a random IMDb pick">IMDb Random</button></div></div></div>
 <div class="grid">
 <section class="panel" data-section="connection" id="connectionSection">
 <div class="head connection-head"><h2>Connection</h2><span>Services &amp; Backup</span></div>
@@ -326,6 +326,35 @@ button:active,a:active,[role="button"]:active,summary:active{background-image:no
 </section>
 </div>
 </div>
+
+<dialog id="imdbRandomModal" class="admin-modal imdb-random-modal" aria-labelledby="imdbRandomTitle">
+  <div class="modal-inner">
+    <button id="closeImdbRandom" class="x" type="button" aria-label="Close IMDb discovery">×</button>
+    <div class="imdb-random-head">
+      <div>
+        <h2>IMDb Random</h2>
+        <p>Random picks from recent, top-rated and classic titles.</p>
+      </div>
+      <span id="imdbRandomCategory" class="imdb-random-category">Discovery</span>
+    </div>
+    <div id="imdbRandomState" class="imdb-random-state">Finding a title…</div>
+    <div id="imdbRandomResult" class="imdb-random-result hidden">
+      <img id="imdbRandomPoster" class="imdb-random-poster" alt="">
+      <div class="imdb-random-copy">
+        <h3 id="imdbRandomTitle"></h3>
+        <div id="imdbRandomMeta" class="modal-meta"></div>
+        <div id="imdbRandomRating" class="imdb-random-rating"></div>
+        <p id="imdbRandomOverview"></p>
+      </div>
+    </div>
+    <div class="imdb-random-actions">
+      <button id="imdbAddWatchlist" class="btn secondary" type="button">Add to Watchlist</button>
+      <button id="imdbAddWatched" class="btn" type="button">Mark as Watched</button>
+      <button id="imdbAnother" class="btn secondary" type="button">Another Pick</button>
+    </div>
+    <div id="imdbRandomMsg" class="message hidden" aria-live="polite"></div>
+  </div>
+</dialog>
 
 <script>
 const $=s=>document.querySelector(s), $$=s=>document.querySelectorAll(s);
@@ -448,6 +477,129 @@ function openRandomMovie(){
    openEdit(i);
  });
 }
+let imdbRandomPool=[],imdbRandomHistory=[],imdbRandomCurrent=null,imdbRandomBusy=false;
+
+async function discoverImdbPool(){
+  if(imdbRandomPool.length)return imdbRandomPool;
+  const now=new Date(),today=now.toISOString().slice(0,10);
+  const old=new Date(now);old.setFullYear(old.getFullYear()-25);
+  const classicCutoff=old.toISOString().slice(0,10);
+  const recent=new Date(now);recent.setFullYear(recent.getFullYear()-2);
+  const recentFrom=recent.toISOString().slice(0,10);
+  const page=()=>String(1+Math.floor(Math.random()*3));
+  const specs=[
+    {category:'Latest',type:'movie',path:'/discover/movie?include_adult=false&include_video=false&sort_by=primary_release_date.desc&primary_release_date.gte='+recentFrom+'&primary_release_date.lte='+today+'&vote_count.gte=25&page='+page()},
+    {category:'Latest',type:'tv',path:'/discover/tv?include_adult=false&sort_by=first_air_date.desc&first_air_date.gte='+recentFrom+'&first_air_date.lte='+today+'&vote_count.gte=25&page='+page()},
+    {category:'Top Rated',type:'movie',path:'/discover/movie?include_adult=false&include_video=false&sort_by=vote_average.desc&vote_average.gte=7.8&vote_count.gte=1000&page='+page()},
+    {category:'Top Rated',type:'tv',path:'/discover/tv?include_adult=false&sort_by=vote_average.desc&vote_average.gte=7.8&vote_count.gte=500&page='+page()},
+    {category:'Classic',type:'movie',path:'/discover/movie?include_adult=false&include_video=false&sort_by=popularity.desc&primary_release_date.lte='+classicCutoff+'&vote_average.gte=7.2&vote_count.gte=500&page='+page()},
+    {category:'Classic',type:'tv',path:'/discover/tv?include_adult=false&sort_by=popularity.desc&first_air_date.lte='+classicCutoff+'&vote_average.gte=7.5&vote_count.gte=250&page='+page()}
+  ];
+  const out=[];
+  for(const s of specs){
+    try{
+      const r=await tmdb(s.path);
+      for(const h of (r.results||[])){
+        if(!h.poster_path)continue;
+        out.push({...h,media_type:s.type,_discovery_category:s.category});
+      }
+    }catch{}
+  }
+  const seen=new Set();
+  imdbRandomPool=out.filter(h=>{
+    const key=h.media_type+'-'+h.id;
+    if(seen.has(key))return false;
+    seen.add(key);return !data.some(m=>String(m.id)===key);
+  });
+  for(let i=imdbRandomPool.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[imdbRandomPool[i],imdbRandomPool[j]]=[imdbRandomPool[j],imdbRandomPool[i]]}
+  return imdbRandomPool;
+}
+
+function setImdbRandomState(textValue,type=''){
+  $('#imdbRandomState').textContent=textValue;
+  $('#imdbRandomState').className='imdb-random-state'+(type?' '+type:'');
+}
+function setImdbRandomMessage(textValue,type=''){
+  const el=$('#imdbRandomMsg');
+  el.textContent=textValue;
+  el.className='message '+(type||'hidden');
+}
+function openImdbRandomModal(){
+  if(!fileSha)return alert('Connect GitHub first so the discovery result can be saved.');
+  if(draftDirty&&!confirm('Unsaved changes will be lost. Open IMDb Random?'))return;
+  $('#imdbRandomModal').showModal();
+  pickImdbRandom();
+}
+async function pickImdbRandom(){
+  if(imdbRandomBusy)return;
+  imdbRandomBusy=true;imdbRandomCurrent=null;
+  ['#imdbAddWatchlist','#imdbAddWatched','#imdbAnother'].forEach(s=>$(s).disabled=true);
+  $('#imdbRandomResult').classList.add('hidden');setImdbRandomMessage('');
+  setImdbRandomState('Finding a title…','busy');
+  try{
+    let pool=await discoverImdbPool();
+    let available=pool.filter((_,i)=>!imdbRandomHistory.includes(i));
+    if(!available.length){imdbRandomHistory=[];available=pool.slice()}
+    if(!available.length)throw Error('No new discovery titles were found.');
+    const candidate=available[Math.floor(Math.random()*available.length)];
+    const index=pool.indexOf(candidate);
+    imdbRandomHistory.push(index);
+    if(imdbRandomHistory.length>Math.min(18,Math.max(1,pool.length-1)))imdbRandomHistory.shift();
+    const m=await enrich(candidate);
+    const existing=data.find(x=>String(x.id)===String(m.id));
+    imdbRandomCurrent={...m,_discovery_category:candidate._discovery_category,_tmdb_rating:candidate.vote_average};
+    $('#imdbRandomPoster').src=m.poster?'https://image.tmdb.org/t/p/w342'+m.poster:'';
+    $('#imdbRandomPoster').alt=m.title||'';
+    $('#imdbRandomTitle').textContent=m.title||'Untitled';
+    $('#imdbRandomMeta').textContent=(m.year||'Year unknown')+' · '+(m.type==='tv'?'TV / Show':'Movie');
+    const imdb=m.imdb?('IMDb '+m.imdb):'IMDb rating unavailable';
+    const tmdb=Number(candidate.vote_average)?' · TMDB '+Number(candidate.vote_average).toFixed(1):'';
+    $('#imdbRandomRating').textContent=imdb+tmdb;
+    $('#imdbRandomOverview').textContent=m.overview||'No overview available.';
+    $('#imdbRandomCategory').textContent=candidate._discovery_category;
+    $('#imdbRandomResult').classList.remove('hidden');
+    if(existing){
+      setImdbRandomState('Already in your library','ok');
+      setImdbRandomMessage('This title is already in CineTon. Choose another pick.', 'ok');
+      $('#imdbAddWatchlist').disabled=true;$('#imdbAddWatched').disabled=true;
+    }else{
+      setImdbRandomState('Ready to add','ok');
+      $('#imdbAddWatchlist').disabled=false;$('#imdbAddWatched').disabled=false;
+    }
+  }catch(e){
+    setImdbRandomState(e.message||'Could not find a discovery title.','error');
+    setImdbRandomMessage('Check your TMDB connection and try again.','error');
+  }finally{
+    $('#imdbAnother').disabled=false;imdbRandomBusy=false;
+  }
+}
+async function addImdbRandom(status){
+  const m=imdbRandomCurrent;if(!m||!fileSha)return;
+  if(data.some(x=>String(x.id)===String(m.id))){setImdbRandomMessage('This title is already in your library.','ok');return}
+  const btn=status==='watched'?$('#imdbAddWatched'):$('#imdbAddWatchlist');
+  btn.disabled=true;setImdbRandomState('Saving to your library…','busy');
+  const item={...m};delete item._discovery_category;delete item._tmdb_rating;
+  Object.assign(item,{my_rating:null,watched_on:status==='watched'?new Date().toISOString().slice(0,10):'',comment:'',status,needs_review:false,added_at:new Date().toISOString()});
+  const old=data.slice();
+  try{
+    data.unshift(item);await save('IMDb Random · Add '+item.title);
+    draftDirty=false;renderAll();
+    setImdbRandomState(status==='watched'?'Added as Watched':'Added to Watchlist','ok');
+    setImdbRandomMessage('✓ '+item.title+' was added to your CineTon library.','ok');
+    $('#imdbAddWatchlist').disabled=true;$('#imdbAddWatched').disabled=true;
+  }catch(e){
+    data=old;renderAll();setImdbRandomState('Could not save this title.','error');setImdbRandomMessage(connError(e),'error');
+    btn.disabled=false;
+  }
+}
+$('#imdbRandomBtn').onclick=openImdbRandomModal;
+$('#imdbAnother').onclick=pickImdbRandom;
+$('#imdbAddWatchlist').onclick=()=>addImdbRandom('watchlist');
+$('#imdbAddWatched').onclick=()=>addImdbRandom('watched');
+$('#closeImdbRandom').onclick=()=>$('#imdbRandomModal').close();
+$('#imdbRandomModal').addEventListener('cancel',e=>{e.preventDefault();$('#imdbRandomModal').close()});
+$('#imdbRandomModal').addEventListener('click',e=>{if(e.target===e.currentTarget)$('#imdbRandomModal').close()});
+
 window.editTitle=openEdit;
 function markDraft(){draftDirty=true;$('#draftState').textContent='Unsaved changes';}
 document.querySelectorAll('#editRatingPicker .rating-choice').forEach(b=>b.onclick=()=>{const value=b.dataset.rating;$('#editRating').value=value;document.querySelectorAll('#editRatingPicker .rating-choice').forEach(x=>{const selected=x===b;x.classList.toggle('selected',selected);x.setAttribute('aria-checked',String(selected));});markDraft()});
@@ -534,6 +686,38 @@ $('#importBackupFile').onchange=async e=>{
 };
 </script>
 </body>
+<style id="imdb-random-discovery-v1">
+.random-actions{display:flex;align-items:center;justify-content:center;gap:5px;width:100%}
+.random-actions .btn{min-width:68px;min-height:28px;padding:4px 9px;font-size:10px;line-height:1.1}
+.random-actions #imdbRandomBtn{border-color:#8a68436b;background:#77583b0d;color:var(--accent)}
+.imdb-random-modal{width:min(700px,calc(100% - 18px))}
+.imdb-random-head{display:flex;align-items:flex-start;justify-content:space-between;gap:12px;margin-bottom:9px}
+.imdb-random-head h2{margin:0 38px 2px 0!important}
+.imdb-random-head p{margin:0;color:var(--muted);font:400 10px/1.35 Mina,sans-serif}
+.imdb-random-category{flex:0 0 auto;color:var(--accent);font:600 9px/1 Mina,sans-serif;border:1px solid #77583b2b;background:#77583b08;border-radius:7px;padding:5px 7px}
+.imdb-random-state{margin:0 0 10px;color:var(--muted);font-size:10px}
+.imdb-random-state.ok{color:var(--ok)}.imdb-random-state.error{color:var(--danger)}.imdb-random-state.busy{color:var(--accent)}
+.imdb-random-result{display:grid;grid-template-columns:150px minmax(0,1fr);gap:14px;align-items:start}
+.imdb-random-poster{width:150px;aspect-ratio:2/3;object-fit:cover;border-radius:9px;background:#ded0bc;border:1px solid var(--line)}
+.imdb-random-copy{min-width:0;padding-top:2px}
+.imdb-random-copy h3{margin:0 0 4px;font:600 25px/1 "Cormorant Garamond",serif}
+.imdb-random-rating{margin-top:7px;color:var(--accent);font:600 11px/1.3 Mina,sans-serif}
+.imdb-random-copy p{margin:9px 0 0;color:var(--muted);font:400 11px/1.55 Mina,sans-serif;display:-webkit-box;-webkit-line-clamp:7;-webkit-box-orient:vertical;overflow:hidden}
+.imdb-random-actions{display:grid;grid-template-columns:1fr 1fr 1fr;gap:6px;margin-top:13px;padding-top:11px;border-top:1px solid var(--line)}
+.imdb-random-actions .btn{min-height:38px}
+@media(max-width:600px){
+ .random-actions{gap:4px}.random-actions .btn{flex:1;min-width:0;padding:4px 6px;font-size:9px}
+ .imdb-random-modal{width:calc(100% - 12px);max-height:92vh}
+ .imdb-random-result{grid-template-columns:88px minmax(0,1fr);gap:10px}
+ .imdb-random-poster{width:88px;border-radius:7px}
+ .imdb-random-copy h3{font-size:21px}
+ .imdb-random-rating{font-size:9px;margin-top:5px}
+ .imdb-random-copy p{font-size:9px;line-height:1.45;-webkit-line-clamp:8;margin-top:7px}
+ .imdb-random-actions{grid-template-columns:1fr 1fr;gap:5px}
+ .imdb-random-actions #imdbAnother{grid-column:1/-1}
+ .imdb-random-actions .btn{min-height:40px;font-size:10px}
+}
+</style>
 </html>
 <style id="admin-submit-balance">
 /* Balanced admin action buttons */
