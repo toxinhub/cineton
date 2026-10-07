@@ -567,7 +567,79 @@ header{position:relative}
     filter:none!important;
   }
 }
-</style></head><body><header><a class="home-brand" href="./index.html" aria-label="Home"><h1><span class="title-mark" aria-hidden="true">🎬</span><span>CineTon</span></h1></a><p class="sub">Some of the films I've watched. Rest of the drama? I'm living it...</p><div class="social-links" aria-label="Social media"><a class="social-btn" href="https://www.facebook.com/share/1BznJkcQVk/" target="_blank" rel="noopener noreferrer" aria-label="Facebook" title="Facebook"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M13.5 21v-8h2.7l.4-3h-3.1V8.1c0-.87.24-1.46 1.5-1.46h1.7V4a20 20 0 0 0-2.48-.13c-2.45 0-4.12 1.5-4.12 4.24V10H7.3v3h2.8v8h3.4Z"/></svg></a><a class="social-btn" href="https://www.instagram.com/tonmoybelieve?stkn=bTFndTYzbGs3eXI5" target="_blank" rel="noopener noreferrer" aria-label="Instagram" title="Instagram"><svg viewBox="0 0 24 24" aria-hidden="true" fill="none"><rect x="3.5" y="3.5" width="17" height="17" rx="5" fill="none" stroke="currentColor" stroke-width="1.8"/><circle cx="12" cy="12" r="4" fill="none" stroke="currentColor" stroke-width="1.8"/><circle cx="17.4" cy="6.7" r="1.1" fill="currentColor" stroke="none"/></svg></a></div></header><div id="top-sentinel" aria-hidden="true"></div><div class="nav-bar"><div class="tabs"><button id="t-watched" class="on">Watched</button><button id="t-watchlist">Watchlist</button></div></div><div class="stats-row"><div id="stats" class="stats" aria-label="Statistics"></div></div><div class="bar"><input id="q" type="search" placeholder="Search title, actor or director…" aria-label="Search"><div class="select-wrap"><button class="select-trigger" id="ge-trigger" type="button" aria-haspopup="listbox" aria-expanded="false">All genres <span>></span></button><div class="select-menu" id="ge-menu" role="listbox" aria-label="Genre"><button type="button" role="option" data-value="all" aria-selected="true">All genres</button></div></div><div class="select-wrap"><button class="select-trigger" id="so-trigger" type="button" aria-haspopup="listbox" aria-expanded="false">Newest first <span>></span></button><div class="select-menu" id="so-menu" role="listbox" aria-label="Sort"><button type="button" role="option" data-value="new" aria-selected="true">Newest first</button><button type="button" role="option" data-value="my">My rating</button><button type="button" role="option" data-value="im">IMDb rating</button><button type="button" role="option" data-value="yr">Release year</button><button type="button" role="option" data-value="az">Title (A–Z)</button></div></div><select id="ty" aria-hidden="true" tabindex="-1"><option value="all">All types</option><option value="movie">Movie</option><option value="tv">TV / Show</option></select><select id="ge" aria-hidden="true" tabindex="-1"><option value="all">All genres</option></select><select id="so" aria-hidden="true" tabindex="-1"><option value="new">Newest first</option><option value="my">My rating</option><option value="im">IMDb rating</option><option value="yr">Release year</option><option value="az">Title (A–Z)</option></select><button id="surprise" class="surprise" type="button" aria-label="Surprise Me" title="Open a random title">🎲 <span>Surprise Me</span></button><div class="views" role="group" aria-label="View"><button id="v-grid" class="on" aria-label="Grid view" title="Grid view">▦</button><button id="v-list" aria-label="List view" title="List view">☷</button></div><div id="person-filter" class="person-filter-bar" aria-live="polite"><span id="person-filter-label"></span><button class="clear-person" id="clear-person" type="button" aria-label="Clear person filter">×</button></div></div><main id="g" aria-live="polite"></main><dialog id="d" class="cinemodal"><button class="x" onclick="d.close()" aria-label="Close">✕</button><div class="m" id="mb"></div></dialog><script>
+</style><style id="public-suggestions-ui-v1">
+/* Suggest Me — restrained editorial notebook, responsive without disturbing the existing CineTon layout. */
+.nav-bar{display:flex;align-items:center;justify-content:space-between;gap:18px}
+.suggest-me-btn{
+  appearance:none;-webkit-appearance:none;display:inline-flex;align-items:center;justify-content:center;gap:5px;
+  min-height:30px;padding:5px 10px;border:1px solid var(--line-strong);border-radius:4px;
+  background:color-mix(in srgb,var(--sf) 62%,transparent);color:var(--tx);
+  font:600 .66rem/1 "Mina",sans-serif;letter-spacing:.02em;white-space:nowrap;cursor:pointer;
+  box-shadow:0 1px 0 #fff7 inset;transition:background .16s,border-color .16s,color .16s,transform .16s
+}
+.suggest-me-btn span{color:var(--gd);font-size:.72rem}
+.suggest-me-btn:hover,.suggest-me-btn:focus-visible{background:var(--sf);border-color:var(--gd);color:var(--tx);outline:none}
+.suggest-me-btn:active{transform:scale(.97)}
+.suggestions-dialog{
+  width:min(620px,calc(100% - 28px));height:min(78vh,680px);max-height:min(78vh,680px);
+  padding:0;border:1px solid #d8c8ae3d;border-radius:7px;background:#201b17;color:#f4eee5;
+  box-shadow:0 24px 70px #0009;overflow:hidden
+}
+.suggestions-dialog::backdrop{background:#130f0bb5;backdrop-filter:blur(3px);-webkit-backdrop-filter:blur(3px)}
+.suggestions-shell{height:100%;display:flex;flex-direction:column;min-height:0;background:
+  linear-gradient(#ffffff05 1px,transparent 1px) 0 0/100% 29px,
+  linear-gradient(90deg,transparent 0 39px,#c58b5a16 39px 40px,transparent 40px) 0 0/100% 100%,
+  #201b17}
+.suggestions-head{display:flex;align-items:flex-start;justify-content:space-between;gap:14px;padding:18px 20px 13px 54px;border-bottom:1px solid #d8c8ae24;background:#201b17f2}
+.suggestions-kicker{margin:0 0 2px;color:#caa36e;font:700 .55rem/1.2 "Mina",sans-serif;letter-spacing:.12em;text-transform:uppercase}
+.suggestions-title{margin:0;color:#f8f0e4;font:600 clamp(1.35rem,3vw,1.8rem)/1 "Cormorant Garamond",serif}
+.suggestions-sub{margin:4px 0 0;color:#bdb1a4;font:400 .62rem/1.35 "Mina",sans-serif}
+.suggestions-close{flex:0 0 auto;width:36px;height:36px;padding:0;border:1px solid #d8c8ae2b;border-radius:50%;background:transparent;color:#d7c8b7;display:grid;place-items:center;font:300 21px/1 Arial,sans-serif;cursor:pointer}
+.suggestions-close:hover,.suggestions-close:focus-visible{background:#ffffff0a;color:#fff;outline:2px solid #caa36e;outline-offset:1px}
+.suggestions-body{min-height:0;overflow:auto;padding:15px 20px 20px 54px;scrollbar-gutter:stable}
+.suggestion-compose{position:relative;margin-bottom:18px;padding:12px 12px 10px;border:1px solid #d8c8ae30;border-radius:5px;background:#181411cc;box-shadow:0 1px 0 #fff4 inset}
+.suggestion-compose label{display:block;margin-bottom:6px;color:#cdbfaf;font:600 .59rem/1.2 "Mina",sans-serif;letter-spacing:.06em}
+.suggestion-compose-row{display:flex;gap:8px;align-items:flex-end}
+.suggestion-compose textarea{flex:1;min-width:0;min-height:54px;max-height:120px;resize:vertical;padding:8px 9px;border:1px solid #d8c8ae36;border-radius:4px;background:#120f0d;color:#fffaf2;font:400 .72rem/1.45 "Mina",sans-serif;outline:none}
+.suggestion-compose textarea::placeholder{color:#9f9285}
+.suggestion-compose textarea:focus{border-color:#caa36e;box-shadow:0 0 0 2px #caa36e20}
+.suggestion-submit{min-height:34px;padding:7px 11px;border:1px solid #caa36e66;border-radius:4px;background:#9a7447;color:#fff9ef;font:600 .63rem/1 "Mina",sans-serif;cursor:pointer;white-space:nowrap}
+.suggestion-submit:hover,.suggestion-submit:focus-visible{background:#b18858;outline:none}
+.suggestion-submit:disabled{opacity:.55;cursor:wait}
+.suggestion-note{margin:7px 0 0;color:#92877d;font:400 .54rem/1.35 "Mina",sans-serif}
+.suggestion-list{display:grid;gap:0}
+.suggestion-empty{padding:24px 8px;text-align:center;color:#9f9285;font:.66rem/1.5 "Mina",sans-serif}
+.suggestion-item{display:grid;grid-template-columns:34px minmax(0,1fr);gap:8px;padding:11px 0;border-bottom:1px dashed #d8c8ae25}
+.suggestion-item:first-child{padding-top:4px}
+.suggestion-number{color:#caa36e;font:600 .66rem/1.45 "Mina",sans-serif;text-align:right;font-variant-numeric:tabular-nums}
+.suggestion-title-text{margin:0;color:#f7efe5;font:400 .76rem/1.45 "Mina",sans-serif;overflow-wrap:anywhere}
+.suggestion-time{display:block;margin-top:2px;color:#978b80;font:400 .52rem/1.25 "Mina",sans-serif;font-variant-numeric:tabular-nums}
+.suggestion-message{min-height:15px;margin:5px 0 0;color:#caa36e;font:.55rem/1.3 "Mina",sans-serif}
+@media(max-width:600px){
+  .nav-bar{padding:12px 12px 9px;gap:10px}
+  .tabs{gap:11px;min-width:0}
+  .suggest-me-btn{min-height:29px;padding:5px 8px;font-size:.60rem}
+  .suggestions-dialog{width:calc(100% - 14px);height:min(82vh,700px);max-height:min(82vh,700px);border-radius:6px}
+  .suggestions-head{padding:15px 15px 11px 42px}
+  .suggestions-body{padding:12px 14px 16px 42px}
+  .suggestions-title{font-size:1.5rem}
+  .suggestions-sub{font-size:.57rem}
+  .suggestions-close{width:38px;height:38px}
+  .suggestion-compose{padding:10px 9px 9px}
+  .suggestion-compose-row{display:block}
+  .suggestion-compose textarea{width:100%;min-height:52px;font-size:.68rem}
+  .suggestion-submit{width:100%;margin-top:7px;min-height:34px}
+  .suggestion-item{grid-template-columns:28px minmax(0,1fr);gap:7px;padding:10px 0}
+  .suggestion-title-text{font-size:.69rem}
+  .suggestion-time{font-size:.50rem}
+}
+@media(max-width:380px){
+  .suggest-me-btn span{display:none}
+  .suggest-me-btn{padding-inline:7px}
+  .suggestions-head{padding-left:38px}
+  .suggestions-body{padding-left:38px}
+}
+</style></head><body><header><a class="home-brand" href="./index.html" aria-label="Home"><h1><span class="title-mark" aria-hidden="true">🎬</span><span>CineTon</span></h1></a><p class="sub">Some of the films I've watched. Rest of the drama? I'm living it...</p><div class="social-links" aria-label="Social media"><a class="social-btn" href="https://www.facebook.com/share/1BznJkcQVk/" target="_blank" rel="noopener noreferrer" aria-label="Facebook" title="Facebook"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M13.5 21v-8h2.7l.4-3h-3.1V8.1c0-.87.24-1.46 1.5-1.46h1.7V4a20 20 0 0 0-2.48-.13c-2.45 0-4.12 1.5-4.12 4.24V10H7.3v3h2.8v8h3.4Z"/></svg></a><a class="social-btn" href="https://www.instagram.com/tonmoybelieve?stkn=bTFndTYzbGs3eXI5" target="_blank" rel="noopener noreferrer" aria-label="Instagram" title="Instagram"><svg viewBox="0 0 24 24" aria-hidden="true" fill="none"><rect x="3.5" y="3.5" width="17" height="17" rx="5" fill="none" stroke="currentColor" stroke-width="1.8"/><circle cx="12" cy="12" r="4" fill="none" stroke="currentColor" stroke-width="1.8"/><circle cx="17.4" cy="6.7" r="1.1" fill="currentColor" stroke="none"/></svg></a></div></header><div id="top-sentinel" aria-hidden="true"></div><div class="nav-bar"><div class="tabs"><button id="t-watched" class="on">Watched</button><button id="t-watchlist">Watchlist</button></div><button id="suggestMeBtn" class="suggest-me-btn" type="button" aria-haspopup="dialog" aria-controls="suggestionsDialog"><span aria-hidden="true">✦</span> Suggest Me</button></div><div class="stats-row"><div id="stats" class="stats" aria-label="Statistics"></div></div><div class="bar"><input id="q" type="search" placeholder="Search title, actor or director…" aria-label="Search"><div class="select-wrap"><button class="select-trigger" id="ge-trigger" type="button" aria-haspopup="listbox" aria-expanded="false">All genres <span>></span></button><div class="select-menu" id="ge-menu" role="listbox" aria-label="Genre"><button type="button" role="option" data-value="all" aria-selected="true">All genres</button></div></div><div class="select-wrap"><button class="select-trigger" id="so-trigger" type="button" aria-haspopup="listbox" aria-expanded="false">Newest first <span>></span></button><div class="select-menu" id="so-menu" role="listbox" aria-label="Sort"><button type="button" role="option" data-value="new" aria-selected="true">Newest first</button><button type="button" role="option" data-value="my">My rating</button><button type="button" role="option" data-value="im">IMDb rating</button><button type="button" role="option" data-value="yr">Release year</button><button type="button" role="option" data-value="az">Title (A–Z)</button></div></div><select id="ty" aria-hidden="true" tabindex="-1"><option value="all">All types</option><option value="movie">Movie</option><option value="tv">TV / Show</option></select><select id="ge" aria-hidden="true" tabindex="-1"><option value="all">All genres</option></select><select id="so" aria-hidden="true" tabindex="-1"><option value="new">Newest first</option><option value="my">My rating</option><option value="im">IMDb rating</option><option value="yr">Release year</option><option value="az">Title (A–Z)</option></select><button id="surprise" class="surprise" type="button" aria-label="Surprise Me" title="Open a random title">🎲 <span>Surprise Me</span></button><div class="views" role="group" aria-label="View"><button id="v-grid" class="on" aria-label="Grid view" title="Grid view">▦</button><button id="v-list" aria-label="List view" title="List view">☷</button></div><div id="person-filter" class="person-filter-bar" aria-live="polite"><span id="person-filter-label"></span><button class="clear-person" id="clear-person" type="button" aria-label="Clear person filter">×</button></div></div><main id="g" aria-live="polite"></main><dialog id="d" class="cinemodal"><button class="x" onclick="d.close()" aria-label="Close">✕</button><div class="m" id="mb"></div></dialog><script>
 const $=s=>document.querySelector(s),d=$('#d'),IMG='https://image.tmdb.org/t/p/w500';const topSentinel=document.querySelector('#top-sentinel');const toTop=document.createElement('button');toTop.id='to-top';toTop.type='button';toTop.setAttribute('aria-label','Back to top');toTop.title='Back to top';toTop.textContent='⋏';document.body.appendChild(toTop);let topTicking=false;const updateTop=()=>{if(topTicking)return;topTicking=true;requestAnimationFrame(()=>{toTop.classList.toggle('show',window.scrollY>500);topTicking=false})};toTop.addEventListener('click',()=>{window.scrollTo({top:0,left:0,behavior:'smooth'});toTop.classList.remove('show')});window.addEventListener('scroll',updateTop,{passive:true});updateTop();function initSelect(key){const w=document.querySelector('#'+key+'-trigger').parentElement,t=w.querySelector('.select-menu'),native=$('#'+key),trigger=w.querySelector('.select-trigger');if(w.dataset.selectInit==='1')return;w.dataset.selectInit='1';t.addEventListener('click',ev=>{const o=ev.target.closest('[role="option"]');if(!o||!t.contains(o))return;native.value=o.dataset.value;native.dispatchEvent(new Event('input',{bubbles:true}));t.querySelectorAll('[role="option"]').forEach(x=>x.setAttribute('aria-selected',x===o));trigger.firstChild.textContent=o.textContent+' ';closeSelect(w)});trigger.onclick=ev=>{ev.stopPropagation();document.querySelectorAll('.select-wrap.open').forEach(x=>{if(x!==w)closeSelect(x)});w.classList.toggle('open');trigger.setAttribute('aria-expanded',w.classList.contains('open'))};}function closeSelect(w){w.classList.remove('open');w.querySelector('.select-trigger').setAttribute('aria-expanded','false')}document.addEventListener('click',()=>document.querySelectorAll('.select-wrap.open').forEach(closeSelect));initSelect('ge');initSelect('so');const e=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));let D=[],tab='watched',view=localStorage.getItem('cineton-view')||'grid',statFilter='all',personFilter=null,personFilterType='';function skeleton(){const g=$('#g');g.innerHTML=Array.from({length:12},()=>'<div class="skel" aria-hidden="true"></div>').join('')}skeleton();fetch('data.json?v=20261006-2',{cache:'no-store'}).then(r=>{if(!r.ok)throw Error('HTTP '+r.status);return r.json()}).then(x=>{D=x;populateGenres();render()}).catch(()=>$('#g').innerHTML='<p class="empty">Couldn’t load your library.</p>');function populateGenres(){const names=[...new Set(D.flatMap(m=>Array.isArray(m.genres)?m.genres:[]).filter(Boolean))].sort((a,b)=>a.localeCompare(b));const s=$('#ge'),menu=$('#ge-menu'),current=s.value||'all';s.innerHTML='<option value="all">All genres</option>'+names.map(g=>'<option value="'+e(g)+'">'+e(g)+'</option>').join('');menu.innerHTML='<button type="button" role="option" data-value="all">All genres</button>'+names.map(g=>'<button type="button" role="option" data-value="'+e(g)+'">'+e(g)+'</button>').join('');const selected=[...s.options].some(o=>o.value===current)?current:'all';s.value=selected;menu.querySelectorAll('[role="option"]').forEach(o=>o.setAttribute('aria-selected',o.dataset.value===selected));const chosen=s.options[s.selectedIndex]?.textContent||'All genres';$('#ge-trigger').firstChild.textContent=chosen+' ';initSelect('ge')}
 const pic=(m,eager=false)=>m.poster?`<img loading="${eager?'eager':'lazy'}" decoding="async" fetchpriority="${eager?'high':'auto'}" src="https://image.tmdb.org/t/p/w500${e(m.poster)}" srcset="https://image.tmdb.org/t/p/w342${e(m.poster)} 342w, https://image.tmdb.org/t/p/w500${e(m.poster)} 500w" sizes="(max-width:600px) 45vw, 190px" alt="${e(m.title)} poster" onerror="this.replaceWith(Object.assign(document.createElement('div'),{className:'ph',textContent:this.alt.replace(/ poster$/,'')}))">`:`<div class="ph">${e(m.title)}</div>`;function applyView(){const g=$('#g');g.classList.toggle('list',view==='list');$('#v-grid').classList.toggle('on',view==='grid');$('#v-list').classList.toggle('on',view==='list');const pf=$('#person-filter'),pl=$('#person-filter-label');pf.classList.toggle('on',!!personFilter);if(personFilter)pl.textContent=(personFilterType||'Person')+' · '+personFilter}function setStatFilter(f){statFilter=statFilter===f?'all':f;document.querySelectorAll('.stat').forEach(x=>x.classList.toggle('active',x.dataset.filter===statFilter));if(f==='movie'||f==='tv'){$('#ty').value=f}else if(f==='rated'){$('#ty').value='all';$('#so').value='my'}else if(f==='loved'){$('#ty').value='all';$('#so').value='new'}render();window.scrollTo({top:document.querySelector('.bar').offsetTop,behavior:'smooth'})}function renderGrid(L){
   const g=$('#g');
@@ -2158,7 +2230,45 @@ update();
 </style>
 <style id="love-heart-universal-v2">/* Keep the modal love reaction as a native pink emoji on desktop and mobile. */
 .cinemodal .chips .love-chip{font-family:"Apple Color Emoji","Segoe UI Emoji","Noto Color Emoji","Noto Emoji",sans-serif!important;font-style:normal!important;font-weight:400!important;color:initial!important;-webkit-text-fill-color:initial!important;text-shadow:none!important;font-variant-emoji:emoji!important;}
-</style></body>
+</style><script id="public-suggestions-v1">
+(()=>{
+  const API="https://osplbqpgxrfovjrumsnb.supabase.co/functions/v1/public-suggestions";
+  const esc=v=>String(v??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;","\"":"&quot;","'":"&#39;"}[c]));
+  const formatWhen=v=>{const d=new Date(v);return Number.isNaN(d.getTime())?"":d.toLocaleString(undefined,{dateStyle:"medium",timeStyle:"short"});};
+  const btn=document.getElementById("suggestMeBtn");
+  if(!btn)return;
+  const dialog=document.createElement("dialog");
+  dialog.id="suggestionsDialog";
+  dialog.className="suggestions-dialog";
+  dialog.setAttribute("aria-labelledby","suggestionsTitle");
+  dialog.innerHTML='<div class="suggestions-shell"><div class="suggestions-head"><div><p class="suggestions-kicker">Visitor Suggestions</p><h2 id="suggestionsTitle" class="suggestions-title">Suggest Me</h2><p class="suggestions-sub">Have a movie or series in mind? Leave it here.</p></div><button class="suggestions-close" type="button" aria-label="Close">×</button></div><div class="suggestions-body"><form class="suggestion-compose"><label for="suggestionInput">Your suggestion</label><div class="suggestion-compose-row"><textarea id="suggestionInput" maxlength="240" required placeholder="Write a movie or series title…"></textarea><button class="suggestion-submit" type="submit">Suggest</button></div><p class="suggestion-note">No account needed. Suggestions are public and cannot be edited after submission.</p><div class="suggestion-message" aria-live="polite"></div></form><div class="suggestion-list" aria-live="polite"></div></div></div>';
+  document.body.appendChild(dialog);
+  const list=dialog.querySelector(".suggestion-list"),form=dialog.querySelector("form"),input=dialog.querySelector("#suggestionInput"),submit=dialog.querySelector(".suggestion-submit"),msg=dialog.querySelector(".suggestion-message");
+  const render=rows=>{
+    list.innerHTML=rows.length?rows.map((x,i)=>'<article class="suggestion-item"><div class="suggestion-number">'+(i+1)+'.</div><div><p class="suggestion-title-text">'+esc(x.title)+'</p><time class="suggestion-time" datetime="'+esc(x.created_at)+'">'+esc(formatWhen(x.created_at))+'</time></div></article>').join(''):'<div class="suggestion-empty">No suggestions yet. Be the first to suggest something.</div>';
+  };
+  const load=async()=>{
+    list.innerHTML='<div class="suggestion-empty">Loading suggestions…</div>';
+    try{const r=await fetch(API,{cache:"no-store"});if(!r.ok)throw Error();const j=await r.json();render(Array.isArray(j.suggestions)?j.suggestions:[]);}
+    catch{list.innerHTML='<div class="suggestion-empty">Suggestions are temporarily unavailable.</div>';}
+  };
+  btn.addEventListener("click",()=>{if(!dialog.open)dialog.showModal();load();requestAnimationFrame(()=>input.focus({preventScroll:true}));});
+  dialog.querySelector(".suggestions-close").addEventListener("click",()=>dialog.close());
+  dialog.addEventListener("click",e=>{if(e.target===dialog)dialog.close()});
+  form.addEventListener("submit",async e=>{
+    e.preventDefault();const title=input.value.replace(/\s+/g," ").trim();if(!title)return;
+    submit.disabled=true;msg.textContent="Saving…";
+    try{
+      const r=await fetch(API,{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({title})});
+      const j=await r.json().catch(()=>({}));if(!r.ok)throw Error(j.error||"Could not save suggestion.");
+      input.value="";msg.textContent="Suggestion added.";
+      await load();
+      setTimeout(()=>{msg.textContent=""},1800);
+    }catch(err){msg.textContent=err.message||"Could not save suggestion.";}
+    finally{submit.disabled=false;}
+  });
+})();
+</script></body>
 <style id="public-rating-opening-js-v1">
 /* Opening timing is driven by Web Animations API for deterministic fast playback. */
 .cineton-rating-layer:not(.is-closing),
