@@ -2232,7 +2232,7 @@ update();
 .cinemodal .chips .love-chip{font-family:"Apple Color Emoji","Segoe UI Emoji","Noto Color Emoji","Noto Emoji",sans-serif!important;font-style:normal!important;font-weight:400!important;color:initial!important;-webkit-text-fill-color:initial!important;text-shadow:none!important;font-variant-emoji:emoji!important;}
 </style><script id="public-suggestions-v1">
 (()=>{
-  const API="https://osplbqpgxrfovjrumsnb.supabase.co/functions/v1/public-suggestions";
+  const API="https://osplbqpgxrfovjrumsnb.supabase.co/functions/v1/public-suggestions",KEY="sb_publishable_tcBaC8FqwlcFFw-IwKmiVA_y67PZNPX";
   const esc=v=>String(v??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;","\"":"&quot;","'":"&#39;"}[c]));
   const formatWhen=v=>{const d=new Date(v);return Number.isNaN(d.getTime())?"":d.toLocaleString(undefined,{dateStyle:"medium",timeStyle:"short"});};
   const btn=document.getElementById("suggestMeBtn");
@@ -2249,7 +2249,7 @@ update();
   };
   const load=async()=>{
     list.innerHTML='<div class="suggestion-empty">Loading suggestions…</div>';
-    try{const r=await fetch(API,{cache:"no-store"});if(!r.ok)throw Error();const j=await r.json();render(Array.isArray(j.suggestions)?j.suggestions:[]);}
+    try{const r=await fetch(API,{cache:"no-store",headers:{apikey:KEY,Accept:"application/json"}});if(!r.ok)throw Error();const j=await r.json();render(Array.isArray(j.suggestions)?j.suggestions:[]);}
     catch{list.innerHTML='<div class="suggestion-empty">Suggestions are temporarily unavailable.</div>';}
   };
   btn.addEventListener("click",()=>{if(!dialog.open)dialog.showModal();load();requestAnimationFrame(()=>input.focus({preventScroll:true}));});
@@ -2259,7 +2259,7 @@ update();
     e.preventDefault();const title=input.value.replace(/\s+/g," ").trim();if(!title)return;
     submit.disabled=true;msg.textContent="Saving…";
     try{
-      const r=await fetch(API,{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({title})});
+      const r=await fetch(API,{method:"POST",headers:{apikey:KEY,"Content-Type":"application/json"},body:JSON.stringify({title})});
       const j=await r.json().catch(()=>({}));if(!r.ok)throw Error(j.error||"Could not save suggestion.");
       input.value="";msg.textContent="Suggestion added.";
       await load();
