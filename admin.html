@@ -606,7 +606,7 @@ async function addImdbRandom(status){
   const item={...m};delete item._discovery_category;delete item._tmdb_rating;
   const watchedRating=status==='watched'?($('#imdbWatchedRating').value||null):null;
   const watchedComment=status==='watched'?$('#imdbWatchedComment').value.trim():'';
-  Object.assign(item,{my_rating:watchedRating,watched_on:status==='watched'?new Date().toISOString().slice(0,10):'',comment:watchedComment,status,needs_review:false,added_at:new Date().toISOString()});
+  Object.assign(item,{my_rating:watchedRating,watched_on:'',comment:watchedComment,status,needs_review:false,added_at:new Date().toISOString()});
   const old=data.slice();
   try{
     data.unshift(item);await save('IMDb Random · Add '+item.title);
