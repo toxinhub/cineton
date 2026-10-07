@@ -1948,6 +1948,23 @@ update();
       card.style.transformOrigin="center";
     }
 
+    // Drive opening with the browser's compositor animation API for deterministic 500ms timing.
+    const reducedMotion=window.matchMedia?.("(prefers-reduced-motion: reduce)").matches;
+    const openingDuration=reducedMotion?0:500;
+    const posterDx=card.style.getPropertyValue("--poster-dx")||"0px";
+    const posterDy=card.style.getPropertyValue("--poster-dy")||"0px";
+    layer.animate(
+      [{opacity:0},{opacity:1}],
+      {duration:openingDuration,easing:"ease-out",fill:"both"}
+    );
+    card.animate(
+      [
+        {opacity:0,transform:"translate3d("+posterDx+","+posterDy+",0) scale(.97)"},
+        {opacity:1,transform:"translate3d(0,0,0) scale(1)"}
+      ],
+      {duration:openingDuration,easing:"cubic-bezier(.2,.7,.25,1)",fill:"both"}
+    );
+
     layer.addEventListener("click",ev=>{
       if(ev.target===layer)closeLayer(layer);
     });
@@ -2126,7 +2143,15 @@ update();
   .cineton-rating-number{transition:none}
 }
 </style>
-</body></html><style id="desktop-soft-square-radius-v1">
+</body>
+<style id="public-rating-opening-js-v1">
+/* Opening timing is driven by Web Animations API so the 500ms setting cannot be lost to CSS cascade/caching. */
+.cineton-rating-layer:not(.is-closing),
+.cineton-rating-layer:not(.is-closing) .cineton-rating-card{
+  animation:none!important;
+}
+</style>
+</html><style id="desktop-soft-square-radius-v1">
 /* Desktop surface geometry — restrained 2px corners for a sharper editorial cinema grid.
    Mobile remains completely untouched. Intentional pills/circles stay unchanged. */
 @media(min-width:601px){
