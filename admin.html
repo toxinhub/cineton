@@ -229,7 +229,7 @@ button:active,a:active,[role="button"]:active,summary:active{background-image:no
 <div class="stats"><div class="stat"><b id="total">—</b><span>Total titles</span></div><div class="stat"><b id="watched">—</b><span>Watched</span></div><div class="stat"><b id="watchlist">—</b><span>Watchlist</span></div></div>
 
 <div class="admin-sticky-bar"><nav class="admin-nav" aria-label="Admin sections"><button type="button" data-target="connection" class="active">Connection</button><button type="button" data-target="genres">Genres</button><button type="button" data-target="add">Add New</button><button type="button" data-target="rating">Rating &amp; Comments</button><button type="button" data-target="public-comments">Public Comments</button></nav>
-<div class="rating-sticky-random"><div class="random-actions"><button id="randomMovieBtn" class="btn secondary" type="button" aria-label="Open a random movie from the library">Random</button><button id="imdbRandomBtn" class="btn" type="button" aria-label="Discover a random IMDb pick">IMDb Random</button></div></div></div>
+<div class="rating-sticky-random"><div class="random-actions"><div class="random-context"><strong>Library Random</strong><span>Pick from your saved titles</span></div><button id="randomMovieBtn" class="btn secondary" type="button" aria-label="Open a random movie from the library">Random</button><button id="imdbRandomBtn" class="btn" type="button" aria-label="Discover a random IMDb pick">IMDb Random</button></div></div></div>
 <div class="grid">
 <section class="panel" data-section="connection" id="connectionSection">
 <div class="head connection-head"><h2>Connection</h2><span>Services &amp; Backup</span></div>
@@ -899,7 +899,119 @@ $('#importBackupFile').onchange=async e=>{
 .imdb-random-filter label{font:600 9px/1.2 Mina,sans-serif;color:var(--muted)}
 .imdb-random-filter select{min-height:32px;padding:6px 8px;font-size:9px}
 @media(max-width:600px){.imdb-random-filter{grid-template-columns:1fr;gap:3px}.imdb-random-filter select{min-height:36px;font-size:10px}}
-</style></html>
+</style></html>\n<style id="library-random-polish-v1">
+/* Library Random — simple, calm and clearly separated from IMDb discovery. */
+.rating-sticky-random{
+  margin:7px 0 10px!important;
+  padding:7px 9px!important;
+  border:1px solid var(--line)!important;
+  border-radius:12px!important;
+  background:#fffaf2!important;
+  box-shadow:0 4px 14px #5b42250a!important;
+}
+.random-actions{
+  display:grid!important;
+  grid-template-columns:minmax(150px,1fr) auto auto!important;
+  align-items:center!important;
+  gap:7px!important;
+  width:100%!important;
+}
+.random-context{
+  min-width:0;
+  display:flex;
+  align-items:baseline;
+  gap:7px;
+  padding-left:2px;
+}
+.random-context strong{
+  color:var(--text);
+  font:600 11px/1.2 Mina,sans-serif;
+  white-space:nowrap;
+}
+.random-context span{
+  color:var(--muted);
+  font:400 9px/1.25 Mina,sans-serif;
+  white-space:nowrap;
+  overflow:hidden;
+  text-overflow:ellipsis;
+}
+.rating-sticky-random #randomMovieBtn,
+.rating-sticky-random #imdbRandomBtn{
+  min-height:34px!important;
+  min-width:0!important;
+  padding:7px 11px!important;
+  border-radius:9px!important;
+  font:600 10px/1.1 Mina,sans-serif!important;
+  white-space:nowrap;
+  transition:background .14s,border-color .14s,transform .12s,box-shadow .14s!important;
+}
+.rating-sticky-random #randomMovieBtn{
+  background:#77583b0b!important;
+  border-color:#77583b35!important;
+  color:var(--accent)!important;
+}
+.rating-sticky-random #imdbRandomBtn{
+  background:var(--accent)!important;
+  border-color:var(--accent)!important;
+  color:#fffaf2!important;
+  box-shadow:0 2px 7px #77583b18!important;
+}
+.rating-sticky-random #randomMovieBtn:hover,
+.rating-sticky-random #imdbRandomBtn:hover{
+  transform:translateY(-1px);
+}
+.rating-sticky-random #randomMovieBtn:hover{
+  background:#77583b15!important;
+  border-color:#77583b55!important;
+}
+.rating-sticky-random #imdbRandomBtn:hover{
+  box-shadow:0 4px 11px #77583b22!important;
+}
+.rating-sticky-random #randomMovieBtn:focus-visible,
+.rating-sticky-random #imdbRandomBtn:focus-visible{
+  outline:2px solid var(--accent)!important;
+  outline-offset:2px;
+}
+.rating-sticky-random #randomMovieBtn:active,
+.rating-sticky-random #imdbRandomBtn:active{
+  transform:translateY(0);
+}
+@media(max-width:600px){
+  .rating-sticky-random{
+    margin:5px 0 8px!important;
+    padding:7px!important;
+    border-radius:11px!important;
+  }
+  .random-actions{
+    grid-template-columns:1fr 1fr!important;
+    gap:5px!important;
+  }
+  .random-context{
+    grid-column:1/-1;
+    gap:6px;
+    padding:0 2px 2px;
+  }
+  .random-context strong{font-size:10px}
+  .random-context span{font-size:8px}
+  .rating-sticky-random #randomMovieBtn,
+  .rating-sticky-random #imdbRandomBtn{
+    width:100%!important;
+    min-height:38px!important;
+    padding:8px 8px!important;
+    font-size:10px!important;
+  }
+}
+@media(max-width:380px){
+  .random-context{
+    display:block;
+  }
+  .random-context span{
+    display:block;
+    margin-top:2px;
+  }
+}
+</style>
+
 <style id="admin-submit-balance">
 /* Balanced admin action buttons */
 .actions{align-items:stretch}
