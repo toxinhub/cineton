@@ -1499,6 +1499,58 @@ $('#importBackupFile').onchange=async e=>{
   }
 }
 </style>
+<style id="imdb-random-absolute-final-v14">
+/* IMDb Random: absolute final mobile sizing layer — placed after every earlier IMDb Random rule. */
+@media(max-width:600px){
+  .imdb-random-modal .imdb-random-result{
+    display:grid!important;
+    grid-template-columns:140px minmax(0,1fr)!important;
+    grid-template-rows:auto auto!important;
+    column-gap:11px!important;
+    row-gap:0!important;
+  }
+  .imdb-random-modal .imdb-random-result > .imdb-random-poster{
+    grid-column:1!important;
+    grid-row:1!important;
+    width:140px!important;
+    max-width:140px!important;
+  }
+  .imdb-random-modal .imdb-random-result > .imdb-random-copy{
+    grid-column:2!important;
+    grid-row:1!important;
+    min-width:0!important;
+  }
+  .imdb-random-modal .imdb-random-result > #imdbRandomOverview{
+    grid-column:1 / -1!important;
+    grid-row:2!important;
+    width:100%!important;
+    max-width:none!important;
+    margin-top:10px!important;
+    font:400 10.5px/1.5 Mina,sans-serif!important;
+  }
+  .imdb-random-modal .imdb-random-credits strong{
+    font:500 10px/1.3 Mina,sans-serif!important;
+  }
+}
+@media(max-width:380px){
+  .imdb-random-modal .imdb-random-result{
+    grid-template-columns:128px minmax(0,1fr)!important;
+    column-gap:9px!important;
+  }
+  .imdb-random-modal .imdb-random-result > .imdb-random-poster{
+    width:128px!important;
+    max-width:128px!important;
+  }
+  .imdb-random-modal .imdb-random-result > #imdbRandomOverview{
+    font-size:10px!important;
+    line-height:1.5!important;
+    margin-top:9px!important;
+  }
+  .imdb-random-modal .imdb-random-credits strong{
+    font-size:9.5px!important;
+  }
+}
+</style>
 </html>
 <style id="library-random-polish-v1">
 /* Library Random — simple, calm and clearly separated from IMDb discovery. */
