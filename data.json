@@ -1,5 +1,36 @@
 [
  {
+  "id": "movie-4935",
+  "type": "movie",
+  "title": "Howl's Moving Castle",
+  "year": "2004",
+  "poster": "/13kOl2v0nD2OLbVSHnHk8GUFEhO.jpg",
+  "overview": "Sophie, a young milliner, is turned into an elderly woman by a witch who enters her shop and curses her. She encounters a wizard named Howl and gets caught up in his resistance to fighting for the king.",
+  "director": "Hayao Miyazaki",
+  "cast": [
+   "Chieko Baisho",
+   "Takuya Kimura",
+   "Akihiro Miwa",
+   "Tatsuya Gashuin",
+   "Ryunosuke Kamiki",
+   "Mitsunori Isaki",
+   "Yo Oizumi",
+   "Akio Otsuka"
+  ],
+  "imdb": "8.2",
+  "genres": [
+   "Fantasy",
+   "Animation",
+   "Adventure"
+  ],
+  "my_rating": "9",
+  "watched_on": "2026-10-07",
+  "comment": "",
+  "status": "watched",
+  "needs_review": false,
+  "added_at": "2026-10-07T01:56:24.278Z"
+ },
+ {
   "id": "movie-12477",
   "type": "movie",
   "title": "Grave of the Fireflies",
