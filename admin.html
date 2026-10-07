@@ -1417,6 +1417,39 @@ $('#importBackupFile').onchange=async e=>{
   }
 }
 </style>
+<style id="imdb-random-mobile-balance-v12">
+/* IMDb Random — restore a balanced mobile poster and story typography. */
+@media(max-width:600px){
+  .imdb-random-modal .imdb-random-result{
+    grid-template-columns:124px minmax(0,1fr)!important;
+    column-gap:11px!important;
+  }
+  .imdb-random-modal .imdb-random-result > .imdb-random-poster{
+    width:124px!important;
+    max-width:124px!important;
+  }
+  .imdb-random-modal .imdb-random-result > #imdbRandomOverview{
+    font:400 10px/1.5 Mina,sans-serif!important;
+    margin-top:9px!important;
+    -webkit-line-clamp:6!important;
+  }
+}
+@media(max-width:380px){
+  .imdb-random-modal .imdb-random-result{
+    grid-template-columns:112px minmax(0,1fr)!important;
+    column-gap:9px!important;
+  }
+  .imdb-random-modal .imdb-random-result > .imdb-random-poster{
+    width:112px!important;
+    max-width:112px!important;
+  }
+  .imdb-random-modal .imdb-random-result > #imdbRandomOverview{
+    font-size:9px!important;
+    line-height:1.5!important;
+    margin-top:8px!important;
+  }
+}
+</style>
 </html>
 <style id="library-random-polish-v1">
 /* Library Random — simple, calm and clearly separated from IMDb discovery. */
