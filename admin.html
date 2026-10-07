@@ -906,14 +906,14 @@ function markActivityRead(){
   if(latest)LS.setItem(ACTIVITY_SEEN_KEY,new Date(latest).toISOString());
   renderActivity();
 }
+let activityLiveRefreshTimer=null;
 function handleLiveActivity(payload){
   const x=payload?.payload||payload;
   if(!x?.type||!x?.media_item_id)return;
   if(x.type!=="comment"&&x.type!=="rating")return;
-  if(publicActivityRows.some(r=>r.id===x.id))return;
-  publicActivityRows.unshift({...x,comment:null,name:null,rating:x.rating??null});
-  renderActivity();
   $("#activityLive").textContent="Live";$("#activityLive").classList.remove("offline");
+  clearTimeout(activityLiveRefreshTimer);
+  activityLiveRefreshTimer=setTimeout(()=>loadPublicActivity(true),700);
 }
 function startActivityRealtime(){
   if(activityChannel||!window.supabase?.createClient)return;
