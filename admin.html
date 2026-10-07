@@ -617,7 +617,7 @@ async function addImdbRandom(status){
   const item={...m};delete item._discovery_category;delete item._tmdb_rating;
   const watchedRating=status==='watched'?($('#imdbWatchedRating').value||null):null;
   const watchedComment=status==='watched'?$('#imdbWatchedComment').value.trim():'';
-  const loved=$('#imdbRandomLoveToggle').getAttribute('aria-pressed')==='true';
+  const loved=status==='watched' ? $('#imdbRandomLoveToggle').getAttribute('aria-pressed')==='true' : false;
   Object.assign(item,{my_rating:watchedRating,watched_on:'',comment:watchedComment,loved,status,needs_review:false,added_at:new Date().toISOString()});
   const old=data.slice();
   try{
@@ -626,7 +626,7 @@ async function addImdbRandom(status){
     setImdbRandomState(status==='watched'?'Added as Watched':'Added to Watchlist','ok');
     setImdbRandomMessage('✓ '+item.title+' was added to your CineTon library.','ok');
     $('#imdbAddWatchlist').disabled=true;$('#imdbAddWatched').disabled=true;
-    $('#imdbWatchedDetails').classList.add('hidden');$('#imdbAddWatched').textContent='Mark as Watched';$('#imdbWatchedRating').value='';$('#imdbWatchedComment').value='';
+    $('#imdbWatchedDetails').classList.add('hidden');$('#imdbAddWatched').textContent='Mark as Watched';$('#imdbWatchedRating').value='';$('#imdbWatchedComment').value='';$('#imdbRandomLoveToggle').setAttribute('aria-pressed','false');$('#imdbRandomLoveToggle').textContent='♡ Love';$('#imdbRandomLoveToggle').classList.remove('is-loved');
   }catch(e){
     data=old;renderAll();setImdbRandomState('Could not save this title.','error');setImdbRandomMessage(connError(e),'error');
     btn.disabled=false;
@@ -837,4 +837,9 @@ $('#importBackupFile').onchange=async e=>{
 .imdb-random-love.is-loved{background:#a54d450d;border-color:#a54d4540;color:#a54d45}
 .imdb-random-love:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
 @media(max-width:600px){.imdb-random-love-row{margin-top:7px}.imdb-random-love{min-height:32px;padding:6px 9px;font-size:9px}}
+</style>
+<style id="imdb-random-love-watched-only-v2">
+.imdb-watched-fields{grid-template-columns:92px minmax(0,1fr) auto!important}
+.imdb-watched-fields .imdb-random-love{align-self:end;min-width:62px!important;white-space:nowrap}
+@media(max-width:600px){.imdb-watched-fields{grid-template-columns:82px minmax(0,1fr) auto!important}.imdb-watched-fields .imdb-random-love{min-width:58px!important;padding-left:7px!important;padding-right:7px!important}}
 </style>
