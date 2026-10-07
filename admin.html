@@ -351,6 +351,7 @@ button:active,a:active,[role="button"]:active,summary:active{background-image:no
         <p id="imdbRandomOverview"></p>
       </div>
     </div>
+    <div class="imdb-random-love-row"><button id="imdbRandomLoveToggle" class="imdb-random-love" type="button" aria-pressed="false" aria-label="Add to favorites">♡ Love</button></div>
     <div id="imdbWatchedDetails" class="imdb-watched-details hidden" aria-label="Watched details">
       <div class="imdb-watched-fields">
         <label>Rating
@@ -585,6 +586,7 @@ async function pickImdbRandom(){
     $('#imdbRandomCredits').classList.remove('hidden');
     $('#imdbRandomOverview').textContent=m.overview||'No overview available.';
     $('#imdbRandomCategory').textContent=candidate._discovery_category;
+    $('#imdbRandomLoveToggle').setAttribute('aria-pressed','false');$('#imdbRandomLoveToggle').textContent='♡ Love';$('#imdbRandomLoveToggle').classList.remove('is-loved');
     $('#imdbRandomResult').classList.remove('hidden');
     if(existing){
       setImdbRandomState('Already in your library','ok');
@@ -615,7 +617,8 @@ async function addImdbRandom(status){
   const item={...m};delete item._discovery_category;delete item._tmdb_rating;
   const watchedRating=status==='watched'?($('#imdbWatchedRating').value||null):null;
   const watchedComment=status==='watched'?$('#imdbWatchedComment').value.trim():'';
-  Object.assign(item,{my_rating:watchedRating,watched_on:'',comment:watchedComment,status,needs_review:false,added_at:new Date().toISOString()});
+  const loved=$('#imdbRandomLoveToggle').getAttribute('aria-pressed')==='true';
+  Object.assign(item,{my_rating:watchedRating,watched_on:'',comment:watchedComment,loved,status,needs_review:false,added_at:new Date().toISOString()});
   const old=data.slice();
   try{
     data.unshift(item);await save('IMDb Random · Add '+item.title);
@@ -630,6 +633,7 @@ async function addImdbRandom(status){
   }
 }
 $('#imdbRandomBtn').onclick=openImdbRandomModal;
+$('#imdbRandomLoveToggle').onclick=()=>{const b=$('#imdbRandomLoveToggle'),next=b.getAttribute('aria-pressed')!=='true';b.setAttribute('aria-pressed',String(next));b.textContent=next?'♥ Loved':'♡ Love';b.classList.toggle('is-loved',next)};
 $('#imdbAnother').onclick=pickImdbRandom;
 $('#imdbAddWatchlist').onclick=()=>addImdbRandom('watchlist');
 $('#imdbAddWatched').onclick=()=>addImdbRandom('watched');
@@ -826,4 +830,11 @@ $('#importBackupFile').onchange=async e=>{
  .modal-actions-row>.btn{min-height:40px}
  .searchbar>.btn,.bulkTools>.btn{min-height:40px}
 }
+</style><style id="imdb-random-love-option-v1">
+.imdb-random-love-row{display:flex;justify-content:flex-start;margin-top:9px}
+.imdb-random-love{min-height:30px;padding:5px 10px;border:1px solid var(--line2);border-radius:8px;background:#fffaf2;color:var(--muted);font:600 10px/1 Mina,sans-serif;cursor:pointer;transition:background .14s,border-color .14s,color .14s,transform .12s}
+.imdb-random-love:hover{background:#77583b0b;border-color:#a54d4540;color:#a54d45;transform:translateY(-1px)}
+.imdb-random-love.is-loved{background:#a54d450d;border-color:#a54d4540;color:#a54d45}
+.imdb-random-love:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+@media(max-width:600px){.imdb-random-love-row{margin-top:7px}.imdb-random-love{min-height:32px;padding:6px 9px;font-size:9px}}
 </style>
