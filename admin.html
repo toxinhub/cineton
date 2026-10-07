@@ -337,7 +337,7 @@ button:active,a:active,[role="button"]:active,summary:active{background-image:no
       </div>
       <span id="imdbRandomCategory" class="imdb-random-category">Discovery</span>
     </div>
-    <div id="imdbRandomState" class="imdb-random-state">Finding a title…</div>
+    <div class="imdb-random-search" role="search" aria-label="Focused discovery"><input id="imdbRandomQuery" type="search" maxlength="80" placeholder="Search a keyword, person, title or franchise…" autocomplete="off" aria-label="IMDb Random search"><button id="imdbRandomSearchBtn" class="btn secondary" type="button">Discover</button><button id="imdbRandomClearBtn" class="btn secondary" type="button" aria-label="Clear discovery search">Clear</button></div><div id="imdbRandomSearchHint" class="imdb-random-search-hint">Try “Marvel”, “Tom Hanks”, “Batman”, “Christopher Nolan”…</div><div id="imdbRandomState" class="imdb-random-state">Finding a title…</div>
     <div id="imdbRandomResult" class="imdb-random-result hidden">
       <img id="imdbRandomPoster" class="imdb-random-poster" alt="">
       <div class="imdb-random-copy">
@@ -495,44 +495,19 @@ function openRandomMovie(){
    openEdit(i);
  });
 }
-let imdbRandomPool=[],imdbRandomHistory=[],imdbRandomSeenKeys=(()=>{try{const v=JSON.parse(SS.getItem('ct_imdb_random_seen')||'[]');return Array.isArray(v)?v:[]}catch{return []}})(),imdbRandomCurrent=null,imdbRandomBusy=false;
+let imdbRandomPool=[],imdbRandomHistory=[],imdbRandomSeenKeys=(()=>{try{const v=JSON.parse(SS.getItem('ct_imdb_random_seen')||'[]');return Array.isArray(v)?v:[]}catch{return []}})(),imdbRandomCurrent=null,imdbRandomBusy=false,imdbRandomQuery='',imdbRandomMode='general';
 
-async function discoverImdbPool(){
-  if(imdbRandomPool.length)return imdbRandomPool;
-  const now=new Date(),today=now.toISOString().slice(0,10);
-  const old=new Date(now);old.setFullYear(old.getFullYear()-25);
-  const classicCutoff=old.toISOString().slice(0,10);
-  const recent=new Date(now);recent.setFullYear(recent.getFullYear()-2);
-  const recentFrom=recent.toISOString().slice(0,10);
-  const page=()=>String(1+Math.floor(Math.random()*3));
-  const specs=[
-    {category:'Latest',type:'movie',path:'/discover/movie?include_adult=false&include_video=false&sort_by=primary_release_date.desc&primary_release_date.gte='+recentFrom+'&primary_release_date.lte='+today+'&vote_count.gte=25&page='+page()},
-    {category:'Latest',type:'tv',path:'/discover/tv?include_adult=false&sort_by=first_air_date.desc&first_air_date.gte='+recentFrom+'&first_air_date.lte='+today+'&vote_count.gte=25&page='+page()},
-    {category:'Top Rated',type:'movie',path:'/discover/movie?include_adult=false&include_video=false&sort_by=vote_average.desc&vote_average.gte=7.8&vote_count.gte=1000&page='+page()},
-    {category:'Top Rated',type:'tv',path:'/discover/tv?include_adult=false&sort_by=vote_average.desc&vote_average.gte=7.8&vote_count.gte=500&page='+page()},
-    {category:'Classic',type:'movie',path:'/discover/movie?include_adult=false&include_video=false&sort_by=popularity.desc&primary_release_date.lte='+classicCutoff+'&vote_average.gte=7.2&vote_count.gte=500&page='+page()},
-    {category:'Classic',type:'tv',path:'/discover/tv?include_adult=false&sort_by=popularity.desc&first_air_date.lte='+classicCutoff+'&vote_average.gte=7.5&vote_count.gte=250&page='+page()}
-  ];
-  const out=[];
-  for(const s of specs){
-    try{
-      const r=await tmdb(s.path);
-      for(const h of (r.results||[])){
-        if(!h.poster_path)continue;
-        out.push({...h,media_type:s.type,_discovery_category:s.category});
-      }
-    }catch{}
-  }
-  const seen=new Set();
-  imdbRandomPool=out.filter(h=>{
-    const key=h.media_type+'-'+h.id;
-    if(seen.has(key))return false;
-    seen.add(key);return !data.some(m=>String(m.id)===key);
-  });
-  for(let i=imdbRandomPool.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[imdbRandomPool[i],imdbRandomPool[j]]=[imdbRandomPool[j],imdbRandomPool[i]]}
-  return imdbRandomPool;
+async function discoverImdbPool(query=''){
+ const q=String(query||'').trim();
+ if(!q){if(imdbRandomPool.length)return imdbRandomPool;const now=new Date(),today=now.toISOString().slice(0,10),old=new Date(now),recent=new Date(now);old.setFullYear(old.getFullYear()-25);recent.setFullYear(recent.getFullYear()-2);const classicCutoff=old.toISOString().slice(0,10),recentFrom=recent.toISOString().slice(0,10),page=()=>String(1+Math.floor(Math.random()*3));const specs=[
+ {category:'Latest',type:'movie',path:'/discover/movie?include_adult=false&include_video=false&sort_by=primary_release_date.desc&primary_release_date.gte='+recentFrom+'&primary_release_date.lte='+today+'&vote_count.gte=25&page='+page()},
+ {category:'Latest',type:'tv',path:'/discover/tv?include_adult=false&sort_by=first_air_date.desc&first_air_date.gte='+recentFrom+'&first_air_date.lte='+today+'&vote_count.gte=25&page='+page()},
+ {category:'Top Rated',type:'movie',path:'/discover/movie?include_adult=false&include_video=false&sort_by=vote_average.desc&vote_average.gte=7.8&vote_count.gte=1000&page='+page()},
+ {category:'Top Rated',type:'tv',path:'/discover/tv?include_adult=false&sort_by=vote_average.desc&vote_count.gte=500&page='+page()},
+ {category:'Classic',type:'movie',path:'/discover/movie?include_adult=false&include_video=false&sort_by=popularity.desc&primary_release_date.lte='+classicCutoff+'&vote_average.gte=7.2&vote_count.gte=500&page='+page()},
+ {category:'Classic',type:'tv',path:'/discover/tv?include_adult=false&sort_by=popularity.desc&first_air_date.lte='+classicCutoff+'&vote_average.gte=7.5&vote_count.gte=250&page='+page()}];const out=[];for(const x of specs){try{const r=await tmdb(x.path);for(const h of(r.results||[])){if(h.poster_path)out.push({...h,media_type:x.type,_discovery_category:x.category})}}catch{}}const seen=new Set();imdbRandomPool=out.filter(h=>{const k=h.media_type+'-'+h.id;if(seen.has(k))return false;seen.add(k);return !data.some(m=>String(m.id)===k)});for(let i=imdbRandomPool.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[imdbRandomPool[i],imdbRandomPool[j]]=[imdbRandomPool[j],imdbRandomPool[i]]}return imdbRandomPool;}
+ const multi=await tmdb('/search/multi?query='+encodeURIComponent(q)+'&include_adult=false');const results=(multi.results||[]).filter(x=>x.media_type==='movie'||x.media_type==='tv'||x.media_type==='person');const out=results.filter(x=>x.media_type==='movie'||x.media_type==='tv').map(x=>({...x,_discovery_category:'Search'}));for(const p of results.filter(x=>x.media_type==='person').slice(0,3)){try{const r=await tmdb('/person/'+p.id+'/combined_credits');for(const h of(r.cast||[]).concat(r.crew||[])){if((h.media_type==='movie'||h.media_type==='tv')&&h.poster_path)out.push({...h,_discovery_category:p.name})}}catch{}}const seen=new Set();const unique=out.filter(h=>{const k=h.media_type+'-'+h.id;if(seen.has(k))return false;seen.add(k);return !data.some(m=>String(m.id).trim().toLowerCase()===k.toLowerCase())});unique.sort((a,b)=>(Number(b.popularity)||0)-(Number(a.popularity)||0));return unique;
 }
-
 function setImdbRandomState(textValue,type=''){
   $('#imdbRandomState').textContent=textValue;
   $('#imdbRandomState').className='imdb-random-state'+(type?' '+type:'');
@@ -548,63 +523,7 @@ function openImdbRandomModal(){
   $('#imdbRandomModal').showModal();
   pickImdbRandom();
 }
-async function pickImdbRandom(){
-  if(imdbRandomBusy)return;
-  imdbRandomBusy=true;imdbRandomCurrent=null;
-  ['#imdbAddWatchlist','#imdbAddWatched','#imdbAnother'].forEach(s=>$(s).disabled=true);
-  $('#imdbRandomResult').classList.add('hidden');setImdbRandomMessage('');
-  setImdbRandomState('Finding a title…','busy');
-  try{
-    let pool=await discoverImdbPool();
-    const libraryKeys=new Set(data.map(x=>String(x.id).trim().toLowerCase()).filter(Boolean));
-    pool=pool.filter(item=>{
-      const key=(item.media_type+'-'+item.id).toLowerCase();
-      return !libraryKeys.has(key);
-    });
-    let available=pool.filter(item=>!imdbRandomSeenKeys.includes((item.media_type+'-'+item.id).toLowerCase()));
-    if(!available.length){
-      imdbRandomSeenKeys=[];
-      try{SS.removeItem('ct_imdb_random_seen')}catch{}
-      available=pool.slice();
-    }
-    if(!available.length)throw Error('No new discovery titles were found.');
-    const candidate=available[Math.floor(Math.random()*available.length)];
-    const candidateKey=(candidate.media_type+'-'+candidate.id).toLowerCase();
-    imdbRandomSeenKeys.push(candidateKey);
-    try{SS.setItem('ct_imdb_random_seen',JSON.stringify(imdbRandomSeenKeys.slice(-2000)))}catch{}
-    const m=await enrich(candidate);
-    const existing=libraryKeys.has(String(m.id).trim().toLowerCase());
-    imdbRandomCurrent={...m,_discovery_category:candidate._discovery_category,_tmdb_rating:candidate.vote_average};
-    $('#imdbRandomPoster').src=m.poster?'https://image.tmdb.org/t/p/w342'+m.poster:'';
-    $('#imdbRandomPoster').alt=m.title||'';
-    $('#imdbRandomTitle').textContent=m.title||'Untitled';
-    $('#imdbRandomMeta').textContent=(m.year||'Year unknown')+' · '+(m.type==='tv'?'TV / Show':'Movie');
-    const imdb=m.imdb?('IMDb '+m.imdb):'IMDb rating unavailable';
-    const tmdb=Number(candidate.vote_average)?' · TMDB '+Number(candidate.vote_average).toFixed(1):'';
-    $('#imdbRandomRating').textContent=imdb+tmdb;
-    $('#imdbRandomDirector').textContent=m.director||'Not available';
-    $('#imdbRandomCast').textContent=(m.cast||[]).slice(0,4).join(', ')||'Not available';
-    $('#imdbRandomGenre').textContent=(m.genres||[]).slice(0,3).join(', ')||'Not available';
-    $('#imdbRandomCredits').classList.remove('hidden');
-    $('#imdbRandomOverview').textContent=m.overview||'No overview available.';
-    $('#imdbRandomCategory').textContent=candidate._discovery_category;
-    $('#imdbRandomLoveToggle').setAttribute('aria-pressed','false');$('#imdbRandomLoveToggle').textContent='♡ Love';$('#imdbRandomLoveToggle').classList.remove('is-loved');
-    $('#imdbRandomResult').classList.remove('hidden');
-    if(existing){
-      setImdbRandomState('Already in your library','ok');
-      setImdbRandomMessage('This title is already in CineTon. Choose another pick.', 'ok');
-      $('#imdbAddWatchlist').disabled=true;$('#imdbAddWatched').disabled=true;
-    }else{
-      setImdbRandomState('Ready to add','ok');
-      $('#imdbAddWatchlist').disabled=false;$('#imdbAddWatched').disabled=false;
-    }
-  }catch(e){
-    setImdbRandomState(e.message||'Could not find a discovery title.','error');
-    setImdbRandomMessage('Check your TMDB connection and try again.','error');
-  }finally{
-    $('#imdbAnother').disabled=false;imdbRandomBusy=false;
-  }
-}
+async function pickImdbRandom(){if(imdbRandomBusy)return;imdbRandomBusy=true;imdbRandomCurrent=null;['#imdbAddWatchlist','#imdbAddWatched','#imdbAnother'].forEach(s=>$(s).disabled=true);$('#imdbRandomResult').classList.add('hidden');setImdbRandomMessage('');setImdbRandomState(imdbRandomQuery?'Finding another pick for “'+imdbRandomQuery+'”…':'Finding a title…','busy');try{let pool=await discoverImdbPool(imdbRandomQuery);const libraryKeys=new Set(data.map(x=>String(x.id).trim().toLowerCase()).filter(Boolean));pool=pool.filter(item=>!libraryKeys.has((item.media_type+'-'+item.id).toLowerCase()));let available=pool.filter(item=>!imdbRandomSeenKeys.includes((item.media_type+'-'+item.id).toLowerCase()));if(!available.length&&pool.length){imdbRandomSeenKeys=[];available=pool.slice()}if(!available.length)throw Error(imdbRandomQuery?'No new matches found for this search.':'No new discovery titles were found.');const candidate=available[Math.floor(Math.random()*available.length)],key=(candidate.media_type+'-'+candidate.id).toLowerCase();imdbRandomSeenKeys.push(key);try{SS.setItem(imdbRandomQuery?'ct_imdb_random_seen_'+imdbRandomQuery.toLocaleLowerCase():'ct_imdb_random_seen',JSON.stringify(imdbRandomSeenKeys.slice(-2000)))}catch{}const m=await enrich(candidate),existing=libraryKeys.has(String(m.id).trim().toLowerCase());imdbRandomCurrent={...m,_discovery_category:candidate._discovery_category,_tmdb_rating:candidate.vote_average};$('#imdbRandomPoster').src=m.poster?'https://image.tmdb.org/t/p/w342'+m.poster:'';$('#imdbRandomPoster').alt=m.title||'';$('#imdbRandomTitle').textContent=m.title||'Untitled';$('#imdbRandomMeta').textContent=(m.year||'Year unknown')+' · '+(m.type==='tv'?'TV / Show':'Movie');const imdb=m.imdb?('IMDb '+m.imdb):'IMDb rating unavailable',tmdb=Number(candidate.vote_average)?' · TMDB '+Number(candidate.vote_average).toFixed(1):'';$('#imdbRandomRating').textContent=imdb+tmdb;$('#imdbRandomDirector').textContent=m.director||'Not available';$('#imdbRandomCast').textContent=(m.cast||[]).slice(0,4).join(', ')||'Not available';$('#imdbRandomGenre').textContent=(m.genres||[]).slice(0,3).join(', ')||'Not available';$('#imdbRandomCredits').classList.remove('hidden');$('#imdbRandomOverview').textContent=m.overview||'No overview available.';$('#imdbRandomCategory').textContent=imdbRandomQuery?(candidate._discovery_category==='Search'?'Search':candidate._discovery_category):candidate._discovery_category;$('#imdbRandomLoveToggle').setAttribute('aria-pressed','false');$('#imdbRandomLoveToggle').textContent='♡ Love';$('#imdbRandomLoveToggle').classList.remove('is-loved');$('#imdbRandomResult').classList.remove('hidden');if(existing){setImdbRandomState('Already in your library','ok');setImdbRandomMessage('This title is already in CineTon. Choose another pick.','ok');$('#imdbAddWatchlist').disabled=true;$('#imdbAddWatched').disabled=true}else{setImdbRandomState(imdbRandomQuery?'Ready · '+imdbRandomQuery:'Ready to add','ok');$('#imdbAddWatchlist').disabled=false;$('#imdbAddWatched').disabled=false}}catch(e){setImdbRandomState(e.message||'Could not find a discovery title.','error');setImdbRandomMessage(imdbRandomQuery?'Try a broader keyword, person or title.':'Check your TMDB connection and try again.','error')}finally{$('#imdbAnother').disabled=false;imdbRandomBusy=false}}
 async function addImdbRandom(status){
   const m=imdbRandomCurrent;if(!m||!fileSha)return;
   if(data.some(x=>String(x.id)===String(m.id))){setImdbRandomMessage('This title is already in your library.','ok');return}
@@ -636,6 +555,8 @@ async function addImdbRandom(status){
 }
 $('#imdbRandomBtn').onclick=openImdbRandomModal;
 $('#imdbRandomLoveToggle').onclick=()=>{const b=$('#imdbRandomLoveToggle'),next=b.getAttribute('aria-pressed')!=='true';b.setAttribute('aria-pressed',String(next));b.textContent=next?'♥ Loved':'♡ Love';b.classList.toggle('is-loved',next)};
+async function startImdbRandomSearch(){const q=$('#imdbRandomQuery').value.trim();if(q.length<2){setImdbRandomMessage('Enter at least 2 characters to search.','error');$('#imdbRandomQuery').focus();return}imdbRandomQuery=q;imdbRandomPool=[];imdbRandomSeenKeys=[];$('#imdbRandomSearchHint').textContent='Focused discovery · '+q+' · Another Pick stays within this search.';await pickImdbRandom()}
+$('#imdbRandomSearchBtn').onclick=startImdbRandomSearch;$('#imdbRandomQuery').addEventListener('keydown',e=>{if(e.key==='Enter')startImdbRandomSearch()});$('#imdbRandomClearBtn').onclick=()=>{imdbRandomQuery='';imdbRandomPool=[];imdbRandomSeenKeys=[];$('#imdbRandomQuery').value='';$('#imdbRandomSearchHint').textContent='Try “Marvel”, “Tom Hanks”, “Batman”, “Christopher Nolan”…';setImdbRandomMessage('');pickImdbRandom()};
 $('#imdbAnother').onclick=pickImdbRandom;
 $('#imdbAddWatchlist').onclick=()=>addImdbRandom('watchlist');
 $('#imdbAddWatched').onclick=()=>addImdbRandom('watched');
@@ -849,3 +770,4 @@ $('#importBackupFile').onchange=async e=>{
 <style id="imdb-random-genre-v1">
 #imdbRandomGenre{color:#1f1711!important}
 </style>
+<style id="imdb-random-smart-search-v1">.imdb-random-search{display:grid;grid-template-columns:minmax(0,1fr) auto auto;gap:5px;margin:0 0 4px}.imdb-random-search input{min-height:34px;padding:7px 9px;font-size:10px}.imdb-random-search .btn{min-height:34px;padding:7px 10px;font-size:9px;white-space:nowrap}.imdb-random-search-hint{margin:0 0 9px;color:var(--muted);font:400 9px/1.35 Mina,sans-serif}@media(max-width:600px){.imdb-random-search{grid-template-columns:minmax(0,1fr) auto;gap:5px}.imdb-random-search #imdbRandomClearBtn{grid-column:1/-1;min-height:30px}.imdb-random-search input{min-height:38px;font-size:10px}.imdb-random-search .btn{min-height:38px}.imdb-random-search-hint{font-size:8px;margin-bottom:8px}}</style>
