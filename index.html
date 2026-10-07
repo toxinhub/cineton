@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<!-- pages-deploy-trigger: 2026-10-07-rating-opening-fast-v2 -->
+<!-- pages-deploy-trigger: 2026-10-07-love-emoji-cross-platform-v2 -->
 <style id="imdb-grid-rating-glow-v2">
 /* Main grid IMDb badge only. Modal IMDb chip keeps its original theme. */
 .c .bd{
@@ -2314,11 +2314,17 @@ update();
   }
 }
 </style>
-<style id="love-emoji-pink-v1">
-/* Use the requested pink love emoji consistently wherever CineTon shows a love reaction. */
+<style id="love-emoji-pink-v2">
+/* Pink heart emoji — use native color-emoji fonts so desktop and mobile keep the actual 🩷 glyph. */
 .cinemodal .chips .love-chip,
 .public-love{
-  color:inherit;
+  font-family:"Apple Color Emoji","Segoe UI Emoji","Noto Color Emoji","Noto Emoji",sans-serif!important;
+  font-style:normal!important;
+  font-weight:400!important;
+  color:initial!important;
+  -webkit-text-fill-color:initial!important;
+  text-shadow:none!important;
+  font-variant-emoji:emoji!important;
 }
 </style><style id="modal-rating-layout-v4">
 .cinemodal .chips{display:flex!important;flex-direction:column!important;align-items:flex-start!important;flex-wrap:nowrap!important;gap:2px!important;overflow:visible!important}
