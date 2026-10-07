@@ -9,7 +9,7 @@
 @media(max-width:600px){
   .c .bd{text-shadow:0 0 6px #f2c94c20!important}
 }
-</style>
+\nbody.suggestions-modal-open{overflow:hidden}\n</style>
 <style id="mobile-genre-menu-balance-v1">
 /* Mobile genre menu — keep every option inside the viewport and prevent text overflow. */
 @media(max-width:600px){
@@ -596,7 +596,7 @@ header{position:relative}
 .suggestions-sub{margin:4px 0 0;color:#bdb1a4;font:400 .62rem/1.35 "Mina",sans-serif}
 .suggestions-close{flex:0 0 auto;width:36px;height:36px;padding:0;border:1px solid #d8c8ae2b;border-radius:50%;background:transparent;color:#d7c8b7;display:grid;place-items:center;font:300 21px/1 Arial,sans-serif;cursor:pointer}
 .suggestions-close:hover,.suggestions-close:focus-visible{background:#ffffff0a;color:#fff;outline:2px solid #caa36e;outline-offset:1px}
-.suggestions-body{min-height:0;overflow:auto;padding:15px 20px 20px 54px;scrollbar-gutter:stable}
+.suggestions-body{min-height:0;overflow:auto;overscroll-behavior:contain;padding:15px 20px 20px 54px;scrollbar-gutter:stable}
 .suggestion-compose{position:relative;margin-left:-34px;margin-bottom:18px;padding:12px 12px 10px;border:1px solid #d8c8ae20;border-radius:5px;background:#181411cc;box-shadow:0 1px 0 #fff4 inset}
 .suggestion-compose label{display:block;margin-bottom:6px;color:#cdbfaf;font:600 .64rem/1.2 "Mina",sans-serif;letter-spacing:.06em}
 .suggestion-compose-row{display:flex;gap:8px;align-items:flex-end}
@@ -2282,8 +2282,9 @@ update();
     try{const r=await fetch(API,{cache:"no-store",headers:{apikey:KEY,Accept:"application/json"}});if(!r.ok)throw Error();const j=await r.json();render(Array.isArray(j.suggestions)?j.suggestions:[]);}
     catch{list.innerHTML='<div class="suggestion-empty">Suggestions are temporarily unavailable.</div>';}
   };
-  btn.addEventListener("click",()=>{if(!dialog.open)dialog.showModal();load();requestAnimationFrame(()=>input.focus({preventScroll:true}));});
+  btn.addEventListener("click",()=>{if(!dialog.open){dialog.showModal();document.body.classList.add("suggestions-modal-open")}load();requestAnimationFrame(()=>input.focus({preventScroll:true}));});
   dialog.querySelector(".suggestions-close").addEventListener("click",()=>dialog.close());
+  dialog.addEventListener("close",()=>document.body.classList.remove("suggestions-modal-open"));
   dialog.addEventListener("click",e=>{if(e.target===dialog)dialog.close()});
   form.addEventListener("submit",async e=>{
     e.preventDefault();const title=input.value.replace(/\s+/g," ").trim();if(!title)return;
