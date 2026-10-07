@@ -724,6 +724,19 @@ $('#importBackupFile').onchange=async e=>{
   body{zoom:1.30}
 }
 </style>
+
+<style id="imdb-random-modal-balance-v1">
+/* IMDb Random: keep the close button clear of the heading and give the discovery card more room. */
+.imdb-random-modal{width:min(760px,calc(100% - 18px))!important}
+.imdb-random-modal .modal-inner{position:relative!important}
+.imdb-random-modal #closeImdbRandom{position:absolute!important;top:12px!important;right:12px!important;z-index:5!important;width:34px!important;height:34px!important;min-width:34px!important;min-height:34px!important;padding:0!important;display:grid!important;place-items:center!important;line-height:1!important;font-size:22px!important}
+.imdb-random-head{padding-right:50px!important}
+@media(max-width:600px){
+  .imdb-random-modal{width:calc(100% - 8px)!important}
+  .imdb-random-modal #closeImdbRandom{top:9px!important;right:9px!important;width:32px!important;height:32px!important;min-width:32px!important;min-height:32px!important;font-size:20px!important}
+  .imdb-random-head{padding-right:42px!important}
+}
+</style>
 </html>
 <style id="admin-submit-balance">
 /* Balanced admin action buttons */
