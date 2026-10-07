@@ -2250,16 +2250,13 @@ update();
 </style>
 <style id="love-heart-universal-v2">/* Keep the modal love reaction as a native pink emoji on desktop and mobile. */
 .cinemodal .chips .love-chip{font-family:"Apple Color Emoji","Segoe UI Emoji","Noto Color Emoji","Noto Emoji",sans-serif!important;font-style:normal!important;font-weight:400!important;color:initial!important;-webkit-text-fill-color:initial!important;text-shadow:none!important;font-variant-emoji:emoji!important;}
-</style><style id="public-suggestions-ghost-v1">
-/* Existing suggestion textarea only: library-match ghost text is painted into its background. */
+</style><style id="public-suggestions-ghost-v2">
+/* Ghost completion is rendered inside the existing suggestion textarea only. */
 .suggestion-compose textarea.suggestion-ghost{
   background-color:#120f0d!important;
   background-repeat:no-repeat!important;
   background-position:9px 8px!important;
   background-size:auto auto!important;
-}
-@media(max-width:600px){
-  .suggestion-compose textarea.suggestion-ghost{background-position:9px 8px!important}
 }
 </style><script id="public-suggestions-v1">
 (()=>{
@@ -2277,30 +2274,47 @@ update();
   const list=dialog.querySelector(".suggestion-list"),form=dialog.querySelector("form"),input=dialog.querySelector("#suggestionInput"),submit=dialog.querySelector(".suggestion-submit"),msg=dialog.querySelector(".suggestion-message");
   let libraryRows=[];
   const normalizeTitle=v=>String(v??"").normalize("NFKD").replace(/[\\u0300-\\u036f]/g,"").toLocaleLowerCase().replace(/[^\\p{L}\\p{N}]+/gu," ").trim();
-  const ghostSvgText=(typed,full,color="#cdbfaf")=>{
-    const safeTyped=String(typed??"").replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;").replace(/"/g,"&quot;").replace(/'/g,"&apos;");
-    const safeFull=String(full??"").replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;").replace(/"/g,"&quot;").replace(/'/g,"&apos;");
-    const svg='<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="48"><text x="0" y="32" fill="'+color+'" fill-opacity=".22" font-family="Mina, sans-serif" font-size="14">'+safeTyped+safeFull.slice(String(typed??"").length)+'</text></svg>';
+  const escapeXml=v=>String(v??"").replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
+  const textMetrics=()=>{
+    const cs=getComputedStyle(input);
+    const canvas=document.createElement("canvas");
+    const ctx=canvas.getContext("2d");
+    if(!ctx)return{width:0,fontSize:14,lineHeight:20};
+    ctx.font=[cs.fontStyle,cs.fontVariant,cs.fontWeight,cs.fontSize,cs.fontFamily].filter(Boolean).join(" ");
+    const width=ctx.measureText(input.value).width;
+    const fontSize=parseFloat(cs.fontSize)||14;
+    const lineHeight=parseFloat(cs.lineHeight)||fontSize*1.45;
+    return{width,fontSize,lineHeight};
+  };
+  const ghostSvgText=(suffix,x,color="#cdbfaf")=>{
+    const m=textMetrics();
+    const safe=escapeXml(suffix);
+    const svg='<svg xmlns="http://www.w3.org/2000/svg" width="1600" height="'+Math.ceil(m.lineHeight+10)+'"><text x="'+Math.max(0,x).toFixed(2)+'" y="'+(m.fontSize*0.86).toFixed(2)+'" fill="'+color+'" fill-opacity=".22" font-family="'+escapeXml(getComputedStyle(input).fontFamily)+'" font-size="'+m.fontSize+'" font-weight="'+(getComputedStyle(input).fontWeight||400)+'">'+safe+'</text></svg>';
     return 'url("data:image/svg+xml;charset=UTF-8,'+encodeURIComponent(svg)+'")';
   };
+  const clearGhost=()=>{
+    input.classList.remove("suggestion-ghost");
+    input.style.backgroundImage="";
+  };
   const updateGhost=()=>{
-    const raw=input.value.replace(/\\s+/g," ").trim(),q=normalizeTitle(raw);
-    if(!q){input.classList.remove("suggestion-ghost");input.style.backgroundImage="";return}
-    const tokens=q.split(/\\s+/).filter(Boolean);
+    const raw=input.value.replace(/\\s+/g," ").trim();
+    const q=normalizeTitle(raw);
+    if(!q){clearGhost();return}
     const match=libraryRows.find(m=>{
-      const t=normalizeTitle(m.title);
-      return t && tokens.every(token=>t.includes(token));
+      const label=String(m?.title||"").trim();
+      return label&&normalizeTitle(label).startsWith(q);
     });
-    if(!match){input.classList.remove("suggestion-ghost");input.style.backgroundImage="";return}
+    if(!match){clearGhost();return}
     const label=String(match.title||"").trim();
-    const typed=String(raw);
-    if(label.toLocaleLowerCase().startsWith(typed.toLocaleLowerCase())){
-      input.classList.add("suggestion-ghost");
-      input.style.backgroundImage=ghostSvgText(typed,label);
-    }else{
-      input.classList.remove("suggestion-ghost");
-      input.style.backgroundImage="";
-    }
+    const typed=String(input.value||"");
+    const typedLower=typed.toLocaleLowerCase();
+    const labelLower=label.toLocaleLowerCase();
+    if(!labelLower.startsWith(typedLower)){clearGhost();return}
+    const suffix=label.slice(typed.length);
+    if(!suffix){clearGhost();return}
+    const m=textMetrics();
+    input.classList.add("suggestion-ghost");
+    input.style.backgroundImage=ghostSvgText(suffix,m.width);
   };
   const loadLibrary=async()=>{
     try{
@@ -2309,11 +2323,18 @@ update();
       const j=await r.json();
       libraryRows=Array.isArray(j)?j.filter(x=>x&&x.title):[];
       updateGhost();
-    }catch{libraryRows=[];updateGhost();}
+    }catch{
+      libraryRows=[];
+      clearGhost();
+    }
   };
   input.addEventListener("input",updateGhost);
-  input.addEventListener("keydown",e=>{if(e.key==="Escape"){input.style.backgroundImage="";input.classList.remove("suggestion-ghost")}});
-
+  input.addEventListener("focus",updateGhost);
+  input.addEventListener("keydown",e=>{
+    if(e.key==="Escape")clearGhost();
+  });
+  window.addEventListener("resize",()=>{if(input.value)updateGhost()});
+  
   const render=rows=>{
     if(!rows.length){list.innerHTML='<div class="suggestion-empty">No suggestions yet. Be the first to suggest something.</div>';return;}
     const groups=[];
