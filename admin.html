@@ -221,16 +221,87 @@ button:active,a:active,[role="button"]:active,summary:active{background-image:no
 .connection-head h2{margin:0;white-space:nowrap}
 .connection-head span{white-space:nowrap;margin-left:auto}
 @media(max-width:600px){.connection-head{gap:7px}.connection-head h2{font-size:18px}.connection-head span{font-size:9px}}
-</style></style></head>
+</style></style>
+<style id="activity-notifications-v1">
+.activity-bell{
+  position:relative;
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  gap:5px;
+  min-width:38px;
+  height:34px;
+  padding:5px 8px;
+  border:1px solid var(--line2);
+  border-radius:9px;
+  background:#fffaf2;
+  color:var(--muted);
+  font:600 11px/1 Mina,sans-serif;
+  cursor:pointer;
+}
+.activity-bell:hover,.activity-bell:focus-visible{color:var(--text);border-color:#77583b55;background:#fffdf8;outline:2px solid #77583b55;outline-offset:2px}
+.activity-bell.has-unread{color:var(--accent);border-color:#77583b55;box-shadow:0 0 0 3px #77583b0d}
+.activity-bell .activity-badge{
+  display:none;min-width:16px;height:16px;padding:0 4px;border-radius:99px;
+  background:var(--accent);color:#fffaf2;font:700 9px/16px Inter,sans-serif;text-align:center;
+}
+.activity-bell.has-unread .activity-badge{display:inline-block}
+.activity-live{display:inline-flex;align-items:center;gap:5px;color:var(--muted);font-size:9px}
+.activity-live::before{content:"";width:6px;height:6px;border-radius:50%;background:var(--ok)}
+.activity-live.offline::before{background:var(--muted)}
+.activity-summary{display:grid;grid-template-columns:repeat(3,1fr);gap:7px;margin-bottom:10px}
+.activity-stat{padding:9px 10px;border:1px solid var(--line);border-radius:10px;background:#fffaf2}
+.activity-stat strong{display:block;font:700 16px/1.1 Inter,sans-serif;color:var(--text)}
+.activity-stat span{display:block;margin-top:3px;color:var(--muted);font:400 9px/1.25 Mina,sans-serif}
+.activity-toolbar{display:flex;align-items:center;gap:7px;margin:8px 0 10px;padding-top:8px;border-top:1px solid var(--line)}
+.activity-toolbar .activity-count{margin-right:auto;color:var(--muted);font-size:9px}
+.activity-list{display:grid;gap:6px}
+.activity-row{
+  display:grid;grid-template-columns:30px minmax(0,1fr) auto;gap:8px;align-items:start;
+  padding:9px;border:1px solid var(--line);border-radius:10px;background:#fffaf2;
+}
+.activity-row.unread{border-color:#77583b45;background:#fffdf8;box-shadow:inset 2px 0 0 var(--accent)}
+.activity-icon{width:30px;height:30px;border-radius:8px;background:#77583b0d;display:grid;place-items:center;color:var(--accent);font-size:13px}
+.activity-copy{min-width:0}
+.activity-title{font:700 11px/1.25 Mina,sans-serif;color:var(--text);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.activity-meta{margin-top:2px;color:var(--muted);font-size:9px;line-height:1.3}
+.activity-preview{margin-top:4px;color:var(--text);font-size:10px;line-height:1.45;overflow-wrap:anywhere}
+.activity-time{color:var(--muted);font-size:8px;white-space:nowrap}
+.activity-open{border:1px solid var(--line2);background:#77583b08;color:var(--text);border-radius:7px;padding:5px 7px;font-size:8px;white-space:nowrap}
+.activity-empty{padding:22px 10px;text-align:center;color:var(--muted);font-size:10px;border:1px dashed var(--line2);border-radius:10px}
+@media(max-width:600px){
+  .top{align-items:center}.activity-bell{min-width:36px;height:32px;padding:4px 7px}
+  .activity-summary{gap:5px}.activity-stat{padding:8px}
+  .activity-stat strong{font-size:14px}.activity-stat span{font-size:8px}
+  .activity-row{grid-template-columns:28px minmax(0,1fr);gap:7px;padding:8px}
+  .activity-row .activity-time{grid-column:2;grid-row:2}
+  .activity-row .activity-open{grid-column:2;justify-self:start;margin-top:2px}
+  .activity-title{font-size:10px}.activity-preview{font-size:9px}
+}
+</style>
+</head>
 <body>
 <div class="app">
-<header class="top"><div class="brand"><div class="logo">🎬</div><div><h1>CineTon Admin</h1><p>Library management</p></div></div><div id="status" class="status">Not connected</div></header>
+<header class="top"><div class="brand"><div class="logo">🎬</div><div><h1>CineTon Admin</h1><p>Library management</p></div></div><div style="display:flex;align-items:center;gap:7px"><button id="activityBell" class="activity-bell" type="button" aria-label="Open activity notifications" title="Public activity"><span aria-hidden="true">♢</span><b id="activityBadge" class="activity-badge">0</b></button><div id="status" class="status">Not connected</div></div></header>
 
 <div class="stats"><div class="stat"><b id="total">—</b><span>Total titles</span></div><div class="stat"><b id="watched">—</b><span>Watched</span></div><div class="stat"><b id="watchlist">—</b><span>Watchlist</span></div></div>
 
-<div class="admin-sticky-bar"><nav class="admin-nav" aria-label="Admin sections"><button type="button" data-target="connection" class="active">Connection</button><button type="button" data-target="genres">Genres</button><button type="button" data-target="add">Add New</button><button type="button" data-target="rating">Rating &amp; Comments</button><button type="button" data-target="public-comments">Public Comments</button></nav>
+<div class="admin-sticky-bar"><nav class="admin-nav" aria-label="Admin sections"><button type="button" data-target="connection" class="active">Connection</button><button type="button" data-target="activity">Activity <span id="activityNavBadge" class="activity-badge" aria-hidden="true">0</span></button><button type="button" data-target="genres">Genres</button><button type="button" data-target="add">Add New</button><button type="button" data-target="rating">Rating &amp; Comments</button><button type="button" data-target="public-comments">Public Comments</button></nav>
 <div class="rating-sticky-random"><div class="random-actions"><div class="random-context"><strong>Library Random</strong><span>Pick from your saved titles</span></div><button id="randomMovieBtn" class="btn secondary" type="button" aria-label="Open a random movie from the library">Random</button><button id="imdbRandomBtn" class="btn" type="button" aria-label="Discover a random IMDb pick">IMDb Random</button></div></div></div>
 <div class="grid">
+
+<section class="panel" data-section="activity" id="activitySection">
+<div class="head"><div><h2>Activity</h2><small class="sector-note">Public comments · Ratings</small></div><span id="activityLive" class="activity-live offline">Waiting</span></div>
+<div class="activity-summary">
+<div class="activity-stat"><strong id="activityUnreadCount">0</strong><span>New</span></div>
+<div class="activity-stat"><strong id="activityCommentCount">0</strong><span>Comments</span></div>
+<div class="activity-stat"><strong id="activityRatingCount">0</strong><span>Ratings</span></div>
+</div>
+<div class="activity-toolbar"><span id="activityCount" class="activity-count">0 recent activities</span><button id="activityRefresh" class="btn secondary" type="button">Refresh</button><button id="activityMarkRead" class="btn secondary" type="button">Mark all read</button></div>
+<div id="activityList" class="activity-list"><div class="activity-empty">Connect GitHub to monitor public activity.</div></div>
+<div id="activityMsg" class="message hidden" aria-live="polite"></div>
+</section>
+
 <section class="panel" data-section="connection" id="connectionSection">
 <div class="head connection-head"><h2>Connection</h2><span>Services &amp; Backup</span></div>
 <div class="tech-label"><span>Technical configuration</span><small>Services connected to your CineTon library</small></div>
@@ -374,6 +445,7 @@ button:active,a:active,[role="button"]:active,summary:active{background-image:no
   </div>
 </dialog>
 
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.117.2"></script>
 <script>
 const $=s=>document.querySelector(s), $$=s=>document.querySelectorAll(s);
 const LS=localStorage, SS=sessionStorage, IMG='https://image.tmdb.org/t/p/w92';
@@ -390,7 +462,7 @@ function encode(s){const bytes=new TextEncoder().encode(s),bin=Array.from(bytes,
 async function load(){const r=await gh();if(!r.sha||!r.content)throw Error('GitHub returned an incomplete data.json response.');fileSha=r.sha;try{data=JSON.parse(decode(r.content));if(!Array.isArray(data))throw 0}catch{throw Error('data.json is not a valid CineTon library file.')}try{LS.setItem('ct_library_cache',JSON.stringify(data))}catch{}renderAll()}
 async function loadPublicLibraryFallback(){try{const cached=LS.getItem('ct_library_cache');if(cached){const parsed=JSON.parse(cached);if(Array.isArray(parsed)&&parsed.length){data=parsed;return true}}}catch{}try{const r=await fetch('https://toxinhub.github.io/cineton/data.json?fallback='+Date.now(),{cache:'no-store'});if(!r.ok)return false;const parsed=await r.json();if(!Array.isArray(parsed)||!parsed.length)return false;data=parsed;try{LS.setItem('ct_library_cache',JSON.stringify(data))}catch{}return true}catch{return false}}
 async function save(message){if(!fileSha)throw Error('Connect to GitHub first.');const payload=JSON.stringify(data);const r=await gh('PUT',{message,sha:fileSha,content:encode(payload)});if(!r.content?.sha)throw Error('GitHub did not confirm the save.');fileSha=r.content.sha;requestAnimationFrame(renderAll)}
-async function connect(){const repo=$('#repo').value.trim(),tok=$('#tok').value.trim();if(!repo||!/^[^\s/]+\/[^\s/]+$/.test(repo))return setConnection('error','Enter a valid repository as username/repository.');if(!tok)return setConnection('error','Enter your GitHub token.');saved('ct_repo',repo);SS.setItem('ct_tok',tok);saved('ct_tmdb',$('#tmdb').value.trim());saved('ct_omdb',$('#omdb').value.trim());setConnection('busy','Verifying GitHub access and loading data.json…');try{await load();setConnection('ok','GitHub verified · library loaded successfully.');renderAll();if($('#tmdb').value.trim()&&data.some(m=>!Array.isArray(m.genres)||m.genres.length===0)){await syncGenres(true)}}catch(e){setConnection('error',connError(e))}}
+async function connect(){const repo=$('#repo').value.trim(),tok=$('#tok').value.trim();if(!repo||!/^[^\s/]+\/[^\s/]+$/.test(repo))return setConnection('error','Enter a valid repository as username/repository.');if(!tok)return setConnection('error','Enter your GitHub token.');saved('ct_repo',repo);SS.setItem('ct_tok',tok);saved('ct_tmdb',$('#tmdb').value.trim());saved('ct_omdb',$('#omdb').value.trim());setConnection('busy','Verifying GitHub access and loading data.json…');try{await load();setConnection('ok','GitHub verified · library loaded successfully.');renderAll();initPublicActivity();if($('#tmdb').value.trim()&&data.some(m=>!Array.isArray(m.genres)||m.genres.length===0)){await syncGenres(true)}}catch(e){setConnection('error',connError(e))}}
 $('#connect').onclick=connect;async function syncGenres(auto=false){
  if(!fileSha)throw Error('Connect to GitHub first.');
  if(!$('#tmdb').value.trim())throw Error('Add your TMDB API key in Connection first.');
@@ -772,14 +844,101 @@ function switchSection(target){
  if(draftDirty&&!confirm('Unsaved changes will be lost. Switch section?'))return;
  document.querySelectorAll('.admin-nav button').forEach(b=>b.classList.toggle('active',b.dataset.target===target));
  document.querySelectorAll('.panel[data-section]').forEach(p=>p.classList.toggle('active',p.dataset.section===target));
- if(target==='rating'||target==='public-comments')requestAnimationFrame(()=>window.scrollTo({top:0,behavior:'smooth'}));if(target==='public-comments')loadPublicCommentsAdmin();
+ if(target==='rating'||target==='public-comments'||target==='activity')requestAnimationFrame(()=>window.scrollTo({top:0,behavior:'smooth'}));if(target==='public-comments')loadPublicCommentsAdmin();if(target==='activity')loadPublicActivity(true);
 }
 document.querySelectorAll('.admin-nav button').forEach(b=>b.onclick=()=>switchSection(b.dataset.target));
 window.addEventListener('beforeunload',e=>{if(draftDirty){e.preventDefault();e.returnValue=''}});
 document.querySelectorAll('.panel[data-section]').forEach(p=>p.classList.toggle('active',p.dataset.section==='connection'));
 $('#librarySearch').oninput=renderLibrary;$('#libraryFilter').onchange=renderLibrary;$('#randomMovieBtn').onclick=openRandomMovie;
-if($('#repo').value&&$('#tok').value)load().then(async()=>{setConnection('ok','Saved GitHub connection restored.');if($('#tmdb').value.trim()&&data.some(m=>!Array.isArray(m.genres)||m.genres.length===0))await syncGenres(true)}).catch(()=>setConnection('idle','Saved credentials found. Click Connect GitHub to verify.'));
-const PUBLIC_COMMENTS_API="https://osplbqpgxrfovjrumsnb.supabase.co",PUBLIC_COMMENTS_KEY="sb_"+"publishable_"+"tcBaC8FqwlcFFw-IwKmiVA_y67PZNPX",PUBLIC_COMMENTS_FN=PUBLIC_COMMENTS_API+"/functions/v1/public-comments";const PUBLIC_TITLE_FALLBACK={"movie-377880":"100% Love","movie-49521":"Man of Steel"};
+if($('#repo').value&&$('#tok').value)load().then(async()=>{setConnection('ok','Saved GitHub connection restored.');initPublicActivity();if($('#tmdb').value.trim()&&data.some(m=>!Array.isArray(m.genres)||m.genres.length===0))await syncGenres(true)}).catch(()=>setConnection('idle','Saved credentials found. Click Connect GitHub to verify.'));
+const PUBLIC_COMMENTS_API="https://osplbqpgxrfovjrumsnb.supabase.co",PUBLIC_COMMENTS_KEY="sb_"+"publishable_"+"tcBaC8FqwlcFFw-IwKmiVA_y67PZNPX",PUBLIC_COMMENTS_FN=PUBLIC_COMMENTS_API+"/functions/v1/public-comments";
+const PUBLIC_ACTIVITY_FN=PUBLIC_COMMENTS_API+"/functions/v1/public-activity";
+const ACTIVITY_SEEN_KEY="ct_public_activity_seen_at";
+const ACTIVITY_SUPABASE_KEY="sb_publishable_tcBaC8FqwlcFFw-IwKmiVA_y67PZNPX";
+let publicActivityRows=[],activityChannel=null,activityPolling=null,activityInitialized=false;
+function activitySeenAt(){return LS.getItem(ACTIVITY_SEEN_KEY)||""}
+function activityIsUnread(x){const seen=activitySeenAt();return !!x?.occurred_at && (!seen || new Date(x.occurred_at).getTime()>new Date(seen).getTime())}
+function activityTitle(id){const key=String(id||"").trim(),m=data.find(x=>String(x.id||"").trim()===key);return m?.title||PUBLIC_TITLE_FALLBACK[key]||"Title not found"}
+function activityTypeLabel(x){return x?.type==="rating"?"Public rating":"Public comment"}
+function activityTime(x){try{return new Date(x).toLocaleString(undefined,{dateStyle:"medium",timeStyle:"short"})}catch{return x||""}}
+function updateActivityBadge(){
+  const unread=publicActivityRows.filter(activityIsUnread).length;
+  ["#activityBadge","#activityNavBadge"].forEach(sel=>{const el=$(sel);if(el){el.textContent=unread>99?"99+":String(unread);el.classList.toggle("has-unread",unread>0);el.setAttribute("aria-label",unread+" unread public activities")}})
+  $("#activityBell")?.classList.toggle("has-unread",unread>0);
+  $("#activityUnreadCount").textContent=String(unread);
+}
+function renderActivity(){
+  const rows=[...publicActivityRows].sort((a,b)=>new Date(b.occurred_at)-new Date(a.occurred_at));
+  const comments=rows.filter(x=>x.type==="comment").length,ratings=rows.filter(x=>x.type==="rating").length;
+  $("#activityCommentCount").textContent=comments;$("#activityRatingCount").textContent=ratings;
+  $("#activityCount").textContent=rows.length+" recent activit"+(rows.length===1?"y":"ies");
+  const list=$("#activityList");
+  if(!rows.length){list.innerHTML='<div class="activity-empty">No public comments or ratings yet.</div>';updateActivityBadge();return}
+  list.innerHTML=rows.slice(0,80).map(x=>{
+    const title=activityTitle(x.media_item_id),unread=activityIsUnread(x),icon=x.type==="rating"?"★":"💬";
+    const preview=x.type==="rating"?"Rated "+esc(String(x.rating||"—"))+"/10":"“"+esc(String(x.comment||""))+"”";
+    return '<article class="activity-row'+(unread?" unread":"")+'"><div class="activity-icon" aria-hidden="true">'+icon+'</div><div class="activity-copy"><div class="activity-title">'+esc(title)+'</div><div class="activity-meta">'+esc(activityTypeLabel(x))+(x.name?' · '+esc(x.name):'')+'</div><div class="activity-preview">'+preview+'</div></div><div class="activity-time">'+esc(activityTime(x.occurred_at))+'</div><button class="activity-open" type="button" data-activity-open="'+esc(x.media_item_id)+'">Open</button></article>'
+  }).join("");
+  list.querySelectorAll("[data-activity-open]").forEach(b=>b.onclick=()=>{
+    const id=b.dataset.activityOpen,index=data.findIndex(m=>String(m.id||"").trim()===String(id).trim());
+    if(index>=0){switchSection("rating");editTitle(index)}
+  });
+  updateActivityBadge();
+}
+async function loadPublicActivity(silent=false){
+  const token=$("#tok")?.value.trim();
+  if(!token){if(!silent)$("#activityMsg").textContent="Connect GitHub to monitor public activity.";return}
+  try{
+    const r=await fetch(PUBLIC_ACTIVITY_FN,{cache:"no-store",headers:{apikey:ACTIVITY_SUPABASE_KEY,"x-github-token":token,Accept:"application/json"}});
+    const j=await r.json().catch(()=>({}));
+    if(!r.ok)throw Error(j.error||"Could not load activity.");
+    publicActivityRows=Array.isArray(j.activities)?j.activities:[];
+    renderActivity();$("#activityMsg").className="message hidden";
+    $("#activityLive").textContent="Live";$("#activityLive").classList.remove("offline");
+  }catch(e){
+    $("#activityLive").textContent="Offline";$("#activityLive").classList.add("offline");
+    if(!silent){$("#activityMsg").textContent=e.message||"Could not load activity.";$("#activityMsg").className="message error"}
+  }
+}
+function markActivityRead(){
+  const latest=publicActivityRows.reduce((max,x)=>Math.max(max,new Date(x.occurred_at||0).getTime()),0);
+  if(latest)LS.setItem(ACTIVITY_SEEN_KEY,new Date(latest).toISOString());
+  renderActivity();
+}
+function handleLiveActivity(payload){
+  const x=payload?.payload||payload;
+  if(!x?.type||!x?.media_item_id)return;
+  if(x.type!=="comment"&&x.type!=="rating")return;
+  if(publicActivityRows.some(r=>r.id===x.id))return;
+  publicActivityRows.unshift({...x,comment:null,name:null,rating:x.rating??null});
+  renderActivity();
+  $("#activityLive").textContent="Live";$("#activityLive").classList.remove("offline");
+}
+function startActivityRealtime(){
+  if(activityChannel||!window.supabase?.createClient)return;
+  try{
+    const sb=window.supabase.createClient(PUBLIC_COMMENTS_API,ACTIVITY_SUPABASE_KEY,{auth:{persistSession:false,autoRefreshToken:false}});
+    activityChannel=sb.channel("cineton:public-activity")
+      .on("broadcast",{event:"public_activity"},handleLiveActivity)
+      .subscribe(status=>{
+        const live=$("#activityLive");if(!live)return;
+        if(status==="SUBSCRIBED"){live.textContent="Live";live.classList.remove("offline")}
+        else if(status==="CHANNEL_ERROR"||status==="TIMED_OUT"){live.textContent="Offline";live.classList.add("offline")}
+      });
+  }catch{}
+}
+function initPublicActivity(){
+  if(activityInitialized)return;
+  activityInitialized=true;
+  loadPublicActivity(true);
+  startActivityRealtime();
+  clearInterval(activityPolling);
+  activityPolling=setInterval(()=>loadPublicActivity(true),30000);
+}
+$("#activityBell")?.addEventListener("click",()=>{switchSection("activity");loadPublicActivity(true);document.querySelector("#activitySection")?.scrollIntoView({block:"start"})});
+$("#activityRefresh")?.addEventListener("click",()=>loadPublicActivity(false));
+$("#activityMarkRead")?.addEventListener("click",markActivityRead);
+const PUBLIC_TITLE_FALLBACK={"movie-377880":"100% Love","movie-49521":"Man of Steel"};
 async function loadPublicCommentsAdmin(){const list=$('#publicCommentsList'),msg=$('#publicCommentsMsg'),q=($('#publicCommentsSearch')?.value||'').trim().toLocaleLowerCase();try{if(!data.length){if($('#repo').value.trim()&&$('#tok').value.trim()){try{await load()}catch{await loadPublicLibraryFallback()}}else{await loadPublicLibraryFallback()}}const r=await fetch(PUBLIC_COMMENTS_API+'/rest/v1/public_comments?select=id,media_item_id,name,comment,created_at&order=created_at.desc',{headers:{apikey:PUBLIC_COMMENTS_KEY,Accept:'application/json'}});if(!r.ok)throw Error('Could not load public comments.');const rows=await r.json(),byId=new Map(data.map(m=>[String(m.id).trim(),m])),filtered=rows.filter(x=>{const key=String(x.media_item_id||'').trim(),m=byId.get(key),hay=[m?.title||key,x.name||'',x.comment].join(' ').toLocaleLowerCase();return !q||hay.includes(q)});$('#publicCommentsCount').textContent=rows.length+' comment'+(rows.length===1?'':'s');list.innerHTML=filtered.length?filtered.map(x=>{const key=String(x.media_item_id||'').trim(),m=byId.get(key),mTitle=m&&m.title?m.title:(PUBLIC_TITLE_FALLBACK[key]||'Title not found'),when=new Date(x.created_at).toLocaleString(undefined,{dateStyle:'medium',timeStyle:'short'});return '<article class="public-admin-row" data-comment-id="'+esc(x.id)+'"><div class="public-admin-check"><input type="checkbox" class="public-comment-check" aria-label="Select comment"></div><div><div class="public-admin-title">'+esc(mTitle)+'</div><div class="public-admin-meta">ID: '+esc(key)+' · '+esc(m?.type==='tv'?'TV / Show':'Movie')+' · '+esc(x.name||'Anonymous')+' · '+esc(when)+'</div><div class="public-admin-comment">'+esc(x.comment)+'</div></div><div class="public-admin-actions"><button class="public-admin-edit" type="button" data-edit-comment="'+esc(x.id)+'">Edit</button><button class="public-admin-delete" type="button" data-comment-id="'+esc(x.id)+'">Delete</button></div></article>'}).join(''):'<div class="hint">No public comments found.</div>';list.querySelectorAll('.public-admin-delete').forEach(b=>b.onclick=()=>deletePublicComment(b.dataset.commentId));list.querySelectorAll('[data-edit-comment]').forEach(b=>b.onclick=()=>editPublicComment(b.dataset.editComment));list.querySelectorAll('.public-comment-check').forEach(b=>b.onchange=updatePublicSelection);updatePublicSelection();msg.className='message hidden'}catch(e){msg.textContent=e.message||'Could not load public comments.';msg.className='message error'}}
 function selectedPublicCommentIds(){return Array.from(document.querySelectorAll('.public-comment-check:checked')).map(x=>x.closest('.public-admin-row')?.dataset.commentId).filter(Boolean)}
 function updatePublicSelection(){const checks=Array.from(document.querySelectorAll('.public-comment-check')),ids=selectedPublicCommentIds();$('#publicCommentsSelected').textContent=ids.length+' selected';$('#publicCommentsDeleteSelected').disabled=!ids.length;const all=$('#publicCommentsSelectAll');if(all){all.checked=checks.length>0&&checks.every(x=>x.checked);all.indeterminate=ids.length>0&&ids.length<checks.length}}
