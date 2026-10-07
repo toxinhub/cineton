@@ -522,7 +522,20 @@ async function discoverImdbPool(query=''){
  {category:'Top Rated',type:'tv',path:'/discover/tv?include_adult=false&sort_by=vote_average.desc&vote_count.gte=500&page='+page()},
  {category:'Classic',type:'movie',path:'/discover/movie?include_adult=false&include_video=false&sort_by=popularity.desc&primary_release_date.lte='+classicCutoff+'&vote_average.gte=7.2&vote_count.gte=500&page='+page()},
  {category:'Classic',type:'tv',path:'/discover/tv?include_adult=false&sort_by=popularity.desc&first_air_date.lte='+classicCutoff+'&vote_average.gte=7.5&vote_count.gte=250&page='+page()}];const out=[];for(const x of specs){try{const r=await tmdb(x.path);for(const h of(r.results||[])){if(h.poster_path)out.push({...h,media_type:x.type,_discovery_category:x.category})}}catch{}}const seen=new Set();imdbRandomPool=out.filter(h=>{const k=h.media_type+'-'+h.id;if(seen.has(k))return false;seen.add(k);return !data.some(m=>String(m.id)===k)});for(let i=imdbRandomPool.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[imdbRandomPool[i],imdbRandomPool[j]]=[imdbRandomPool[j],imdbRandomPool[i]]}return imdbRandomPool;}
- const multi=await tmdb('/search/multi?query='+encodeURIComponent(q)+'&include_adult=false');const results=(multi.results||[]).filter(x=>x.media_type==='movie'||x.media_type==='tv'||x.media_type==='person');const out=results.filter(x=>x.media_type==='movie'||x.media_type==='tv').map(x=>({...x,_discovery_category:'Search'}));for(const p of results.filter(x=>x.media_type==='person').slice(0,3)){try{const r=await tmdb('/person/'+p.id+'/combined_credits');for(const h of(r.cast||[]).concat(r.crew||[])){if((h.media_type==='movie'||h.media_type==='tv')&&h.poster_path)out.push({...h,_discovery_category:p.name})}}catch{}}const seen=new Set();const unique=out.filter(h=>{const k=h.media_type+'-'+h.id;if(seen.has(k))return false;seen.add(k);return !data.some(m=>String(m.id).trim().toLowerCase()===k.toLowerCase())});unique.sort((a,b)=>(Number(b.popularity)||0)-(Number(a.popularity)||0));return unique;
+ const pages=Array.from({length:10},(_,i)=>i+1);
+ const multiResults=(await Promise.all(pages.map(page=>tmdb('/search/multi?query='+encodeURIComponent(q)+'&include_adult=false&page='+page).catch(()=>({results:[]}))))).flatMap(r=>r.results||[]);
+ const results=multiResults.filter(x=>x.media_type==='movie'||x.media_type==='tv'||x.media_type==='person');
+ const out=results.filter(x=>x.media_type==='movie'||x.media_type==='tv').map(x=>({...x,_discovery_category:'Search'}));
+ const people=[];const personSeen=new Set();
+ for(const p of results.filter(x=>x.media_type==='person')){
+   const key=String(p.id);if(personSeen.has(key))continue;personSeen.add(key);people.push(p);if(people.length>=8)break;
+ }
+ const creditResults=await Promise.all(people.map(async p=>{
+   try{const r=await tmdb('/person/'+p.id+'/combined_credits');return (r.cast||[]).concat(r.crew||[]).filter(h=>(h.media_type==='movie'||h.media_type==='tv')&&h.poster_path).map(h=>({...h,_discovery_category:p.name}))}catch{return []}
+ }));
+ creditResults.forEach(items=>out.push(...items));
+ const seen=new Set();const unique=out.filter(h=>{const k=h.media_type+'-'+h.id;if(seen.has(k))return false;seen.add(k);return !data.some(m=>String(m.id).trim().toLowerCase()===k.toLowerCase())});
+ unique.sort((a,b)=>(Number(b.popularity)||0)-(Number(a.popularity)||0));return unique;
 }
 function setImdbRandomState(textValue,type=''){
   $('#imdbRandomState').textContent=textValue;
