@@ -2277,8 +2277,10 @@ update();
   const list=dialog.querySelector(".suggestion-list"),form=dialog.querySelector("form"),input=dialog.querySelector("#suggestionInput"),submit=dialog.querySelector(".suggestion-submit"),msg=dialog.querySelector(".suggestion-message");
   let libraryRows=[];
   const normalizeTitle=v=>String(v??"").normalize("NFKD").replace(/[\\u0300-\\u036f]/g,"").toLocaleLowerCase().replace(/[^\\p{L}\\p{N}]+/gu," ").trim();
-  const ghostSvgText=(text,color="#cdbfaf")=>{
-    const svg='<svg xmlns="http://www.w3.org/2000/svg" width="900" height="48"><text x="0" y="32" fill="'+color+'" fill-opacity=".22" font-family="Mina, sans-serif" font-size="14">'+String(text).replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;").replace(/"/g,"&quot;").replace(/'/g,"&apos;")+'</text></svg>';
+  const ghostSvgText=(typed,full,color="#cdbfaf")=>{
+    const safeTyped=String(typed??"").replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;").replace(/"/g,"&quot;").replace(/'/g,"&apos;");
+    const safeFull=String(full??"").replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;").replace(/"/g,"&quot;").replace(/'/g,"&apos;");
+    const svg='<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="48"><text x="0" y="32" fill="'+color+'" fill-opacity=".22" font-family="Mina, sans-serif" font-size="14">'+safeTyped+safeFull.slice(String(typed??"").length)+'</text></svg>';
     return 'url("data:image/svg+xml;charset=UTF-8,'+encodeURIComponent(svg)+'")';
   };
   const updateGhost=()=>{
@@ -2291,8 +2293,14 @@ update();
     });
     if(!match){input.classList.remove("suggestion-ghost");input.style.backgroundImage="";return}
     const label=String(match.title||"").trim();
-    input.classList.add("suggestion-ghost");
-    input.style.backgroundImage=ghostSvgText(label);
+    const typed=String(raw);
+    if(label.toLocaleLowerCase().startsWith(typed.toLocaleLowerCase())){
+      input.classList.add("suggestion-ghost");
+      input.style.backgroundImage=ghostSvgText(typed,label);
+    }else{
+      input.classList.remove("suggestion-ghost");
+      input.style.backgroundImage="";
+    }
   };
   const loadLibrary=async()=>{
     try{
