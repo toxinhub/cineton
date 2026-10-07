@@ -899,7 +899,125 @@ $('#importBackupFile').onchange=async e=>{
 .imdb-random-filter label{font:600 9px/1.2 Mina,sans-serif;color:var(--muted)}
 .imdb-random-filter select{min-height:32px;padding:6px 8px;font-size:9px}
 @media(max-width:600px){.imdb-random-filter{grid-template-columns:1fr;gap:3px}.imdb-random-filter select{min-height:36px;font-size:10px}}
-</style></html>\n<style id="library-random-polish-v1">
+</style><style id="admin-edit-modal-balance-v1">
+/* Edit modal balance — give the poster, title and comment area enough room on desktop and mobile. */
+#editModal.admin-modal{
+  width:min(780px,calc(100% - 28px))!important;
+  max-height:92vh!important;
+}
+#editModal.admin-modal .modal-inner{
+  padding:22px!important;
+  max-height:92vh!important;
+}
+#editModal.admin-modal h2{
+  font-size:31px!important;
+  line-height:1.02!important;
+  margin-right:44px!important;
+}
+#editModal.admin-modal .modal-meta{
+  font-size:12px!important;
+  line-height:1.45!important;
+}
+#editModal.admin-modal .admin-detail{
+  grid-template-columns:150px minmax(0,1fr)!important;
+  gap:18px!important;
+  margin:16px 0!important;
+  align-items:start!important;
+}
+#editModal.admin-modal .admin-detail img{
+  width:150px!important;
+  border-radius:11px!important;
+  box-shadow:0 5px 16px #40352c18!important;
+}
+#editModal.admin-modal .personal-box{
+  padding-top:16px!important;
+  margin-top:14px!important;
+}
+#editModal.admin-modal .personal-box h3{
+  font-size:15px!important;
+  margin-bottom:11px!important;
+}
+#editModal.admin-modal .personal-grid{
+  grid-template-columns:140px minmax(0,1fr)!important;
+  gap:11px!important;
+}
+#editModal.admin-modal .field label{
+  font-size:11px!important;
+  margin-bottom:6px!important;
+}
+#editModal.admin-modal #editComment{
+  min-height:124px!important;
+  padding:11px 12px!important;
+  font-size:13px!important;
+  line-height:1.5!important;
+  resize:vertical!important;
+}
+#editModal.admin-modal .love-toggle{
+  min-height:42px!important;
+  font-size:12px!important;
+}
+#editModal.admin-modal .modal-actions-row{
+  margin-top:13px!important;
+  gap:9px!important;
+}
+#editModal.admin-modal .modal-actions-row .btn{
+  min-height:40px!important;
+}
+@media(max-width:600px){
+  #editModal.admin-modal{
+    width:calc(100% - 12px)!important;
+    max-height:94vh!important;
+  }
+  #editModal.admin-modal .modal-inner{
+    padding:15px!important;
+    max-height:94vh!important;
+  }
+  #editModal.admin-modal h2{
+    font-size:25px!important;
+    line-height:1.04!important;
+  }
+  #editModal.admin-modal .modal-meta{
+    font-size:10px!important;
+  }
+  #editModal.admin-modal .admin-detail{
+    grid-template-columns:94px minmax(0,1fr)!important;
+    gap:13px!important;
+    margin:13px 0!important;
+  }
+  #editModal.admin-modal .admin-detail img{
+    width:94px!important;
+    border-radius:9px!important;
+  }
+  #editModal.admin-modal .personal-box{
+    padding-top:13px!important;
+    margin-top:11px!important;
+  }
+  #editModal.admin-modal .personal-box h3{
+    font-size:13px!important;
+    margin-bottom:9px!important;
+  }
+  #editModal.admin-modal .personal-grid{
+    grid-template-columns:1fr!important;
+    gap:9px!important;
+  }
+  #editModal.admin-modal #editComment{
+    min-height:118px!important;
+    font-size:12px!important;
+  }
+  #editModal.admin-modal .modal-actions-row{
+    margin-top:10px!important;
+  }
+}
+@media(max-width:380px){
+  #editModal.admin-modal .admin-detail{
+    grid-template-columns:84px minmax(0,1fr)!important;
+    gap:11px!important;
+  }
+  #editModal.admin-modal .admin-detail img{width:84px!important}
+  #editModal.admin-modal h2{font-size:23px!important}
+}
+</style>
+\n</html>\n<style id="library-random-polish-v1">
 /* Library Random — simple, calm and clearly separated from IMDb discovery. */
 .rating-sticky-random{
   margin:7px 0 10px!important;
