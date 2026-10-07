@@ -554,15 +554,24 @@ async function pickImdbRandom(){
   setImdbRandomState('Finding a title…','busy');
   try{
     let pool=await discoverImdbPool();
-    let available=pool.filter((_,i)=>!imdbRandomHistory.includes(i));
-    if(!available.length){imdbRandomHistory=[];available=pool.slice()}
+    const libraryKeys=new Set(data.map(x=>String(x.id).trim().toLowerCase()).filter(Boolean));
+    pool=pool.filter(item=>{
+      const key=(item.media_type+'-'+item.id).toLowerCase();
+      return !libraryKeys.has(key);
+    });
+    let available=pool.filter(item=>!imdbRandomSeenKeys.includes((item.media_type+'-'+item.id).toLowerCase()));
+    if(!available.length){
+      imdbRandomSeenKeys=[];
+      try{SS.removeItem('ct_imdb_random_seen')}catch{}
+      available=pool.slice();
+    }
     if(!available.length)throw Error('No new discovery titles were found.');
     const candidate=available[Math.floor(Math.random()*available.length)];
-    const index=pool.indexOf(candidate);
-    imdbRandomHistory.push(index);
-    if(imdbRandomHistory.length>Math.min(18,Math.max(1,pool.length-1)))imdbRandomHistory.shift();
+    const candidateKey=(candidate.media_type+'-'+candidate.id).toLowerCase();
+    imdbRandomSeenKeys.push(candidateKey);
+    try{SS.setItem('ct_imdb_random_seen',JSON.stringify(imdbRandomSeenKeys.slice(-2000)))}catch{}
     const m=await enrich(candidate);
-    const existing=data.find(x=>String(x.id)===String(m.id));
+    const existing=libraryKeys.has(String(m.id).trim().toLowerCase());
     imdbRandomCurrent={...m,_discovery_category:candidate._discovery_category,_tmdb_rating:candidate.vote_average};
     $('#imdbRandomPoster').src=m.poster?'https://image.tmdb.org/t/p/w342'+m.poster:'';
     $('#imdbRandomPoster').alt=m.title||'';
