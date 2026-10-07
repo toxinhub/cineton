@@ -347,6 +347,7 @@ button:active,a:active,[role="button"]:active,summary:active{background-image:no
         <div id="imdbRandomCredits" class="imdb-random-credits hidden">
           <div><span>Director</span><strong id="imdbRandomDirector"></strong></div>
           <div><span>Cast</span><strong id="imdbRandomCast"></strong></div>
+          <div><span>Genre</span><strong id="imdbRandomGenre"></strong></div>
         </div>
         <p id="imdbRandomOverview"></p>
       </div>
@@ -583,6 +584,7 @@ async function pickImdbRandom(){
     $('#imdbRandomRating').textContent=imdb+tmdb;
     $('#imdbRandomDirector').textContent=m.director||'Not available';
     $('#imdbRandomCast').textContent=(m.cast||[]).slice(0,4).join(', ')||'Not available';
+    $('#imdbRandomGenre').textContent=(m.genres||[]).slice(0,3).join(', ')||'Not available';
     $('#imdbRandomCredits').classList.remove('hidden');
     $('#imdbRandomOverview').textContent=m.overview||'No overview available.';
     $('#imdbRandomCategory').textContent=candidate._discovery_category;
@@ -842,4 +844,8 @@ $('#importBackupFile').onchange=async e=>{
 .imdb-watched-fields{grid-template-columns:92px minmax(0,1fr) auto!important}
 .imdb-watched-fields .imdb-random-love{align-self:end;min-width:62px!important;white-space:nowrap;margin:0!important}
 @media(max-width:600px){.imdb-watched-fields{grid-template-columns:82px minmax(0,1fr) auto!important}.imdb-watched-fields .imdb-random-love{min-width:58px!important;padding-left:7px!important;padding-right:7px!important}}
+</style>
+
+<style id="imdb-random-genre-v1">
+#imdbRandomGenre{color:#1f1711!important}
 </style>
