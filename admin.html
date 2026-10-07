@@ -457,6 +457,7 @@ button:active,a:active,[role="button"]:active,summary:active{background-image:no
 .suggestions-admin-row{display:grid;grid-template-columns:34px minmax(0,1fr) auto;gap:10px;align-items:start;padding:10px 11px;border:1px solid var(--line);border-radius:5px;background:color-mix(in srgb,var(--surface,#fbf6ed) 72%,transparent)}
 .suggestions-admin-number{color:var(--accent,#77583b);font:700 11px/1.4 Mina,sans-serif;text-align:right}
 .suggestions-admin-title{color:var(--text,#2f241b);font:600 13px/1.45 Mina,sans-serif;overflow-wrap:anywhere}
+.suggestions-admin-title-button{display:block;width:100%;padding:0;border:0;background:transparent;text-align:left;cursor:pointer}.suggestions-admin-title-button:hover{text-decoration:underline;text-underline-offset:3px}.suggestions-admin-title-button:focus-visible{outline:2px solid var(--accent,#77583b);outline-offset:2px;border-radius:3px}
 .suggestions-admin-meta{margin-top:2px;color:var(--muted,#58483a);font:400 10px/1.35 Mina,sans-serif}
 .suggestions-admin-actions{display:flex;gap:5px;align-items:center}
 .suggestions-admin-actions button{min-height:30px;padding:5px 8px;font-size:10px}
@@ -1215,10 +1216,25 @@ $('#importBackupFile').onchange=async e=>{
    const filtered=rows.filter(x=>String(x.title||"").toLocaleLowerCase().includes(q));
    if(count)count.textContent=rows.length+" suggestion"+(rows.length===1?"":"s");
    if(badge)badge.textContent=String(rows.length);
-   list.innerHTML=filtered.length?filtered.map((x,i)=>'<article class="suggestions-admin-row" data-suggestion-id="'+esc(x.id)+'"><div class="suggestions-admin-number">'+(rows.indexOf(x)+1)+'.</div><div><div class="suggestions-admin-title">'+esc(x.title)+'</div><div class="suggestions-admin-meta">'+esc(when(x.created_at))+(x.updated_at&&x.updated_at!==x.created_at?' · edited '+esc(when(x.updated_at)):"")+'</div></div><div class="suggestions-admin-actions"><button class="btn secondary" type="button" data-edit-suggestion>Edit</button><button class="btn danger" type="button" data-delete-suggestion>Delete</button></div></article>').join(''):'<div class="suggestions-admin-empty">No suggestions found.</div>';
+   list.innerHTML=filtered.length?filtered.map((x,i)=>'<article class="suggestions-admin-row" data-suggestion-id="'+esc(x.id)+'"><div class="suggestions-admin-number">'+(rows.indexOf(x)+1)+'.</div><div><button class="suggestions-admin-title suggestions-admin-title-button" type="button" data-search-suggestion>'+esc(x.title)+'</button><div class="suggestions-admin-meta">'+esc(when(x.created_at))+(x.updated_at&&x.updated_at!==x.created_at?' · edited '+esc(when(x.updated_at)):"")+'</div></div><div class="suggestions-admin-actions"><button class="btn secondary" type="button" data-edit-suggestion>Edit</button><button class="btn danger" type="button" data-delete-suggestion>Delete</button></div></article>').join(''):'<div class="suggestions-admin-empty">No suggestions found.</div>';
    list.querySelectorAll("[data-edit-suggestion]").forEach(b=>b.onclick=()=>edit(b.closest("[data-suggestion-id]")?.dataset.suggestionId));
    list.querySelectorAll("[data-delete-suggestion]").forEach(b=>b.onclick=()=>remove(b.closest("[data-suggestion-id]")?.dataset.suggestionId));
+   list.querySelectorAll("[data-search-suggestion]").forEach(b=>b.onclick=()=>searchSuggestion(b.closest("[data-suggestion-id]")?.dataset.suggestionId));
  };
+ async function searchSuggestion(id){
+   const item=rows.find(x=>String(x.id)===String(id));if(!item)return;
+   const query=String(item.title||"").trim();if(!query)return;
+   switchSection("add");
+   const input=document.getElementById("search");if(!input)return;
+   input.value=query;
+   try{
+     await doSearch();
+     requestAnimationFrame(()=>document.getElementById("quickAddSection")?.scrollIntoView({behavior:"smooth",block:"start"}));
+   }catch(e){
+     const results=document.getElementById("results");
+     if(results)results.innerHTML='<div class="message error">'+esc(e.message||"Search failed.")+'</div>';
+   }
+ }
  async function load(){
    list.innerHTML='<div class="suggestions-admin-empty">Loading suggestions…</div>';
    try{const r=await fetch(API,{cache:"no-store",headers:{apikey:KEY,Accept:"application/json"}});const j=await r.json();if(!r.ok)throw Error(j.error||"Could not load suggestions.");rows=Array.isArray(j.suggestions)?j.suggestions:[];showMsg("");render();}
