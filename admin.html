@@ -315,6 +315,48 @@ button:active,a:active,[role="button"]:active,summary:active{background-image:no
 #editModal.local-random-edit{width:min(680px,calc(100% - 28px))!important;max-height:86vh!important}#editModal.local-random-edit .modal-inner{padding:15px!important;max-height:86vh!important}#editModal.local-random-edit .admin-detail{grid-template-columns:138px minmax(0,1fr)!important;gap:14px!important;padding-bottom:11px!important}#editModal.local-random-edit .admin-detail::before{left:153px!important}#editModal.local-random-edit .admin-detail img{width:138px!important}#editModal.local-random-edit .admin-detail>div{padding-top:18px!important}#editModal.local-random-edit .modal-status-row{margin-top:10px!important;padding-top:6px!important}#editModal.local-random-edit .personal-box{margin-top:10px!important}#editModal.local-random-edit .personal-box h3{margin-bottom:7px!important}#editModal.local-random-edit .personal-grid{gap:7px!important;padding:9px!important}#editModal.local-random-edit #editComment{min-height:76px!important}#editModal.local-random-edit .love-toggle{margin-top:7px!important;min-height:38px!important}#editModal.local-random-edit .modal-actions-row{margin-top:8px!important;padding-top:7px!important;gap:6px!important}#editModal.local-random-edit .modal-actions-row .btn{min-height:38px!important}
 @media(max-width:600px){#editModal.local-random-edit{width:calc(100% - 10px)!important;max-height:88vh!important}#editModal.local-random-edit .modal-inner{padding:11px!important;max-height:88vh!important}#editModal.local-random-edit .admin-detail{grid-template-columns:78px minmax(0,1fr)!important;gap:9px!important;padding-bottom:9px!important}#editModal.local-random-edit .admin-detail::before{left:87px!important}#editModal.local-random-edit .admin-detail img{width:78px!important}#editModal.local-random-edit .admin-detail>div{padding-top:16px!important}#editModal.local-random-edit .modal-status-row{margin-top:7px!important;padding-top:5px!important;column-gap:7px!important}#editModal.local-random-edit .personal-box{margin-top:8px!important}#editModal.local-random-edit .personal-grid{gap:7px!important;padding:8px!important}#editModal.local-random-edit #editComment{min-height:72px!important}#editModal.local-random-edit .love-toggle{margin-top:6px!important;min-height:36px!important}#editModal.local-random-edit .modal-actions-row{margin-top:7px!important;padding-top:6px!important;gap:5px!important}#editModal.local-random-edit .modal-actions-row .btn{min-height:36px!important}}
 @media(max-width:380px){#editModal.local-random-edit{width:calc(100% - 8px)!important}#editModal.local-random-edit .modal-inner{padding:10px!important}#editModal.local-random-edit .admin-detail{grid-template-columns:74px minmax(0,1fr)!important;gap:8px!important}#editModal.local-random-edit .admin-detail::before{left:82px!important}#editModal.local-random-edit .admin-detail img{width:74px!important}}
+</style><style id="random-modals-mobile-balance-v5">
+@media(max-width:600px){
+  /* IMDb Random: remove the oversized stack above the poster. */
+  .imdb-random-modal .modal-inner{padding-top:8px!important}
+  .imdb-random-modal .imdb-random-head{margin-bottom:3px!important}
+  .imdb-random-modal .imdb-random-filter{margin-bottom:3px!important}
+  .imdb-random-modal .imdb-random-filter label{line-height:1.1!important}
+  .imdb-random-modal .imdb-random-filter select{min-height:32px!important;padding-top:5px!important;padding-bottom:5px!important}
+  .imdb-random-modal .imdb-random-search input,
+  .imdb-random-modal .imdb-random-search .btn{min-height:34px!important}
+  .imdb-random-modal .imdb-random-search-hint{margin-bottom:3px!important;line-height:1.2!important}
+  .imdb-random-modal .imdb-random-state{margin-bottom:3px!important}
+  .imdb-random-modal .imdb-random-result{gap:8px!important}
+  /* Local Random: make the bottom actions equal and visually centered. */
+  #editModal.local-random-edit .modal-actions-row{
+    display:grid!important;
+    grid-template-columns:minmax(0,1fr) minmax(0,1fr) minmax(0,1.15fr)!important;
+    align-items:stretch!important;
+    gap:6px!important;
+  }
+  #editModal.local-random-edit .modal-actions-row .btn{
+    width:100%!important;
+    min-width:0!important;
+    margin:0!important;
+    padding-left:8px!important;
+    padding-right:8px!important;
+  }
+  #editModal.local-random-edit .modal-actions-row .draft-state{
+    display:none!important;
+  }
+}
+@media(max-width:380px){
+  #editModal.local-random-edit .modal-actions-row{
+    grid-template-columns:minmax(0,1fr) minmax(0,1fr) minmax(0,1.12fr)!important;
+    gap:5px!important;
+  }
+  #editModal.local-random-edit .modal-actions-row .btn{
+    font-size:9px!important;
+    padding-left:5px!important;
+    padding-right:5px!important;
+  }
+}
 </style></head>
 <body>
 <div class="app">
