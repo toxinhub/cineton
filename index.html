@@ -2234,7 +2234,9 @@ update();
 (()=>{
   const API="https://osplbqpgxrfovjrumsnb.supabase.co/functions/v1/public-suggestions",KEY="sb_publishable_tcBaC8FqwlcFFw-IwKmiVA_y67PZNPX";
   const esc=v=>String(v??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;","\"":"&quot;","'":"&#39;"}[c]));
-  const formatWhen=v=>{const d=new Date(v);return Number.isNaN(d.getTime())?"":d.toLocaleString(undefined,{dateStyle:"medium",timeStyle:"short"});};
+  const formatDate=v=>{const d=new Date(v);return Number.isNaN(d.getTime())?"":d.toLocaleDateString(undefined,{month:"short",day:"numeric",year:"numeric"});};
+  const formatTime=v=>{const d=new Date(v);return Number.isNaN(d.getTime())?"":d.toLocaleTimeString(undefined,{hour:"numeric",minute:"2-digit",hour12:true});};
+  const localDateKey=v=>{const d=new Date(v);return Number.isNaN(d.getTime())?"":`${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,"0")}-${String(d.getDate()).padStart(2,"0")}`;};
   const btn=document.getElementById("suggestMeBtn");
   if(!btn)return;
   const dialog=document.createElement("dialog");
@@ -2245,7 +2247,16 @@ update();
   document.body.appendChild(dialog);
   const list=dialog.querySelector(".suggestion-list"),form=dialog.querySelector("form"),input=dialog.querySelector("#suggestionInput"),submit=dialog.querySelector(".suggestion-submit"),msg=dialog.querySelector(".suggestion-message");
   const render=rows=>{
-    list.innerHTML=rows.length?rows.map((x,i)=>'<article class="suggestion-item"><div class="suggestion-number">'+(i+1)+'.</div><div><p class="suggestion-title-text">'+esc(x.title)+'</p><time class="suggestion-time" datetime="'+esc(x.created_at)+'">'+esc(formatWhen(x.created_at))+'</time></div></article>').join(''):'<div class="suggestion-empty">No suggestions yet. Be the first to suggest something.</div>';
+    if(!rows.length){list.innerHTML='<div class="suggestion-empty">No suggestions yet. Be the first to suggest something.</div>';return;}
+    const sorted=[...rows].sort((a,b)=>new Date(b.created_at)-new Date(a.created_at));
+    const groups=[];
+    let current=null;
+    sorted.forEach((x,i)=>{
+      const key=localDateKey(x.created_at);
+      if(!current||current.key!==key){current={key,date:x.created_at,items:[]};groups.push(current);}
+      current.items.push({...x,serial:i+1});
+    });
+    list.innerHTML=groups.map(g=>'<section class="suggestion-date-group"><div class="suggestion-date-header"><div class="suggestion-date-gutter"></div><div class="suggestion-date-content"><time class="suggestion-date" datetime="'+esc(g.date)+'">'+esc(formatDate(g.date))+'</time></div></div>'+g.items.map(x=>'<article class="suggestion-item"><div class="suggestion-number">'+x.serial+'.</div><div class="suggestion-item-content"><div class="suggestion-item-main"><p class="suggestion-item-title">'+esc(x.title)+'</p><time class="suggestion-item-time" datetime="'+esc(x.created_at)+'">'+esc(formatTime(x.created_at))+'</time></div></div></article>').join('')+'</section>').join('');
   };
   const load=async()=>{
     list.innerHTML='<div class="suggestion-empty">Loading suggestions…</div>';
