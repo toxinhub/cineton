@@ -394,6 +394,31 @@ button:active,a:active,[role="button"]:active,summary:active{background-image:no
   .imdb-random-modal .imdb-random-search .btn{padding-left:6px!important;padding-right:6px!important}
 }
 </style>
+
+<style id="imdb-random-story-below-v8">
+/* IMDb Random mobile — story spans the modal cleanly below the poster/content. */
+@media(max-width:600px){
+  .imdb-random-modal .imdb-random-result{
+    grid-template-columns:86px minmax(0,1fr)!important;
+    column-gap:8px!important;
+    row-gap:0!important;
+    align-items:start!important;
+  }
+  .imdb-random-modal #imdbRandomOverview{
+    grid-column:1/-1!important;
+    width:100%!important;
+    max-width:100%!important;
+    box-sizing:border-box!important;
+    margin:9px 0 0!important;
+    padding:0!important;
+    clear:both!important;
+  }
+}
+@media(max-width:380px){
+  .imdb-random-modal .imdb-random-result{column-gap:7px!important}
+  .imdb-random-modal #imdbRandomOverview{margin-top:8px!important}
+}
+</style>
 </head>
 <body>
 <div class="app">
