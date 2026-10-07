@@ -564,6 +564,7 @@ async function addImdbRandom(status){
     setImdbRandomMessage('✓ '+item.title+' was added to your CineTon library.','ok');
     $('#imdbAddWatchlist').disabled=true;$('#imdbAddWatched').disabled=true;
     $('#imdbWatchedDetails').classList.add('hidden');$('#imdbAddWatched').textContent='Mark as Watched';$('#imdbWatchedRating').value='';$('#imdbWatchedComment').value='';$('#imdbRandomLoveToggle').setAttribute('aria-pressed','false');$('#imdbRandomLoveToggle').textContent='♡ Love';$('#imdbRandomLoveToggle').classList.remove('is-loved');
+    setTimeout(()=>{if($('#imdbRandomModal').open)pickImdbRandom()},220);
   }catch(e){
     data=old;renderAll();setImdbRandomState('Could not save this title.','error');setImdbRandomMessage(connError(e),'error');
     btn.disabled=false;
