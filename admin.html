@@ -297,7 +297,7 @@ button:active,a:active,[role="button"]:active,summary:active{background-image:no
 <div class="activity-stat"><strong id="activityCommentCount">0</strong><span>Comments</span></div>
 <div class="activity-stat"><strong id="activityRatingCount">0</strong><span>Ratings</span></div>
 </div>
-<div class="activity-toolbar"><span id="activityCount" class="activity-count">0 recent activities</span><button id="activityRefresh" class="btn secondary" type="button">Refresh</button><button id="activityMarkRead" class="btn secondary" type="button">Mark all read</button></div>
+<div class="activity-toolbar"><div class="activity-filters" role="group" aria-label="Activity filter"><button class="activity-filter active" type="button" data-activity-filter="all">All</button><button class="activity-filter" type="button" data-activity-filter="comment">Comments</button><button class="activity-filter" type="button" data-activity-filter="rating">Ratings</button></div><span id="activityCount" class="activity-count">0 recent activities</span><button id="activityRefresh" class="btn secondary" type="button">Refresh</button><button id="activityMarkRead" class="btn secondary" type="button">Mark all read</button></div>
 <div id="activityList" class="activity-list"><div class="activity-empty">Connect GitHub to monitor public activity.</div></div>
 <div id="activityMsg" class="message hidden" aria-live="polite"></div>
 </section>
@@ -855,7 +855,7 @@ const PUBLIC_COMMENTS_API="https://osplbqpgxrfovjrumsnb.supabase.co",PUBLIC_COMM
 const PUBLIC_ACTIVITY_FN=PUBLIC_COMMENTS_API+"/functions/v1/public-activity";
 const ACTIVITY_SEEN_KEY="ct_public_activity_seen_at";
 const ACTIVITY_SUPABASE_KEY="sb_publishable_tcBaC8FqwlcFFw-IwKmiVA_y67PZNPX";
-let publicActivityRows=[],activityChannel=null,activityPolling=null,activityInitialized=false;
+let publicActivityRows=[],activityChannel=null,activityPolling=null,activityInitialized=false,activityFilter="all";
 function activitySeenAt(){return LS.getItem(ACTIVITY_SEEN_KEY)||""}
 function activityIsUnread(x){const seen=activitySeenAt();return !!x?.occurred_at && (!seen || new Date(x.occurred_at).getTime()>new Date(seen).getTime())}
 function activityTitle(id){const key=String(id||"").trim(),m=data.find(x=>String(x.id||"").trim()===key);return m?.title||PUBLIC_TITLE_FALLBACK[key]||"Title not found"}
@@ -868,13 +868,20 @@ function updateActivityBadge(){
   $("#activityUnreadCount").textContent=String(unread);
 }
 function renderActivity(){
-  const rows=[...publicActivityRows].sort((a,b)=>new Date(b.occurred_at)-new Date(a.occurred_at));
-  const comments=rows.filter(x=>x.type==="comment").length,ratings=rows.filter(x=>x.type==="rating").length;
-  $("#activityCommentCount").textContent=comments;$("#activityRatingCount").textContent=ratings;
+  const allRows=[...publicActivityRows].sort((a,b)=>new Date(b.occurred_at)-new Date(a.occurred_at));
+  const rows=activityFilter==="all"?allRows:allRows.filter(x=>x.type===activityFilter);
+  const comments=allRows.filter(x=>x.type==="comment").length,ratings=allRows.filter(x=>x.type==="rating").length;
+  const todayKey=new Date().toDateString();
+  const today=allRows.filter(x=>new Date(x.occurred_at).toDateString()===todayKey).length;
+  $("#activityCommentCount").textContent=comments;$("#activityRatingCount").textContent=ratings;$("#activityTodayCount").textContent=today;
   $("#activityCount").textContent=rows.length+" recent activit"+(rows.length===1?"y":"ies");
   const list=$("#activityList");
   if(!rows.length){list.innerHTML='<div class="activity-empty">No public comments or ratings yet.</div>';updateActivityBadge();return}
+  let lastDay="";
   list.innerHTML=rows.slice(0,80).map(x=>{
+    const day=new Date(x.occurred_at).toLocaleDateString(undefined,{weekday:"long",month:"short",day:"numeric"});
+    const divider=day!==lastDay?`<div class="activity-day">${esc(day)}</div>`:"";
+    lastDay=day;
     const title=activityTitle(x.media_item_id),unread=activityIsUnread(x),icon=x.type==="rating"?"★":"💬";
     const preview=x.type==="rating"?"Rated "+esc(String(x.rating||"—"))+"/10":"“"+esc(String(x.comment||""))+"”";
     return '<article class="activity-row'+(unread?" unread":"")+'"><div class="activity-icon" aria-hidden="true">'+icon+'</div><div class="activity-copy"><div class="activity-title">'+esc(title)+'</div><div class="activity-meta">'+esc(activityTypeLabel(x))+(x.name?' · '+esc(x.name):'')+'</div><div class="activity-preview">'+preview+'</div></div><div class="activity-time">'+esc(activityTime(x.occurred_at))+'</div><button class="activity-open" type="button" data-activity-open="'+esc(x.media_item_id)+'">Open</button></article>'
@@ -939,6 +946,13 @@ function initPublicActivity(){
 $("#activityBell")?.addEventListener("click",()=>{switchSection("activity");loadPublicActivity(true);document.querySelector("#activitySection")?.scrollIntoView({block:"start"})});
 $("#activityRefresh")?.addEventListener("click",()=>loadPublicActivity(false));
 $("#activityMarkRead")?.addEventListener("click",markActivityRead);
+
+document.querySelectorAll("[data-activity-filter]").forEach(b=>b.addEventListener("click",()=>{
+  activityFilter=b.dataset.activityFilter||"all";
+  document.querySelectorAll("[data-activity-filter]").forEach(x=>x.classList.toggle("active",x===b));
+  renderActivity();
+}));
+
 const PUBLIC_TITLE_FALLBACK={"movie-377880":"100% Love","movie-49521":"Man of Steel"};
 async function loadPublicCommentsAdmin(){const list=$('#publicCommentsList'),msg=$('#publicCommentsMsg'),q=($('#publicCommentsSearch')?.value||'').trim().toLocaleLowerCase();try{if(!data.length){if($('#repo').value.trim()&&$('#tok').value.trim()){try{await load()}catch{await loadPublicLibraryFallback()}}else{await loadPublicLibraryFallback()}}const r=await fetch(PUBLIC_COMMENTS_API+'/rest/v1/public_comments?select=id,media_item_id,name,comment,created_at&order=created_at.desc',{headers:{apikey:PUBLIC_COMMENTS_KEY,Accept:'application/json'}});if(!r.ok)throw Error('Could not load public comments.');const rows=await r.json(),byId=new Map(data.map(m=>[String(m.id).trim(),m])),filtered=rows.filter(x=>{const key=String(x.media_item_id||'').trim(),m=byId.get(key),hay=[m?.title||key,x.name||'',x.comment].join(' ').toLocaleLowerCase();return !q||hay.includes(q)});$('#publicCommentsCount').textContent=rows.length+' comment'+(rows.length===1?'':'s');list.innerHTML=filtered.length?filtered.map(x=>{const key=String(x.media_item_id||'').trim(),m=byId.get(key),mTitle=m&&m.title?m.title:(PUBLIC_TITLE_FALLBACK[key]||'Title not found'),when=new Date(x.created_at).toLocaleString(undefined,{dateStyle:'medium',timeStyle:'short'});return '<article class="public-admin-row" data-comment-id="'+esc(x.id)+'"><div class="public-admin-check"><input type="checkbox" class="public-comment-check" aria-label="Select comment"></div><div><div class="public-admin-title">'+esc(mTitle)+'</div><div class="public-admin-meta">ID: '+esc(key)+' · '+esc(m?.type==='tv'?'TV / Show':'Movie')+' · '+esc(x.name||'Anonymous')+' · '+esc(when)+'</div><div class="public-admin-comment">'+esc(x.comment)+'</div></div><div class="public-admin-actions"><button class="public-admin-edit" type="button" data-edit-comment="'+esc(x.id)+'">Edit</button><button class="public-admin-delete" type="button" data-comment-id="'+esc(x.id)+'">Delete</button></div></article>'}).join(''):'<div class="hint">No public comments found.</div>';list.querySelectorAll('.public-admin-delete').forEach(b=>b.onclick=()=>deletePublicComment(b.dataset.commentId));list.querySelectorAll('[data-edit-comment]').forEach(b=>b.onclick=()=>editPublicComment(b.dataset.editComment));list.querySelectorAll('.public-comment-check').forEach(b=>b.onchange=updatePublicSelection);updatePublicSelection();msg.className='message hidden'}catch(e){msg.textContent=e.message||'Could not load public comments.';msg.className='message error'}}
 function selectedPublicCommentIds(){return Array.from(document.querySelectorAll('.public-comment-check:checked')).map(x=>x.closest('.public-admin-row')?.dataset.commentId).filter(Boolean)}
@@ -1673,5 +1687,59 @@ $('#importBackupFile').onchange=async e=>{
 }
 @media(max-width:380px){
   #editModal.local-random-edit .modal-actions-row .local-random-another{min-width:88px!important}
+}
+</style>
+
+
+<style id="activity-polish-v2">
+/* Activity — balanced information density */
+#activitySection{max-width:980px;margin-left:auto;margin-right:auto}
+#activitySection .head{align-items:center;margin-bottom:10px}
+#activitySection .sector-note{display:block;margin-top:3px;font:400 9px/1.3 Mina,sans-serif;color:var(--muted)}
+.activity-summary{grid-template-columns:repeat(4,minmax(0,1fr));gap:7px;margin-bottom:8px}
+.activity-stat{min-height:58px;padding:9px 10px;display:flex;flex-direction:column;justify-content:center}
+.activity-stat strong{font-size:16px;line-height:1}
+.activity-stat span{margin-top:4px}
+.activity-toolbar{display:grid;grid-template-columns:minmax(0,1fr) auto auto;gap:6px;align-items:center;margin:0 0 8px;padding:8px 0;border-top:1px solid var(--line)}
+.activity-filters{display:flex;gap:4px;min-width:0}
+.activity-filter{border:1px solid var(--line2);background:#77583b08;color:var(--muted);border-radius:8px;padding:6px 8px;font:600 9px/1 Mina,sans-serif;white-space:nowrap}
+.activity-filter.active{background:#77583b14;border-color:#77583b45;color:var(--text)}
+.activity-toolbar .btn{min-height:30px;padding:6px 9px;font-size:9px}
+.activity-count{font-size:9px!important}
+.activity-list{gap:5px}
+.activity-row{grid-template-columns:30px minmax(0,1fr) auto;gap:8px;padding:8px;border-radius:10px}
+.activity-row.unread{box-shadow:inset 3px 0 0 var(--accent)}
+.activity-title{font-size:11px}
+.activity-meta{font-size:8.5px}
+.activity-preview{font-size:9.5px;line-height:1.4}
+.activity-time{font-size:8px}
+.activity-open{min-height:27px}
+.activity-day{margin:9px 1px 4px;color:var(--muted);font:600 8px/1 Mina,sans-serif;letter-spacing:.04em;text-transform:uppercase}
+.activity-day:first-child{margin-top:2px}
+.activity-live{padding:4px 7px;border:1px solid var(--line);border-radius:99px;background:#fffaf2}
+@media(max-width:600px){
+  #activitySection{max-width:none}
+  .activity-summary{grid-template-columns:repeat(4,minmax(0,1fr));gap:4px}
+  .activity-stat{min-height:52px;padding:7px 5px;text-align:center}
+  .activity-stat strong{font-size:14px}
+  .activity-stat span{font-size:7px}
+  .activity-toolbar{grid-template-columns:1fr auto;gap:5px}
+  .activity-filters{grid-column:1/-1;display:grid;grid-template-columns:repeat(3,1fr);gap:4px}
+  .activity-filter{padding:7px 4px}
+  .activity-toolbar .activity-count{grid-column:1;grid-row:2;align-self:center}
+  .activity-toolbar #activityRefresh,.activity-toolbar #activityMarkRead{grid-row:2}
+  .activity-toolbar #activityRefresh{grid-column:2}
+  .activity-toolbar #activityMarkRead{grid-column:2;display:none}
+  .activity-row{grid-template-columns:27px minmax(0,1fr);padding:7px}
+  .activity-icon{width:27px;height:27px}
+  .activity-row .activity-time{grid-column:2;grid-row:2}
+  .activity-row .activity-open{grid-column:2;grid-row:3;justify-self:start;margin-top:2px}
+}
+@media(max-width:380px){
+  .activity-summary{gap:3px}
+  .activity-stat{min-height:49px;padding:6px 3px}
+  .activity-stat strong{font-size:13px}
+  .activity-stat span{font-size:6.5px}
+  .activity-filter{font-size:8px}
 }
 </style>
