@@ -1202,7 +1202,7 @@ $('#importBackupFile').onchange=async e=>{
 </script>
 <script id="public-suggestions-admin-v1">
 (()=>{
- const API="https://osplbqpgxrfovjrumsnb.supabase.co/functions/v1/public-suggestions";
+ const API="https://osplbqpgxrfovjrumsnb.supabase.co/functions/v1/public-suggestions",KEY="sb_publishable_tcBaC8FqwlcFFw-IwKmiVA_y67PZNPX";
  const esc=v=>String(v??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;","\"":"&quot;","'":"&#39;"}[c]));
  const when=v=>{const d=new Date(v);return Number.isNaN(d.getTime())?"":d.toLocaleString(undefined,{dateStyle:"medium",timeStyle:"short"});};
  const list=document.getElementById("suggestionsList"),count=document.getElementById("suggestionsCount"),badge=document.getElementById("suggestionsNavBadge"),search=document.getElementById("suggestionsSearch"),msg=document.getElementById("suggestionsMsg");
@@ -1221,7 +1221,7 @@ $('#importBackupFile').onchange=async e=>{
  };
  async function load(){
    list.innerHTML='<div class="suggestions-admin-empty">Loading suggestions…</div>';
-   try{const r=await fetch(API,{cache:"no-store"});const j=await r.json();if(!r.ok)throw Error(j.error||"Could not load suggestions.");rows=Array.isArray(j.suggestions)?j.suggestions:[];showMsg("");render();}
+   try{const r=await fetch(API,{cache:"no-store",headers:{apikey:KEY,Accept:"application/json"}});const j=await r.json();if(!r.ok)throw Error(j.error||"Could not load suggestions.");rows=Array.isArray(j.suggestions)?j.suggestions:[];showMsg("");render();}
    catch(e){showMsg(e.message||"Could not load suggestions.",true);list.innerHTML='<div class="suggestions-admin-empty">Could not load suggestions.</div>';}
  }
  async function edit(id){
@@ -1230,7 +1230,7 @@ $('#importBackupFile').onchange=async e=>{
    const box=document.createElement("div");box.className="suggestions-admin-edit-box";box.innerHTML='<textarea maxlength="240" aria-label="Edit suggestion"></textarea><div class="suggestions-admin-edit-actions"><button class="btn" type="button" data-save>Save</button><button class="btn secondary" type="button" data-cancel>Cancel</button></div>';
    row.children[1].appendChild(box);const ta=box.querySelector("textarea");ta.value=item.title;ta.focus();
    box.querySelector("[data-cancel]").onclick=()=>box.remove();
-   box.querySelector("[data-save]").onclick=async()=>{const title=ta.value.replace(/\s+/g," ").trim(),save=box.querySelector("[data-save]");if(!title)return;const t=token();if(!t){showMsg("Connect GitHub first so the edit can be authorized.",true);return}save.disabled=true;try{const r=await fetch(API,{method:"PATCH",headers:{"Content-Type":"application/json","x-github-token":t},body:JSON.stringify({id,title})});const j=await r.json().catch(()=>({}));if(!r.ok)throw Error(j.error||"Edit failed.");await load();}catch(e){showMsg(e.message||"Edit failed.",true)}finally{save.disabled=false}};
+   box.querySelector("[data-save]").onclick=async()=>{const title=ta.value.replace(/\s+/g," ").trim(),save=box.querySelector("[data-save]");if(!title)return;const t=token();if(!t){showMsg("Connect GitHub first so the edit can be authorized.",true);return}save.disabled=true;try{const r=await fetch(API,{method:"PATCH",headers:{apikey:KEY,"Content-Type":"application/json","x-github-token":t},body:JSON.stringify({id,title})});const j=await r.json().catch(()=>({}));if(!r.ok)throw Error(j.error||"Edit failed.");await load();}catch(e){showMsg(e.message||"Edit failed.",true)}finally{save.disabled=false}};
  }
  async function remove(id){
    const item=rows.find(x=>String(x.id)===String(id));if(!item)return;
