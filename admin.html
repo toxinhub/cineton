@@ -347,6 +347,18 @@ button:active,a:active,[role="button"]:active,summary:active{background-image:no
         <p id="imdbRandomOverview"></p>
       </div>
     </div>
+    <div id="imdbWatchedDetails" class="imdb-watched-details hidden" aria-label="Watched details">
+      <div class="imdb-watched-fields">
+        <label>Rating
+          <select id="imdbWatchedRating" aria-label="Personal rating">
+            <option value="">Rating</option><option value="1">1/10</option><option value="2">2/10</option><option value="3">3/10</option><option value="4">4/10</option><option value="5">5/10</option><option value="6">6/10</option><option value="7">7/10</option><option value="8">8/10</option><option value="9">9/10</option><option value="10">10/10</option>
+          </select>
+        </label>
+        <label class="imdb-watched-comment">Comment
+          <input id="imdbWatchedComment" type="text" maxlength="300" placeholder="Optional comment" aria-label="Personal comment">
+        </label>
+      </div>
+    </div>
     <div class="imdb-random-actions">
       <button id="imdbAddWatchlist" class="btn secondary" type="button">Add to Watchlist</button>
       <button id="imdbAddWatched" class="btn" type="button">Mark as Watched</button>
@@ -576,10 +588,18 @@ async function pickImdbRandom(){
 async function addImdbRandom(status){
   const m=imdbRandomCurrent;if(!m||!fileSha)return;
   if(data.some(x=>String(x.id)===String(m.id))){setImdbRandomMessage('This title is already in your library.','ok');return}
+  if(status==='watched' && $('#imdbWatchedDetails').classList.contains('hidden')){
+    $('#imdbWatchedDetails').classList.remove('hidden');
+    $('#imdbAddWatched').textContent='Save Watched';
+    $('#imdbWatchedRating').focus();
+    return;
+  }
   const btn=status==='watched'?$('#imdbAddWatched'):$('#imdbAddWatchlist');
   btn.disabled=true;setImdbRandomState('Saving to your library…','busy');
   const item={...m};delete item._discovery_category;delete item._tmdb_rating;
-  Object.assign(item,{my_rating:null,watched_on:status==='watched'?new Date().toISOString().slice(0,10):'',comment:'',status,needs_review:false,added_at:new Date().toISOString()});
+  const watchedRating=status==='watched'?($('#imdbWatchedRating').value||null):null;
+  const watchedComment=status==='watched'?$('#imdbWatchedComment').value.trim():'';
+  Object.assign(item,{my_rating:watchedRating,watched_on:status==='watched'?new Date().toISOString().slice(0,10):'',comment:watchedComment,status,needs_review:false,added_at:new Date().toISOString()});
   const old=data.slice();
   try{
     data.unshift(item);await save('IMDb Random · Add '+item.title);
@@ -587,6 +607,7 @@ async function addImdbRandom(status){
     setImdbRandomState(status==='watched'?'Added as Watched':'Added to Watchlist','ok');
     setImdbRandomMessage('✓ '+item.title+' was added to your CineTon library.','ok');
     $('#imdbAddWatchlist').disabled=true;$('#imdbAddWatched').disabled=true;
+    $('#imdbWatchedDetails').classList.add('hidden');$('#imdbAddWatched').textContent='Mark as Watched';$('#imdbWatchedRating').value='';$('#imdbWatchedComment').value='';
   }catch(e){
     data=old;renderAll();setImdbRandomState('Could not save this title.','error');setImdbRandomMessage(connError(e),'error');
     btn.disabled=false;
@@ -736,6 +757,14 @@ $('#importBackupFile').onchange=async e=>{
   .imdb-random-modal #closeImdbRandom{top:9px!important;right:9px!important;width:32px!important;height:32px!important;min-width:32px!important;min-height:32px!important;font-size:20px!important}
   .imdb-random-head{padding-right:42px!important}
 }
+</style>
+
+<style id="imdb-random-watched-details-v1">
+.imdb-watched-details{margin-top:10px;padding:8px 9px;border:1px solid var(--line2);border-radius:9px;background:#77583b08}
+.imdb-watched-fields{display:grid;grid-template-columns:92px minmax(0,1fr);gap:7px;align-items:end}
+.imdb-watched-fields label{display:grid;gap:3px;color:var(--muted);font:600 9px/1.1 Mina,sans-serif}
+.imdb-watched-fields select,.imdb-watched-fields input{width:100%;min-height:32px;padding:6px 8px;border:1px solid var(--line2);border-radius:7px;background:var(--panel);color:var(--text);font:500 10px/1.2 Mina,sans-serif;box-sizing:border-box}
+@media(max-width:600px){.imdb-watched-details{margin-top:8px;padding:7px}.imdb-watched-fields{grid-template-columns:82px minmax(0,1fr);gap:6px}.imdb-watched-fields select,.imdb-watched-fields input{min-height:34px;font-size:10px;padding:6px 7px}}
 </style>
 </html>
 <style id="admin-submit-balance">
