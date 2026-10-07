@@ -351,7 +351,6 @@ button:active,a:active,[role="button"]:active,summary:active{background-image:no
         <p id="imdbRandomOverview"></p>
       </div>
     </div>
-    <div class="imdb-random-love-row"><button id="imdbRandomLoveToggle" class="imdb-random-love" type="button" aria-pressed="false" aria-label="Add to favorites">♡ Love</button></div>
     <div id="imdbWatchedDetails" class="imdb-watched-details hidden" aria-label="Watched details">
       <div class="imdb-watched-fields">
         <label>Rating
@@ -362,6 +361,7 @@ button:active,a:active,[role="button"]:active,summary:active{background-image:no
         <label class="imdb-watched-comment">Comment
           <input id="imdbWatchedComment" type="text" maxlength="300" placeholder="Optional comment" aria-label="Personal comment">
         </label>
+        <button id="imdbRandomLoveToggle" class="imdb-random-love" type="button" aria-pressed="false" aria-label="Add to favorites">♡ Love</button>
       </div>
     </div>
     <div class="imdb-random-actions">
@@ -840,6 +840,6 @@ $('#importBackupFile').onchange=async e=>{
 </style>
 <style id="imdb-random-love-watched-only-v2">
 .imdb-watched-fields{grid-template-columns:92px minmax(0,1fr) auto!important}
-.imdb-watched-fields .imdb-random-love{align-self:end;min-width:62px!important;white-space:nowrap}
+.imdb-watched-fields .imdb-random-love{align-self:end;min-width:62px!important;white-space:nowrap;margin:0!important}
 @media(max-width:600px){.imdb-watched-fields{grid-template-columns:82px minmax(0,1fr) auto!important}.imdb-watched-fields .imdb-random-love{min-width:58px!important;padding-left:7px!important;padding-right:7px!important}}
 </style>
