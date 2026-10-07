@@ -279,8 +279,8 @@ button:active,a:active,[role="button"]:active,summary:active{background-image:no
   .activity-title{font-size:10px}.activity-preview{font-size:9px}
 }
 </style>
-<style id="activity-polish-v3">
-/* Activity v3 — balanced metrics, quick notification drawer, grouping and moderation shortcuts */
+<style id="activity-polish-v4">
+/* Activity v4 — balanced activity metrics and clean sticky navigation */
 .activity-summary{display:grid!important;grid-template-columns:repeat(4,minmax(0,1fr));gap:7px!important;margin-bottom:9px!important}
 .activity-stat{min-width:0;min-height:58px;padding:9px 8px!important;display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center;border-radius:12px}
 .activity-stat strong{font-size:16px;line-height:1}
@@ -294,63 +294,25 @@ button:active,a:active,[role="button"]:active,summary:active{background-image:no
 .activity-actions{display:flex;flex-direction:column;align-items:flex-end;gap:4px}
 .activity-moderate{border:1px solid #a54d4530;background:#a54d4508;color:#8f4b49;border-radius:7px;padding:5px 7px;font-size:8px;white-space:nowrap}
 .activity-moderate:hover{background:#a54d4512;border-color:#a54d4550}
-.activity-drawer{position:fixed;inset:0;z-index:100;pointer-events:none;visibility:hidden}
-.activity-drawer.open{pointer-events:auto;visibility:visible}
-.activity-drawer-backdrop{position:absolute;inset:0;background:#40352c35;opacity:0;transition:opacity .18s}
-.activity-drawer-panel{position:absolute;top:0;right:0;width:min(390px,calc(100% - 20px));height:100%;background:#fbf6ed;border-left:1px solid var(--line2);box-shadow:-18px 0 50px #40352c22;transform:translateX(100%);transition:transform .2s;display:flex;flex-direction:column}
-.activity-drawer.open .activity-drawer-backdrop{opacity:1}
-.activity-drawer.open .activity-drawer-panel{transform:translateX(0)}
-.activity-drawer-head{display:flex;align-items:center;justify-content:space-between;gap:10px;padding:16px;border-bottom:1px solid var(--line)}
-.activity-drawer-head h2{margin:0;font:600 18px/1 Mina,sans-serif}
-.activity-drawer-head small{color:var(--muted);font-size:9px}
-.activity-drawer-head button{width:34px;height:34px;border:1px solid var(--line2);border-radius:9px;background:#fffaf2;color:var(--text);font-size:21px;line-height:1}
-.activity-drawer-list{padding:8px;overflow:auto;flex:1}
-.activity-drawer-row{width:100%;display:grid;grid-template-columns:30px minmax(0,1fr);gap:8px;text-align:left;border:1px solid transparent;border-radius:10px;background:transparent;padding:9px;margin-bottom:3px;color:var(--text);cursor:pointer}
-.activity-drawer-row:hover{background:#77583b08;border-color:var(--line)}
-.activity-drawer-row.unread{background:#fffdf8;border-color:#77583b35;box-shadow:inset 2px 0 0 var(--accent)}
-.activity-drawer-icon{width:30px;height:30px;border-radius:8px;background:#77583b0d;display:grid;place-items:center;color:var(--accent);font-size:13px}
-.activity-drawer-copy{min-width:0}
-.activity-drawer-copy strong,.activity-drawer-copy small,.activity-drawer-copy em{display:block}
-.activity-drawer-copy strong{font:700 11px/1.25 Mina,sans-serif;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-.activity-drawer-copy small{margin-top:2px;color:var(--muted);font-size:8px}
-.activity-drawer-copy em{margin-top:4px;color:var(--text);font-style:normal;font-size:9px;line-height:1.4;overflow-wrap:anywhere}
-.activity-drawer-foot{display:grid;grid-template-columns:1fr 1fr;gap:6px;padding:10px 12px;border-top:1px solid var(--line)}
-.activity-drawer-foot .btn{min-height:38px}
-body.activity-drawer-open{overflow:hidden}
 @media(max-width:600px){
   .activity-summary{gap:4px!important}
   .activity-stat{min-height:52px;padding:7px 4px!important}
-  .activity-stat strong{font-size:14px}
-  .activity-stat span{font-size:7px}
+  .activity-stat strong{font-size:14px}.activity-stat span{font-size:7px}
   .activity-row{grid-template-columns:27px minmax(0,1fr);gap:7px!important}
-  .activity-row .activity-actions{grid-column:2;display:flex;flex-direction:row;align-items:center;justify-content:flex-start;margin-top:2px}
   .activity-row .activity-time{grid-column:2;grid-row:2}
-  .activity-row .activity-actions{grid-row:3}
+  .activity-row .activity-actions{grid-column:2;grid-row:3;display:flex;flex-direction:row;align-items:center;justify-content:flex-start;margin-top:2px}
   .activity-movie{margin-top:8px}
-  .activity-drawer-panel{width:min(360px,calc(100% - 12px))}
 }
 @media(max-width:380px){
   .activity-summary{gap:3px!important}
   .activity-stat{min-height:49px;padding:6px 2px!important}
-  .activity-stat strong{font-size:13px}
-  .activity-stat span{font-size:6.5px}
+  .activity-stat strong{font-size:13px}.activity-stat span{font-size:6.5px}
 }
 </style>
 </head>
 <body>
 <div class="app">
 <header class="top"><div class="brand"><div class="logo">🎬</div><div><h1>CineTon Admin</h1><p>Library management</p></div></div><div style="display:flex;align-items:center;gap:7px"><button id="activityBell" class="activity-bell" type="button" aria-label="Open activity notifications" title="Public activity"><span aria-hidden="true">🔔</span><b id="activityBadge" class="activity-badge">0</b></button><div id="status" class="status">Not connected</div></div></header>
-<div id="activityDrawer" class="activity-drawer" aria-hidden="true">
-  <div class="activity-drawer-backdrop" data-activity-drawer-close></div>
-  <aside class="activity-drawer-panel" role="dialog" aria-modal="true" aria-labelledby="activityDrawerTitle">
-    <div class="activity-drawer-head">
-      <div><h2 id="activityDrawerTitle">Public Activity</h2><small>Latest comments &amp; ratings</small></div>
-      <button id="activityDrawerClose" type="button" aria-label="Close notifications">×</button>
-    </div>
-    <div id="activityDrawerList" class="activity-drawer-list"><div class="activity-empty">Connect GitHub to monitor activity.</div></div>
-    <div class="activity-drawer-foot"><button id="activityDrawerViewAll" class="btn secondary" type="button">View all activity</button><button id="activityDrawerRead" class="btn" type="button">Mark read</button></div>
-  </aside>
-</div>
 
 <div class="stats"><div class="stat"><b id="total">—</b><span>Total titles</span></div><div class="stat"><b id="watched">—</b><span>Watched</span></div><div class="stat"><b id="watchlist">—</b><span>Watchlist</span></div></div>
 
@@ -945,7 +907,7 @@ function renderActivity(){
   $("#activityCommentCount").textContent=comments;$("#activityRatingCount").textContent=ratings;$("#activityTodayCount").textContent=today;
   $("#activityCount").textContent=rows.length+" recent activit"+(rows.length===1?"y":"ies");
   const list=$("#activityList");
-  if(!rows.length){list.innerHTML='<div class="activity-empty">No public comments or ratings yet.</div>';updateActivityBadge();renderActivityDrawer();return}
+  if(!rows.length){list.innerHTML='<div class="activity-empty">No public comments or ratings yet.</div>';updateActivityBadge();return}
   let lastDay="",lastMovie="",separatorShown=false;
   list.innerHTML=rows.slice(0,80).map(x=>{
     const day=new Date(x.occurred_at).toLocaleDateString(undefined,{weekday:"long",month:"short",day:"numeric"});
@@ -975,25 +937,8 @@ function renderActivity(){
       if(q){q.value=m?.title||"";q.dispatchEvent(new Event("input",{bubbles:true}));q.focus()}
     });
   });
-  updateActivityBadge();renderActivityDrawer();
+  updateActivityBadge();
 }
-function renderActivityDrawer(){
-  const list=$("#activityDrawerList");if(!list)return;
-  const rows=[...publicActivityRows].sort((a,b)=>new Date(b.occurred_at)-new Date(a.occurred_at)).slice(0,5);
-  if(!rows.length){list.innerHTML='<div class="activity-empty">No public activity yet.</div>';return}
-  list.innerHTML=rows.map(x=>{
-    const title=activityTitle(x.media_item_id),unread=activityIsUnread(x),icon=x.type==="rating"?"★":"💬";
-    const preview=x.type==="rating"?"Rated "+esc(String(x.rating||"—"))+"/10":"“"+esc(String(x.comment||""))+"”";
-    return '<button class="activity-drawer-row'+(unread?" unread":"")+'" type="button" data-drawer-open="'+esc(x.media_item_id)+'"><span class="activity-drawer-icon" aria-hidden="true">'+icon+'</span><span class="activity-drawer-copy"><strong>'+esc(title)+'</strong><small>'+esc(activityTypeLabel(x))+(x.name?' · '+esc(x.name):'')+' · '+esc(activityTime(x.occurred_at))+'</small><em>'+preview+'</em></span></button>'
-  }).join("");
-  list.querySelectorAll("[data-drawer-open]").forEach(b=>b.onclick=()=>{
-    closeActivityDrawer();
-    const id=b.dataset.drawerOpen,index=data.findIndex(m=>String(m.id||"").trim()===String(id).trim());
-    if(index>=0){switchSection("rating");editTitle(index)}
-  });
-}
-function openActivityDrawer(){renderActivityDrawer();$("#activityDrawer")?.classList.add("open");$("#activityDrawer")?.setAttribute("aria-hidden","false");document.body.classList.add("activity-drawer-open")}
-function closeActivityDrawer(){$("#activityDrawer")?.classList.remove("open");$("#activityDrawer")?.setAttribute("aria-hidden","true");document.body.classList.remove("activity-drawer-open")}
 
 async function loadPublicActivity(silent=false){
   const token=$("#tok")?.value.trim();
@@ -1046,14 +991,9 @@ function initPublicActivity(){
   clearInterval(activityPolling);
   activityPolling=setInterval(()=>loadPublicActivity(true),30000);
 }
-$("#activityBell")?.addEventListener("click",()=>{openActivityDrawer();loadPublicActivity(true)});
-$("#activityDrawerClose")?.addEventListener("click",closeActivityDrawer);
-document.querySelectorAll("[data-activity-drawer-close]").forEach(x=>x.addEventListener("click",closeActivityDrawer));
-$("#activityDrawerViewAll")?.addEventListener("click",()=>{closeActivityDrawer();switchSection("activity");document.querySelector("#activitySection")?.scrollIntoView({block:"start"})});
-$("#activityDrawerRead")?.addEventListener("click",()=>{markActivityRead();renderActivityDrawer()});
+$("#activityBell")?.addEventListener("click",()=>{switchSection("activity");loadPublicActivity(true);document.querySelector("#activitySection")?.scrollIntoView({block:"start"})});
 $("#activityRefresh")?.addEventListener("click",()=>loadPublicActivity(false));
 $("#activityMarkRead")?.addEventListener("click",markActivityRead);
-document.addEventListener("keydown",e=>{if(e.key==="Escape")closeActivityDrawer()});
 
 document.querySelectorAll("[data-activity-filter]").forEach(b=>b.addEventListener("click",()=>{
   activityFilter=b.dataset.activityFilter||"all";
