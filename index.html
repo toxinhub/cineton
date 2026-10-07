@@ -2039,6 +2039,22 @@ update();
             b.style.setProperty("--exit-x",(direction*(8+Math.abs(i-4.5)*2))+"px");
           }
         });
+        // Give the chosen score its own brief glassy flight into the poster.
+        const posterTarget=poster ? poster.getBoundingClientRect() : null;
+        const buttonRect=button.getBoundingClientRect();
+        if(posterTarget){
+          const fly=document.createElement("div");
+          fly.className="cineton-rating-fly-number";
+          fly.textContent=String(n);
+          fly.setAttribute("aria-hidden","true");
+          fly.style.left=(buttonRect.left+buttonRect.width/2)+"px";
+          fly.style.top=(buttonRect.top+buttonRect.height/2)+"px";
+          fly.style.setProperty("--fly-x",(posterTarget.left+posterTarget.width/2)-(buttonRect.left+buttonRect.width/2)+"px");
+          fly.style.setProperty("--fly-y",(posterTarget.top+posterTarget.height/2)-(buttonRect.top+buttonRect.height/2)+"px");
+          document.body.appendChild(fly);
+          requestAnimationFrame(()=>fly.classList.add("is-flying"));
+          window.setTimeout(()=>fly.remove(),290);
+        }
         closeLayer(layer,button);
 
         try{
@@ -2405,7 +2421,52 @@ update();
     finally{submit.disabled=false;}
   });
 })();
-</script></body>
+</script><style id="public-rating-glassy-number-v1">
+/* Selected rating travels into the poster as a translucent glass numeral. */
+.cineton-rating-fly-number{
+  position:fixed;
+  z-index:999;
+  pointer-events:none;
+  display:grid;
+  place-items:center;
+  width:72px;
+  height:72px;
+  margin:0;
+  border:1px solid color-mix(in srgb,#fff 34%,transparent);
+  border-radius:18px;
+  background:linear-gradient(145deg,color-mix(in srgb,#fff 20%,transparent),color-mix(in srgb,var(--modal) 22%,transparent));
+  color:color-mix(in srgb,#fff 88%,var(--ac));
+  -webkit-text-fill-color:color-mix(in srgb,#fff 88%,var(--ac));
+  font:600 2.15rem/1 "Mina",sans-serif;
+  text-shadow:0 1px 12px #fff7,0 2px 18px #0005;
+  box-shadow:0 8px 30px #0003,0 1px 0 #fff8 inset,0 0 0 1px #fff2 inset;
+  backdrop-filter:blur(7px) saturate(115%);
+  -webkit-backdrop-filter:blur(7px) saturate(115%);
+  transform:translate(-50%,-50%) scale(.72);
+  opacity:0;
+  will-change:transform,opacity;
+}
+.cineton-rating-fly-number.is-flying{
+  animation:cinetonRatingGlassFly .27s cubic-bezier(.2,.78,.25,1) both;
+}
+@keyframes cinetonRatingGlassFly{
+  0%{opacity:0;transform:translate(-50%,-50%) scale(.72)}
+  22%{opacity:1;transform:translate(-50%,-50%) scale(1.08)}
+  100%{opacity:0;transform:translate(calc(-50% + var(--fly-x)),calc(-50% + var(--fly-y))) scale(.18)}
+}
+@media(max-width:600px){
+  .cineton-rating-fly-number{
+    width:58px;height:58px;border-radius:14px;
+    font-size:1.8rem;
+    backdrop-filter:blur(6px) saturate(112%);
+    -webkit-backdrop-filter:blur(6px) saturate(112%);
+  }
+}
+@media(prefers-reduced-motion:reduce){
+  .cineton-rating-fly-number.is-flying{animation:none;opacity:0}
+}
+</style>
+</body>
 <style id="public-rating-opening-js-v1">
 /* Opening timing is driven by Web Animations API for deterministic fast playback. */
 .cineton-rating-layer:not(.is-closing),
