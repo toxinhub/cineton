@@ -2244,3 +2244,52 @@ $('#importBackupFile').onchange=async e=>{
   }
 }
 </style>
+
+<style id="imdb-random-credits-wrap-v16">
+/* IMDb Random credits — labels and values may wrap naturally instead of clipping on narrow screens. */
+.imdb-random-modal .imdb-random-credits{
+  width:100%!important;
+  min-width:0!important;
+}
+.imdb-random-modal .imdb-random-credits div{
+  grid-template-columns:max-content minmax(0,1fr)!important;
+  min-width:0!important;
+  align-items:start!important;
+}
+.imdb-random-modal .imdb-random-credits span,
+.imdb-random-modal .imdb-random-credits strong{
+  min-width:0!important;
+  max-width:100%!important;
+  white-space:normal!important;
+  overflow:visible!important;
+  overflow-wrap:anywhere!important;
+  word-break:normal!important;
+}
+.imdb-random-modal .imdb-random-credits strong{
+  display:block!important;
+  line-height:1.35!important;
+}
+@media(max-width:600px){
+  .imdb-random-modal .imdb-random-credits div{
+    grid-template-columns:46px minmax(0,1fr)!important;
+    column-gap:5px!important;
+  }
+  .imdb-random-modal .imdb-random-credits span{
+    white-space:nowrap!important;
+  }
+  .imdb-random-modal .imdb-random-credits strong{
+    font-size:10px!important;
+    line-height:1.4!important;
+  }
+}
+@media(max-width:380px){
+  .imdb-random-modal .imdb-random-credits div{
+    grid-template-columns:43px minmax(0,1fr)!important;
+    column-gap:5px!important;
+  }
+  .imdb-random-modal .imdb-random-credits strong{
+    font-size:9.5px!important;
+    line-height:1.4!important;
+  }
+}
+</style>
