@@ -1,5 +1,36 @@
 [
  {
+  "id": "movie-12477",
+  "type": "movie",
+  "title": "Grave of the Fireflies",
+  "year": "1988",
+  "poster": "/k9tv1rXZbOhH7eiCk378x61kNQ1.jpg",
+  "overview": "In the final months of World War II, 14-year-old Seita and his sister Setsuko are orphaned when their mother is killed during an air raid in Kobe, Japan. After a falling out with their aunt, they move into an abandoned bomb shelter. With no surviving relatives and their emergency rations depleted, Seita and Setsuko struggle to survive.",
+  "director": "Isao Takahata",
+  "cast": [
+   "Tsutomu Tatsumi",
+   "Ayano Shiraishi",
+   "Yoshiko Shinohara",
+   "Akemi Yamaguchi",
+   "Masayo Sakai",
+   "Kozo Hashida",
+   "Kazumi Nozaki",
+   "Yoshio Matsuoka"
+  ],
+  "imdb": "8.5",
+  "genres": [
+   "Animation",
+   "Drama",
+   "War"
+  ],
+  "my_rating": "9",
+  "watched_on": "2026-10-07",
+  "comment": "",
+  "status": "watched",
+  "needs_review": false,
+  "added_at": "2026-10-07T01:55:58.694Z"
+ },
+ {
   "id": "movie-278",
   "type": "movie",
   "title": "The Shawshank Redemption",
