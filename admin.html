@@ -357,7 +357,44 @@ button:active,a:active,[role="button"]:active,summary:active{background-image:no
     padding-right:5px!important;
   }
 }
-</style></head>
+</style>
+<style id="imdb-random-mobile-space-v6">
+/* IMDb Random mobile: remove non-essential vertical chrome above the result while keeping controls usable. */
+@media(max-width:600px){
+  .imdb-random-modal .modal-inner{padding-top:6px!important}
+  .imdb-random-modal .imdb-random-head{margin-bottom:2px!important;min-height:0!important}
+  .imdb-random-modal .imdb-random-head p{display:none!important}
+  .imdb-random-modal .imdb-random-category{font-size:8px!important;line-height:1!important}
+  .imdb-random-modal .imdb-random-filter{
+    display:grid!important;
+    grid-template-columns:auto minmax(0,1fr)!important;
+    align-items:center!important;
+    gap:6px!important;
+    margin-bottom:3px!important;
+  }
+  .imdb-random-modal .imdb-random-filter label{margin:0!important;white-space:nowrap!important;line-height:1!important}
+  .imdb-random-modal .imdb-random-filter select{min-height:30px!important;padding:4px 8px!important}
+  .imdb-random-modal .imdb-random-search{
+    grid-template-columns:minmax(0,1fr) auto auto!important;
+    gap:4px!important;
+    margin-bottom:1px!important;
+  }
+  .imdb-random-modal .imdb-random-search input,
+  .imdb-random-modal .imdb-random-search .btn,
+  .imdb-random-modal .imdb-random-search #imdbRandomClearBtn{
+    min-height:32px!important;
+  }
+  .imdb-random-modal .imdb-random-search .btn{padding-left:8px!important;padding-right:8px!important}
+  .imdb-random-modal .imdb-random-search-hint{display:none!important}
+  .imdb-random-modal .imdb-random-state{margin:1px 0 2px!important;line-height:1.15!important;min-height:0!important}
+  .imdb-random-modal .imdb-random-result{gap:8px!important}
+}
+@media(max-width:380px){
+  .imdb-random-modal .imdb-random-filter{grid-template-columns:auto minmax(0,1fr)!important;gap:5px!important}
+  .imdb-random-modal .imdb-random-search .btn{padding-left:6px!important;padding-right:6px!important}
+}
+</style>
+</head>
 <body>
 <div class="app">
 <header class="top"><div class="brand"><div class="logo">🎬</div><div><h1>CineTon Admin</h1><p>Library management</p></div></div><div style="display:flex;align-items:center;gap:7px"><button id="activityBell" class="activity-bell" type="button" aria-label="Open activity notifications" title="Public activity"><span aria-hidden="true">🔔</span><b id="activityBadge" class="activity-badge">0</b></button><div id="status" class="status">Not connected</div></div></header>
