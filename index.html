@@ -2042,18 +2042,19 @@ update();
         // Give the chosen score its own brief glassy flight into the poster.
         const posterTarget=poster ? poster.getBoundingClientRect() : null;
         const buttonRect=button.getBoundingClientRect();
-        if(posterTarget){
+        const dialogRect=dialog.getBoundingClientRect();
+        if(posterTarget && dialogRect.width && dialogRect.height){
           const fly=document.createElement("div");
           fly.className="cineton-rating-fly-number";
           fly.textContent=String(n);
           fly.setAttribute("aria-hidden","true");
-          fly.style.left=(buttonRect.left+buttonRect.width/2)+"px";
-          fly.style.top=(buttonRect.top+buttonRect.height/2)+"px";
+          fly.style.left=(buttonRect.left+buttonRect.width/2-dialogRect.left)+"px";
+          fly.style.top=(buttonRect.top+buttonRect.height/2-dialogRect.top)+"px";
           fly.style.setProperty("--fly-x",(posterTarget.left+posterTarget.width/2)-(buttonRect.left+buttonRect.width/2)+"px");
           fly.style.setProperty("--fly-y",(posterTarget.top+posterTarget.height/2)-(buttonRect.top+buttonRect.height/2)+"px");
-          document.body.appendChild(fly);
+          dialog.appendChild(fly);
           requestAnimationFrame(()=>fly.classList.add("is-flying"));
-          window.setTimeout(()=>fly.remove(),290);
+          window.setTimeout(()=>fly.remove(),310);
         }
         closeLayer(layer,button);
 
@@ -2875,4 +2876,9 @@ main.list .cineton-love-heart{
     animation:none!important;
   }
 }
+</style>
+
+<style id="public-rating-glassy-number-hard-final-v2">
+.cineton-rating-fly-number{position:absolute!important;z-index:9999!important;pointer-events:none!important;transform-origin:center!important}
+.cinemodal{overflow:visible!important}
 </style>
