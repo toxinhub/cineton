@@ -2273,7 +2273,7 @@ update();
   document.body.appendChild(dialog);
   const list=dialog.querySelector(".suggestion-list"),form=dialog.querySelector("form"),input=dialog.querySelector("#suggestionInput"),submit=dialog.querySelector(".suggestion-submit"),msg=dialog.querySelector(".suggestion-message");
   let libraryRows=[];
-  const normalizeTitle=v=>String(v??"").normalize("NFKD").replace(/[\\u0300-\\u036f]/g,"").toLocaleLowerCase().replace(/[^\\p{L}\\p{N}]+/gu," ").trim();
+  const normalizeTitle=v=>String(v??"").normalize("NFKD").toLocaleLowerCase().replace(/[^a-z0-9]+/g," ").trim();
   const escapeXml=v=>String(v??"").replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
   const textMetrics=()=>{
     const cs=getComputedStyle(input);
@@ -2297,7 +2297,7 @@ update();
     input.style.backgroundImage="";
   };
   const updateGhost=()=>{
-    const raw=input.value.replace(/\\s+/g," ").trim();
+    const raw=input.value.replace(/\s+/g," ").trim();
     const q=normalizeTitle(raw);
     if(!q){clearGhost();return}
     const match=libraryRows.find(m=>{
