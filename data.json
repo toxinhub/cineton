@@ -1,5 +1,35 @@
 [
  {
+  "id": "movie-278",
+  "type": "movie",
+  "title": "The Shawshank Redemption",
+  "year": "1994",
+  "poster": "/9cqNxx0GxF0bflZmeSMuL5tnGzr.jpg",
+  "overview": "Imprisoned in the 1940s for the double murder of his wife and her lover, upstanding banker Andy Dufresne begins a new life at the Shawshank prison, where he puts his accounting skills to work for an amoral warden. During his long stretch in prison, Dufresne comes to be admired by the other inmates -- including an older prisoner named Red -- for his integrity and unquenchable sense of hope.",
+  "director": "Frank Darabont",
+  "cast": [
+   "Tim Robbins",
+   "Morgan Freeman",
+   "Bob Gunton",
+   "William Sadler",
+   "Clancy Brown",
+   "Gil Bellows",
+   "James Whitmore",
+   "Mark Rolston"
+  ],
+  "imdb": "9.3",
+  "genres": [
+   "Drama",
+   "Crime"
+  ],
+  "my_rating": null,
+  "watched_on": "2026-10-07",
+  "comment": "",
+  "status": "watched",
+  "needs_review": false,
+  "added_at": "2026-10-07T01:52:30.278Z"
+ },
+ {
   "id": "movie-598",
   "type": "movie",
   "title": "City of God",
