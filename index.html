@@ -1941,7 +1941,11 @@ update();
     const posterCenterX=Number.parseFloat(layer.style.getPropertyValue("--poster-x"));
     const posterCenterY=Number.parseFloat(layer.style.getPropertyValue("--poster-y"));
     if(Number.isFinite(posterCenterX) && Number.isFinite(posterCenterY)){
-      card.style.transformOrigin=(posterCenterX+dialogRect.left-cardRect.left)+"px "+(posterCenterY+dialogRect.top-cardRect.top)+"px";
+      const cardCenterX=cardRect.left+cardRect.width/2-dialogRect.left;
+      const cardCenterY=cardRect.top+cardRect.height/2-dialogRect.top;
+      card.style.setProperty("--poster-dx",(posterCenterX-cardCenterX)+"px");
+      card.style.setProperty("--poster-dy",(posterCenterY-cardCenterY)+"px");
+      card.style.transformOrigin="center";
     }
 
     layer.addEventListener("click",ev=>{
@@ -2072,7 +2076,7 @@ update();
 }
 .cineton-rating-card{
   transform-origin:center;
-  animation:cinetonRatingCardFromPoster .12s cubic-bezier(.22,.72,.28,1) both!important;
+  animation:cinetonRatingCardFromPoster .16s cubic-bezier(.22,.72,.28,1) both!important;
 }
 
 /* Fast selection: other numbers clear away while the picked number returns to the poster. */
@@ -2092,7 +2096,8 @@ update();
 }
 @keyframes cinetonRatingLayerFast{from{opacity:0}to{opacity:1}}
 @keyframes cinetonRatingCardFromPoster{
-  from{opacity:0;transform:translateY(2px) scale(.88)}
+  from{opacity:0;transform:translate(var(--poster-dx,0),var(--poster-dy,0)) scale(.92)}
+  68%{opacity:1;transform:translate(calc(var(--poster-dx,0)*.12),calc(var(--poster-dy,0)*.12)) scale(1.01)}
   to{opacity:1;transform:none}
 }
 @keyframes cinetonRatingLayerOut{from{opacity:1}to{opacity:0}}
