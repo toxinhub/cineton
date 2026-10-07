@@ -1719,7 +1719,7 @@ update();
     color-mix(in srgb,var(--sf) 58%,transparent),
     color-mix(in srgb,var(--modal) 48%,transparent));
   box-shadow:0 18px 42px #00000028,0 1px 0 #fff5 inset;
-  backdrop-filter:blur(10px) saturate(110%);-webkit-backdrop-filter:blur(10px) saturate(110%);
+  backdrop-filter:blur(6px) saturate(108%);-webkit-backdrop-filter:blur(6px) saturate(108%);
   animation:cinetonRatingCardIn .24s cubic-bezier(.22,.8,.25,1) both;
 }
 .cineton-rating-grid{
@@ -2072,12 +2072,12 @@ update();
 
 /* Fast opening: the card visually grows out from the poster's center. */
 .cineton-rating-layer{
-  animation:cinetonRatingLayerFast .09s cubic-bezier(.22,.72,.28,1) both!important;
+  animation:cinetonRatingLayerFast .07s ease-out both!important;
 }
 .cineton-rating-card{
   transform-origin:center;
   will-change:transform,opacity;
-  animation:cinetonRatingCardFromPoster .14s cubic-bezier(.16,.78,.24,1) both!important;
+  animation:cinetonRatingCardFromPoster .12s cubic-bezier(.2,.7,.25,1) both!important;
 }
 
 /* Fast selection: other numbers clear away while the picked number returns to the poster. */
@@ -2097,8 +2097,7 @@ update();
 }
 @keyframes cinetonRatingLayerFast{from{opacity:0}to{opacity:1}}
 @keyframes cinetonRatingCardFromPoster{
-  from{opacity:0;transform:translate3d(var(--poster-dx,0),var(--poster-dy,0),0) scale(.94)}
-  72%{opacity:1;transform:translate3d(calc(var(--poster-dx,0)*.08),calc(var(--poster-dy,0)*.08),0) scale(1.005)}
+  from{opacity:0;transform:translate3d(var(--poster-dx,0),var(--poster-dy,0),0) scale(.97)}
   to{opacity:1;transform:translate3d(0,0,0) scale(1)}
 }
 @keyframes cinetonRatingLayerOut{from{opacity:1}to{opacity:0}}
