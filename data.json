@@ -1,5 +1,36 @@
 [
  {
+  "id": "movie-274",
+  "type": "movie",
+  "title": "The Silence of the Lambs",
+  "year": "1991",
+  "poster": "/uS9m8OBk1A8eM9I042bx8XXpqAq.jpg",
+  "overview": "Clarice Starling is a top student at the FBI's training academy.  Jack Crawford wants Clarice to interview Dr. Hannibal Lecter, a brilliant psychiatrist who is also a violent psychopath, serving life behind bars for various acts of murder and cannibalism.  Crawford believes that Lecter may have insight into a case and that Starling, as an attractive young woman, may be just the bait to draw him out.",
+  "director": "Jonathan Demme",
+  "cast": [
+   "Jodie Foster",
+   "Anthony Hopkins",
+   "Scott Glenn",
+   "Ted Levine",
+   "Anthony Heald",
+   "Brooke Smith",
+   "Diane Baker",
+   "Kasi Lemmons"
+  ],
+  "imdb": "8.6",
+  "genres": [
+   "Crime",
+   "Thriller",
+   "Drama"
+  ],
+  "my_rating": "8",
+  "watched_on": "2026-10-07",
+  "comment": "",
+  "status": "watched",
+  "needs_review": false,
+  "added_at": "2026-10-07T02:00:49.979Z"
+ },
+ {
   "id": "movie-4935",
   "type": "movie",
   "title": "Howl's Moving Castle",
