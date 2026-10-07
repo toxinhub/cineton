@@ -2364,13 +2364,16 @@ update();
     e.preventDefault();
     const titles=input.value.split(/\r?\n/).map(line=>line.replace(/^\s*\d+\s*[.)-]\s*/,"").replace(/\s+/g," ").trim()).filter(Boolean);
     if(!titles.length)return;
-    const unique=titles.slice(0,10);
+    if(titles.length>6){msg.textContent="Please submit up to 6 titles at a time.";return;}
     submit.disabled=true;msg.textContent="Saving…";
     try{
-      const r=await fetch(API,{method:"POST",headers:{apikey:KEY,"Content-Type":"application/json"},body:JSON.stringify({titles:unique})});
-      const j=await r.json().catch(()=>({}));if(!r.ok)throw Error(j.error||"Could not save suggestion.");
+      for(const title of titles){
+        const r=await fetch(API,{method:"POST",headers:{apikey:KEY,"Content-Type":"application/json"},body:JSON.stringify({title})});
+        const j=await r.json().catch(()=>({}));
+        if(!r.ok)throw Error(j.error||"Could not save suggestion.");
+      }
       input.value="";input.style.backgroundImage="";input.classList.remove("suggestion-ghost");
-      msg.textContent=unique.length>1?unique.length+" suggestions added.":"Suggestion added.";
+      msg.textContent=titles.length>1?titles.length+" suggestions added.":"Suggestion added.";
       await load();
       setTimeout(()=>{msg.textContent=""},1800);
     }catch(err){msg.textContent=err.message||"Could not save suggestion.";}
