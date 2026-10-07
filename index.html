@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<!-- pages-deploy-trigger: 2026-10-05-imdb-grid-glow-v2 -->
+<!-- pages-deploy-trigger: 2026-10-07-rating-opening-fast-v2 -->
 <style id="imdb-grid-rating-glow-v2">
 /* Main grid IMDb badge only. Modal IMDb chip keeps its original theme. */
 .c .bd{
@@ -1950,7 +1950,7 @@ update();
 
     // Drive opening with the browser's compositor animation API for deterministic 500ms timing.
     const reducedMotion=window.matchMedia?.("(prefers-reduced-motion: reduce)").matches;
-    const openingDuration=reducedMotion?0:500;
+    const openingDuration=reducedMotion?0:90;
     const posterDx=card.style.getPropertyValue("--poster-dx")||"0px";
     const posterDy=card.style.getPropertyValue("--poster-dy")||"0px";
     layer.animate(
@@ -2145,7 +2145,7 @@ update();
 </style>
 </body>
 <style id="public-rating-opening-js-v1">
-/* Opening timing is driven by Web Animations API so the 500ms setting cannot be lost to CSS cascade/caching. */
+/* Opening timing is driven by Web Animations API for deterministic fast playback. */
 .cineton-rating-layer:not(.is-closing),
 .cineton-rating-layer:not(.is-closing) .cineton-rating-card{
   animation:none!important;
