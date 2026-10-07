@@ -2166,6 +2166,53 @@ update();
   animation:none!important;
 }
 </style>
+
+<style id="modal-love-emoji-final-v4">
+/* Final modal Love cleanup: strip inherited chip styling from both the wrapper and emoji glyph. */
+.cinemodal .chips .love-chip{
+  display:inline-flex!important;
+  align-items:center!important;
+  justify-content:center!important;
+  flex:0 0 auto!important;
+  width:auto!important;
+  min-width:0!important;
+  min-height:0!important;
+  margin:0!important;
+  padding:0!important;
+  border:0!important;
+  border-radius:0!important;
+  background:transparent!important;
+  box-shadow:none!important;
+  color:initial!important;
+  -webkit-text-fill-color:initial!important;
+  text-shadow:none!important;
+  font-family:"Apple Color Emoji","Segoe UI Emoji","Noto Color Emoji","Noto Emoji",sans-serif!important;
+  font-size:.66rem!important;
+  font-weight:400!important;
+  line-height:1!important;
+}
+.cinemodal .chips .love-chip .love-mobile-emoji,
+.cinemodal .chips .love-chip .love-desktop-emoji{
+  display:inline!important;
+  margin:0!important;
+  padding:0!important;
+  border:0!important;
+  border-radius:0!important;
+  background:transparent!important;
+  box-shadow:none!important;
+  color:initial!important;
+  -webkit-text-fill-color:initial!important;
+  text-shadow:none!important;
+  font:inherit!important;
+  line-height:1!important;
+}
+.cinemodal .chips .love-chip .love-mobile-emoji{display:none!important}
+@media(max-width:600px){
+  .cinemodal .chips .love-chip{font-size:.62rem!important}
+  .cinemodal .chips .love-chip .love-desktop-emoji{display:none!important}
+  .cinemodal .chips .love-chip .love-mobile-emoji{display:inline!important}
+}
+</style>
 </html><style id="desktop-soft-square-radius-v1">
 /* Desktop surface geometry — restrained 2px corners for a sharper editorial cinema grid.
    Mobile remains completely untouched. Intentional pills/circles stay unchanged. */
