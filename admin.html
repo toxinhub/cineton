@@ -495,7 +495,7 @@ function openRandomMovie(){
    openEdit(i);
  });
 }
-let imdbRandomPool=[],imdbRandomHistory=[],imdbRandomSeenKeys=(()=>{try{const v=JSON.parse(SS.getItem('ct_imdb_random_seen')||'[]');return Array.isArray(v)?v:[]}catch{return []}})(),imdbRandomCurrent=null,imdbRandomBusy=false,imdbRandomQuery='',imdbRandomMode='general',imdbRandomGenre='',imdbRandomRegion='all';
+let imdbRandomPool=[],imdbRandomHistory=[],imdbRandomSeenKeys=(()=>{try{const v=JSON.parse(SS.getItem('ct_imdb_random_seen')||'[]');return Array.isArray(v)?v:[]}catch{return []}})(),imdbRandomCurrent=null,imdbRandomBusy=false,imdbRandomQuery='',imdbRandomMode='general',imdbRandomGenre='',imdbRandomRegion='all',imdbRandomRegionPending=false;
 
 async function discoverImdbGenrePool(genre){
  const name=String(genre||'').trim();if(!name)return [];
@@ -597,6 +597,24 @@ async function discoverImdbPool(query=''){
  for(let i=unique.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[unique[i],unique[j]]=[unique[j],unique[i]]}
  return unique;
 }
+function getImdbRandomRegion(){
+ const map={all:null,US:{label:'Hollywood · USA',country:'US',language:'en'},'IN-hi':{label:'Bollywood · Hindi',country:'IN',language:'hi'},'IN-bn':{label:'Kolkata · Bengali',country:'IN',language:'bn'},'BD-bn':{label:'Bangladesh · Bengali',country:'BD',language:'bn'},'IN-ml':{label:'Malayalam · India',country:'IN',language:'ml'},'KR-ko':{label:'Korean · South Korea',country:'KR',language:'ko'},'IN-ta':{label:'Tamil · India',country:'IN',language:'ta'},'IN-te':{label:'Telugu · India',country:'IN',language:'te'},'JP-ja':{label:'Japanese · Japan',country:'JP',language:'ja'},'CN-zh':{label:'Chinese · China',country:'CN',language:'zh'},'FR-fr':{label:'French · France',country:'FR',language:'fr'},'ES-es':{label:'Spanish · Spain',country:'ES',language:'es'}};
+ return map[$('#imdbRandomRegion')?.value||imdbRandomRegion]||null;
+}
+async function strictImdbRegionFilter(items){
+ const region=getImdbRandomRegion(); if(!region)return items;
+ const checked=[]; for(const item of items.slice(0,18)){
+  try{
+   const endpoint=item.media_type==='tv'?'/tv/'+item.id:'/movie/'+item.id;
+   const d=await tmdb(endpoint);
+   const countries=item.media_type==='tv'?(Array.isArray(d.origin_country)?d.origin_country:[]):(Array.isArray(d.production_countries)?d.production_countries.map(x=>x.iso_3166_1):[]);
+   const lang=String(d.original_language||'').toLowerCase();
+   if(countries.includes(region.country)&&lang===region.language)checked.push(item);
+  }catch{}
+  if(checked.length>=10)break;
+ }
+ return checked;
+}
 function setImdbRandomState(textValue,type=''){
   $('#imdbRandomState').textContent=textValue;
   $('#imdbRandomState').className='imdb-random-state'+(type?' '+type:'');
@@ -635,6 +653,7 @@ async function pickImdbRandom(){
      let pool=imdbRandomMode==='genre'?await discoverImdbGenrePool(imdbRandomGenre):await discoverImdbPool(imdbRandomQuery);
      pool=pool.filter(item=>!libraryKeys.has((item.media_type+'-'+item.id).toLowerCase()));
      available=pool.filter(item=>!imdbRandomSeenKeys.includes((item.media_type+'-'+item.id).toLowerCase()));
+     if(available.length&&getImdbRandomRegion())available=await strictImdbRegionFilter(available);
    }
    if(!available.length)throw Error(imdbRandomQuery?'No more unseen matches found for this search.':imdbRandomMode==='genre'?'No more unseen titles found in this genre.':'No more unseen discovery titles were found right now.');
    const candidate=available[Math.floor(Math.random()*available.length)],key=(candidate.media_type+'-'+candidate.id).toLowerCase();
@@ -656,7 +675,7 @@ async function pickImdbRandom(){
    if(existing){setImdbRandomState('Already in your library','ok');setImdbRandomMessage('This title is already in CineTon. Choose another pick.','ok');$('#imdbAddWatchlist').disabled=true;$('#imdbAddWatched').disabled=true}
    else{setImdbRandomState(imdbRandomMode==='genre'?'Ready · '+imdbRandomGenre:imdbRandomQuery?'Ready · '+imdbRandomQuery:'Ready to add','ok');$('#imdbAddWatchlist').disabled=false;$('#imdbAddWatched').disabled=false}
  }catch(e){setImdbRandomState(e.message||'Could not find a discovery title.','error');setImdbRandomMessage(imdbRandomMode==='genre'?'No more unseen titles found in this genre.':imdbRandomQuery?'Try a broader keyword, person or title.':'Check your TMDB connection and try again.','error')}
- finally{$('#imdbAnother').disabled=false;imdbRandomBusy=false}
+ finally{$('#imdbAnother').disabled=false;imdbRandomBusy=false;if(imdbRandomRegionPending){imdbRandomRegionPending=false;pickImdbRandom()}}
 }
 async function addImdbRandom(status){
   const m=imdbRandomCurrent;if(!m||!fileSha)return;
@@ -694,7 +713,7 @@ async function startImdbRandomGenre(name){const genre=String(name||'').trim();if
 async function startImdbRandomSearch(){const q=$('#imdbRandomQuery').value.trim();if(q.length<2){setImdbRandomMessage('Enter at least 2 characters to search.','error');$('#imdbRandomQuery').focus();return}imdbRandomMode='search';imdbRandomGenre='';imdbRandomQuery=q;imdbRandomPool=[];imdbRandomSeenKeys=[];$('#imdbRandomSearchHint').textContent='Focused discovery · '+q+' · '+$('#imdbRandomRegion').selectedOptions[0].text+' · Another Pick stays within this search.';await pickImdbRandom()}
 $('#imdbRandomSearchBtn').onclick=startImdbRandomSearch;
 $('#imdbRandomQuery').addEventListener('keydown',e=>{if(e.key==='Enter')startImdbRandomSearch()});
-$('#imdbRandomRegion').onchange=()=>{imdbRandomPool=[];imdbRandomSeenKeys=[];if(imdbRandomMode==='search'||imdbRandomMode==='genre')pickImdbRandom();else pickImdbRandom()};
+$('#imdbRandomRegion').onchange=()=>{imdbRandomRegion=$('#imdbRandomRegion').value;imdbRandomPool=[];imdbRandomSeenKeys=[];$('#imdbRandomResult').classList.add('hidden');setImdbRandomMessage('');setImdbRandomState('Applying '+$('#imdbRandomRegion').selectedOptions[0].text+' filter…','busy');if(imdbRandomBusy){imdbRandomRegionPending=true;return}pickImdbRandom()};
 $('#imdbRandomClearBtn').onclick=()=>{imdbRandomMode='general';imdbRandomGenre='';imdbRandomQuery='';imdbRandomPool=[];imdbRandomSeenKeys=[];$('#imdbRandomQuery').value='';$('#imdbRandomRegion').value='all';$('#imdbRandomSearchHint').textContent='Try “Marvel”, “Tom Hanks”, “Batman”, “Christopher Nolan”…';setImdbRandomMessage('');pickImdbRandom()};
 document.addEventListener('click',e=>{const b=e.target.closest('.imdb-random-genre-link');if(b)startImdbRandomGenre(b.dataset.genre)});
 $('#imdbAnother').onclick=pickImdbRandom;
