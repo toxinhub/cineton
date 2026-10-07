@@ -1719,7 +1719,7 @@ update();
     color-mix(in srgb,var(--sf) 58%,transparent),
     color-mix(in srgb,var(--modal) 48%,transparent));
   box-shadow:0 18px 42px #00000028,0 1px 0 #fff5 inset;
-  backdrop-filter:blur(6px) saturate(108%);-webkit-backdrop-filter:blur(6px) saturate(108%);
+  backdrop-filter:blur(3px) saturate(104%);-webkit-backdrop-filter:blur(3px) saturate(104%);
   animation:cinetonRatingCardIn .24s cubic-bezier(.22,.8,.25,1) both;
 }
 .cineton-rating-grid{
@@ -2077,6 +2077,8 @@ update();
 .cineton-rating-card{
   transform-origin:center;
   will-change:transform,opacity;
+  backface-visibility:hidden;
+  -webkit-backface-visibility:hidden;
   animation:cinetonRatingCardFromPoster .12s cubic-bezier(.2,.7,.25,1) both!important;
 }
 
