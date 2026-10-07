@@ -573,11 +573,8 @@ async function discoverImdbPool(query=''){
        out.push({...x,media_type:x.media_type||requests[i].type,_discovery_category:'Search'});
      }
    }));
-   const people=(rs[3].results||[]).filter(Boolean).slice(0,6);const regionMap={all:null,US:{country:'US',language:'en'},'IN-hi':{country:'IN',language:'hi'},'IN-bn':{country:'IN',language:'bn'},'BD-bn':{country:'BD',language:'bn'},'IN-ml':{country:'IN',language:'ml'},'KR-ko':{country:'KR',language:'ko'},'IN-ta':{country:'IN',language:'ta'},'IN-te':{country:'IN',language:'te'},'JP-ja':{country:'JP',language:'ja'},'CN-zh':{country:'CN',language:'zh'},'FR-fr':{country:'FR',language:'fr'},'ES-es':{country:'ES',language:'es'}};
-   const region=regionMap[imdbRandomRegion]||null;
+   const people=(rs[3].results||[]).filter(Boolean).slice(0,6);
    const matchesRegion=x=>!region||((Array.isArray(x.origin_country)?x.origin_country:[]).includes(region.country)&&String(x.original_language||'').toLowerCase()===region.language);
-   if(region){for(let i=out.length-1;i>=0;i--)if(!matchesRegion(out[i]))out.splice(i,1)}
-   
    const credits=await Promise.all(people.map(async p=>{
      try{
        const r=await tmdb('/person/'+p.id+'/combined_credits');
