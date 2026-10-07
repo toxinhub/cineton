@@ -1,5 +1,35 @@
 [
  {
+  "id": "movie-37165",
+  "type": "movie",
+  "title": "The Truman Show",
+  "year": "1998",
+  "poster": "/vuza0WqY239yBXOadKlGwJsZJFE.jpg",
+  "overview": "In a picture-perfect seaside town, an insurance salesman begins to realize that his entire existence may be staged and observed by a vast unseen audience as part of a long-running real-time reality TV show.",
+  "director": "Peter Weir",
+  "cast": [
+   "Jim Carrey",
+   "Laura Linney",
+   "Noah Emmerich",
+   "Natascha McElhone",
+   "Holland Taylor",
+   "Ed Harris",
+   "Paul Giamatti",
+   "Brian Delate"
+  ],
+  "imdb": "8.2",
+  "genres": [
+   "Comedy",
+   "Drama"
+  ],
+  "my_rating": null,
+  "watched_on": "2026-10-07",
+  "comment": "",
+  "status": "watched",
+  "needs_review": false,
+  "added_at": "2026-10-07T01:49:19.672Z"
+ },
+ {
   "id": "movie-429",
   "type": "movie",
   "title": "The Good, the Bad and the Ugly",
