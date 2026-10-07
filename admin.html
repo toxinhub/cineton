@@ -514,28 +514,42 @@ async function discoverImdbGenrePool(genre){
  const seen=new Set();return out.filter(h=>{const k=h.media_type+'-'+h.id;if(seen.has(k))return false;seen.add(k);return !data.some(m=>String(m.id).trim().toLowerCase()===k.toLowerCase())});
 }
 async function discoverImdbPool(query=''){
- const q=String(query||'').trim();
- if(!q){if(imdbRandomPool.length)return imdbRandomPool;const now=new Date(),today=now.toISOString().slice(0,10),old=new Date(now),recent=new Date(now);old.setFullYear(old.getFullYear()-25);recent.setFullYear(recent.getFullYear()-2);const classicCutoff=old.toISOString().slice(0,10),recentFrom=recent.toISOString().slice(0,10),page=()=>String(1+Math.floor(Math.random()*3));const specs=[
- {category:'Latest',type:'movie',path:'/discover/movie?include_adult=false&include_video=false&sort_by=primary_release_date.desc&primary_release_date.gte='+recentFrom+'&primary_release_date.lte='+today+'&vote_count.gte=25&page='+page()},
- {category:'Latest',type:'tv',path:'/discover/tv?include_adult=false&sort_by=first_air_date.desc&first_air_date.gte='+recentFrom+'&first_air_date.lte='+today+'&vote_count.gte=25&page='+page()},
- {category:'Top Rated',type:'movie',path:'/discover/movie?include_adult=false&include_video=false&sort_by=vote_average.desc&vote_average.gte=7.8&vote_count.gte=1000&page='+page()},
- {category:'Top Rated',type:'tv',path:'/discover/tv?include_adult=false&sort_by=vote_average.desc&vote_count.gte=500&page='+page()},
- {category:'Classic',type:'movie',path:'/discover/movie?include_adult=false&include_video=false&sort_by=popularity.desc&primary_release_date.lte='+classicCutoff+'&vote_average.gte=7.2&vote_count.gte=500&page='+page()},
- {category:'Classic',type:'tv',path:'/discover/tv?include_adult=false&sort_by=popularity.desc&first_air_date.lte='+classicCutoff+'&vote_average.gte=7.5&vote_count.gte=250&page='+page()}];const out=[];for(const x of specs){try{const r=await tmdb(x.path);for(const h of(r.results||[])){if(h.poster_path)out.push({...h,media_type:x.type,_discovery_category:x.category})}}catch{}}const seen=new Set();imdbRandomPool=out.filter(h=>{const k=h.media_type+'-'+h.id;if(seen.has(k))return false;seen.add(k);return !data.some(m=>String(m.id)===k)});for(let i=imdbRandomPool.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[imdbRandomPool[i],imdbRandomPool[j]]=[imdbRandomPool[j],imdbRandomPool[i]]}return imdbRandomPool;}
- const pages=Array.from({length:10},(_,i)=>i+1);
- const multiResults=(await Promise.all(pages.map(page=>tmdb('/search/multi?query='+encodeURIComponent(q)+'&include_adult=false&page='+page).catch(()=>({results:[]}))))).flatMap(r=>r.results||[]);
- const results=multiResults.filter(x=>x.media_type==='movie'||x.media_type==='tv'||x.media_type==='person');
- const out=results.filter(x=>x.media_type==='movie'||x.media_type==='tv').map(x=>({...x,_discovery_category:'Search'}));
- const people=[];const personSeen=new Set();
- for(const p of results.filter(x=>x.media_type==='person')){
-   const key=String(p.id);if(personSeen.has(key))continue;personSeen.add(key);people.push(p);if(people.length>=8)break;
+ const q=String(query||'').trim(),library=new Set(data.map(m=>String(m.id).trim().toLowerCase()));
+ const randPage=()=>1+Math.floor(Math.random()*20),out=[];
+ if(!q){
+   const now=new Date(),today=now.toISOString().slice(0,10),old=new Date(now),recent=new Date(now);
+   old.setFullYear(old.getFullYear()-25);recent.setFullYear(recent.getFullYear()-2);
+   const classicCutoff=old.toISOString().slice(0,10),recentFrom=recent.toISOString().slice(0,10);
+   const specs=[
+    {category:'Latest',type:'movie',path:'/discover/movie?include_adult=false&include_video=false&sort_by=primary_release_date.desc&primary_release_date.gte='+recentFrom+'&primary_release_date.lte='+today+'&vote_count.gte=10&page='+randPage()},
+    {category:'Latest',type:'tv',path:'/discover/tv?include_adult=false&sort_by=first_air_date.desc&first_air_date.gte='+recentFrom+'&first_air_date.lte='+today+'&vote_count.gte=10&page='+randPage()},
+    {category:'Top Rated',type:'movie',path:'/discover/movie?include_adult=false&include_video=false&sort_by=vote_average.desc&vote_count.gte=250&page='+randPage()},
+    {category:'Top Rated',type:'tv',path:'/discover/tv?include_adult=false&sort_by=vote_average.desc&vote_count.gte=100&page='+randPage()},
+    {category:'Popular',type:'movie',path:'/discover/movie?include_adult=false&include_video=false&sort_by=popularity.desc&vote_count.gte=10&page='+randPage()},
+    {category:'Popular',type:'tv',path:'/discover/tv?include_adult=false&sort_by=popularity.desc&vote_count.gte=10&page='+randPage()},
+    {category:'Classic',type:'movie',path:'/discover/movie?include_adult=false&include_video=false&sort_by=popularity.desc&primary_release_date.lte='+classicCutoff+'&vote_average.gte=6.5&vote_count.gte=100&page='+randPage()},
+    {category:'Classic',type:'tv',path:'/discover/tv?include_adult=false&sort_by=popularity.desc&first_air_date.lte='+classicCutoff+'&vote_average.gte=6.5&vote_count.gte=50&page='+randPage()}
+   ];
+   const rs=await Promise.all(specs.map(x=>tmdb(x.path).catch(()=>({results:[]}))));
+   rs.forEach((r,i)=>(r.results||[]).forEach(h=>{if(h.poster_path)out.push({...h,media_type:specs[i].type,_discovery_category:specs[i].category})}));
+ }else{
+   const pages=Array.from({length:8},()=>randPage());
+   const [multiResults,movieResults,tvResults,personResults]=await Promise.all([
+     Promise.all(pages.map(p=>tmdb('/search/multi?query='+encodeURIComponent(q)+'&include_adult=false&page='+p).catch(()=>({results:[]})))),
+     Promise.all(pages.slice(0,5).map(p=>tmdb('/search/movie?query='+encodeURIComponent(q)+'&include_adult=false&page='+p).catch(()=>({results:[]})))),
+     Promise.all(pages.slice(0,5).map(p=>tmdb('/search/tv?query='+encodeURIComponent(q)+'&include_adult=false&page='+p).catch(()=>({results:[]})))),
+     Promise.all(pages.slice(0,4).map(p=>tmdb('/search/person?query='+encodeURIComponent(q)+'&include_adult=false&page='+p).catch(()=>({results:[]}))))
+   ]);
+   const direct=multiResults.flatMap(r=>r.results||[]).concat(movieResults.flatMap(r=>r.results||[]),tvResults.flatMap(r=>r.results||[]));
+   direct.filter(x=>x.poster_path&&(x.media_type==='movie'||x.media_type==='tv'||!x.media_type)).forEach(x=>out.push({...x,media_type:x.media_type||'movie',_discovery_category:'Search'}));
+   const people=personResults.flatMap(r=>r.results||[]).filter(Boolean).slice(0,12),personSeen=new Set();
+   const credits=await Promise.all(people.map(async p=>{const id=String(p.id);if(personSeen.has(id))return [];personSeen.add(id);try{const r=await tmdb('/person/'+p.id+'/combined_credits');return (r.cast||[]).concat(r.crew||[]).filter(h=>(h.media_type==='movie'||h.media_type==='tv')&&h.poster_path).map(h=>({...h,_discovery_category:p.name}))}catch{return []}}));
+   credits.forEach(items=>out.push(...items));
  }
- const creditResults=await Promise.all(people.map(async p=>{
-   try{const r=await tmdb('/person/'+p.id+'/combined_credits');return (r.cast||[]).concat(r.crew||[]).filter(h=>(h.media_type==='movie'||h.media_type==='tv')&&h.poster_path).map(h=>({...h,_discovery_category:p.name}))}catch{return []}
- }));
- creditResults.forEach(items=>out.push(...items));
- const seen=new Set();const unique=out.filter(h=>{const k=h.media_type+'-'+h.id;if(seen.has(k))return false;seen.add(k);return !data.some(m=>String(m.id).trim().toLowerCase()===k.toLowerCase())});
- unique.sort((a,b)=>(Number(b.popularity)||0)-(Number(a.popularity)||0));return unique;
+ const seen=new Set();
+ const unique=out.filter(h=>{const k=String(h.media_type)+'-'+h.id;if(seen.has(k)||library.has(k.toLowerCase()))return false;seen.add(k);return true});
+ for(let i=unique.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[unique[i],unique[j]]=[unique[j],unique[i]]}
+ return unique;
 }
 function setImdbRandomState(textValue,type=''){
   $('#imdbRandomState').textContent=textValue;
