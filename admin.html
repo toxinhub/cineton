@@ -245,7 +245,7 @@ button:active,a:active,[role="button"]:active,summary:active{background-image:no
   display:none;min-width:16px;height:16px;padding:0 4px;border-radius:99px;
   background:var(--accent);color:#fffaf2;font:700 9px/16px Inter,sans-serif;text-align:center;
 }
-.activity-bell.has-unread .activity-badge{display:inline-block}
+.activity-bell.has-unread .activity-badge,.activity-badge.has-unread{display:inline-block}
 .activity-live{display:inline-flex;align-items:center;gap:5px;color:var(--muted);font-size:9px}
 .activity-live::before{content:"";width:6px;height:6px;border-radius:50%;background:var(--ok)}
 .activity-live.offline::before{background:var(--muted)}
@@ -282,7 +282,7 @@ button:active,a:active,[role="button"]:active,summary:active{background-image:no
 </head>
 <body>
 <div class="app">
-<header class="top"><div class="brand"><div class="logo">🎬</div><div><h1>CineTon Admin</h1><p>Library management</p></div></div><div style="display:flex;align-items:center;gap:7px"><button id="activityBell" class="activity-bell" type="button" aria-label="Open activity notifications" title="Public activity"><span aria-hidden="true">♢</span><b id="activityBadge" class="activity-badge">0</b></button><div id="status" class="status">Not connected</div></div></header>
+<header class="top"><div class="brand"><div class="logo">🎬</div><div><h1>CineTon Admin</h1><p>Library management</p></div></div><div style="display:flex;align-items:center;gap:7px"><button id="activityBell" class="activity-bell" type="button" aria-label="Open activity notifications" title="Public activity"><span aria-hidden="true">🔔</span><b id="activityBadge" class="activity-badge">0</b></button><div id="status" class="status">Not connected</div></div></header>
 
 <div class="stats"><div class="stat"><b id="total">—</b><span>Total titles</span></div><div class="stat"><b id="watched">—</b><span>Watched</span></div><div class="stat"><b id="watchlist">—</b><span>Watchlist</span></div></div>
 
@@ -893,6 +893,7 @@ async function loadPublicActivity(silent=false){
     const j=await r.json().catch(()=>({}));
     if(!r.ok)throw Error(j.error||"Could not load activity.");
     publicActivityRows=Array.isArray(j.activities)?j.activities:[];
+    if(!LS.getItem(ACTIVITY_SEEN_KEY) && publicActivityRows.length){const firstSeen=publicActivityRows.reduce((max,x)=>Math.max(max,new Date(x.occurred_at||0).getTime()),0);if(firstSeen)LS.setItem(ACTIVITY_SEEN_KEY,new Date(firstSeen).toISOString())}
     renderActivity();$("#activityMsg").className="message hidden";
     $("#activityLive").textContent="Live";$("#activityLive").classList.remove("offline");
   }catch(e){
