@@ -508,8 +508,11 @@ async function discoverImdbGenrePool(genre){
   maps={movie:find(movieMap),tv:find(tvMap)};try{SS.setItem(key,JSON.stringify(maps))}catch{}
  }
  const page=()=>String(1+Math.floor(Math.random()*3)),specs=[];
- if(maps.movie)specs.push({type:'movie',path:'/discover/movie?include_adult=false&include_video=false&sort_by=popularity.desc&with_genres='+maps.movie+'&vote_count.gte=25&page='+page()});
- if(maps.tv)specs.push({type:'tv',path:'/discover/tv?include_adult=false&sort_by=popularity.desc&with_genres='+maps.tv+'&vote_count.gte=25&page='+page()});
+ const regionMap={all:null,US:{country:'US',language:'en'},'IN-hi':{country:'IN',language:'hi'},'IN-bn':{country:'IN',language:'bn'},'BD-bn':{country:'BD',language:'bn'},'IN-ml':{country:'IN',language:'ml'},'KR-ko':{country:'KR',language:'ko'},'IN-ta':{country:'IN',language:'ta'},'IN-te':{country:'IN',language:'te'},'JP-ja':{country:'JP',language:'ja'},'CN-zh':{country:'CN',language:'zh'},'FR-fr':{country:'FR',language:'fr'},'ES-es':{country:'ES',language:'es'}};
+ const region=regionMap[imdbRandomRegion]||null;
+ const regionParams=region?'&with_origin_country='+region.country+'&with_original_language='+region.language:'';
+ if(maps.movie)specs.push({type:'movie',path:'/discover/movie?include_adult=false&include_video=false&sort_by=popularity.desc&with_genres='+maps.movie+'&vote_count.gte=25'+regionParams});
+ if(maps.tv)specs.push({type:'tv',path:'/discover/tv?include_adult=false&sort_by=popularity.desc&with_genres='+maps.tv+'&vote_count.gte=25'+regionParams});
  const out=[];for(const x of specs){try{const r=await tmdb(x.path);for(const h of(r.results||[])){if(h.poster_path)out.push({...h,media_type:x.type,_discovery_category:name,_genre_target:name})}}catch{}}
  const seen=new Set();return out.filter(h=>{const k=h.media_type+'-'+h.id;if(seen.has(k))return false;seen.add(k);return !data.some(m=>String(m.id).trim().toLowerCase()===k.toLowerCase())});
 }
@@ -575,6 +578,7 @@ async function discoverImdbPool(query=''){
    }));
    const people=(rs[3].results||[]).filter(Boolean).slice(0,6);
    const matchesRegion=x=>!region||((Array.isArray(x.origin_country)?x.origin_country:[]).includes(region.country)&&String(x.original_language||'').toLowerCase()===region.language);
+   if(region){for(let i=out.length-1;i>=0;i--)if(!matchesRegion(out[i]))out.splice(i,1)}
    const credits=await Promise.all(people.map(async p=>{
      try{
        const r=await tmdb('/person/'+p.id+'/combined_credits');
@@ -582,6 +586,7 @@ async function discoverImdbPool(query=''){
      }catch{return []}
    }));
    credits.forEach(items=>out.push(...items));
+   if(region){for(let i=out.length-1;i>=0;i--)if(!matchesRegion(out[i]))out.splice(i,1)}
  }
  const seen=new Set();
  const unique=out.filter(h=>{
