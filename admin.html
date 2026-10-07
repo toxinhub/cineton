@@ -337,7 +337,7 @@ button:active,a:active,[role="button"]:active,summary:active{background-image:no
       </div>
       <span id="imdbRandomCategory" class="imdb-random-category">Discovery</span>
     </div>
-    <div class="imdb-random-search" role="search" aria-label="Focused discovery"><input id="imdbRandomQuery" type="search" maxlength="80" placeholder="Search a keyword, person, title or franchise…" autocomplete="off" aria-label="IMDb Random search"><button id="imdbRandomSearchBtn" class="btn secondary" type="button">Discover</button><button id="imdbRandomClearBtn" class="btn secondary" type="button" aria-label="Clear discovery search">Clear</button></div><div id="imdbRandomSearchHint" class="imdb-random-search-hint">Try “Marvel”, “Tom Hanks”, “Batman”, “Christopher Nolan”…</div><div id="imdbRandomState" class="imdb-random-state">Finding a title…</div>
+    <div class="imdb-random-filter"><label for="imdbRandomRegion">Region / Industry</label><select id="imdbRandomRegion" aria-label="Filter by region or film industry"><option value="all">All industries</option><option value="US">Hollywood · USA</option><option value="IN-hi">Bollywood · Hindi</option><option value="IN-bn">Kolkata · Bengali</option><option value="BD-bn">Bangladesh · Bengali</option><option value="IN-ml">Malayalam · India</option><option value="KR-ko">Korean · South Korea</option><option value="IN-ta">Tamil · India</option><option value="IN-te">Telugu · India</option><option value="JP-ja">Japanese · Japan</option><option value="CN-zh">Chinese · China</option><option value="FR-fr">French · France</option><option value="ES-es">Spanish · Spain</option></select></div><div class="imdb-random-search" role="search" aria-label="Focused discovery"><input id="imdbRandomQuery" type="search" maxlength="80" placeholder="Search a keyword, person, title or franchise…" autocomplete="off" aria-label="IMDb Random search"><button id="imdbRandomSearchBtn" class="btn secondary" type="button">Discover</button><button id="imdbRandomClearBtn" class="btn secondary" type="button" aria-label="Clear discovery search">Clear</button></div><div id="imdbRandomSearchHint" class="imdb-random-search-hint">Try “Marvel”, “Tom Hanks”, “Batman”, “Christopher Nolan”…</div><div id="imdbRandomState" class="imdb-random-state">Finding a title…</div>
     <div id="imdbRandomResult" class="imdb-random-result hidden">
       <img id="imdbRandomPoster" class="imdb-random-poster" alt="">
       <div class="imdb-random-copy">
@@ -495,7 +495,7 @@ function openRandomMovie(){
    openEdit(i);
  });
 }
-let imdbRandomPool=[],imdbRandomHistory=[],imdbRandomSeenKeys=(()=>{try{const v=JSON.parse(SS.getItem('ct_imdb_random_seen')||'[]');return Array.isArray(v)?v:[]}catch{return []}})(),imdbRandomCurrent=null,imdbRandomBusy=false,imdbRandomQuery='',imdbRandomMode='general',imdbRandomGenre='';
+let imdbRandomPool=[],imdbRandomHistory=[],imdbRandomSeenKeys=(()=>{try{const v=JSON.parse(SS.getItem('ct_imdb_random_seen')||'[]');return Array.isArray(v)?v:[]}catch{return []}})(),imdbRandomCurrent=null,imdbRandomBusy=false,imdbRandomQuery='',imdbRandomMode='general',imdbRandomGenre='',imdbRandomRegion='all';
 
 async function discoverImdbGenrePool(genre){
  const name=String(genre||'').trim();if(!name)return [];
@@ -537,25 +537,47 @@ async function discoverImdbPool(query=''){
     {category:'Classic',type:'movie',path:'/discover/movie?include_adult=false&include_video=false&sort_by=popularity.desc&primary_release_date.lte='+classicCutoff+'&vote_average.gte=6.5&vote_count.gte=100',maxPage:500},
     {category:'Classic',type:'tv',path:'/discover/tv?include_adult=false&sort_by=popularity.desc&first_air_date.lte='+classicCutoff+'&vote_average.gte=6.5&vote_count.gte=50',maxPage:500}
    ];
-   const specs=base.map(x=>({...x,maxPage:500}));
+   const regionMap={
+     all:null,
+     US:{label:'Hollywood · USA',country:'US',language:'en'},
+     'IN-hi':{label:'Bollywood · Hindi',country:'IN',language:'hi'},
+     'IN-bn':{label:'Kolkata · Bengali',country:'IN',language:'bn'},
+     'BD-bn':{label:'Bangladesh · Bengali',country:'BD',language:'bn'},
+     'IN-ml':{label:'Malayalam · India',country:'IN',language:'ml'},
+     'KR-ko':{label:'Korean · South Korea',country:'KR',language:'ko'},
+     'IN-ta':{label:'Tamil · India',country:'IN',language:'ta'},
+     'IN-te':{label:'Telugu · India',country:'IN',language:'te'},
+     'JP-ja':{label:'Japanese · Japan',country:'JP',language:'ja'},
+     'CN-zh':{label:'Chinese · China',country:'CN',language:'zh'},
+     'FR-fr':{label:'French · France',country:'FR',language:'fr'},
+     'ES-es':{label:'Spanish · Spain',country:'ES',language:'es'}
+   };
+   const region=regionMap[imdbRandomRegion]||null;
+   const specs=base.map(x=>({...x,path:x.path+(region?'&with_origin_country='+region.country+'&with_original_language='+region.language:''),maxPage:500,regionLabel:region?.label||'All industries'}));
    const rs=await Promise.all(specs.map(fetchPage));
-   rs.forEach((r,i)=>(r.results||[]).forEach(h=>{if(h.poster_path)out.push({...h,media_type:specs[i].type,_discovery_category:specs[i].category})}));
+   rs.forEach((r,i)=>(r.results||[]).forEach(h=>{if(h.poster_path)out.push({...h,media_type:specs[i].type,_discovery_category:specs[i].regionLabel+' · '+specs[i].category})}));
  }else{
    const enc=encodeURIComponent(q);
+   const regionMap={all:null,US:{label:'Hollywood · USA',country:'US',language:'en'},'IN-hi':{label:'Bollywood · Hindi',country:'IN',language:'hi'},'IN-bn':{label:'Kolkata · Bengali',country:'IN',language:'bn'},'BD-bn':{label:'Bangladesh · Bengali',country:'BD',language:'bn'},'IN-ml':{label:'Malayalam · India',country:'IN',language:'ml'},'KR-ko':{label:'Korean · South Korea',country:'KR',language:'ko'},'IN-ta':{label:'Tamil · India',country:'IN',language:'ta'},'IN-te':{label:'Telugu · India',country:'IN',language:'te'},'JP-ja':{label:'Japanese · Japan',country:'JP',language:'ja'},'CN-zh':{label:'Chinese · China',country:'CN',language:'zh'},'FR-fr':{label:'French · France',country:'FR',language:'fr'},'ES-es':{label:'Spanish · Spain',country:'ES',language:'es'}};
+   const region=regionMap[imdbRandomRegion]||null;
+   const regionParams=region?'&with_origin_country='+region.country+'&with_original_language='+region.language:'';
    const requests=[
     {type:'multi',path:'/search/multi?query='+enc+'&include_adult=false',maxPage:500},
     {type:'movie',path:'/search/movie?query='+enc+'&include_adult=false',maxPage:500},
     {type:'tv',path:'/search/tv?query='+enc+'&include_adult=false',maxPage:500},
     {type:'person',path:'/search/person?query='+enc+'&include_adult=false',maxPage:500}
-   ];
-   const rs=await Promise.all(requests.map(fetchPage));
+   ];const rs=await Promise.all(requests.map(fetchPage));
    rs.forEach((r,i)=>(r.results||[]).forEach(x=>{
      if(requests[i].type==='person')return;
      if(x.poster_path&&(x.media_type==='movie'||x.media_type==='tv'||requests[i].type!=='multi')){
        out.push({...x,media_type:x.media_type||requests[i].type,_discovery_category:'Search'});
      }
    }));
-   const people=(rs[3].results||[]).filter(Boolean).slice(0,6);
+   const people=(rs[3].results||[]).filter(Boolean).slice(0,6);const regionMap={all:null,US:{country:'US',language:'en'},'IN-hi':{country:'IN',language:'hi'},'IN-bn':{country:'IN',language:'bn'},'BD-bn':{country:'BD',language:'bn'},'IN-ml':{country:'IN',language:'ml'},'KR-ko':{country:'KR',language:'ko'},'IN-ta':{country:'IN',language:'ta'},'IN-te':{country:'IN',language:'te'},'JP-ja':{country:'JP',language:'ja'},'CN-zh':{country:'CN',language:'zh'},'FR-fr':{country:'FR',language:'fr'},'ES-es':{country:'ES',language:'es'}};
+   const region=regionMap[imdbRandomRegion]||null;
+   const matchesRegion=x=>!region||((Array.isArray(x.origin_country)?x.origin_country:[]).includes(region.country)&&String(x.original_language||'').toLowerCase()===region.language);
+   if(region){for(let i=out.length-1;i>=0;i--)if(!matchesRegion(out[i]))out.splice(i,1)}
+   
    const credits=await Promise.all(people.map(async p=>{
      try{
        const r=await tmdb('/person/'+p.id+'/combined_credits');
@@ -667,8 +689,11 @@ async function addImdbRandom(status){
 $('#imdbRandomBtn').onclick=openImdbRandomModal;
 $('#imdbRandomLoveToggle').onclick=()=>{const b=$('#imdbRandomLoveToggle'),next=b.getAttribute('aria-pressed')!=='true';b.setAttribute('aria-pressed',String(next));b.textContent=next?'♥ Loved':'♡ Love';b.classList.toggle('is-loved',next)};
 async function startImdbRandomGenre(name){const genre=String(name||'').trim();if(!genre)return;imdbRandomMode='genre';imdbRandomGenre=genre;imdbRandomQuery='';imdbRandomPool=[];imdbRandomSeenKeys=[];try{const v=JSON.parse(SS.getItem('ct_imdb_random_genre_seen_'+genre.toLocaleLowerCase())||'[]');if(Array.isArray(v))imdbRandomSeenKeys=v}catch{}$('#imdbRandomQuery').value=genre;$('#imdbRandomSearchHint').textContent='Genre discovery · '+genre+' · Another Pick stays within this genre.';await pickImdbRandom()}
-async function startImdbRandomSearch(){const q=$('#imdbRandomQuery').value.trim();if(q.length<2){setImdbRandomMessage('Enter at least 2 characters to search.','error');$('#imdbRandomQuery').focus();return}imdbRandomMode='search';imdbRandomGenre='';imdbRandomQuery=q;imdbRandomPool=[];imdbRandomSeenKeys=[];$('#imdbRandomSearchHint').textContent='Focused discovery · '+q+' · Another Pick stays within this search.';await pickImdbRandom()}
-$('#imdbRandomSearchBtn').onclick=startImdbRandomSearch;$('#imdbRandomQuery').addEventListener('keydown',e=>{if(e.key==='Enter')startImdbRandomSearch()});$('#imdbRandomClearBtn').onclick=()=>{imdbRandomMode='general';imdbRandomGenre='';imdbRandomQuery='';imdbRandomPool=[];imdbRandomSeenKeys=[];$('#imdbRandomQuery').value='';$('#imdbRandomSearchHint').textContent='Try “Marvel”, “Tom Hanks”, “Batman”, “Christopher Nolan”…';setImdbRandomMessage('');pickImdbRandom()};
+async function startImdbRandomSearch(){const q=$('#imdbRandomQuery').value.trim();if(q.length<2){setImdbRandomMessage('Enter at least 2 characters to search.','error');$('#imdbRandomQuery').focus();return}imdbRandomMode='search';imdbRandomGenre='';imdbRandomQuery=q;imdbRandomPool=[];imdbRandomSeenKeys=[];$('#imdbRandomSearchHint').textContent='Focused discovery · '+q+' · '+$('#imdbRandomRegion').selectedOptions[0].text+' · Another Pick stays within this search.';await pickImdbRandom()}
+$('#imdbRandomSearchBtn').onclick=startImdbRandomSearch;
+$('#imdbRandomQuery').addEventListener('keydown',e=>{if(e.key==='Enter')startImdbRandomSearch()});
+$('#imdbRandomRegion').onchange=()=>{imdbRandomPool=[];imdbRandomSeenKeys=[];if(imdbRandomMode==='search'||imdbRandomMode==='genre')pickImdbRandom();else pickImdbRandom()};
+$('#imdbRandomClearBtn').onclick=()=>{imdbRandomMode='general';imdbRandomGenre='';imdbRandomQuery='';imdbRandomPool=[];imdbRandomSeenKeys=[];$('#imdbRandomQuery').value='';$('#imdbRandomRegion').value='all';$('#imdbRandomSearchHint').textContent='Try “Marvel”, “Tom Hanks”, “Batman”, “Christopher Nolan”…';setImdbRandomMessage('');pickImdbRandom()};
 document.addEventListener('click',e=>{const b=e.target.closest('.imdb-random-genre-link');if(b)startImdbRandomGenre(b.dataset.genre)});
 $('#imdbAnother').onclick=pickImdbRandom;
 $('#imdbAddWatchlist').onclick=()=>addImdbRandom('watchlist');
@@ -848,7 +873,12 @@ $('#importBackupFile').onchange=async e=>{
 .imdb-random-credits strong{color:#1f1711!important}
 .imdb-random-copy p{color:#1f1711!important}
 </style>
-</html>
+<style id="imdb-random-region-filter-v1">
+.imdb-random-filter{display:grid;grid-template-columns:auto minmax(150px,220px);align-items:center;gap:7px;margin:0 0 7px}
+.imdb-random-filter label{font:600 9px/1.2 Mina,sans-serif;color:var(--muted)}
+.imdb-random-filter select{min-height:32px;padding:6px 8px;font-size:9px}
+@media(max-width:600px){.imdb-random-filter{grid-template-columns:1fr;gap:3px}.imdb-random-filter select{min-height:36px;font-size:10px}}
+</style></html>
 <style id="admin-submit-balance">
 /* Balanced admin action buttons */
 .actions{align-items:stretch}
