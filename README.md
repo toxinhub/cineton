@@ -2,7 +2,7 @@
 
 > **Some of the films I've watched. Rest of the drama? I'm living it...**
 
-A lightweight, GitHub Pages–based personal cinema diary for keeping a watched library and watchlist in a clean, responsive interface.
+A lightweight, GitHub Pages–based personal cinema diary with a GitHub-managed library and a Supabase-backed public interaction layer for visitor ratings, comments, and admin activity monitoring.
 
 ## 🎬 Live Site
 
@@ -70,7 +70,7 @@ The separate `admin.html` page provides browser-based library management:
 | `data.json` | Movie/TV library data |
 | `README.md` | Project documentation |
 
-The project is intentionally simple: no build system, framework, database or server is required.
+The project remains buildless and framework-free, but public interaction features use Supabase Database, Realtime Broadcast, and Edge Functions.
 
 ---
 
@@ -195,12 +195,12 @@ Each library entry follows a structure similar to:
                            │ metadata
                            ▼
 ┌─────────────┐     ┌──────────────┐
-│  admin.html │ ───▶ │   data.json  │
+│  admin.html │ ───▶ │   data.json  │   ← personal library
 └─────────────┘     └──────┬───────┘
                            │
                            ▼
                     ┌──────────────┐
-                    │   index.html │
+                    │   Supabase   │   ← public comments / ratings / activity
                     └──────────────┘
                            │
                            ▼
@@ -237,6 +237,7 @@ The goal is a calm, readable cinema diary rather than a conventional streaming-s
 - JSON
 - GitHub Pages
 - GitHub Contents API
+- Supabase Database / Realtime / Edge Functions
 - TMDB API
 - OMDb API
 - Google Fonts
@@ -245,9 +246,23 @@ No React, Node.js, build step or backend server is required.
 
 ---
 
+## 🔔 Public Activity & Admin Notifications
+
+Visitor interaction is intentionally separated from the personal library.
+
+- Visitors can submit anonymous **public comments** and **1–10 public ratings**.
+- Admin has a dedicated **Activity** section showing recent comments and ratings.
+- A header **🔔 notification indicator** shows unread activity.
+- Activity can be marked as read and is remembered locally in the admin browser.
+- A Supabase Edge Function returns the activity feed only after verifying the existing GitHub admin token.
+- Supabase Realtime Broadcast provides a low-latency refresh signal while the Edge Function remains the source of truth.
+- The live signal carries only minimal identifiers; it does not expose the full comment/rating feed.
+
+The database triggers are defensive: if Realtime is temporarily unavailable, a visitor comment or rating must still be saved successfully.
+
 ## 📌 Notes
 
-CineTon is designed primarily as a **personal film diary and library**, with the data kept in a simple GitHub-managed JSON file.
+CineTon is designed primarily as a **personal film diary and library**, with the personal library kept in a simple GitHub-managed JSON file and visitor interaction data kept separately in Supabase.
 
 For future changes, preserve the separation between:
 
