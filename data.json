@@ -1,5 +1,30 @@
 [
  {
+  "id": "tv-3854",
+  "type": "tv",
+  "title": "The Spectacular Spider-Man",
+  "year": "2008",
+  "poster": "/dCNxOhXT7c4lqYuRpdM3m8s9XDp.jpg",
+  "overview": "Having spent the summer engaging common criminals with his new-found powers, not so typical 16-year-old Peter Parker must conceal his secret identity and battle super-villains in the real world as he enters his junior year of high school.",
+  "director": "Stan Lee, Steve Ditko",
+  "cast": [
+   "Josh Keaton"
+  ],
+  "imdb": "8.4",
+  "genres": [
+   "Action & Adventure",
+   "Animation",
+   "Kids",
+   "Family"
+  ],
+  "my_rating": null,
+  "watched_on": "",
+  "comment": "",
+  "status": "watchlist",
+  "needs_review": false,
+  "added_at": "2026-10-07T02:01:05.747Z"
+ },
+ {
   "id": "movie-274",
   "type": "movie",
   "title": "The Silence of the Lambs",
