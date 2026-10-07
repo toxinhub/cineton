@@ -1,5 +1,34 @@
 [
  {
+  "id": "movie-429",
+  "type": "movie",
+  "title": "The Good, the Bad and the Ugly",
+  "year": "1966",
+  "poster": "/bX2xnavhMYjWDoZp1VM6VnU1xwe.jpg",
+  "overview": "While the Civil War rages on between the Union and the Confederacy, three men – a quiet loner, a ruthless hitman, and a Mexican bandit – comb the American Southwest in search of a strongbox containing $200,000 in stolen gold.",
+  "director": "Sergio Leone",
+  "cast": [
+   "Clint Eastwood",
+   "Eli Wallach",
+   "Lee Van Cleef",
+   "Aldo Giuffrè",
+   "Luigi Pistilli",
+   "Rada Rassimov",
+   "Enzo Petito",
+   "Claudio Scarchilli"
+  ],
+  "imdb": "8.8",
+  "genres": [
+   "Western"
+  ],
+  "my_rating": null,
+  "watched_on": "2026-10-07",
+  "comment": "",
+  "status": "watched",
+  "needs_review": false,
+  "added_at": "2026-10-07T01:48:59.528Z"
+ },
+ {
   "id": "movie-581",
   "type": "movie",
   "title": "Dances with Wolves",
