@@ -321,7 +321,7 @@ button:active,a:active,[role="button"]:active,summary:active{background-image:no
 <div class="field"><label for="editComment">Comment</label><textarea id="editComment" placeholder="Write your thoughts about this movie..."></textarea></div></div>
 <div style="margin-top:8px"><button id="loveToggle" class="love-toggle" type="button" aria-pressed="false"><span id="loveIcon">♡</span><span id="loveText">Add Love</span></button></div>
 </div>
-<div class="actions modal-actions-row"><button id="savePersonal" class="btn" type="button">Save Changes</button><span id="draftState" class="draft-state"></span><button id="editDelete" class="btn danger" type="button" aria-label="Remove this title">Remove</button></div></div>
+<div class="actions modal-actions-row"><button id="editDelete" class="btn danger" type="button" aria-label="Remove this title">Remove</button><button id="localRandomAnotherPick" class="btn secondary local-random-another" type="button" aria-label="Open another random title">Another Pick</button><span id="draftState" class="draft-state"></span><button id="savePersonal" class="btn" type="button">Save Changes</button></div></div>
 </div></dialog>
 </section>
 </div>
@@ -758,7 +758,8 @@ $('#savePersonal').onclick=async()=>{
   setTimeout(()=>{if($('#editModal').open)$('#editModal').close()},450);
  }catch(e){Object.assign(m,old);draftDirty=true;$('#draftState').textContent='Save failed — changes are still unsaved';alert(connError(e));}finally{$('#savePersonal').disabled=false}
 };
-$('#closeEdit').onclick=()=>{if(draftDirty&&!confirm('Unsaved changes will be lost. Leave this movie?'))return;$('#editModal').close()};
+$('#closeEdit').onclick=(e)=>{e.preventDefault();e.stopPropagation();if(draftDirty&&!confirm('Unsaved changes will be lost. Leave this movie?'))return;$('#editModal').close()};
+$('#localRandomAnotherPick').onclick=()=>{if(draftDirty&&!confirm('Unsaved changes will be lost. Open another random title?'))return;openRandomMovie()};
 $('#editModal').addEventListener('cancel',e=>{if(draftDirty&&!confirm('Unsaved changes will be lost. Leave this movie?'))e.preventDefault()});
 $('#editModal').addEventListener('click',e=>{if(e.target===e.currentTarget){if(draftDirty&&!confirm('Unsaved changes will be lost. Leave this movie?'))return;$('#editModal').close()}});
 const backToTop=$('#backToTop');
@@ -1454,5 +1455,63 @@ $('#importBackupFile').onchange=async e=>{
   #editModal.local-random-edit .admin-detail::before{left:87px!important}
   #editModal.local-random-edit .admin-detail img{width:78px!important}
   #editModal.local-random-edit h2{font-size:20px!important}
+}
+</style>
+
+<style id="local-random-modal-controls-v3">
+#editModal.local-random-edit .x{
+  z-index:30!important;
+  pointer-events:auto!important;
+  top:10px!important;
+  right:10px!important;
+  width:36px!important;
+  height:36px!important;
+  display:grid!important;
+  place-items:center!important;
+  cursor:pointer!important;
+}
+#editModal.local-random-edit .modal-status-row{
+  display:grid!important;
+  grid-template-columns:minmax(0,1fr) auto!important;
+  align-items:center!important;
+  column-gap:14px!important;
+  width:100%!important;
+}
+#editModal.local-random-edit #editStatusToggle{
+  justify-self:end!important;
+  min-width:116px!important;
+}
+#editModal.local-random-edit .modal-actions-row{
+  display:grid!important;
+  grid-template-columns:auto auto minmax(0,1fr) auto!important;
+  align-items:center!important;
+  gap:8px!important;
+  justify-content:initial!important;
+}
+#editModal.local-random-edit .modal-actions-row #editDelete{justify-self:start!important}
+#editModal.local-random-edit .modal-actions-row .local-random-another{justify-self:start!important;min-width:104px!important}
+#editModal.local-random-edit .modal-actions-row #savePersonal{justify-self:end!important}
+#editModal.local-random-edit .modal-actions-row .draft-state{margin:0!important;text-align:center!important;min-width:0!important}
+@media(max-width:600px){
+  #editModal.local-random-edit .modal-status-row{
+    grid-template-columns:minmax(0,1fr) auto!important;
+    column-gap:9px!important;
+  }
+  #editModal.local-random-edit #editStatusToggle{
+    min-width:98px!important;
+  }
+  #editModal.local-random-edit .modal-actions-row{
+    grid-template-columns:auto minmax(0,1fr) auto!important;
+    gap:6px!important;
+  }
+  #editModal.local-random-edit .modal-actions-row .local-random-another{
+    grid-column:2!important;
+    justify-self:center!important;
+    min-width:96px!important;
+  }
+  #editModal.local-random-edit .modal-actions-row .draft-state{display:none!important}
+}
+@media(max-width:380px){
+  #editModal.local-random-edit .modal-actions-row .local-random-another{min-width:88px!important}
 }
 </style>
