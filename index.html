@@ -2716,3 +2716,32 @@ main.list .cineton-love-heart{
   }
 }
 </style>
+
+<style id="modal-mobile-poster-hard-final-v3">
+/* Hard-final mobile poster sizing: 100px wide / 150px tall. Keep desktop unchanged. */
+@media(max-width:600px){
+  .cinemodal .modal-top{
+    grid-template-columns:100px minmax(0,1fr)!important;
+    gap:11px!important;
+  }
+  .cinemodal .modal-top .poster-wrap{
+    width:100px!important;
+    min-width:100px!important;
+    max-width:100px!important;
+    flex:0 0 100px!important;
+  }
+  .cinemodal .modal-top .poster-wrap img,
+  .cinemodal .m img{
+    display:block!important;
+    width:100px!important;
+    min-width:100px!important;
+    max-width:100px!important;
+    height:150px!important;
+    min-height:150px!important;
+    max-height:150px!important;
+    aspect-ratio:2 / 3!important;
+    object-fit:cover!important;
+    box-sizing:border-box!important;
+  }
+}
+</style>
