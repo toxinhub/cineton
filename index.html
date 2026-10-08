@@ -718,6 +718,7 @@ header{position:relative}
 @media(max-width:640px){:root{--open-ms:240;--close-ms:220;}}
 html{scrollbar-gutter:stable;}
 .cinemodal{transform-origin:0 0!important;overscroll-behavior:contain;will-change:auto;}
+@media(min-width:641px){.cinemodal .m{transform:translate3d(0,0,0);will-change:auto;}}
 .cinemodal::backdrop{background:transparent!important;backdrop-filter:none!important;-webkit-backdrop-filter:none!important;}
 .movie-motion-overlay{position:fixed;inset:0;z-index:2147483000;pointer-events:none;opacity:0;background:rgb(0 0 0 / .58);-webkit-backdrop-filter:blur(8px) saturate(105%) brightness(70%);backdrop-filter:blur(8px) saturate(105%) brightness(70%);will-change:opacity;transform:translateZ(0);backface-visibility:hidden;}
 .movie-motion-cover{position:absolute;inset:0;z-index:50;pointer-events:none;background-position:center;background-repeat:no-repeat;background-size:cover;background-color:var(--modal);background-blend-mode:normal;will-change:opacity;transform:translateZ(0);backface-visibility:hidden;}
@@ -921,19 +922,26 @@ async function cinetonMotionOpen(sourcePoster,poster){
       void d.offsetWidth;
       await cinetonMotionPaintFrame();
       const desktop=window.matchMedia('(min-width:641px)').matches;
-      const keyframes=desktop
-        ? [
-            {transform:'translate3d(0,108vh,0) scale(.94,.94)',opacity:0,offset:0},
-            {transform:'translate3d(0,18px,0) scale(.992,.992)',opacity:.94,offset:.72},
-            {transform:'translate3d(0,-4px,0) scale(1.012,1.012)',opacity:1,offset:.90},
-            {transform:'translate3d(0,0,0) scale(1,1)',opacity:1,offset:1}
-          ]
-        : [
-            {transform:target.transform,opacity:1,offset:0},
-            {transform:'translate(0px,0px) scale(1,1)',opacity:1,offset:1}
-          ];
-
-      const a=cinetonMotionPlay(d,keyframes,{duration:baseDuration});
+      const modalBody=$('#modal .m');
+      let a;
+      if(desktop && modalBody){
+        d.style.transform='none';
+        modalBody.style.transform='translate3d(0,100%,0)';
+        modalBody.style.opacity='1';
+        void modalBody.offsetHeight;
+        a=cinetonMotionPlay(modalBody,[
+          {transform:'translate3d(0,100%,0)',opacity:0,offset:0},
+          {transform:'translate3d(0,12px,0)',opacity:.94,offset:.72},
+          {transform:'translate3d(0,-3px,0)',opacity:1,offset:.90},
+          {transform:'translate3d(0,0,0)',opacity:1,offset:1}
+        ],{duration:baseDuration});
+      }else{
+        const keyframes=[
+          {transform:target.transform,opacity:1,offset:0},
+          {transform:'translate(0px,0px) scale(1,1)',opacity:1,offset:1}
+        ];
+        a=cinetonMotionPlay(d,keyframes,{duration:baseDuration});
+      }
 
       cinetonMotionPlay(cinetonMotionOverlay,[
         {opacity:0},
@@ -960,6 +968,8 @@ async function cinetonMotionOpen(sourcePoster,poster){
     d.style.transform='none';
     d.style.opacity='1';
     d.style.willChange='';
+    const bodyNow=d.querySelector('.m');
+    if(bodyNow)bodyNow.style.transform='none';
     const coverNow=d.querySelector('.movie-motion-cover');
     if(coverNow)coverNow.remove();
     mb.style.opacity='1';
@@ -1022,18 +1032,19 @@ async function cinetonMotionClose(){
   }
 
   const desktop=window.matchMedia('(min-width:641px)').matches;
-  const closeKeyframes=desktop
+  const modalBody=d.querySelector('.m');
+  const closeKeyframes=desktop && modalBody
     ? [
-        {transform:'translate3d(0,0,0) scale(1,1)',opacity:1,offset:0},
-        {transform:'translate3d(0,-18px,0) scale(.992,.992)',opacity:.96,offset:.18},
-        {transform:'translate3d(0,-108vh,0) scale(.94,.94)',opacity:0,offset:1}
+        {transform:'translate3d(0,0,0)',opacity:1,offset:0},
+        {transform:'translate3d(0,-12px,0)',opacity:.96,offset:.18},
+        {transform:'translate3d(0,-100%,0)',opacity:0,offset:1}
       ]
     : [
         {transform:'translate(0px,0px) scale(1,1)',opacity:1,offset:0},
         {transform:target.transform,opacity:1,offset:.85},
         {transform:target.transform,opacity:0,offset:1}
       ];
-  const a=cinetonMotionPlay(d,closeKeyframes,{duration});
+  const a=cinetonMotionPlay(desktop && modalBody ? modalBody : d,closeKeyframes,{duration});
 
   cinetonMotionPlay(cinetonMotionOverlay,[
     {opacity:.58},
