@@ -2324,133 +2324,111 @@ update();
   .cineton-rating-fly-number.is-flying{animation:none;opacity:0}
 }
 </style>
-<style id="cineton-modal-motion-authoritative-v9">
-.cinemodal,.cinemodal[open]{
-  transform-origin:center center!important;
-  will-change:transform,opacity;
-  transition:none!important;
-}
-.cinemodal::backdrop{
-  background:var(--modal-backdrop);
-  opacity:1;
-  transition:opacity .26s cubic-bezier(.22,.7,.25,1);
-}
-.cinemodal.cineton-modal-opening::backdrop,
-.cinemodal.cineton-modal-closing::backdrop{opacity:0}
-@media(prefers-reduced-motion:reduce){
-  .cinemodal,.cinemodal[open]{will-change:auto!important}
-  .cinemodal::backdrop{transition:none!important}
-}
+<style id="cineton-modal-motion-authoritative-v10">
+/* Deterministic poster-origin modal morph. The dialog itself is the animated element. */
+.cinemodal,.cinemodal[open]{transform-origin:center center!important;will-change:transform!important;transition:none!important}
+.cinemodal::backdrop{background:var(--modal-backdrop);opacity:1;transition:opacity .24s cubic-bezier(.22,.7,.25,1)}
+.cinemodal.cineton-modal-opening::backdrop,.cinemodal.cineton-modal-closing::backdrop{opacity:0}
+@media(prefers-reduced-motion:reduce){.cinemodal,.cinemodal[open]{will-change:auto!important}.cinemodal::backdrop{transition:none!important}}
 </style>
-<script id="cineton-modal-motion-controller-v9">
+<script id="cineton-modal-motion-controller-v10">
 (function(){
-  const modal=document.getElementById('d');
-  if(!modal) return;
-  let sourceCard=null,sourcePoster=null,sourceMovieId=null,sourceRect=null,sourceInlineState=null;
-  let closing=false,activeAnimation=null;
+  const modal=document.getElementById('d'); if(!modal)return;
+  let sourceCard=null,sourcePoster=null,sourceMovieId=null,sourceRect=null;
+  let closing=false,activeAnimation=null,openToken=0;
   const reducedMotion=()=>window.matchMedia('(prefers-reduced-motion: reduce)').matches;
   const mobile=()=>window.matchMedia('(max-width:600px)').matches;
+  const raf=()=>new Promise(resolve=>requestAnimationFrame(resolve));
 
-  function getPoster(){
-    const live=sourceMovieId?document.querySelector('.c[data-id="'+CSS.escape(sourceMovieId)+'"] img,.c[data-id="'+CSS.escape(sourceMovieId)+'"] .ph'):null;
-    return live||sourcePoster||null;
-  }
   function captureSource(){
-    const poster=getPoster();
+    const poster=sourceMovieId
+      ? document.querySelector('.c[data-id="'+CSS.escape(sourceMovieId)+'"] img,.c[data-id="'+CSS.escape(sourceMovieId)+'"] .ph')||sourcePoster
+      : sourcePoster;
     if(!poster)return null;
     const r=poster.getBoundingClientRect();
     if(!r.width||!r.height)return null;
+    sourcePoster=poster;
     sourceRect={left:r.left,top:r.top,width:r.width,height:r.height};
-    sourceInlineState={
-      card:{transform:sourceCard?.style.getPropertyValue('transform')||'',transformPriority:sourceCard?.style.getPropertyPriority('transform')||'',boxShadow:sourceCard?.style.getPropertyValue('box-shadow')||'',boxShadowPriority:sourceCard?.style.getPropertyPriority('box-shadow')||'',transition:sourceCard?.style.getPropertyValue('transition')||'',transitionPriority:sourceCard?.style.getPropertyPriority('transition')||''},
-      poster:{transform:poster.style.getPropertyValue('transform')||'',transformPriority:poster.style.getPropertyPriority('transform')||'',transition:poster.style.getPropertyValue('transition')||'',transitionPriority:poster.style.getPropertyPriority('transition')||''}
-    };
-    const cardCS=sourceCard?getComputedStyle(sourceCard):null,posterCS=getComputedStyle(poster);
-    if(sourceCard){
-      sourceCard.style.setProperty('transform',cardCS.transform,'important');
-      sourceCard.style.setProperty('box-shadow',cardCS.boxShadow,'important');
-      sourceCard.style.setProperty('transition','none','important');
-    }
-    poster.style.setProperty('transform',posterCS.transform,'important');
-    poster.style.setProperty('transition','none','important');
     return sourceRect;
   }
-  function restoreSource(){
-    if(!sourceCard||!sourceInlineState)return;
-    const s=sourceInlineState.card;
-    if(s.transform)sourceCard.style.setProperty('transform',s.transform,s.transformPriority);else sourceCard.style.removeProperty('transform');
-    if(s.boxShadow)sourceCard.style.setProperty('box-shadow',s.boxShadow,s.boxShadowPriority);else sourceCard.style.removeProperty('box-shadow');
-    if(s.transition)sourceCard.style.setProperty('transition',s.transition,s.transitionPriority);else sourceCard.style.removeProperty('transition');
-    const p=sourceInlineState.poster;
-    if(sourcePoster){
-      if(p.transform)sourcePoster.style.setProperty('transform',p.transform,p.transformPriority);else sourcePoster.style.removeProperty('transform');
-      if(p.transition)sourcePoster.style.setProperty('transition',p.transition,p.transitionPriority);else sourcePoster.style.removeProperty('transition');
-    }
-    sourceInlineState=null;
-  }
   function clearAnimation(){if(activeAnimation){try{activeAnimation.cancel()}catch{}activeAnimation=null}}
-  function originTransform(o){return 'translate3d('+o.x+'px,'+o.y+'px,0) scale3d('+o.sx+','+o.sy+',1)'}
-  function measure(){
-    const pr=sourceRect,mr=modal.getBoundingClientRect();
-    if(!pr||!mr.width||!mr.height)return null;
-    return {x:pr.left+pr.width/2-(mr.left+mr.width/2),y:pr.top+pr.height/2-(mr.top+mr.height/2),sx:Math.max(.01,pr.width/mr.width),sy:Math.max(.01,pr.height/mr.height)};
+  function origin(){
+    if(!sourceRect)return null;
+    const mr=modal.getBoundingClientRect();
+    if(!mr.width||!mr.height)return null;
+    return {
+      x:sourceRect.left+sourceRect.width/2-(mr.left+mr.width/2),
+      y:sourceRect.top+sourceRect.height/2-(mr.top+mr.height/2),
+      sx:Math.max(.01,sourceRect.width/mr.width),
+      sy:Math.max(.01,sourceRect.height/mr.height)
+    };
   }
-  function resetInline(){
-    modal.style.removeProperty('opacity');
-    modal.style.removeProperty('transform');
-    modal.style.removeProperty('will-change');
+  const tf=o=>'translate3d('+o.x+'px,'+o.y+'px,0) scale3d('+o.sx+','+o.sy+',1)';
+  function reset(){
+    modal.style.removeProperty('opacity');modal.style.removeProperty('transform');
+    modal.style.removeProperty('visibility');modal.style.removeProperty('will-change');
     modal.classList.remove('cineton-modal-opening','cineton-modal-closing');
   }
+
   window.setCinetonModalSource=function(card){
-    restoreSource();
-    sourceCard=card||null;
+    clearAnimation(); sourceCard=card||null;
     sourcePoster=sourceCard?.querySelector?.('img,.ph')||null;
     sourceMovieId=sourceCard?.dataset?.id||null;
     sourceRect=captureSource();
   };
-  window.playCinetonModalOpen=function(){
+
+  window.playCinetonModalOpen=async function(){
     if(!modal.open)return;
-    closing=false;clearAnimation();
-    modal.classList.remove('cineton-modal-closing');
-    modal.classList.add('cineton-modal-opening');
-    if(reducedMotion()){modal.style.opacity='1';modal.style.transform='none';modal.classList.remove('cineton-modal-opening');return}
-    const o=measure();
-    if(!o){modal.style.opacity='1';modal.style.transform='none';modal.classList.remove('cineton-modal-opening');return}
-    const start=originTransform(o);
-    modal.style.opacity='1';
-    modal.style.transform=start;
+    const token=++openToken; closing=false; clearAnimation();
+    if(reducedMotion()){
+      modal.style.visibility='visible';modal.style.opacity='1';modal.style.transform='none';
+      modal.classList.remove('cineton-modal-opening');return;
+    }
+    /* showModal() moves <dialog> to the browser top layer. Wait for that
+       promotion and one settled layout frame before measuring the real box. */
+    await raf(); await raf();
+    if(!modal.open||token!==openToken)return;
+    const o=origin();
+    if(!o){
+      modal.style.visibility='visible';modal.style.opacity='1';modal.style.transform='none';
+      modal.classList.remove('cineton-modal-opening');return;
+    }
+    const start=tf(o);
+    modal.style.visibility='visible';modal.style.opacity='1';modal.style.transform=start;
+    void modal.getBoundingClientRect();
+    await raf();
+    if(!modal.open||token!==openToken)return;
     const anim=modal.animate(
       [{opacity:1,transform:start},{opacity:1,transform:'translate3d(0,0,0) scale3d(1,1,1)'}],
-      {duration:mobile()?440:500,easing:'cubic-bezier(.16,1,.3,1)',fill:'forwards'}
+      {duration:mobile()?460:520,easing:'cubic-bezier(.16,1,.3,1)',fill:'forwards'}
     );
     activeAnimation=anim;
-    anim.finished.catch(()=>{}).then(()=>{
-      if(activeAnimation!==anim)return;
-      activeAnimation=null;
-      modal.style.opacity='1';modal.style.transform='none';modal.style.removeProperty('will-change');
-      modal.classList.remove('cineton-modal-opening');
-    });
+    try{await anim.finished}catch{}
+    if(activeAnimation!==anim||!modal.open||token!==openToken)return;
+    activeAnimation=null;modal.style.opacity='1';modal.style.transform='none';
+    modal.style.removeProperty('will-change');modal.classList.remove('cineton-modal-opening');
   };
+
   window.closeCinetonModal=function(){
     if(!modal.open||closing)return;
     if(reducedMotion()){modal.close();return}
-    closing=true;clearAnimation();
-    modal.classList.remove('cineton-modal-opening');
-    modal.classList.add('cineton-modal-closing');
-    modal.style.setProperty('will-change','transform,opacity');
-    const o=measure();
-    if(!o){modal.close();return}
-    const end=originTransform(o);
+    closing=true;++openToken;clearAnimation();
+    modal.classList.remove('cineton-modal-opening');modal.classList.add('cineton-modal-closing');
+    modal.style.setProperty('will-change','transform');
+    const o=origin(); if(!o){modal.close();return}
     const anim=modal.animate(
-      [{opacity:1,transform:'translate3d(0,0,0) scale3d(1,1,1)'},{opacity:1,transform:end}],
+      [{opacity:1,transform:'translate3d(0,0,0) scale3d(1,1,1)'},{opacity:1,transform:tf(o)}],
       {duration:mobile()?390:450,easing:'cubic-bezier(.4,0,1,1)',fill:'forwards'}
     );
     activeAnimation=anim;
-    anim.finished.catch(()=>{}).then(()=>{if(activeAnimation!==anim)return;activeAnimation=null;modal.close()});
+    anim.finished.catch(()=>{}).then(()=>{
+      if(activeAnimation!==anim)return; activeAnimation=null; modal.close();
+    });
   };
-  modal.addEventListener('cancel',function(ev){if(reducedMotion())return;ev.preventDefault();window.closeCinetonModal()});
-  modal.addEventListener('close',function(){
-    closing=false;clearAnimation();restoreSource();resetInline();
+
+  modal.addEventListener('cancel',ev=>{if(reducedMotion())return;ev.preventDefault();window.closeCinetonModal()});
+  modal.addEventListener('close',()=>{
+    ++openToken;closing=false;clearAnimation();reset();
     sourceRect=null;sourcePoster=null;sourceCard=null;sourceMovieId=null;
   });
 })();
