@@ -2324,21 +2324,60 @@ update();
   .cineton-rating-fly-number.is-flying{animation:none;opacity:0}
 }
 </style>
-<style id="cineton-modal-motion-final-v13">
-/* Modal shell motion is controlled by Web Animations API so the dialog itself visibly travels from/to the source poster. */
+<style id="cineton-modal-motion-clean-v14">
+/* Clean poster-bound dialog motion. The native dialog stays in the top layer for the full transition. */
 .cinemodal{
-  opacity:1!important;
-  transform:none!important;
-  transition:none!important;
-  transform-origin:center center!important;
+  opacity:0;
+  transform:translate3d(var(--origin-x,0px),var(--origin-y,0px),0) scale(var(--origin-scale,.28));
+  transform-origin:center center;
+  transition:
+    opacity .34s cubic-bezier(.22,.7,.25,1),
+    transform .42s cubic-bezier(.16,1,.3,1),
+    display .42s cubic-bezier(.16,1,.3,1) allow-discrete,
+    overlay .42s cubic-bezier(.16,1,.3,1) allow-discrete;
+  transition-behavior:allow-discrete;
   will-change:transform,opacity;
 }
 .cinemodal[open]{
-  opacity:1!important;
-  transform:none!important;
+  opacity:1;
+  transform:translate3d(0,0,0) scale(1);
+}
+.cinemodal::backdrop{
+  background:transparent;
+  opacity:0;
+  transition:
+    opacity .34s ease,
+    display .34s ease allow-discrete,
+    overlay .34s ease allow-discrete;
+  transition-behavior:allow-discrete;
+}
+.cinemodal[open]::backdrop{
+  background:var(--modal-backdrop);
+  opacity:1;
+}
+@starting-style{
+  .cinemodal[open]{
+    opacity:0;
+    transform:translate3d(var(--origin-x,0px),var(--origin-y,0px),0) scale(var(--origin-scale,.28));
+  }
+  .cinemodal[open]::backdrop{
+    opacity:0;
+  }
 }
 @media(prefers-reduced-motion:reduce){
-  .cinemodal{will-change:auto}
+  .cinemodal,
+  .cinemodal[open]{
+    opacity:1;
+    transform:none;
+    transition:none;
+    will-change:auto;
+  }
+  .cinemodal::backdrop,
+  .cinemodal[open]::backdrop{
+    opacity:1;
+    transition:none;
+    background:var(--modal-backdrop);
+  }
 }
 </style>
 </body>
@@ -2396,126 +2435,46 @@ update();
   .cinemodal .chips .love-chip .love-mobile-emoji{display:inline!important}
 }
 </style>
-<script id="cineton-modal-motion-controller-v2">
+<script id="cineton-modal-motion-controller-v3">
 (function(){
   const modal=document.getElementById('d');
   if(!modal) return;
-  let activeAnimation=null;
-  let activeBackdropAnimation=null;
-  let closing=false;
 
   function reducedMotion(){
     return window.matchMedia('(prefers-reduced-motion: reduce)').matches;
   }
 
-  function originTransform(){
-    const x=modal.style.getPropertyValue('--origin-x')||'0px';
-    const y=modal.style.getPropertyValue('--origin-y')||'0px';
-    const s=modal.style.getPropertyValue('--origin-scale')||'.28';
-    return 'translate3d('+x+','+y+',0) scale('+s+')';
-  }
-
-  function cancelAnimations(){
-    if(activeAnimation){ activeAnimation.cancel(); activeAnimation=null; }
-    if(activeBackdropAnimation){ activeBackdropAnimation.cancel(); activeBackdropAnimation=null; }
-  }
-
-  function animateBackdrop(opening){
-    const backdrop=modal;
-    if(!backdrop) return;
-    try{
-      const pseudo=backdrop.getAnimations ? backdrop.getAnimations({subtree:false}) : [];
-      pseudo.forEach(a=>a.cancel());
-    }catch(_){}
+  function reset(){
+    modal.style.opacity='';
+    modal.style.transform='';
   }
 
   window.playCinetonModalOpen=function(){
     if(!modal.open) return;
-    cancelAnimations();
-    closing=false;
-
+    modal.removeAttribute('data-closing');
+    reset();
     if(reducedMotion()){
       modal.style.opacity='1';
       modal.style.transform='none';
-      return;
     }
-
-    const from=originTransform();
-    modal.style.opacity='0';
-    modal.style.transform=from;
-    modal.offsetWidth;
-
-    requestAnimationFrame(()=>{
-      if(!modal.open || closing) return;
-      activeAnimation=modal.animate(
-        [
-          {opacity:0,transform:from,offset:0},
-          {opacity:1,transform:'translate3d(0,0,0) scale(1)',offset:1}
-        ],
-        {
-          duration:420,
-          easing:'cubic-bezier(.16,1,.3,1)',
-          fill:'forwards'
-        }
-      );
-      activeAnimation.onfinish=()=>{
-        if(!modal.open) return;
-        modal.style.opacity='1';
-        modal.style.transform='none';
-        activeAnimation=null;
-      };
-    });
   };
 
   window.closeCinetonModal=function(){
-    if(!modal.open || closing) return;
-    closing=true;
-    cancelAnimations();
-
+    if(!modal.open) return;
     if(reducedMotion()){
-      closing=false;
       modal.close();
       return;
     }
-
-    const to=originTransform();
-    modal.style.opacity='1';
-    modal.style.transform='translate3d(0,0,0) scale(1)';
-    modal.offsetWidth;
-
-    activeAnimation=modal.animate(
-      [
-        {opacity:1,transform:'translate3d(0,0,0) scale(1)',offset:0},
-        {opacity:0,transform:to,offset:1}
-      ],
-      {
-        duration:340,
-        easing:'cubic-bezier(.4,0,1,1)',
-        fill:'forwards'
-      }
-    );
-
-    activeAnimation.onfinish=()=>{
-      activeAnimation=null;
-      modal.style.opacity='1';
-      modal.style.transform='none';
-      closing=false;
-      if(modal.open) modal.close();
-    };
+    modal.close();
   };
 
   modal.addEventListener('cancel',function(ev){
     if(reducedMotion()) return;
     ev.preventDefault();
-    window.closeCinetonModal();
+    modal.close();
   });
 
-  modal.addEventListener('close',function(){
-    cancelAnimations();
-    closing=false;
-    modal.style.opacity='1';
-    modal.style.transform='none';
-  });
+  modal.addEventListener('close',reset);
 })();
 </script>
 </html><style id="desktop-soft-square-radius-v1">
