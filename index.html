@@ -910,6 +910,8 @@ async function cinetonMotionOpen(sourcePoster,poster){
       await a.finished.catch(()=>{});
     }else{
       d.style.transform=target.transform;
+      /* Force the poster-sized FLIP start frame to be painted before WAAPI. */
+      void d.offsetWidth;
       const desktop=window.matchMedia('(min-width:641px)').matches;
       const keyframes=desktop
         ? [
