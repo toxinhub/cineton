@@ -3087,3 +3087,55 @@ main.list .cineton-love-heart{
   .cinemodal.modal-returning .m{animation:none!important}
 }
 </style>
+<style id="desktop-modal-poster-origin-fix-v5">
+@media(min-width:601px){
+  /* The dialog itself is the native top-layer shell; the visible content travels from/to the clicked poster. */
+  .cinemodal.modal-opening,
+  .cinemodal.modal-returning{
+    overflow:visible!important;
+  }
+  .cinemodal.modal-opening .m{
+    animation:cinetonDesktopPosterOpenV5 .28s cubic-bezier(.18,.82,.22,1) both!important;
+  }
+  .cinemodal.modal-returning .m{
+    animation:cinetonDesktopPosterCloseV5 .18s cubic-bezier(.42,0,.9,.18) both!important;
+    pointer-events:none!important;
+  }
+  @keyframes cinetonDesktopPosterOpenV5{
+    from{
+      opacity:0;
+      transform:translate3d(var(--origin-x,0px),calc(var(--origin-y,0px) + 18px),0) scale(max(.20,var(--origin-scale,.28)));
+    }
+    62%{
+      opacity:1;
+      transform:translate3d(calc(var(--origin-x,0px) * .16),calc(var(--origin-y,0px) * .16),0) scale(.99);
+    }
+    82%{
+      opacity:1;
+      transform:translate3d(calc(var(--origin-x,0px) * -.025),calc(var(--origin-y,0px) * -.025),0) scale(1.003);
+    }
+    to{
+      opacity:1;
+      transform:translate3d(0,0,0) scale(1);
+    }
+  }
+  @keyframes cinetonDesktopPosterCloseV5{
+    from{
+      opacity:1;
+      transform:translate3d(0,0,0) scale(1);
+    }
+    55%{
+      opacity:.96;
+      transform:translate3d(calc(var(--origin-x,0px) * .46),calc(var(--origin-y,0px) * .46),0) scale(.84);
+    }
+    82%{
+      opacity:.54;
+      transform:translate3d(calc(var(--origin-x,0px) * .82),calc(var(--origin-y,0px) * .82),0) scale(max(.42,var(--origin-scale,.28) + .14));
+    }
+    to{
+      opacity:0;
+      transform:translate3d(var(--origin-x,0px),calc(var(--origin-y,0px) + 8px),0) scale(max(.20,var(--origin-scale,.28)));
+    }
+  }
+}
+</style>
