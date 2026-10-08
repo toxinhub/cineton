@@ -3131,13 +3131,12 @@ update();
   .cinemodal .chips .love-chip .love-mobile-emoji{display:inline!important}
 }
 </style>
-<style id="card-meta-symbol-separator-v1">
-/* Keep metadata symbols visually separated: Year · Type · Visitor Comment • Loved. */
-.visitor-comment-indicator{
-  margin-left:0!important;
-}
+<style id="card-meta-symbol-separator-v2">
+/* Use one consistent bullet separator with balanced spacing across card metadata. */
+.ci small{word-spacing:0}
+.visitor-comment-indicator{margin-left:0!important}
 .visitor-comment-indicator::before{
-  content:" · ";
+  content:" • ";
   color:var(--mu);
   opacity:.82;
   font:inherit;
