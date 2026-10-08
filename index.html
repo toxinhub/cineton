@@ -713,7 +713,8 @@ header{position:relative}
 <style id="movie-modal-motion-v3">
 /* Movie modal — Poster ↔ Modal cinematic FLIP transition.
    Independent from Suggest Me. Vanilla CSS + Web Animations API only. */
-:root{--open-ms:240;--close-ms:210;}
+:root{--open-ms:240;--close-ms:220;}
+@media(min-width:641px){:root{--open-ms:360;--close-ms:300;}}
 @media(max-width:640px){:root{--open-ms:240;--close-ms:220;}}
 html{scrollbar-gutter:stable;}
 .cinemodal{transform-origin:0 0!important;overscroll-behavior:contain;will-change:auto;}
@@ -887,7 +888,8 @@ async function cinetonMotionOpen(sourcePoster,poster){
   cinetonMotionOverlay.style.opacity='0';
   cinetonMotionOverlay.style.pointerEvents='none';
 
-  d.style.transformOrigin='0 0';
+  const desktopMotion=window.matchMedia('(min-width:641px)').matches;
+  d.style.transformOrigin=desktopMotion?'50% 50%':'0 0';
   d.style.transform='none';
   d.style.opacity='1';
   d.style.willChange='transform, opacity';
@@ -921,9 +923,10 @@ async function cinetonMotionOpen(sourcePoster,poster){
       const desktop=window.matchMedia('(min-width:641px)').matches;
       const keyframes=desktop
         ? [
-            {transform:target.transform,opacity:1,offset:0},
-            {transform:'translate(0px,-4px) scale(1.012,1.012)',opacity:1,offset:.82},
-            {transform:'translate(0px,0px) scale(1,1)',opacity:1,offset:1}
+            {transform:'translate3d(0,108vh,0) scale(.94,.94)',opacity:0,offset:0},
+            {transform:'translate3d(0,18px,0) scale(.992,.992)',opacity:.94,offset:.72},
+            {transform:'translate3d(0,-4px,0) scale(1.012,1.012)',opacity:1,offset:.90},
+            {transform:'translate3d(0,0,0) scale(1,1)',opacity:1,offset:1}
           ]
         : [
             {transform:target.transform,opacity:1,offset:0},
@@ -994,7 +997,8 @@ async function cinetonMotionClose(){
     cinetonModalBusy=false;
   };
 
-  d.style.transformOrigin='0 0';
+  const desktopMotion=window.matchMedia('(min-width:641px)').matches;
+  d.style.transformOrigin=desktopMotion?'50% 50%':'0 0';
   d.style.willChange='transform, opacity';
 
   /*
@@ -1017,11 +1021,19 @@ async function cinetonMotionClose(){
     return;
   }
 
-  const a=cinetonMotionPlay(d,[
-    {transform:'translate(0px,0px) scale(1,1)',opacity:1,offset:0},
-    {transform:target.transform,opacity:1,offset:.85},
-    {transform:target.transform,opacity:0,offset:1}
-  ],{duration});
+  const desktop=window.matchMedia('(min-width:641px)').matches;
+  const closeKeyframes=desktop
+    ? [
+        {transform:'translate3d(0,0,0) scale(1,1)',opacity:1,offset:0},
+        {transform:'translate3d(0,-18px,0) scale(.992,.992)',opacity:.96,offset:.18},
+        {transform:'translate3d(0,-108vh,0) scale(.94,.94)',opacity:0,offset:1}
+      ]
+    : [
+        {transform:'translate(0px,0px) scale(1,1)',opacity:1,offset:0},
+        {transform:target.transform,opacity:1,offset:.85},
+        {transform:target.transform,opacity:0,offset:1}
+      ];
+  const a=cinetonMotionPlay(d,closeKeyframes,{duration});
 
   cinetonMotionPlay(cinetonMotionOverlay,[
     {opacity:.58},
