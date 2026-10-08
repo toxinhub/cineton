@@ -2324,8 +2324,8 @@ update();
   .cineton-rating-fly-number.is-flying{animation:none;opacity:0}
 }
 </style>
-<style id="cineton-modal-motion-authoritative-v13">
-/* Native-feeling shared-element transition: lock the dialog to the poster BEFORE the first paint. */
+<style id="cineton-modal-motion-authoritative-v14">
+/* Clean shared-element modal motion: fast, quiet, and poster-originated. */
 .cinemodal,.cinemodal[open]{
   transform-origin:center center!important;
   will-change:transform!important;
@@ -2334,7 +2334,7 @@ update();
 .cinemodal::backdrop{
   background:var(--modal-backdrop);
   opacity:1;
-  transition:opacity .36s cubic-bezier(.22,.7,.25,1);
+  transition:opacity .24s cubic-bezier(.22,.7,.25,1);
 }
 .cinemodal.cineton-modal-opening::backdrop,
 .cinemodal.cineton-modal-closing::backdrop{opacity:0}
@@ -2343,7 +2343,7 @@ update();
   .cinemodal::backdrop{transition:none!important}
 }
 </style>
-<script id="cineton-modal-motion-controller-v13">
+<script id="cineton-modal-motion-controller-v14">
 (function(){
   const modal=document.getElementById('d');if(!modal)return;
   let sourcePoster=null,sourceMovieId=null,sourceRect=null;
@@ -2351,7 +2351,6 @@ update();
 
   const reducedMotion=()=>window.matchMedia('(prefers-reduced-motion: reduce)').matches;
   const mobile=()=>window.matchMedia('(max-width:600px)').matches;
-  const raf=()=>new Promise(r=>requestAnimationFrame(r));
 
   function captureSource(){
     let p=null;
@@ -2413,12 +2412,6 @@ update();
       return;
     }
 
-    /*
-      Critical: showModal() puts <dialog> in the top layer immediately.
-      Lock its starting transform NOW, before yielding to requestAnimationFrame,
-      otherwise the browser can paint the full dialog first and the transition
-      looks like an instant popup.
-    */
     const rect=captureSource();
     const o=rect?origin():null;
     if(!o){
@@ -2435,34 +2428,19 @@ update();
     modal.style.setProperty('will-change','transform');
     modal.classList.add('cineton-modal-opening');
 
-    /* Commit the poster-sized state, then animate from that exact state. */
+    /* Force the poster-sized start state to be committed before animation. */
     void modal.getBoundingClientRect();
-    await raf();
-    if(!modal.open||token!==openToken)return;
 
     const fresh=captureSource();
     const next=fresh?origin():o;
     if(!next)return;
-    const mid1=tf(
-      next.x*.94,next.y*.94,
-      Math.min(1,next.sx+(1-next.sx)*.20),
-      Math.min(1,next.sy+(1-next.sy)*.20)
-    );
-    const mid2=tf(
-      next.x*.52,next.y*.52,
-      Math.min(1,next.sx+(1-next.sx)*.70),
-      Math.min(1,next.sy+(1-next.sy)*.70)
-    );
-    const end=tf(0,0,1,1);
 
     const anim=modal.animate([
-      {opacity:1,transform:start,offset:0,easing:'cubic-bezier(.18,.32,.28,1)'},
-      {opacity:1,transform:mid1,offset:.25,easing:'cubic-bezier(.2,.7,.28,1)'},
-      {opacity:1,transform:mid2,offset:.70,easing:'cubic-bezier(.16,.86,.28,1)'},
-      {opacity:1,transform:end,offset:1}
+      {opacity:1,transform:tf(next.x,next.y,next.sx,next.sy)},
+      {opacity:1,transform:'translate3d(0,0,0) scale3d(1,1,1)'}
     ],{
-      duration:mobile()?780:860,
-      easing:'linear',
+      duration:mobile()?400:460,
+      easing:'cubic-bezier(.2,.8,.2,1)',
       fill:'forwards'
     });
 
@@ -2492,12 +2470,11 @@ update();
     const o=rect?origin():null;
     if(!o){modal.close();return}
 
-    const end=tf(o.x,o.y,o.sx,o.sy);
     const anim=modal.animate([
-      {opacity:1,transform:tf(0,0,1,1),offset:0},
-      {opacity:1,transform:end,offset:1}
+      {opacity:1,transform:'translate3d(0,0,0) scale3d(1,1,1)'},
+      {opacity:1,transform:tf(o.x,o.y,o.sx,o.sy)}
     ],{
-      duration:mobile()?390:450,
+      duration:mobile()?270:300,
       easing:'cubic-bezier(.4,0,1,1)',
       fill:'forwards'
     });
