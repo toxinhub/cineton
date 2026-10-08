@@ -3138,13 +3138,19 @@ main.list .cineton-love-heart{
     }
   }
 }
-</style><style id="desktop-modal-shell-motion-v6">
+</style><style id="desktop-modal-shell-motion-v7">
 @media(min-width:601px){
+  /*
+    The shell itself is animated with the Web Animations API.
+    Do not mark opacity/transform as !important here: an !important
+    declaration wins over WAAPI's animated value and freezes the shell.
+  */
   .cinemodal.modal-shell-motion{
-    opacity:1!important;
-    transform:translate3d(var(--shell-x,0px),var(--shell-y,0px),0) scale(var(--shell-scale,1))!important;
-    transform-origin:center center!important;
-    will-change:transform,opacity!important;
+    opacity:1;
+    transform:translate3d(0,0,0) scale(1);
+    transform-origin:center center;
+    will-change:transform,opacity;
+    transition:none!important;
   }
   .cinemodal.modal-shell-motion .m{
     animation:none!important;
