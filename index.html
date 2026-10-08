@@ -2324,59 +2324,209 @@ update();
   .cineton-rating-fly-number.is-flying{animation:none;opacity:0}
 }
 </style>
-<style id="cineton-modal-motion-authoritative-v11">
-.cinemodal,.cinemodal[open]{transform-origin:center center!important;will-change:transform!important;transition:none!important}
-.cinemodal::backdrop{background:var(--modal-backdrop);opacity:1;transition:opacity .34s cubic-bezier(.22,.7,.25,1)}
-.cinemodal.cineton-modal-opening::backdrop,.cinemodal.cineton-modal-closing::backdrop{opacity:0}
-@media(prefers-reduced-motion:reduce){.cinemodal,.cinemodal[open]{will-change:auto!important}.cinemodal::backdrop{transition:none!important}}
+<style id="cineton-modal-motion-authoritative-v12">
+/* Shared-element modal motion — poster to dialog, inspired by native contact/profile transitions. */
+.cinemodal,.cinemodal[open]{
+  transform-origin:center center!important;
+  will-change:transform!important;
+  transition:none!important;
+}
+.cinemodal::backdrop{
+  background:var(--modal-backdrop);
+  opacity:1;
+  transition:opacity .38s cubic-bezier(.22,.7,.25,1);
+}
+.cinemodal.cineton-modal-opening::backdrop,
+.cinemodal.cineton-modal-closing::backdrop{opacity:0}
+@media(prefers-reduced-motion:reduce){
+  .cinemodal,.cinemodal[open]{will-change:auto!important}
+  .cinemodal::backdrop{transition:none!important}
+}
 </style>
-<script id="cineton-modal-motion-controller-v11">
+<script id="cineton-modal-motion-controller-v12">
 (function(){
   const modal=document.getElementById('d');if(!modal)return;
-  let sourceCard=null,sourcePoster=null,sourceMovieId=null,sourceRect=null;
+  let sourcePoster=null,sourceMovieId=null,sourceRect=null;
   let closing=false,activeAnimation=null,openToken=0;
+
   const reducedMotion=()=>window.matchMedia('(prefers-reduced-motion: reduce)').matches;
   const mobile=()=>window.matchMedia('(max-width:600px)').matches;
   const raf=()=>new Promise(r=>requestAnimationFrame(r));
+
   function captureSource(){
-    const p=sourceMovieId?document.querySelector('.c[data-id="'+CSS.escape(sourceMovieId)+'"] img,.c[data-id="'+CSS.escape(sourceMovieId)+'"] .ph')||sourcePoster:sourcePoster;
-    if(!p)return null;const r=p.getBoundingClientRect();if(!r.width||!r.height)return null;
-    sourcePoster=p;sourceRect={left:r.left,top:r.top,width:r.width,height:r.height};return sourceRect;
+    let p=null;
+    if(sourceMovieId){
+      try{
+        p=document.querySelector('.c[data-id="'+CSS.escape(sourceMovieId)+'"] img,.c[data-id="'+CSS.escape(sourceMovieId)+'"] .ph');
+      }catch{}
+    }
+    p=p||sourcePoster;
+    if(!p)return null;
+    const r=p.getBoundingClientRect();
+    if(!r.width||!r.height)return null;
+    sourcePoster=p;
+    sourceRect={left:r.left,top:r.top,width:r.width,height:r.height};
+    return sourceRect;
   }
-  function clearAnimation(){if(activeAnimation){try{activeAnimation.cancel()}catch{}activeAnimation=null}}
+
+  function clearAnimation(){
+    if(activeAnimation){
+      try{activeAnimation.cancel()}catch{}
+      activeAnimation=null;
+    }
+  }
+
   function origin(){
-    if(!sourceRect)return null;const r=modal.getBoundingClientRect();if(!r.width||!r.height)return null;
-    return{x:sourceRect.left+sourceRect.width/2-(r.left+r.width/2),y:sourceRect.top+sourceRect.height/2-(r.top+r.height/2),sx:Math.max(.01,sourceRect.width/r.width),sy:Math.max(.01,sourceRect.height/r.height)};
+    if(!sourceRect)return null;
+    const r=modal.getBoundingClientRect();
+    if(!r.width||!r.height)return null;
+    return {
+      x:sourceRect.left+sourceRect.width/2-(r.left+r.width/2),
+      y:sourceRect.top+sourceRect.height/2-(r.top+r.height/2),
+      sx:Math.max(.01,sourceRect.width/r.width),
+      sy:Math.max(.01,sourceRect.height/r.height)
+    };
   }
-  const tf=o=>'translate3d('+o.x+'px,'+o.y+'px,0) scale3d('+o.sx+','+o.sy+',1)';
-  function reset(){modal.style.removeProperty('opacity');modal.style.removeProperty('transform');modal.style.removeProperty('visibility');modal.style.removeProperty('will-change');modal.classList.remove('cineton-modal-opening','cineton-modal-closing')}
-  window.setCinetonModalSource=function(card){clearAnimation();sourceCard=card||null;sourcePoster=sourceCard?.querySelector?.('img,.ph')||null;sourceMovieId=sourceCard?.dataset?.id||null;sourceRect=captureSource()};
+
+  const transform=(x,y,sx,sy)=>
+    'translate3d('+x+'px,'+y+'px,0) scale3d('+sx+','+sy+',1)';
+
+  function reset(){
+    modal.style.removeProperty('opacity');
+    modal.style.removeProperty('transform');
+    modal.style.removeProperty('visibility');
+    modal.style.removeProperty('will-change');
+    modal.classList.remove('cineton-modal-opening','cineton-modal-closing');
+  }
+
+  window.setCinetonModalSource=function(card){
+    clearAnimation();
+    sourcePoster=card?.querySelector?.('img,.ph')||null;
+    sourceMovieId=card?.dataset?.id||null;
+    sourceRect=captureSource();
+  };
+
   window.playCinetonModalOpen=async function(){
-    if(!modal.open)return;const token=++openToken;closing=false;clearAnimation();
-    if(reducedMotion()){modal.style.visibility='visible';modal.style.opacity='1';modal.style.transform='none';return}
-    await raf();await raf();if(!modal.open||token!==openToken)return;
-    const o=origin();if(!o){modal.style.visibility='visible';modal.style.opacity='1';modal.style.transform='none';return}
-    const start=tf(o),end='translate3d(0,0,0) scale3d(1,1,1)';
-    modal.style.visibility='visible';modal.style.opacity='1';modal.style.transform=start;
-    void modal.getBoundingClientRect();await raf();if(!modal.open||token!==openToken)return;
+    if(!modal.open)return;
+    const token=++openToken;
+    closing=false;
+    clearAnimation();
+
+    if(reducedMotion()){
+      modal.style.visibility='visible';
+      modal.style.opacity='1';
+      modal.style.transform='none';
+      return;
+    }
+
+    /* Let <dialog> finish its native open/layout pass before measuring. */
+    await raf();
+    await raf();
+    if(!modal.open||token!==openToken)return;
+
+    const rect=captureSource();
+    const o=rect?origin():null;
+    if(!o){
+      modal.style.visibility='visible';
+      modal.style.opacity='1';
+      modal.style.transform='none';
+      return;
+    }
+
+    const start=transform(o.x,o.y,o.sx,o.sy);
+    const mid1=transform(
+      o.x*.94,o.y*.94,
+      Math.min(1,o.sx+(1-o.sx)*.22),
+      Math.min(1,o.sy+(1-o.sy)*.22)
+    );
+    const mid2=transform(
+      o.x*.55,o.y*.55,
+      Math.min(1,o.sx+(1-o.sx)*.72),
+      Math.min(1,o.sy+(1-o.sy)*.72)
+    );
+    const end=transform(0,0,1,1);
+
+    modal.style.visibility='visible';
+    modal.style.opacity='1';
+    modal.style.transform=start;
+    modal.style.setProperty('will-change','transform');
+    void modal.getBoundingClientRect();
+    await raf();
+    if(!modal.open||token!==openToken)return;
+
+    modal.classList.add('cineton-modal-opening');
+
     const anim=modal.animate([
-      {opacity:1,transform:start,offset:0},
-      {opacity:1,transform:'translate3d('+(o.x*.82)+'px,'+(o.y*.82)+'px,0) scale3d('+(Math.min(1,o.sx+(1-o.sx)*.58))+','+(Math.min(1,o.sy+(1-o.sy)*.58))+',1)',offset:.52},
+      {opacity:1,transform:start,offset:0,easing:'cubic-bezier(.22,.35,.3,1)'},
+      {opacity:1,transform:mid1,offset:.24,easing:'cubic-bezier(.2,.75,.25,1)'},
+      {opacity:1,transform:mid2,offset:.70,easing:'cubic-bezier(.16,.9,.28,1)'},
       {opacity:1,transform:end,offset:1}
-    ],{duration:mobile()?680:760,easing:'cubic-bezier(.22,.78,.22,1)',fill:'forwards'});
-    activeAnimation=anim;try{await anim.finished}catch{}
+    ],{
+      duration:mobile()?760:840,
+      easing:'linear',
+      fill:'forwards'
+    });
+
+    activeAnimation=anim;
+    try{await anim.finished}catch{}
     if(activeAnimation!==anim||!modal.open||token!==openToken)return;
-    activeAnimation=null;modal.style.opacity='1';modal.style.transform='none';modal.style.removeProperty('will-change');modal.classList.remove('cineton-modal-opening');
+
+    activeAnimation=null;
+    modal.style.opacity='1';
+    modal.style.transform='none';
+    modal.style.removeProperty('will-change');
+    modal.classList.remove('cineton-modal-opening');
   };
+
   window.closeCinetonModal=function(){
-    if(!modal.open||closing)return;if(reducedMotion()){modal.close();return}
-    closing=true;++openToken;clearAnimation();modal.classList.remove('cineton-modal-opening');modal.classList.add('cineton-modal-closing');modal.style.setProperty('will-change','transform');
-    const o=origin();if(!o){modal.close();return}const end=tf(o);
-    const anim=modal.animate([{opacity:1,transform:'translate3d(0,0,0) scale3d(1,1,1)'},{opacity:1,transform:end}],{duration:mobile()?390:450,easing:'cubic-bezier(.4,0,1,1)',fill:'forwards'});
-    activeAnimation=anim;anim.finished.catch(()=>{}).then(()=>{if(activeAnimation!==anim)return;activeAnimation=null;modal.close()});
+    if(!modal.open||closing)return;
+    if(reducedMotion()){modal.close();return}
+
+    closing=true;
+    ++openToken;
+    clearAnimation();
+    modal.classList.remove('cineton-modal-opening');
+    modal.classList.add('cineton-modal-closing');
+    modal.style.setProperty('will-change','transform');
+
+    const rect=captureSource();
+    const o=rect?origin():null;
+    if(!o){modal.close();return}
+
+    const end=transform(o.x,o.y,o.sx,o.sy);
+
+    const anim=modal.animate([
+      {opacity:1,transform:transform(0,0,1,1),offset:0,easing:'cubic-bezier(.4,0,1,1)'},
+      {opacity:1,transform:end,offset:1}
+    ],{
+      duration:mobile()?390:450,
+      easing:'cubic-bezier(.4,0,1,1)',
+      fill:'forwards'
+    });
+
+    activeAnimation=anim;
+    anim.finished.catch(()=>{}).then(()=>{
+      if(activeAnimation!==anim)return;
+      activeAnimation=null;
+      modal.close();
+    });
   };
-  modal.addEventListener('cancel',ev=>{if(reducedMotion())return;ev.preventDefault();window.closeCinetonModal()});
-  modal.addEventListener('close',()=>{++openToken;closing=false;clearAnimation();reset();sourceRect=null;sourcePoster=null;sourceCard=null;sourceMovieId=null});
+
+  modal.addEventListener('cancel',ev=>{
+    if(reducedMotion())return;
+    ev.preventDefault();
+    window.closeCinetonModal();
+  });
+
+  modal.addEventListener('close',()=>{
+    ++openToken;
+    closing=false;
+    clearAnimation();
+    reset();
+    sourceRect=null;
+    sourcePoster=null;
+    sourceMovieId=null;
+  });
 })();
 </script>
 </body>
