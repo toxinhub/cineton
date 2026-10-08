@@ -719,7 +719,7 @@ html{scrollbar-gutter:stable;}
 .cinemodal{transform-origin:0 0!important;overscroll-behavior:contain;will-change:auto;}
 .cinemodal::backdrop{background:transparent!important;backdrop-filter:none!important;-webkit-backdrop-filter:none!important;}
 .movie-motion-overlay{position:fixed;inset:0;z-index:2147483000;pointer-events:none;opacity:0;background:rgb(0 0 0 / .58);-webkit-backdrop-filter:blur(8px) saturate(105%) brightness(70%);backdrop-filter:blur(8px) saturate(105%) brightness(70%);will-change:opacity;}
-.movie-motion-cover{position:absolute;inset:0;z-index:50;pointer-events:none;background-position:center;background-repeat:no-repeat;background-size:cover;background-color:var(--modal);background-blend-mode:normal;will-change:opacity;}.movie-motion-clone{position:fixed;z-index:2147483001;pointer-events:none;margin:0;padding:0;background-position:center;background-repeat:no-repeat;background-size:cover;background-color:var(--modal);border:1px solid color-mix(in srgb,var(--line-strong) 80%,transparent);border-radius:4px;box-shadow:0 24px 70px #0009;transform-origin:0 0;will-change:transform,opacity;}
+.movie-motion-cover{position:absolute;inset:0;z-index:50;pointer-events:none;background-position:center;background-repeat:no-repeat;background-size:cover;background-color:var(--modal);background-blend-mode:normal;will-change:opacity;}
 .cinemodal.movie-motion-running #mb{opacity:0}
 .movie-motion-dev{position:fixed;right:10px;bottom:10px;z-index:2147483001;min-height:30px;padding:6px 9px;border:1px solid #d8c8ae66;border-radius:5px;background:#201b17ee;color:#f4eee5;font:600 11px/1.1 "Mina",sans-serif;cursor:pointer;box-shadow:0 5px 18px #0006;}
 .movie-motion-dev[aria-pressed="true"]{border-color:#caa36e;color:#fff3dd;}
@@ -877,99 +877,90 @@ async function cinetonMotionOpen(sourcePoster,poster){
   const reduced=cinetonMotionReduced();
   const from=cinetonMotionRect(sourcePoster);
 
+  /*
+    IMPORTANT:
+    The source poster deliberately remains visible.
+    The modal starts from its measured geometry; the poster itself is the
+    visual anchor that makes the desktop origin readable.
+  */
   cinetonMotionCancel();
   cinetonMotionOverlay.style.opacity='0';
   cinetonMotionOverlay.style.pointerEvents='none';
+
   d.style.transformOrigin='0 0';
   d.style.transform='none';
-  d.style.opacity='0';
-  d.style.willChange='opacity';
+  d.style.opacity='1';
+  d.style.willChange='transform';
   d.classList.remove('movie-motion-running');
 
   if(!d.open)d.showModal();
 
   const to=cinetonMotionRect(d);
   const target=cinetonMotionTarget(from,to);
+  const cover=reduced?null:cinetonMotionCover(poster);
+  d.classList.add('movie-motion-running');
+
   const mb=$('#mb');
   const baseDuration=reduced?150:cinetonMotionDuration('--open-ms')*(cinetonMotionSlow?4:1);
-
-  const cleanup=()=>{
-    cinetonMotionAnimations=[];
-    const clone=document.querySelector('.movie-motion-clone');
-    if(clone)clone.remove();
-    const cover=d.querySelector('.movie-motion-cover');
-    if(cover)cover.remove();
-    d.style.transform='none';
-    d.style.opacity='1';
-    d.style.willChange='';
-    d.classList.remove('movie-motion-running');
-    mb.style.opacity='1';
-    cinetonMotionOverlay.style.opacity='.58';
-    cinetonMotionOverlay.style.pointerEvents='none';
-  };
 
   try{
     if(!target||reduced){
       d.style.transform='none';
       const a=cinetonMotionPlay(d,[{opacity:0},{opacity:1}],{duration:baseDuration});
       cinetonMotionPlay(cinetonMotionOverlay,[{opacity:0},{opacity:.58}],{duration:baseDuration});
+      if(cover){
+        cinetonMotionPlay(cover,[{opacity:1},{opacity:0}],{duration:baseDuration});
+        cinetonMotionPlay(mb,[{opacity:0},{opacity:1}],{duration:baseDuration});
+      }
       await a.finished.catch(()=>{});
-      cleanup();
-      return;
+    }else{
+      d.style.transform=target.transform;
+      /* Force the poster-sized FLIP frame through two browser paints before WAAPI. */
+      void d.offsetWidth;
+      await cinetonMotionPaintFrame();
+      const desktop=window.matchMedia('(min-width:641px)').matches;
+      const keyframes=desktop
+        ? [
+            {transform:target.transform,opacity:1,offset:0},
+            {transform:'translate(0px,-4px) scale(1.012,1.012)',opacity:1,offset:.82},
+            {transform:'translate(0px,0px) scale(1,1)',opacity:1,offset:1}
+          ]
+        : [
+            {transform:target.transform,opacity:1,offset:0},
+            {transform:'translate(0px,0px) scale(1,1)',opacity:1,offset:1}
+          ];
+
+      const a=cinetonMotionPlay(d,keyframes,{duration:baseDuration});
+
+      cinetonMotionPlay(cinetonMotionOverlay,[
+        {opacity:0},
+        {opacity:.58}
+      ],{duration:baseDuration});
+
+      cinetonMotionPlay(cover,[
+        {opacity:1,offset:0},
+        {opacity:1,offset:.35},
+        {opacity:0,offset:1}
+      ],{duration:baseDuration});
+
+      cinetonMotionPlay(mb,[
+        {opacity:0,offset:0},
+        {opacity:0,offset:.35},
+        {opacity:1,offset:1}
+      ],{duration:baseDuration});
+
+      await a.finished.catch(()=>{});
     }
+  }catch{}
 
-    const clone=document.createElement('div');
-    clone.className='movie-motion-clone';
-    clone.style.left=from.left+'px';
-    clone.style.top=from.top+'px';
-    clone.style.width=from.width+'px';
-    clone.style.height=from.height+'px';
-    const src=poster?IMG+poster:'';
-    clone.style.backgroundImage=src
-      ? `linear-gradient(135deg,rgba(20,15,10,.08),rgba(20,15,10,.58)),url("${src}")`
-      : 'linear-gradient(135deg,#30251c,#120f0d)';
-    document.body.appendChild(clone);
-
-    d.classList.add('movie-motion-running');
-    mb.style.opacity='0';
-
-    /*
-      The native dialog stays in the top layer but transparent.
-      The fixed bridge is what the eye follows, so the poster-to-modal
-      movement is painted independently of native <dialog> transform rules.
-    */
-    const desktop=window.matchMedia('(min-width:641px)').matches;
-    const endTransform=desktop
-      ? 'translate(0px,0px) scale(1,1)'
-      : 'translate(0px,0px) scale(1,1)';
-
-    const a=cinetonMotionPlay(clone,[
-      {transform:target.transform,opacity:1,offset:0},
-      ...(desktop?[{transform:'translate(0px,-4px) scale(1.012,1.012)',opacity:1,offset:.82}]:[]),
-      {transform:endTransform,opacity:1,offset:1}
-    ],{duration:baseDuration});
-
-    cinetonMotionPlay(cinetonMotionOverlay,[
-      {opacity:0,offset:0},
-      {opacity:.58,offset:1}
-    ],{duration:baseDuration});
-
-    cinetonMotionPlay(d,[
-      {opacity:0,offset:0},
-      {opacity:0,offset:.35},
-      {opacity:1,offset:1}
-    ],{duration:baseDuration});
-
-    cinetonMotionPlay(mb,[
-      {opacity:0,offset:0},
-      {opacity:0,offset:.35},
-      {opacity:1,offset:1}
-    ],{duration:baseDuration});
-
-    await a.finished.catch(()=>{});
-    cleanup();
-  }catch{
-    cleanup();
+  if(d.open){
+    d.style.transform='none';
+    d.style.opacity='1';
+    d.style.willChange='';
+    const coverNow=d.querySelector('.movie-motion-cover');
+    if(coverNow)coverNow.remove();
+    mb.style.opacity='1';
+    cinetonMotionOverlay.style.opacity='.58';
   }
 }
 
@@ -981,65 +972,61 @@ async function cinetonMotionClose(){
   const sourceId=d.dataset.sourceMovieId;
   const sourceCard=sourceId&&document.querySelector('.c[data-id="'+CSS.escape(sourceId)+'"]');
   const sourcePoster=sourceCard?.querySelector('img,.ph');
+
+  /*
+    Re-measure the poster at the exact moment Close starts.
+    The poster stays visible throughout; the modal visually returns into it.
+  */
   const from=cinetonMotionRect(d);
   const to=cinetonMotionRect(sourcePoster);
   const reduced=cinetonMotionReduced();
-  const duration=reduced?150:cinetonMotionDuration('--close-ms')*(cinetonMotionSlow?4:1);
-  const target=cinetonMotionFullyInViewport(to)?cinetonMotionTarget(to,from):null;
+  const duration=reduced
+    ? 150
+    : cinetonMotionDuration('--close-ms')*(cinetonMotionSlow?4:1);
+  const target=cinetonMotionFullyInViewport(to)
+    ? cinetonMotionTarget(to,from)
+    : null;
 
   const finish=()=>{
     cinetonMotionCancel();
-    const clone=document.querySelector('.movie-motion-clone');
-    if(clone)clone.remove();
     if(d.open)d.close();
-    d.style.transform='none';
-    d.style.opacity='1';
-    d.style.willChange='';
-    $('#mb').style.opacity='1';
-    cinetonMotionOverlay.style.opacity='0';
-    cinetonMotionOverlay.style.pointerEvents='none';
+    cinetonMotionFinish();
     cinetonModalBusy=false;
   };
 
-  d.style.transform='none';
-  d.style.willChange='opacity';
+  d.style.transformOrigin='0 0';
+  d.style.willChange='transform';
 
+  /*
+    If the source poster has moved outside the viewport, never fly toward
+    an off-screen coordinate. Instead shrink/fade safely in place.
+  */
   if(!target||reduced){
     const a=cinetonMotionPlay(d,[
-      {opacity:1,offset:0},
-      {opacity:0,offset:1}
+      {transform:'translate(0px,0px) scale(1,1)',opacity:1},
+      {transform:'translate(0px,0px) scale(.95,.95)',opacity:0}
     ],{duration});
-    cinetonMotionPlay(cinetonMotionOverlay,[{opacity:.58},{opacity:0}],{duration});
+
+    cinetonMotionPlay(cinetonMotionOverlay,[
+      {opacity:.58},
+      {opacity:0}
+    ],{duration});
+
     await a.finished.catch(()=>{});
     finish();
     return;
   }
 
-  const clone=document.createElement('div');
-  clone.className='movie-motion-clone';
-  clone.style.left=from.left+'px';
-  clone.style.top=from.top+'px';
-  clone.style.width=from.width+'px';
-  clone.style.height=from.height+'px';
-  const posterSrc=sourcePoster?.currentSrc||sourcePoster?.src||(d.querySelector('.modal-top img')?.currentSrc||d.querySelector('.modal-top img')?.src)||'';
-  clone.style.backgroundImage=posterSrc
-    ? `linear-gradient(135deg,rgba(20,15,10,.08),rgba(20,15,10,.58)),url("${posterSrc}")`
-    : 'linear-gradient(135deg,#30251c,#120f0d)';
-  document.body.appendChild(clone);
-
-  const a=cinetonMotionPlay(clone,[
+  const a=cinetonMotionPlay(d,[
     {transform:'translate(0px,0px) scale(1,1)',opacity:1,offset:0},
     {transform:target.transform,opacity:1,offset:.85},
     {transform:target.transform,opacity:0,offset:1}
   ],{duration});
 
-  cinetonMotionPlay(d,[
-    {opacity:1,offset:0},
-    {opacity:0,offset:.78},
-    {opacity:0,offset:1}
+  cinetonMotionPlay(cinetonMotionOverlay,[
+    {opacity:.58},
+    {opacity:0}
   ],{duration});
-
-  cinetonMotionPlay(cinetonMotionOverlay,[{opacity:.58},{opacity:0}],{duration});
 
   await a.finished.catch(()=>{});
   finish();
