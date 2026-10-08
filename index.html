@@ -2396,11 +2396,12 @@ update();
   .cinemodal .chips .love-chip .love-mobile-emoji{display:inline!important}
 }
 </style>
-<script id="cineton-modal-motion-controller-v1">
+<script id="cineton-modal-motion-controller-v2">
 (function(){
   const modal=document.getElementById('d');
   if(!modal) return;
   let activeAnimation=null;
+  let activeBackdropAnimation=null;
   let closing=false;
 
   function reducedMotion(){
@@ -2414,51 +2415,92 @@ update();
     return 'translate3d('+x+','+y+',0) scale('+s+')';
   }
 
+  function cancelAnimations(){
+    if(activeAnimation){ activeAnimation.cancel(); activeAnimation=null; }
+    if(activeBackdropAnimation){ activeBackdropAnimation.cancel(); activeBackdropAnimation=null; }
+  }
+
+  function animateBackdrop(opening){
+    const backdrop=modal;
+    if(!backdrop) return;
+    try{
+      const pseudo=backdrop.getAnimations ? backdrop.getAnimations({subtree:false}) : [];
+      pseudo.forEach(a=>a.cancel());
+    }catch(_){}
+  }
+
   window.playCinetonModalOpen=function(){
     if(!modal.open) return;
-    if(activeAnimation){ activeAnimation.cancel(); activeAnimation=null; }
+    cancelAnimations();
     closing=false;
-    if(reducedMotion()) return;
-    modal.style.opacity='1';
-    modal.style.transform='none';
-    activeAnimation=modal.animate(
-      [
-        {opacity:0,transform:originTransform()},
-        {opacity:1,transform:'translate3d(0,0,0) scale(1)'}
-      ],
-      {duration:360,easing:'cubic-bezier(.18,.82,.22,1)',fill:'both'}
-    );
-    activeAnimation.onfinish=()=>{
-      if(!modal.open) return;
+
+    if(reducedMotion()){
       modal.style.opacity='1';
       modal.style.transform='none';
-      activeAnimation=null;
-    };
+      return;
+    }
+
+    const from=originTransform();
+    modal.style.opacity='0';
+    modal.style.transform=from;
+    modal.offsetWidth;
+
+    requestAnimationFrame(()=>{
+      if(!modal.open || closing) return;
+      activeAnimation=modal.animate(
+        [
+          {opacity:0,transform:from,offset:0},
+          {opacity:1,transform:'translate3d(0,0,0) scale(1)',offset:1}
+        ],
+        {
+          duration:420,
+          easing:'cubic-bezier(.16,1,.3,1)',
+          fill:'forwards'
+        }
+      );
+      activeAnimation.onfinish=()=>{
+        if(!modal.open) return;
+        modal.style.opacity='1';
+        modal.style.transform='none';
+        activeAnimation=null;
+      };
+    });
   };
 
   window.closeCinetonModal=function(){
     if(!modal.open || closing) return;
+    closing=true;
+    cancelAnimations();
+
     if(reducedMotion()){
+      closing=false;
       modal.close();
       return;
     }
-    closing=true;
-    if(activeAnimation){ activeAnimation.cancel(); activeAnimation=null; }
-    const anim=modal.animate(
+
+    const to=originTransform();
+    modal.style.opacity='1';
+    modal.style.transform='translate3d(0,0,0) scale(1)';
+    modal.offsetWidth;
+
+    activeAnimation=modal.animate(
       [
-        {opacity:1,transform:'translate3d(0,0,0) scale(1)'},
-        {opacity:0,transform:originTransform()}
+        {opacity:1,transform:'translate3d(0,0,0) scale(1)',offset:0},
+        {opacity:0,transform:to,offset:1}
       ],
-      {duration:300,easing:'cubic-bezier(.4,0,1,1)',fill:'both'}
+      {
+        duration:340,
+        easing:'cubic-bezier(.4,0,1,1)',
+        fill:'forwards'
+      }
     );
-    activeAnimation=anim;
-    anim.onfinish=()=>{
-      if(!modal.open) return;
+
+    activeAnimation.onfinish=()=>{
+      activeAnimation=null;
       modal.style.opacity='1';
       modal.style.transform='none';
-      activeAnimation=null;
       closing=false;
-      modal.close();
+      if(modal.open) modal.close();
     };
   };
 
@@ -2469,8 +2511,8 @@ update();
   });
 
   modal.addEventListener('close',function(){
+    cancelAnimations();
     closing=false;
-    if(activeAnimation){ activeAnimation.cancel(); activeAnimation=null; }
     modal.style.opacity='1';
     modal.style.transform='none';
   });
