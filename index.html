@@ -712,13 +712,14 @@ header{position:relative}
 </style>
 <style id="movie-modal-motion-v2">
 /* Movie modal — Poster ↔ Modal cinematic transition.
-   Isolated from Suggest Me and driven by Web Animations API. */
+   FLIP/Web Animations API only. Independent from Suggest Me. */
 .cinemodal{
   --open-ms:200ms;
   --close-ms:190ms;
   transform-origin:0 0!important;
   opacity:1;
   transform:none;
+  will-change:transform,opacity;
 }
 .cinemodal::backdrop{
   background:transparent!important;
@@ -729,12 +730,12 @@ header{position:relative}
   position:fixed;
   inset:0;
   z-index:2147483000;
-  display:block;
   pointer-events:none;
   opacity:0;
   background:rgb(0 0 0 / .58);
   -webkit-backdrop-filter:blur(3px) saturate(105%) brightness(70%);
   backdrop-filter:blur(3px) saturate(105%) brightness(70%);
+  will-change:opacity;
 }
 .movie-motion-cover{
   position:absolute;
@@ -746,10 +747,9 @@ header{position:relative}
   background-size:cover;
   background-color:var(--modal);
   background-blend-mode:normal;
+  will-change:opacity;
 }
-.cinemodal.movie-motion-running #mb{
-  opacity:1;
-}
+.cinemodal.movie-motion-running #mb{opacity:0}
 .movie-motion-dev{
   position:fixed;
   right:10px;
@@ -836,7 +836,7 @@ if(!cinetonMotionOverlay){
   document.body.appendChild(cinetonMotionOverlay);
 }
 const cinetonMotionReduced=()=>window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-const cinetonMotionDuration=(name)=>Math.round(parseFloat(getComputedStyle(d).getPropertyValue(name)||'0'))||({open:200,close:190}[name]||200);
+const cinetonMotionDuration=name=>Math.round(parseFloat(getComputedStyle(d).getPropertyValue(name)||'0'))||({open:200,close:190}[name]||200);
 const cinetonMotionPlay=(el,keyframes,options)=>{
   const a=el.animate(keyframes,{duration:options.duration,easing:'cubic-bezier(.4,0,.2,1)',fill:'both'});
   cinetonModalAnimations.push(a);
@@ -869,7 +869,7 @@ const cinetonMotionTarget=(from,to)=>{
     transform:`translate(${(from.left-to.left).toFixed(3)}px,${(from.top-to.top).toFixed(3)}px) scale(${(from.width/to.width).toFixed(5)},${(from.height/to.height).toFixed(5)})`
   };
 };
-const cinetonMotionCover=(poster)=>{
+const cinetonMotionCover=poster=>{
   const cover=document.createElement('div');
   cover.className='movie-motion-cover';
   const src=poster?IMG+poster:'';
@@ -897,41 +897,51 @@ async function cinetonMotionOpen(sourcePoster,poster){
   cinetonMotionOverlay.style.opacity='0';
   cinetonMotionOverlay.style.pointerEvents='none';
   d.style.transformOrigin='0 0';
+  d.style.transform='none';
   d.style.opacity='1';
   d.classList.remove('movie-motion-running');
   if(!d.open)d.showModal();
+  /* Force the native dialog's final geometry before calculating the FLIP delta. */
   const to=cinetonMotionRect(d);
   const target=cinetonMotionTarget(from,to);
   const cover=reduced?null:cinetonMotionCover(poster);
   d.classList.add('movie-motion-running');
+  const mb=$('#mb');
   const baseDuration=reduced?150:cinetonMotionDuration('--open-ms')*(cinetonMotionSlow?4:1);
-  if(!target||reduced){
-    d.style.transform='none';
-    const a=cinetonMotionPlay(d,[{opacity:0},{opacity:1}],{duration:baseDuration});
-    cinetonMotionPlay(cinetonMotionOverlay,[{opacity:0},{opacity:.58}],{duration:baseDuration});
-    if(cover){
-      cinetonMotionPlay(cover,[{opacity:1,offset:0},{opacity:1,offset:.32},{opacity:0,offset:1}],{duration:baseDuration});
-      cinetonMotionPlay($('#mb'),[{opacity:0,offset:0},{opacity:0,offset:.32},{opacity:1,offset:1}],{duration:baseDuration});
+  try{
+    if(!target||reduced){
+      d.style.transform='none';
+      const a=cinetonMotionPlay(d,[{opacity:0},{opacity:1}],{duration:baseDuration});
+      cinetonMotionPlay(cinetonMotionOverlay,[{opacity:0},{opacity:.58}],{duration:baseDuration});
+      if(cover){
+        cinetonMotionPlay(cover,[{opacity:1,offset:0},{opacity:1,offset:.34},{opacity:0,offset:1}],{duration:baseDuration});
+        cinetonMotionPlay(mb,[{opacity:0,offset:0},{opacity:0,offset:.34},{opacity:1,offset:1}],{duration:baseDuration});
+      }else{
+        cinetonMotionPlay(mb,[{opacity:0},{opacity:1}],{duration:baseDuration});
+      }
+      await a.finished.catch(()=>{});
+    }else{
+      d.style.transform=target.transform;
+      const a=cinetonMotionPlay(d,[
+        {transform:target.transform,opacity:1,offset:0},
+        {transform:`translate(0px,0px) scale(1.008,1.008)`,opacity:1,offset:.92},
+        {transform:'translate(0px,0px) scale(1,1)',opacity:1,offset:1}
+      ],{duration:baseDuration});
+      cinetonMotionPlay(cinetonMotionOverlay,[{opacity:0},{opacity:.58}],{duration:baseDuration});
+      cinetonMotionPlay(cover,[{opacity:1,offset:0},{opacity:1,offset:.34},{opacity:0,offset:1}],{duration:baseDuration});
+      cinetonMotionPlay(mb,[{opacity:0,offset:0},{opacity:0,offset:.34},{opacity:1,offset:1}],{duration:baseDuration});
+      await a.finished.catch(()=>{});
     }
-    await a.finished.catch(()=>{});
-  }else{
-    d.style.transform=target.transform;
-    const a=cinetonMotionPlay(d,[
-      {transform:target.transform,opacity:1,offset:0},
-      {transform:'translate(0px,0px) scale(1,1)',opacity:1,offset:1}
-    ],{duration:baseDuration});
-    cinetonMotionPlay(cinetonMotionOverlay,[{opacity:0},{opacity:.58}],{duration:baseDuration});
-    cinetonMotionPlay(cover,[{opacity:1,offset:0},{opacity:1,offset:.34},{opacity:0,offset:1}],{duration:baseDuration});
-    cinetonMotionPlay($('#mb'),[{opacity:0,offset:0},{opacity:0,offset:.34},{opacity:1,offset:1}],{duration:baseDuration});
-    await a.finished.catch(()=>{});
-  }
+  }catch{}
   if(d.open){
     d.style.transform='none';
     d.style.opacity='1';
     const coverNow=d.querySelector('.movie-motion-cover');
     if(coverNow)coverNow.remove();
-    $('#mb').style.opacity='1';
+    mb.style.opacity='1';
     cinetonMotionOverlay.style.opacity='.58';
+  }else if(sourcePoster){
+    sourcePoster.style.visibility='';
   }
 }
 async function cinetonMotionClose(){
@@ -946,16 +956,27 @@ async function cinetonMotionClose(){
   const reduced=cinetonMotionReduced();
   const duration=(reduced?150:cinetonMotionDuration('--close-ms')*(cinetonMotionSlow?4:1));
   const target=cinetonMotionTarget(to,from);
+  const originalPosterOpacity=sourcePoster?.style.opacity||'';
+  const restorePoster=()=>{
+    if(!sourcePoster)return;
+    sourcePoster.style.visibility='';
+    sourcePoster.style.opacity=originalPosterOpacity;
+  };
   const finish=()=>{
     cinetonMotionCancel();
     if(d.open)d.close();
     cinetonMotionFinish();
-    if(sourcePoster)sourcePoster.style.visibility='';
+    restorePoster();
     cinetonModalBusy=false;
   };
   if(!target||reduced){
     const a=cinetonMotionPlay(d,[{opacity:1},{opacity:0}],{duration});
     cinetonMotionPlay(cinetonMotionOverlay,[{opacity:.58},{opacity:0}],{duration});
+    if(sourcePoster){
+      sourcePoster.style.visibility='';
+      sourcePoster.style.opacity='0';
+      cinetonMotionPlay(sourcePoster,[{opacity:0,offset:0},{opacity:0,offset:.75},{opacity:1,offset:1}],{duration});
+    }
     await a.finished.catch(()=>{});
     finish();
     return;
@@ -966,6 +987,11 @@ async function cinetonMotionClose(){
     {transform:target.transform,opacity:0,offset:1}
   ],{duration});
   cinetonMotionPlay(cinetonMotionOverlay,[{opacity:.58},{opacity:0}],{duration});
+  if(sourcePoster){
+    sourcePoster.style.visibility='';
+    sourcePoster.style.opacity='0';
+    cinetonMotionPlay(sourcePoster,[{opacity:0,offset:0},{opacity:0,offset:.75},{opacity:1,offset:1}],{duration});
+  }
   await a.finished.catch(()=>{});
   finish();
 }
