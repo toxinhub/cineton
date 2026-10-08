@@ -2047,7 +2047,7 @@ update();
   transform:none;
 }
 .cineton-rating-number{
-  transition:transform 110ms cubic-bezier(.22,.61,.36,1),opacity 100ms ease,filter 100ms ease,background-color 100ms ease,box-shadow 120ms ease;
+  transition:transform 150ms cubic-bezier(.22,.61,.36,1),opacity 140ms cubic-bezier(.4,0,.2,1),filter 140ms ease,background-color 140ms ease,box-shadow 150ms ease;
   will-change:transform,opacity;
 }
 .cineton-rating-number.is-fading{
@@ -2057,13 +2057,13 @@ update();
 }
 .cineton-rating-number.is-final{
   z-index:2;
-  transform:scale(1.10);
+  transform:scale(1.16);
   opacity:1;
   border-color:color-mix(in srgb,var(--ac) 58%,transparent);
   background:linear-gradient(145deg,
     color-mix(in srgb,var(--ac) 30%,var(--sf)),
     color-mix(in srgb,var(--modal) 54%,transparent));
-  box-shadow:0 1px 0 #fff8 inset,0 7px 18px color-mix(in srgb,var(--ac) 18%,transparent),0 0 0 1px color-mix(in srgb,var(--ac) 14%,transparent);
+  box-shadow:0 1px 0 #fff8 inset,0 9px 22px color-mix(in srgb,var(--ac) 20%,transparent),0 0 0 1px color-mix(in srgb,var(--ac) 16%,transparent);
   filter:saturate(1.05);
 }
 @keyframes ratingLayerIn{
@@ -2240,10 +2240,10 @@ update();
       buttons.forEach(b=>{b.disabled=true});
       buttons.filter(b=>b!==pickedButton).forEach((b,i)=>{
         b.classList.add("is-fading");
-        b.style.transitionDelay=(i*8)+"ms";
+        b.style.transitionDelay=(i*5)+"ms";
       });
       pickedButton.classList.add("is-selected","is-final");
-      pickedButton.style.transitionDelay=Math.max(0,buttons.length*8+45)+"ms";
+      pickedButton.style.transitionDelay="0ms";
       /* Keep the chosen number visible briefly after the others disappear. */
       window.setTimeout(()=>{
         if(!layer.isConnected)return;
@@ -2253,7 +2253,7 @@ update();
           if(layer.isConnected)layer.remove();
           dialog?.querySelector(".modal-top .poster-wrap img")?.focus?.({preventScroll:true});
         },180);
-      },300);
+      },320);
       return;
     }
     layer.classList.add("is-closing");
