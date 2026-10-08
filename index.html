@@ -796,48 +796,232 @@ function render(){applyView();const q=$('#q').value.trim().toLowerCase(),ge=$('#
 function setModalPosterAccent(d){const img=d.querySelector(".modal-top img"),btn=d.querySelector(".x");if(!img||!btn)return;const src=img.currentSrc||img.src;if(!src)return;const fallback=()=>d.style.setProperty("--poster-accent","var(--gd)");const proxy="https://wsrv.nl/?url="+encodeURIComponent(src)+"&w=72&h=108&fit=inside&output=webp";const dominant=async()=>{try{const res=await fetch(proxy,{mode:"cors",cache:"force-cache"});if(!res.ok)throw Error();const blob=await res.blob(),bmp=await createImageBitmap(blob),cv=document.createElement("canvas"),ctx=cv.getContext("2d",{willReadFrequently:true});if(!ctx)throw Error();cv.width=72;cv.height=108;ctx.drawImage(bmp,0,0,72,108);bmp.close();const p=ctx.getImageData(0,0,72,108).data,c=[];for(let i=0;i<p.length;i+=16){const a=p[i+3];if(a<180)continue;const r=p[i],g=p[i+1],b=p[i+2],mx=Math.max(r,g,b),mn=Math.min(r,g,b),v=mx/255,s=mx?((mx-mn)/mx):0;if(v<.28||s<.18)continue;const score=v*(.55+s*.9);c.push({r,g,b,score})}if(!c.length)throw Error();c.sort((a,b)=>b.score-a.score);const top=c.slice(0,Math.max(8,Math.floor(c.length*.12)));let w=0,r=0,g=0,b=0;for(const x of top){const q=x.score*x.score;w+=q;r+=x.r*q;g+=x.g*q;b+=x.b*q}const hex="#"+[r/w,g/w,b/w].map(v=>Math.round(v).toString(16).padStart(2,"0")).join("");d.style.setProperty("--poster-accent",hex)}catch{fallback()}};d.style.setProperty("--poster-accent","var(--gd)");dominant()}let cinetonModalBusy=false;
 let cinetonModalAnimations=[];
 let cinetonMotionOverlay=document.querySelector('.movie-motion-overlay');
-if(!cinetonMotionOverlay){cinetonMotionOverlay=document.createElement('div');cinetonMotionOverlay.className='movie-motion-overlay';cinetonMotionOverlay.setAttribute('aria-hidden','true');document.body.appendChild(cinetonMotionOverlay);}
+if(!cinetonMotionOverlay){
+  cinetonMotionOverlay=document.createElement('div');
+  cinetonMotionOverlay.className='movie-motion-overlay';
+  cinetonMotionOverlay.setAttribute('aria-hidden','true');
+  document.body.appendChild(cinetonMotionOverlay);
+}
 const cinetonMotionReduced=()=>window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-const cinetonMotionDuration=name=>{const raw=getComputedStyle(document.documentElement).getPropertyValue(name).trim();const value=parseFloat(raw);return Number.isFinite(value)&&value>0?value:({open:240,close:210}[name]||210);};
-const cinetonMotionPlay=(el,keyframes,options)=>{const a=el.animate(keyframes,{duration:options.duration,easing:'cubic-bezier(.4,0,.2,1)',fill:'both'});cinetonModalAnimations.push(a);return a;};
-const cinetonMotionCancel=()=>{cinetonModalAnimations.forEach(a=>{try{a.cancel()}catch{}});cinetonModalAnimations=[];};
+const cinetonMotionDuration=name=>{
+  const raw=getComputedStyle(document.documentElement).getPropertyValue(name).trim();
+  const value=parseFloat(raw);
+  return Number.isFinite(value)&&value>0?value:({open:240,close:210}[name]||210);
+};
+const cinetonMotionPlay=(el,keyframes,options)=>{
+  const a=el.animate(keyframes,{duration:options.duration,easing:'cubic-bezier(.4,0,.2,1)',fill:'both'});
+  cinetonModalAnimations.push(a);
+  return a;
+};
+const cinetonMotionCancel=()=>{
+  cinetonModalAnimations.forEach(a=>{try{a.cancel()}catch{}});
+  cinetonModalAnimations=[];
+};
 const cinetonMotionDev=location.search.includes('dev=1')||localStorage.getItem('cineton-motion-dev')==='1';
 let cinetonMotionSlow=cinetonMotionDev&&localStorage.getItem('cineton-motion-slow')==='1';
-if(cinetonMotionDev){const b=document.createElement('button');b.type='button';b.className='movie-motion-dev';b.textContent='Motion ×4';b.setAttribute('aria-pressed',String(cinetonMotionSlow));b.title='Toggle movie modal slow-motion preview';b.onclick=()=>{cinetonMotionSlow=!cinetonMotionSlow;localStorage.setItem('cineton-motion-slow',String(cinetonMotionSlow));b.setAttribute('aria-pressed',String(cinetonMotionSlow));};document.body.appendChild(b);}
+if(cinetonMotionDev){
+  const b=document.createElement('button');
+  b.type='button';
+  b.className='movie-motion-dev';
+  b.textContent='Motion ×4';
+  b.setAttribute('aria-pressed',String(cinetonMotionSlow));
+  b.title='Toggle movie modal slow-motion preview';
+  b.onclick=()=>{
+    cinetonMotionSlow=!cinetonMotionSlow;
+    localStorage.setItem('cineton-motion-slow',String(cinetonMotionSlow));
+    b.setAttribute('aria-pressed',String(cinetonMotionSlow));
+  };
+  document.body.appendChild(b);
+}
 const cinetonMotionRect=el=>el?.getBoundingClientRect?.();
-const cinetonMotionTarget=(from,to)=>{if(!from||!to||from.width<=0||from.height<=0||to.width<=0||to.height<=0)return null;return{transform:`translate(${(from.left-to.left).toFixed(3)}px,${(from.top-to.top).toFixed(3)}px) scale(${(from.width/to.width).toFixed(5)},${(from.height/to.height).toFixed(5)})`};};
-const cinetonMotionFullyInViewport=rect=>!!rect&&rect.width>0&&rect.height>0&&rect.left>=0&&rect.top>=0&&rect.right<=window.innerWidth&&rect.bottom<=window.innerHeight;
-const cinetonMotionCover=poster=>{const cover=document.createElement('div');cover.className='movie-motion-cover';const src=poster?IMG+poster:'';cover.style.backgroundImage=src?`linear-gradient(135deg,rgba(20,15,10,.18),rgba(20,15,10,.72)),url("${src}")`:'linear-gradient(135deg,#30251c,#120f0d)';d.appendChild(cover);return cover;};
-const cinetonMotionFinish=()=>{cinetonModalAnimations=[];d.style.transform='none';d.style.opacity='1';d.style.willChange='';d.classList.remove('movie-motion-running');const cover=d.querySelector('.movie-motion-cover');if(cover)cover.remove();cinetonMotionOverlay.style.opacity='0';cinetonMotionOverlay.style.pointerEvents='none';cinetonMotionOverlay.style.willChange='';};
+const cinetonMotionTarget=(from,to)=>{
+  if(!from||!to||from.width<=0||from.height<=0||to.width<=0||to.height<=0)return null;
+  return {
+    transform:`translate(${(from.left-to.left).toFixed(3)}px,${(from.top-to.top).toFixed(3)}px) scale(${(from.width/to.width).toFixed(5)},${(from.height/to.height).toFixed(5)})`
+  };
+};
+const cinetonMotionFullyInViewport=rect=>{
+  return !!rect&&rect.width>0&&rect.height>0&&
+    rect.left>=0&&rect.top>=0&&
+    rect.right<=window.innerWidth&&rect.bottom<=window.innerHeight;
+};
+const cinetonMotionCover=poster=>{
+  const cover=document.createElement('div');
+  cover.className='movie-motion-cover';
+  const src=poster?IMG+poster:'';
+  cover.style.backgroundImage=src
+    ? `linear-gradient(135deg,rgba(20,15,10,.18),rgba(20,15,10,.72)),url("${src}")`
+    : 'linear-gradient(135deg,#30251c,#120f0d)';
+  d.appendChild(cover);
+  return cover;
+};
+const cinetonMotionFinish=()=>{
+  cinetonModalAnimations=[];
+  d.style.transform='none';
+  d.style.opacity='1';
+  d.style.willChange='';
+  d.classList.remove('movie-motion-running');
+  const cover=d.querySelector('.movie-motion-cover');
+  if(cover)cover.remove();
+  cinetonMotionOverlay.style.opacity='0';
+  cinetonMotionOverlay.style.pointerEvents='none';
+  cinetonMotionOverlay.style.willChange='';
+};
+
 async function cinetonMotionOpen(sourcePoster,poster){
-  const reduced=cinetonMotionReduced(),from=cinetonMotionRect(sourcePoster),sourceOriginalVisibility=sourcePoster?.style.visibility||'';
-  if(sourcePoster){sourcePoster.dataset.cinetonMotionVisibility=sourceOriginalVisibility;sourcePoster.style.visibility='hidden';}
-  cinetonMotionCancel();cinetonMotionOverlay.style.opacity='0';cinetonMotionOverlay.style.pointerEvents='none';d.style.transformOrigin='0 0';d.style.transform='none';d.style.opacity='1';d.style.willChange='transform';d.classList.remove('movie-motion-running');if(!d.open)d.showModal();
-  const to=cinetonMotionRect(d),target=cinetonMotionTarget(from,to),cover=reduced?null:cinetonMotionCover(poster);d.classList.add('movie-motion-running');const mb=$('#mb'),baseDuration=reduced?150:cinetonMotionDuration('--open-ms')*(cinetonMotionSlow?4:1);
+  const reduced=cinetonMotionReduced();
+  const from=cinetonMotionRect(sourcePoster);
+
+  /*
+    IMPORTANT:
+    The source poster deliberately remains visible.
+    The modal starts from its measured geometry; the poster itself is the
+    visual anchor that makes the desktop origin readable.
+  */
+  cinetonMotionCancel();
+  cinetonMotionOverlay.style.opacity='0';
+  cinetonMotionOverlay.style.pointerEvents='none';
+
+  d.style.transformOrigin='0 0';
+  d.style.transform='none';
+  d.style.opacity='1';
+  d.style.willChange='transform';
+  d.classList.remove('movie-motion-running');
+
+  if(!d.open)d.showModal();
+
+  const to=cinetonMotionRect(d);
+  const target=cinetonMotionTarget(from,to);
+  const cover=reduced?null:cinetonMotionCover(poster);
+  d.classList.add('movie-motion-running');
+
+  const mb=$('#mb');
+  const baseDuration=reduced?150:cinetonMotionDuration('--open-ms')*(cinetonMotionSlow?4:1);
+
   try{
     if(!target||reduced){
-      d.style.transform='none';const a=cinetonMotionPlay(d,[{opacity:0},{opacity:1}],{duration:baseDuration});cinetonMotionPlay(cinetonMotionOverlay,[{opacity:0},{opacity:.58}],{duration:baseDuration});if(cover){cinetonMotionPlay(cover,[{opacity:1},{opacity:0}],{duration:baseDuration});cinetonMotionPlay(mb,[{opacity:0},{opacity:1}],{duration:baseDuration});}await a.finished.catch(()=>{});
+      d.style.transform='none';
+      const a=cinetonMotionPlay(d,[{opacity:0},{opacity:1}],{duration:baseDuration});
+      cinetonMotionPlay(cinetonMotionOverlay,[{opacity:0},{opacity:.58}],{duration:baseDuration});
+      if(cover){
+        cinetonMotionPlay(cover,[{opacity:1},{opacity:0}],{duration:baseDuration});
+        cinetonMotionPlay(mb,[{opacity:0},{opacity:1}],{duration:baseDuration});
+      }
+      await a.finished.catch(()=>{});
     }else{
-      d.style.transform=target.transform;const desktop=window.matchMedia('(min-width:641px)').matches;
-      const keyframes=desktop?[{transform:target.transform,opacity:1,offset:0},{transform:'translate(0px,-4px) scale(1.012,1.012)',opacity:1,offset:.82},{transform:'translate(0px,0px) scale(1,1)',opacity:1,offset:1}]:[{transform:target.transform,opacity:1,offset:0},{transform:'translate(0px,0px) scale(1,1)',opacity:1,offset:1}];
-      const a=cinetonMotionPlay(d,keyframes,{duration:baseDuration});cinetonMotionPlay(cinetonMotionOverlay,[{opacity:0},{opacity:.58}],{duration:baseDuration});cinetonMotionPlay(cover,[{opacity:1,offset:0},{opacity:1,offset:.35},{opacity:0,offset:1}],{duration:baseDuration});cinetonMotionPlay(mb,[{opacity:0,offset:0},{opacity:0,offset:.35},{opacity:1,offset:1}],{duration:baseDuration});await a.finished.catch(()=>{});
+      d.style.transform=target.transform;
+      const desktop=window.matchMedia('(min-width:641px)').matches;
+      const keyframes=desktop
+        ? [
+            {transform:target.transform,opacity:1,offset:0},
+            {transform:'translate(0px,-4px) scale(1.012,1.012)',opacity:1,offset:.82},
+            {transform:'translate(0px,0px) scale(1,1)',opacity:1,offset:1}
+          ]
+        : [
+            {transform:target.transform,opacity:1,offset:0},
+            {transform:'translate(0px,0px) scale(1,1)',opacity:1,offset:1}
+          ];
+
+      const a=cinetonMotionPlay(d,keyframes,{duration:baseDuration});
+
+      cinetonMotionPlay(cinetonMotionOverlay,[
+        {opacity:0},
+        {opacity:.58}
+      ],{duration:baseDuration});
+
+      cinetonMotionPlay(cover,[
+        {opacity:1,offset:0},
+        {opacity:1,offset:.35},
+        {opacity:0,offset:1}
+      ],{duration:baseDuration});
+
+      cinetonMotionPlay(mb,[
+        {opacity:0,offset:0},
+        {opacity:0,offset:.35},
+        {opacity:1,offset:1}
+      ],{duration:baseDuration});
+
+      await a.finished.catch(()=>{});
     }
   }catch{}
-  if(d.open){d.style.transform='none';d.style.opacity='1';d.style.willChange='';const coverNow=d.querySelector('.movie-motion-cover');if(coverNow)coverNow.remove();mb.style.opacity='1';cinetonMotionOverlay.style.opacity='.58';}
-}
-async function cinetonMotionClose(){
-  if(!d.open||cinetonModalBusy)return;cinetonModalBusy=true;cinetonMotionCancel();
-  const sourceId=d.dataset.sourceMovieId,sourceCard=sourceId&&document.querySelector('.c[data-id="'+CSS.escape(sourceId)+'"]'),sourcePoster=sourceCard?.querySelector('img,.ph'),from=cinetonMotionRect(d),to=cinetonMotionRect(sourcePoster),reduced=cinetonMotionReduced(),duration=(reduced?150:cinetonMotionDuration('--close-ms')*(cinetonMotionSlow?4:1)),target=cinetonMotionFullyInViewport(to)?cinetonMotionTarget(to,from):null,originalVisibility=sourcePoster?.dataset.cinetonMotionVisibility??'',originalOpacity=sourcePoster?.style.opacity??'',computedOpacity=sourcePoster?getComputedStyle(sourcePoster).opacity:'1';
-  const restorePoster=()=>{if(!sourcePoster)return;sourcePoster.style.opacity=originalOpacity;sourcePoster.style.visibility=originalVisibility;delete sourcePoster.dataset.cinetonMotionVisibility;};
-  const finish=()=>{cinetonMotionCancel();restorePoster();if(d.open)d.close();cinetonMotionFinish();cinetonModalBusy=false;};
-  d.style.transformOrigin='0 0';d.style.willChange='transform';
-  if(!target||reduced){
-    const a=cinetonMotionPlay(d,[{transform:'translate(0px,0px) scale(1,1)',opacity:1},{transform:'translate(0px,0px) scale(.95,.95)',opacity:0}],{duration});cinetonMotionPlay(cinetonMotionOverlay,[{opacity:.58},{opacity:0}],{duration});await a.finished.catch(()=>{});finish();return;
+
+  if(d.open){
+    d.style.transform='none';
+    d.style.opacity='1';
+    d.style.willChange='';
+    const coverNow=d.querySelector('.movie-motion-cover');
+    if(coverNow)coverNow.remove();
+    mb.style.opacity='1';
+    cinetonMotionOverlay.style.opacity='.58';
   }
-  const a=cinetonMotionPlay(d,[{transform:'translate(0px,0px) scale(1,1)',opacity:1,offset:0},{transform:target.transform,opacity:1,offset:.85},{transform:target.transform,opacity:0,offset:1}],{duration});
-  cinetonMotionPlay(cinetonMotionOverlay,[{opacity:.58},{opacity:0}],{duration});
-  if(sourcePoster){cinetonMotionPlay(sourcePoster,[{opacity:0,offset:0},{opacity:0,offset:.75},{opacity:Number(computedOpacity)||1,offset:1}],{duration});window.setTimeout(()=>{sourcePoster.style.visibility='visible';},duration*.75);}
-  await a.finished.catch(()=>{});finish();
+}
+
+async function cinetonMotionClose(){
+  if(!d.open||cinetonModalBusy)return;
+  cinetonModalBusy=true;
+  cinetonMotionCancel();
+
+  const sourceId=d.dataset.sourceMovieId;
+  const sourceCard=sourceId&&document.querySelector('.c[data-id="'+CSS.escape(sourceId)+'"]');
+  const sourcePoster=sourceCard?.querySelector('img,.ph');
+
+  /*
+    Re-measure the poster at the exact moment Close starts.
+    The poster stays visible throughout; the modal visually returns into it.
+  */
+  const from=cinetonMotionRect(d);
+  const to=cinetonMotionRect(sourcePoster);
+  const reduced=cinetonMotionReduced();
+  const duration=reduced
+    ? 150
+    : cinetonMotionDuration('--close-ms')*(cinetonMotionSlow?4:1);
+  const target=cinetonMotionFullyInViewport(to)
+    ? cinetonMotionTarget(to,from)
+    : null;
+
+  const finish=()=>{
+    cinetonMotionCancel();
+    if(d.open)d.close();
+    cinetonMotionFinish();
+    cinetonModalBusy=false;
+  };
+
+  d.style.transformOrigin='0 0';
+  d.style.willChange='transform';
+
+  /*
+    If the source poster has moved outside the viewport, never fly toward
+    an off-screen coordinate. Instead shrink/fade safely in place.
+  */
+  if(!target||reduced){
+    const a=cinetonMotionPlay(d,[
+      {transform:'translate(0px,0px) scale(1,1)',opacity:1},
+      {transform:'translate(0px,0px) scale(.95,.95)',opacity:0}
+    ],{duration});
+
+    cinetonMotionPlay(cinetonMotionOverlay,[
+      {opacity:.58},
+      {opacity:0}
+    ],{duration});
+
+    await a.finished.catch(()=>{});
+    finish();
+    return;
+  }
+
+  const a=cinetonMotionPlay(d,[
+    {transform:'translate(0px,0px) scale(1,1)',opacity:1,offset:0},
+    {transform:target.transform,opacity:1,offset:.85},
+    {transform:target.transform,opacity:0,offset:1}
+  ],{duration});
+
+  cinetonMotionPlay(cinetonMotionOverlay,[
+    {opacity:.58},
+    {opacity:0}
+  ],{duration});
+
+  await a.finished.catch(()=>{});
+  finish();
 }
 function closeCinetonModal(){cinetonMotionClose()}
 async function openMovie(m){if(cinetonModalBusy)return;cinetonModalBusy=true;try{d.querySelector('.cineton-rating-layer')?.remove();const sourceCard=document.querySelector('.c[data-id="'+CSS.escape(m.id)+'"]');const sourcePoster=sourceCard?.querySelector('img,.ph');const watched=m.watched_on?'<span class="watched-chip">Watched · '+e(m.watched_on)+'</span>':'';let modal='<div class="modal-top"><div class="poster-wrap">'+pic(m)+'<span class="poster-status">'+(m.status==='watched'?'✓ Watched':'○ Watchlist')+'</span></div><div class="modal-side"><div class="detail-head"><h2 id="modal-title">'+e(m.title)+'</h2><p class="subline">'+e(m.year)+' · '+(m.type==='tv'?'TV / Show':'Movie')+'</p></div><div class="chips"><div class="modal-rating-main">'+(m.imdb?'<span class="imdb-chip">IMDb '+e(m.imdb)+'</span>':'')+(m.my_rating?'<span class="my-chip">★ Rating '+e(m.my_rating)+'/10</span>':'')+(m.loved?'<span class="love-chip" aria-label="Loved"><span class="love-mobile-emoji" aria-hidden="true">🩷</span><span class="love-desktop-emoji" aria-hidden="true">❤️</span></span>':'')+'</div><div class="modal-public-rating-slot"></div>'+watched+'</div>'+(m.director?'<div class="detail-section"><span class="detail-label">Director / Creator</span><p class="detail-value">'+String(m.director).split(',').map(n=>'<button type="button" class="person-filter" data-person="'+e(n.trim())+'" data-person-type="Director">'+e(n.trim())+'</button>').join(', ')+'</p></div>':'')+((m.cast||[]).length?'<div class="detail-section"><span class="detail-label">Cast</span><p class="detail-value person-list">'+m.cast.map(n=>'<button type="button" class="person-filter" data-person="'+e(n)+'" data-person-type="Actor">'+e(n)+'</button>').join(', ')+'</p></div>':'')+'</div></div>'+((m.genres||[]).length?'<div class="modal-wide detail-section"><span class="detail-label">Genres</span><p class="detail-value">'+(m.genres||[]).map(g=>'<button type="button" class="genre-filter" data-genre="'+e(g)+'">'+e(g)+'</button>').join(' · ')+'</p></div>':'')+(m.overview?'<div class="modal-wide detail-section"><span class="detail-label">Story</span><p class="detail-value story">'+e(m.overview)+'</p></div>':'')+(m.comment?'<p class="cm modal-wide">'+e(m.comment)+'</p>':'')+(m.watched_on?'<div class="modal-footer"><strong>CineTon</strong> · Watched on '+e(m.watched_on)+'</div>':'')+'<section class="public-comments" data-public-comments><button type="button" class="public-comments-head" aria-expanded="false"><span>PUBLIC COMMENTS <span class="public-comments-count" aria-label="0 comments">- 0</span></span></button><div class="public-comments-body"><div class="public-comments-inner"><h3 class="public-comments-title" hidden>Comments</h3><div class="public-comments-list"></div><button type="button" class="public-comments-toggle" aria-expanded="false" title="Open comment box">＋</button><form class="public-comment-composer"><input name="name" maxlength="80" autocomplete="nickname" placeholder="_নাম"><textarea name="comment" maxlength="1000" required placeholder="_আপনার মন্তব্য"></textarea><button class="public-comment-submit" type="submit" aria-label="Submit comment">⌲</button><button class="public-comment-resize" type="button" aria-label="Resize comment box" title="Resize comment box"></button></form></div></div></section>';$('#mb').innerHTML=modal;const mobileModalPoster=window.matchMedia('(max-width:600px)').matches?d.querySelector('.modal-top .poster-wrap'):null;if(mobileModalPoster){const mobileModalTop=mobileModalPoster.closest('.modal-top');if(mobileModalTop)mobileModalTop.style.setProperty('grid-template-columns','120px minmax(0,1fr)','important');mobileModalPoster.style.setProperty('width','120px','important');mobileModalPoster.style.setProperty('min-width','120px','important');mobileModalPoster.style.setProperty('max-width','120px','important');mobileModalPoster.style.setProperty('flex-basis','120px','important');const mobilePosterImg=mobileModalPoster.querySelector('img');if(mobilePosterImg){mobilePosterImg.style.setProperty('width','120px','important');mobilePosterImg.style.setProperty('min-width','120px','important');mobilePosterImg.style.setProperty('max-width','120px','important');mobilePosterImg.style.setProperty('height','180px','important');mobilePosterImg.style.setProperty('min-height','180px','important');mobilePosterImg.style.setProperty('max-height','180px','important');mobilePosterImg.style.setProperty('aspect-ratio','2 / 3','important')}}const savedScrollY=window.scrollY;d.style.setProperty('--modal-bg',m.poster?'url("'+IMG+m.poster+'")':'none');d.dataset.returnScroll=String(savedScrollY);d.dataset.sourceMovieId=m.id;
