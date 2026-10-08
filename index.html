@@ -822,18 +822,35 @@ body.cineton-page-ready .title-mark{
   animation:cinetonMarkReveal 680ms cubic-bezier(.22,.61,.36,1) both;
   will-change:transform,opacity,filter;
 }
-body.cineton-page-ready .title-mark::after,
-body.cineton-page-ready .home-brand h1 > span:not(.title-mark)::after{
+body.cineton-page-ready .title-mark::after{
   content:"";
   position:absolute;
-  inset:-35% -10%;
+  inset:-35% -30%;
   pointer-events:none;
   border-radius:50%;
-  background:linear-gradient(118deg,transparent 40%,color-mix(in srgb,var(--gd) 0%,transparent) 45%,color-mix(in srgb,#fff1cf 68%,transparent) 50%,color-mix(in srgb,var(--gd) 0%,transparent) 55%,transparent 60%);
+  background:linear-gradient(118deg,transparent 40%,color-mix(in srgb,#fff1cf 72%,transparent) 50%,transparent 60%);
   transform:translateX(-125%) skewX(-16deg);
   opacity:0;
   mix-blend-mode:screen;
   animation:cinetonMarkLightSweep 15s cubic-bezier(.4,0,.2,1) 900ms infinite;
+}
+body.cineton-page-ready .home-brand h1 > span:not(.title-mark){
+  position:relative;
+  overflow:visible;
+}
+body.cineton-page-ready .home-brand h1 > span:not(.title-mark)::after{
+  content:"";
+  position:absolute;
+  top:-55%;
+  bottom:-55%;
+  left:-45%;
+  width:30%;
+  pointer-events:none;
+  background:linear-gradient(118deg,transparent 18%,color-mix(in srgb,#fff1cf 0%,transparent) 35%,color-mix(in srgb,#fff1cf 68%,transparent) 50%,color-mix(in srgb,#fff1cf 0%,transparent) 65%,transparent 82%);
+  transform:translateX(-220%) skewX(-16deg);
+  opacity:0;
+  mix-blend-mode:screen;
+  animation:cinetonTitleLightSweep 15s cubic-bezier(.4,0,.2,1) 900ms infinite;
 }
 @keyframes cinetonMarkReveal{
   0%{opacity:0;transform:translateY(4px) scale(.82) rotate(-5deg);filter:brightness(.9)}
@@ -847,10 +864,21 @@ body.cineton-page-ready .home-brand h1 > span:not(.title-mark)::after{
   94%{opacity:.52}
   100%{opacity:0;transform:translateX(125%) skewX(-16deg)}
 }
+@keyframes cinetonTitleLightSweep{
+  0%,88%{opacity:0;transform:translateX(-220%) skewX(-16deg)}
+  91%{opacity:.72}
+  94%{opacity:.48}
+  100%{opacity:0;transform:translateX(520%) skewX(-16deg)}
+}
 @media(max-width:600px){
   body.cineton-page-ready .title-mark::after{
     inset:-16% -24%;
     animation-duration:15s;
+  }
+  body.cineton-page-ready .home-brand h1 > span:not(.title-mark)::after{
+    top:-65%;
+    bottom:-65%;
+    width:34%;
   }
 }
 @media(prefers-reduced-motion:reduce){
