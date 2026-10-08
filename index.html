@@ -2324,28 +2324,40 @@ update();
   .cineton-rating-fly-number.is-flying{animation:none;opacity:0}
 }
 </style>
-<style id="cineton-modal-motion-authoritative-v14">
-/* Clean shared-element modal motion: fast, quiet, and poster-originated. */
+<style id="cineton-modal-motion-authoritative-v15">
+/* Clean modal motion: fixed dialog shell + poster-originated content. */
 .cinemodal,.cinemodal[open]{
-  transform-origin:center center!important;
-  will-change:transform!important;
+  transform:none!important;
   transition:none!important;
 }
+.cinemodal .m{
+  transform-origin:center center;
+  will-change:transform,opacity;
+}
+.cinemodal::before,
+.cinemodal::after{
+  transition:opacity .22s cubic-bezier(.22,.7,.25,1);
+}
+.cinemodal.cineton-modal-opening::before,
+.cinemodal.cineton-modal-opening::after,
+.cinemodal.cineton-modal-closing::before,
+.cinemodal.cineton-modal-closing::after{opacity:0}
 .cinemodal::backdrop{
   background:var(--modal-backdrop);
   opacity:1;
-  transition:opacity .24s cubic-bezier(.22,.7,.25,1);
+  transition:opacity .22s cubic-bezier(.22,.7,.25,1);
 }
 .cinemodal.cineton-modal-opening::backdrop,
 .cinemodal.cineton-modal-closing::backdrop{opacity:0}
 @media(prefers-reduced-motion:reduce){
-  .cinemodal,.cinemodal[open]{will-change:auto!important}
-  .cinemodal::backdrop{transition:none!important}
+  .cinemodal .m{will-change:auto}
+  .cinemodal::before,.cinemodal::after,.cinemodal::backdrop{transition:none}
 }
 </style>
-<script id="cineton-modal-motion-controller-v14">
+<script id="cineton-modal-motion-controller-v15">
 (function(){
   const modal=document.getElementById('d');if(!modal)return;
+  const panel=modal.querySelector('.m');
   let sourcePoster=null,sourceMovieId=null,sourceRect=null;
   let closing=false,activeAnimation=null,openToken=0;
 
@@ -2371,24 +2383,23 @@ update();
   }
 
   function origin(){
-    if(!sourceRect)return null;
-    const r=modal.getBoundingClientRect();
+    if(!sourceRect||!panel)return null;
+    const r=panel.getBoundingClientRect();
     if(!r.width||!r.height)return null;
     return{
       x:sourceRect.left+sourceRect.width/2-(r.left+r.width/2),
       y:sourceRect.top+sourceRect.height/2-(r.top+r.height/2),
-      sx:Math.max(.01,sourceRect.width/r.width),
-      sy:Math.max(.01,sourceRect.height/r.height)
+      sx:Math.max(.02,sourceRect.width/r.width),
+      sy:Math.max(.02,sourceRect.height/r.height)
     };
   }
 
   const tf=(x,y,sx,sy)=>'translate3d('+x+'px,'+y+'px,0) scale3d('+sx+','+sy+',1)';
 
   function reset(){
-    modal.style.removeProperty('opacity');
-    modal.style.removeProperty('transform');
-    modal.style.removeProperty('visibility');
-    modal.style.removeProperty('will-change');
+    panel?.style.removeProperty('transform');
+    panel?.style.removeProperty('opacity');
+    panel?.style.removeProperty('will-change');
     modal.classList.remove('cineton-modal-opening','cineton-modal-closing');
   }
 
@@ -2400,58 +2411,45 @@ update();
   };
 
   window.playCinetonModalOpen=async function(){
-    if(!modal.open)return;
+    if(!modal.open||!panel)return;
     const token=++openToken;
     closing=false;
     clearAnimation();
-
+    modal.classList.remove('cineton-modal-closing');
     if(reducedMotion()){
-      modal.style.visibility='visible';
-      modal.style.opacity='1';
-      modal.style.transform='none';
+      reset();
       return;
     }
 
-    const rect=captureSource();
-    const o=rect?origin():null;
-    if(!o){
-      modal.style.visibility='visible';
-      modal.style.opacity='1';
-      modal.style.transform='none';
-      return;
-    }
+    const rect=captureSource(),o=rect?origin():null;
+    if(!o){reset();return;}
 
     const start=tf(o.x,o.y,o.sx,o.sy);
-    modal.style.visibility='visible';
-    modal.style.opacity='1';
-    modal.style.transform=start;
-    modal.style.setProperty('will-change','transform');
+    panel.style.transform=start;
+    panel.style.opacity='0';
+    panel.style.setProperty('will-change','transform,opacity');
     modal.classList.add('cineton-modal-opening');
 
-    /* Force the poster-sized start state to be committed before animation. */
-    void modal.getBoundingClientRect();
+    /* Commit the poster-sized state before the first animation frame. */
+    void panel.getBoundingClientRect();
 
-    const fresh=captureSource();
-    const next=fresh?origin():o;
-    if(!next)return;
-
-    const anim=modal.animate([
-      {opacity:1,transform:tf(next.x,next.y,next.sx,next.sy)},
+    const fresh=captureSource(),next=fresh?origin():o;
+    const anim=panel.animate([
+      {opacity:0,transform:tf(next.x,next.y,next.sx,next.sy)},
       {opacity:1,transform:'translate3d(0,0,0) scale3d(1,1,1)'}
     ],{
-      duration:mobile()?400:460,
-      easing:'cubic-bezier(.2,.8,.2,1)',
+      duration:mobile()?360:420,
+      easing:'cubic-bezier(.18,.78,.22,1)',
       fill:'forwards'
     });
 
     activeAnimation=anim;
     try{await anim.finished}catch{}
     if(activeAnimation!==anim||!modal.open||token!==openToken)return;
-
     activeAnimation=null;
-    modal.style.opacity='1';
-    modal.style.transform='none';
-    modal.style.removeProperty('will-change');
+    panel.style.opacity='1';
+    panel.style.transform='none';
+    panel.style.removeProperty('will-change');
     modal.classList.remove('cineton-modal-opening');
   };
 
@@ -2464,18 +2462,16 @@ update();
     clearAnimation();
     modal.classList.remove('cineton-modal-opening');
     modal.classList.add('cineton-modal-closing');
-    modal.style.setProperty('will-change','transform');
 
-    const rect=captureSource();
-    const o=rect?origin():null;
-    if(!o){modal.close();return}
+    const rect=captureSource(),o=rect?origin():null;
+    if(!o){modal.close();return;}
 
-    const anim=modal.animate([
+    const anim=panel.animate([
       {opacity:1,transform:'translate3d(0,0,0) scale3d(1,1,1)'},
-      {opacity:1,transform:tf(o.x,o.y,o.sx,o.sy)}
+      {opacity:0,transform:tf(o.x,o.y,o.sx,o.sy)}
     ],{
-      duration:mobile()?270:300,
-      easing:'cubic-bezier(.4,0,1,1)',
+      duration:mobile()?250:290,
+      easing:'cubic-bezier(.45,0,1,1)',
       fill:'forwards'
     });
 
