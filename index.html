@@ -639,7 +639,7 @@ header{position:relative}
 </style>
 <style id="suggest-me-motion-v1">
 /* Suggest Me motion — first isolated animation layer.
-   Only the Suggest Me trigger and suggestion dialog are animated. */
+   Fast, bottom-origin movement only. No global motion rules. */
 .suggest-me-btn{
   transition:
     transform 100ms ease,
@@ -653,24 +653,29 @@ header{position:relative}
 }
 .suggestions-dialog{
   opacity:0;
-  transform:translateY(8px);
+  transform:translateY(24px);
   transition:
-    opacity 180ms ease,
-    transform 180ms cubic-bezier(.22,.61,.36,1),
-    overlay 180ms ease,
-    display 180ms ease;
+    opacity 190ms ease,
+    transform 190ms cubic-bezier(.22,.61,.36,1),
+    overlay 190ms ease,
+    display 190ms ease;
   transition-behavior:allow-discrete;
 }
 .suggestions-dialog[open]{
   opacity:1;
   transform:translateY(0);
 }
+.suggestions-dialog.is-closing{
+  opacity:0;
+  transform:translateY(24px);
+  pointer-events:none;
+}
 .suggestions-dialog::backdrop{
   background:#130f0b00;
   transition:
-    background-color 180ms ease,
-    backdrop-filter 180ms ease,
-    -webkit-backdrop-filter 180ms ease;
+    background-color 170ms ease,
+    backdrop-filter 170ms ease,
+    -webkit-backdrop-filter 170ms ease;
 }
 .suggestions-dialog[open]::backdrop{
   background:#130f0bb5;
@@ -680,7 +685,7 @@ header{position:relative}
 @starting-style{
   .suggestions-dialog[open]{
     opacity:0;
-    transform:translateY(8px);
+    transform:translateY(24px);
   }
   .suggestions-dialog[open]::backdrop{
     background:#130f0b00;
@@ -697,10 +702,10 @@ header{position:relative}
       color 140ms ease;
   }
   .suggestions-dialog{
-    transition-duration:170ms;
+    transition-duration:180ms;
   }
   .suggestions-dialog::backdrop{
-    transition-duration:170ms;
+    transition-duration:160ms;
   }
 }
 </style>
@@ -2219,10 +2224,35 @@ update();
     try{const r=await fetch(API,{cache:"no-store",headers:{apikey:KEY,Accept:"application/json"}});if(!r.ok)throw Error();const j=await r.json();render(Array.isArray(j.suggestions)?j.suggestions:[]);}
     catch{list.innerHTML='<div class="suggestion-empty">Suggestions are temporarily unavailable.</div>';}
   };
-  const closeSuggestions=()=>{if(!dialog.open)return;dialog.close()};
-  btn.addEventListener("click",()=>{if(!dialog.open){dialog.showModal();document.body.classList.add("suggestions-modal-open")}loadLibrary();load();requestAnimationFrame(()=>{input.focus({preventScroll:true});updateGhost()});});
+  let suggestionsCloseTimer=0;
+  const closeSuggestions=()=>{
+    if(!dialog.open||suggestionsCloseTimer)return;
+    dialog.classList.add("is-closing");
+    suggestionsCloseTimer=window.setTimeout(()=>{
+      suggestionsCloseTimer=0;
+      dialog.classList.remove("is-closing");
+      if(dialog.open)dialog.close();
+    },190);
+  };
+  btn.addEventListener("click",()=>{
+    if(!dialog.open){
+      clearTimeout(suggestionsCloseTimer);
+      suggestionsCloseTimer=0;
+      dialog.classList.remove("is-closing");
+      dialog.showModal();
+      document.body.classList.add("suggestions-modal-open");
+    }
+    loadLibrary();
+    load();
+    requestAnimationFrame(()=>{input.focus({preventScroll:true});updateGhost()});
+  });
   dialog.querySelector(".suggestions-close").addEventListener("click",closeSuggestions);
-  dialog.addEventListener("close",()=>{document.body.classList.remove("suggestions-modal-open")});
+  dialog.addEventListener("close",()=>{
+    clearTimeout(suggestionsCloseTimer);
+    suggestionsCloseTimer=0;
+    dialog.classList.remove("is-closing");
+    document.body.classList.remove("suggestions-modal-open");
+  });
   dialog.addEventListener("click",e=>{if(e.target===dialog)closeSuggestions()});
   form.addEventListener("submit",async e=>{
     e.preventDefault();
