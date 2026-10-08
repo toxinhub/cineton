@@ -2417,10 +2417,10 @@ update();
     const o=measure();
     if(!o){modal.style.opacity='1';modal.style.transform='none';modal.classList.remove('cineton-modal-opening');return}
     const start=originTransform(o);
-    modal.style.opacity='0';
+    modal.style.opacity='1';
     modal.style.transform=start;
     const anim=modal.animate(
-      [{opacity:0,transform:start},{opacity:1,transform:'translate3d(0,0,0) scale3d(1,1,1)'}],
+      [{opacity:1,transform:start},{opacity:1,transform:'translate3d(0,0,0) scale3d(1,1,1)'}],
       {duration:mobile()?440:500,easing:'cubic-bezier(.16,1,.3,1)',fill:'forwards'}
     );
     activeAnimation=anim;
@@ -2442,7 +2442,7 @@ update();
     if(!o){modal.close();return}
     const end=originTransform(o);
     const anim=modal.animate(
-      [{opacity:1,transform:'translate3d(0,0,0) scale3d(1,1,1)'},{opacity:0,transform:end}],
+      [{opacity:1,transform:'translate3d(0,0,0) scale3d(1,1,1)'},{opacity:1,transform:end}],
       {duration:mobile()?390:450,easing:'cubic-bezier(.4,0,1,1)',fill:'forwards'}
     );
     activeAnimation=anim;
