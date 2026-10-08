@@ -714,12 +714,12 @@ header{position:relative}
 /* Movie modal — Poster ↔ Modal cinematic FLIP transition.
    Independent from Suggest Me. Vanilla CSS + Web Animations API only. */
 :root{--open-ms:240;--close-ms:210;}
-@media(max-width:640px){:root{--open-ms:220;--close-ms:200;}}
+@media(max-width:640px){:root{--open-ms:240;--close-ms:220;}}
 html{scrollbar-gutter:stable;}
 .cinemodal{transform-origin:0 0!important;overscroll-behavior:contain;will-change:auto;}
 .cinemodal::backdrop{background:transparent!important;backdrop-filter:none!important;-webkit-backdrop-filter:none!important;}
-.movie-motion-overlay{position:fixed;inset:0;z-index:2147483000;pointer-events:none;opacity:0;background:rgb(0 0 0 / .58);-webkit-backdrop-filter:blur(8px) saturate(105%) brightness(70%);backdrop-filter:blur(8px) saturate(105%) brightness(70%);will-change:opacity;}
-.movie-motion-cover{position:absolute;inset:0;z-index:50;pointer-events:none;background-position:center;background-repeat:no-repeat;background-size:cover;background-color:var(--modal);background-blend-mode:normal;will-change:opacity;}
+.movie-motion-overlay{position:fixed;inset:0;z-index:2147483000;pointer-events:none;opacity:0;background:rgb(0 0 0 / .58);-webkit-backdrop-filter:blur(8px) saturate(105%) brightness(70%);backdrop-filter:blur(8px) saturate(105%) brightness(70%);will-change:opacity;transform:translateZ(0);backface-visibility:hidden;}
+.movie-motion-cover{position:absolute;inset:0;z-index:50;pointer-events:none;background-position:center;background-repeat:no-repeat;background-size:cover;background-color:var(--modal);background-blend-mode:normal;will-change:opacity;transform:translateZ(0);backface-visibility:hidden;}
 .cinemodal.movie-motion-running #mb{opacity:0}
 .movie-motion-dev{position:fixed;right:10px;bottom:10px;z-index:2147483001;min-height:30px;padding:6px 9px;border:1px solid #d8c8ae66;border-radius:5px;background:#201b17ee;color:#f4eee5;font:600 11px/1.1 "Mina",sans-serif;cursor:pointer;box-shadow:0 5px 18px #0006;}
 .movie-motion-dev[aria-pressed="true"]{border-color:#caa36e;color:#fff3dd;}
@@ -732,7 +732,7 @@ html{scrollbar-gutter:stable;}
   .cinemodal .modal-top .poster-wrap img,.cinemodal .m img{width:170px!important;min-width:170px!important;max-width:170px!important;height:255px!important;min-height:255px!important;max-height:255px!important;aspect-ratio:2 / 3!important;object-fit:cover!important;}
   .cinemodal .modal-side{padding:0 24px 0 0!important;}
   .cinemodal .x{width:44px!important;height:44px!important;min-width:44px!important;min-height:44px!important;top:4px!important;right:4px!important;}
-  .movie-motion-overlay{-webkit-backdrop-filter:blur(5px) saturate(105%) brightness(70%);backdrop-filter:blur(5px) saturate(105%) brightness(70%);}
+  .movie-motion-overlay{-webkit-backdrop-filter:blur(4px) saturate(102%) brightness(72%);backdrop-filter:blur(4px) saturate(102%) brightness(72%);}
 }
 @media(hover:hover){.cinemodal .x:hover{color:var(--poster-accent,var(--gd));background:transparent;}}
 @media(prefers-reduced-motion:reduce){.movie-motion-dev{display:none!important}}
@@ -809,7 +809,7 @@ const cinetonMotionDuration=name=>{
   return Number.isFinite(value)&&value>0?value:({open:240,close:210}[name]||210);
 };
 const cinetonMotionPlay=(el,keyframes,options)=>{
-  const a=el.animate(keyframes,{duration:options.duration,easing:'cubic-bezier(.4,0,.2,1)',fill:'both'});
+  const a=el.animate(keyframes,{duration:options.duration,easing:'cubic-bezier(.4,0,.2,1)',fill:'both',composite:'replace'});
   cinetonModalAnimations.push(a);
   return a;
 };
@@ -843,7 +843,7 @@ const cinetonMotionTarget=(from,to)=>{
 const cinetonMotionNextFrame=()=>new Promise(resolve=>requestAnimationFrame(()=>resolve()));
 const cinetonMotionPaintFrame=async()=>{
   await cinetonMotionNextFrame();
-  await cinetonMotionNextFrame();
+  if(window.matchMedia('(min-width:641px)').matches) await cinetonMotionNextFrame();
 };
 const cinetonMotionFullyInViewport=rect=>{
   return !!rect&&rect.width>0&&rect.height>0&&
@@ -890,7 +890,7 @@ async function cinetonMotionOpen(sourcePoster,poster){
   d.style.transformOrigin='0 0';
   d.style.transform='none';
   d.style.opacity='1';
-  d.style.willChange='transform';
+  d.style.willChange='transform, opacity';
   d.classList.remove('movie-motion-running');
 
   if(!d.open)d.showModal();
@@ -995,7 +995,7 @@ async function cinetonMotionClose(){
   };
 
   d.style.transformOrigin='0 0';
-  d.style.willChange='transform';
+  d.style.willChange='transform, opacity';
 
   /*
     If the source poster has moved outside the viewport, never fly toward
