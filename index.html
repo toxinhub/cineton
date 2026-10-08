@@ -653,21 +653,22 @@ header{position:relative}
 }
 .suggestions-dialog{
   opacity:0;
-  transform:translateY(24px);
+  transform:translateY(34px) scale(.94);
+  transform-origin:center bottom;
   transition:
-    opacity 190ms ease,
-    transform 190ms cubic-bezier(.22,.61,.36,1),
-    overlay 190ms ease,
-    display 190ms ease;
+    opacity 180ms ease,
+    transform 180ms cubic-bezier(.22,.68,.32,1),
+    overlay 180ms ease,
+    display 180ms ease;
   transition-behavior:allow-discrete;
 }
 .suggestions-dialog[open]{
   opacity:1;
-  transform:translateY(0);
+  transform:translateY(0) scale(1);
 }
 .suggestions-dialog.is-closing{
   opacity:0;
-  transform:translateY(24px);
+  transform:translateY(34px) scale(.94);
   pointer-events:none;
 }
 .suggestions-dialog::backdrop{
@@ -702,10 +703,10 @@ header{position:relative}
       color 140ms ease;
   }
   .suggestions-dialog{
-    transition-duration:180ms;
+    transition-duration:175ms;
   }
   .suggestions-dialog::backdrop{
-    transition-duration:160ms;
+    transition-duration:155ms;
   }
 }
 </style>
