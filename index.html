@@ -892,7 +892,6 @@ const cinetonMotionFinish=()=>{
 async function cinetonMotionOpen(sourcePoster,poster){
   const reduced=cinetonMotionReduced();
   const from=cinetonMotionRect(sourcePoster);
-  if(sourcePoster)sourcePoster.style.visibility='hidden';
   cinetonMotionCancel();
   cinetonMotionOverlay.style.opacity='0';
   cinetonMotionOverlay.style.pointerEvents='none';
@@ -940,9 +939,7 @@ async function cinetonMotionOpen(sourcePoster,poster){
     if(coverNow)coverNow.remove();
     mb.style.opacity='1';
     cinetonMotionOverlay.style.opacity='.58';
-  }else if(sourcePoster){
-    sourcePoster.style.visibility='';
-  }
+}
 }
 async function cinetonMotionClose(){
   if(!d.open||cinetonModalBusy)return;
@@ -959,7 +956,6 @@ async function cinetonMotionClose(){
   const originalPosterOpacity=sourcePoster?.style.opacity||'';
   const restorePoster=()=>{
     if(!sourcePoster)return;
-    sourcePoster.style.visibility='';
     sourcePoster.style.opacity=originalPosterOpacity;
   };
   const finish=()=>{
@@ -988,7 +984,6 @@ async function cinetonMotionClose(){
   ],{duration});
   cinetonMotionPlay(cinetonMotionOverlay,[{opacity:.58},{opacity:0}],{duration});
   if(sourcePoster){
-    sourcePoster.style.visibility='';
     sourcePoster.style.opacity='0';
     cinetonMotionPlay(sourcePoster,[{opacity:0,offset:0},{opacity:0,offset:.75},{opacity:1,offset:1}],{duration});
   }
