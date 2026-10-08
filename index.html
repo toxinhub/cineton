@@ -738,15 +738,15 @@ html{scrollbar-gutter:stable;}
 }
 @media(hover:hover){.cinemodal .x:hover{color:var(--poster-accent,var(--gd));background:transparent;}}
 @keyframes cinetonDesktopModalIn{
-  0%{transform:translate3d(0,108vh,0) scale(.94);opacity:0}
-  72%{transform:translate3d(0,18px,0) scale(.992);opacity:.94}
-  90%{transform:translate3d(0,-4px,0) scale(1.012);opacity:1}
-  100%{transform:translate3d(0,0,0) scale(1);opacity:1}
+  0%{translate:0 108vh;scale:.94;opacity:0}
+  72%{translate:0 18px;scale:.992;opacity:.94}
+  90%{translate:0 -4px;scale:1.012;opacity:1}
+  100%{translate:0 0;scale:1;opacity:1}
 }
 @keyframes cinetonDesktopModalOut{
-  0%{transform:translate3d(0,0,0) scale(1);opacity:1}
-  18%{transform:translate3d(0,-18px,0) scale(.992);opacity:.96}
-  100%{transform:translate3d(0,-108vh,0) scale(.94);opacity:0}
+  0%{translate:0 0;scale:1;opacity:1}
+  18%{translate:0 -18px;scale:.992;opacity:.96}
+  100%{translate:0 -108vh;scale:.94;opacity:0}
 }
 @media(min-width:641px){
   .cinemodal.cineton-desktop-enter{animation:cinetonDesktopModalIn var(--open-ms) cubic-bezier(.4,0,.2,1) both!important;}
@@ -951,7 +951,7 @@ async function cinetonMotionOpen(sourcePoster,poster){
         };
         d.addEventListener('animationend',done,{once:false});
         d.classList.add('cineton-desktop-enter');
-        d.style.animation='cinetonDesktopModalIn '+baseDuration+'ms cubic-bezier(.4,0,.2,1) both';
+        d.style.translate='0 108vh';d.style.scale='.94';d.style.animation='cinetonDesktopModalIn '+baseDuration+'ms cubic-bezier(.4,0,.2,1) both';
         setTimeout(done,baseDuration+120);
       });
     }else if(target){
@@ -1070,7 +1070,7 @@ async function cinetonMotionClose(){
       };
       d.addEventListener('animationend',done,{once:false});
       d.classList.add('cineton-desktop-exit');
-      d.style.animation='cinetonDesktopModalOut '+duration+'ms cubic-bezier(.4,0,.2,1) both';
+      d.style.translate='0 0';d.style.scale='1';d.style.animation='cinetonDesktopModalOut '+duration+'ms cubic-bezier(.4,0,.2,1) both';
       setTimeout(done,duration+120);
     });
     finish();
