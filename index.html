@@ -1265,7 +1265,7 @@ const pic=(m,eager=false)=>m.poster?`<img loading="${eager?'eager':'lazy'}" deco
     title.textContent=String(m.title??'');
     info.appendChild(title);
     const meta=document.createElement('small');
-    meta.textContent=String(m.year??'')+' · '+(m.type==='tv'?'TV / Show':'Movie');
+    meta.textContent=String(m.year??'')+' · '+(m.type==='tv'?'TV / Show':'Movie')+' ·';
     if(publicCommentMediaIds.has(String(m.id))){
       const indicator=document.createElement('span');
       indicator.className='visitor-comment-indicator';
