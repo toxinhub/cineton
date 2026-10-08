@@ -832,7 +832,7 @@ body.cineton-page-ready .title-mark::after{
   transform:translateX(-125%) skewX(-16deg);
   opacity:0;
   mix-blend-mode:screen;
-  animation:cinetonMarkLightSweep 520ms cubic-bezier(.22,.61,.36,1) 210ms both;
+  animation:cinetonMarkLightSweep 15s cubic-bezier(.4,0,.2,1) 900ms infinite;
 }
 @keyframes cinetonMarkReveal{
   0%{opacity:0;transform:translateY(4px) scale(.82) rotate(-5deg);filter:brightness(.9)}
@@ -841,10 +841,16 @@ body.cineton-page-ready .title-mark::after{
   100%{opacity:1;transform:translateY(0) scale(1) rotate(0);filter:brightness(1)}
 }
 @keyframes cinetonMarkLightSweep{
-  0%{opacity:0;transform:translateX(-125%) skewX(-16deg)}
-  18%{opacity:.8}
-  58%{opacity:.52}
+  0%,88%{opacity:0;transform:translateX(-125%) skewX(-16deg)}
+  91%{opacity:.8}
+  94%{opacity:.52}
   100%{opacity:0;transform:translateX(125%) skewX(-16deg)}
+}
+@media(max-width:600px){
+  body.cineton-page-ready .title-mark::after{
+    inset:-16% -24%;
+    animation-duration:15s;
+  }
 }
 @media(prefers-reduced-motion:reduce){
   body.cineton-page-ready .title-mark{animation:none!important;transform:none!important;filter:none!important}
