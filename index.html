@@ -718,7 +718,6 @@ header{position:relative}
 @media(max-width:640px){:root{--open-ms:240;--close-ms:220;}}
 html{scrollbar-gutter:stable;}
 .cinemodal{transform-origin:0 0!important;overscroll-behavior:contain;will-change:auto;}
-
 .cinemodal::backdrop{background:transparent!important;backdrop-filter:none!important;-webkit-backdrop-filter:none!important;}
 .movie-motion-overlay{position:fixed;inset:0;z-index:2147483000;pointer-events:none;opacity:0;background:rgb(0 0 0 / .58);-webkit-backdrop-filter:blur(8px) saturate(105%) brightness(70%);backdrop-filter:blur(8px) saturate(105%) brightness(70%);will-change:opacity;transform:translateZ(0);backface-visibility:hidden;}
 .movie-motion-cover{position:absolute;inset:0;z-index:50;pointer-events:none;background-position:center;background-repeat:no-repeat;background-size:cover;background-color:var(--modal);background-blend-mode:normal;will-change:opacity;transform:translateZ(0);backface-visibility:hidden;}
@@ -737,21 +736,6 @@ html{scrollbar-gutter:stable;}
   .movie-motion-overlay{-webkit-backdrop-filter:blur(4px) saturate(102%) brightness(72%);backdrop-filter:blur(4px) saturate(102%) brightness(72%);}
 }
 @media(hover:hover){.cinemodal .x:hover{color:var(--poster-accent,var(--gd));background:transparent;}}
-@keyframes cinetonDesktopModalIn{
-  0%{translate:0 108vh;scale:.94;opacity:0}
-  72%{translate:0 18px;scale:.992;opacity:.94}
-  90%{translate:0 -4px;scale:1.012;opacity:1}
-  100%{translate:0 0;scale:1;opacity:1}
-}
-@keyframes cinetonDesktopModalOut{
-  0%{translate:0 0;scale:1;opacity:1}
-  18%{translate:0 -18px;scale:.992;opacity:.96}
-  100%{translate:0 -108vh;scale:.94;opacity:0}
-}
-@media(min-width:641px){
-  .cinemodal.cineton-desktop-enter{animation:cinetonDesktopModalIn var(--open-ms) cubic-bezier(.4,0,.2,1) both!important;}
-  .cinemodal.cineton-desktop-exit{animation:cinetonDesktopModalOut var(--close-ms) cubic-bezier(.4,0,.2,1) both!important;}
-}
 @media(prefers-reduced-motion:reduce){.movie-motion-dev{display:none!important}}
 </style>
 </head><body><header><a class="home-brand" href="./index.html" aria-label="Home"><h1><span class="title-mark" aria-hidden="true">🎬</span><span>CineTon</span></h1></a><p class="sub">Some of the films I've watched. Rest of the drama? I'm living it...</p><div class="social-links" aria-label="Social media"><a class="social-btn" href="https://www.facebook.com/share/1BznJkcQVk/" target="_blank" rel="noopener noreferrer" aria-label="Facebook" title="Facebook"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M13.5 21v-8h2.7l.4-3h-3.1V8.1c0-.87.24-1.46 1.5-1.46h1.7V4a20 20 0 0 0-2.48-.13c-2.45 0-4.12 1.5-4.12 4.24V10H7.3v3h2.8v8h3.4Z"/></svg></a><a class="social-btn" href="https://www.instagram.com/tonmoybelieve?stkn=bTFndTYzbGs3eXI5" target="_blank" rel="noopener noreferrer" aria-label="Instagram" title="Instagram"><svg viewBox="0 0 24 24" aria-hidden="true" fill="none"><rect x="3.5" y="3.5" width="17" height="17" rx="5" fill="none" stroke="currentColor" stroke-width="1.8"/><circle cx="12" cy="12" r="4" fill="none" stroke="currentColor" stroke-width="1.8"/><circle cx="17.4" cy="6.7" r="1.1" fill="currentColor" stroke="none"/></svg></a></div></header><div id="top-sentinel" aria-hidden="true"></div><div class="nav-bar"><div class="tabs"><button id="t-watched" class="on">Watched</button><button id="t-watchlist">Watchlist</button></div><button id="suggestMeBtn" class="suggest-me-btn" type="button" aria-haspopup="dialog" aria-controls="suggestionsDialog"><span aria-hidden="true">✦</span> Suggest Me</button></div><div class="stats-row"><div id="stats" class="stats" aria-label="Statistics"></div></div><div class="bar"><input id="q" type="search" placeholder="Search title, actor or director…" aria-label="Search"><div class="select-wrap"><button class="select-trigger" id="ge-trigger" type="button" aria-haspopup="listbox" aria-expanded="false">All genres <span>></span></button><div class="select-menu" id="ge-menu" role="listbox" aria-label="Genre"><button type="button" role="option" data-value="all" aria-selected="true">All genres</button></div></div><div class="select-wrap"><button class="select-trigger" id="so-trigger" type="button" aria-haspopup="listbox" aria-expanded="false">Newest first <span>></span></button><div class="select-menu" id="so-menu" role="listbox" aria-label="Sort"><button type="button" role="option" data-value="new" aria-selected="true">Newest first</button><button type="button" role="option" data-value="my">My rating</button><button type="button" role="option" data-value="im">IMDb rating</button><button type="button" role="option" data-value="yr">Release year</button><button type="button" role="option" data-value="az">Title (A–Z)</button></div></div><select id="ty" aria-hidden="true" tabindex="-1"><option value="all">All types</option><option value="movie">Movie</option><option value="tv">TV / Show</option></select><select id="ge" aria-hidden="true" tabindex="-1"><option value="all">All genres</option></select><select id="so" aria-hidden="true" tabindex="-1"><option value="new">Newest first</option><option value="my">My rating</option><option value="im">IMDb rating</option><option value="yr">Release year</option><option value="az">Title (A–Z)</option></select><button id="surprise" class="surprise" type="button" aria-label="Surprise Me" title="Open a random title">🎲 <span>Surprise Me</span></button><div class="views" role="group" aria-label="View"><button id="v-grid" class="on" aria-label="Grid view" title="Grid view">▦</button><button id="v-list" aria-label="List view" title="List view">☷</button></div><div id="person-filter" class="person-filter-bar" aria-live="polite"><span id="person-filter-label"></span><button class="clear-person" id="clear-person" type="button" aria-label="Clear person filter">×</button></div></div><main id="g" aria-live="polite"></main><dialog id="d" class="cinemodal"><button class="x" onclick="closeCinetonModal()" aria-label="Close">✕</button><div class="m" id="mb"></div></dialog><script>
@@ -922,68 +906,54 @@ async function cinetonMotionOpen(sourcePoster,poster){
   const baseDuration=reduced?150:cinetonMotionDuration('--open-ms')*(cinetonMotionSlow?4:1);
 
   try{
-    const desktop=window.matchMedia('(min-width:641px)').matches;
-    let a;
-
-    if(reduced){
+    if(!target||reduced){
       d.style.transform='none';
-      a=cinetonMotionPlay(d,[{opacity:0},{opacity:1}],{duration:baseDuration});
-    }else if(desktop){
-      /* Desktop uses a real CSS animation on the dialog itself.
-         This avoids WAAPI/native-dialog conflicts and guarantees a visible
-         bottom-to-center movement. */
-      d.classList.remove('cineton-desktop-exit','cineton-desktop-enter');
-      d.style.removeProperty('transform');
-      d.style.removeProperty('opacity');
-      d.style.animation='none';
-      void d.offsetWidth;
-      a=new Promise(resolve=>{
-        let finished=false;
-        const done=()=>{
-          if(finished)return;
-          finished=true;
-          d.removeEventListener('animationend',done);
-          d.style.animation='none';
-          d.classList.remove('cineton-desktop-enter');
-          d.style.removeProperty('transform');
-          d.style.removeProperty('opacity');
-          resolve();
-        };
-        d.addEventListener('animationend',done,{once:false});
-        d.classList.add('cineton-desktop-enter');
-        d.style.translate='0 108vh';d.style.scale='.94';d.style.animation='cinetonDesktopModalIn '+baseDuration+'ms cubic-bezier(.4,0,.2,1) both';
-        setTimeout(done,baseDuration+120);
-      });
-    }else if(target){
-      /* Mobile keeps the poster-to-modal FLIP path unchanged. */
+      const a=cinetonMotionPlay(d,[{opacity:0},{opacity:1}],{duration:baseDuration});
+      cinetonMotionPlay(cinetonMotionOverlay,[{opacity:0},{opacity:.58}],{duration:baseDuration});
+      if(cover){
+        cinetonMotionPlay(cover,[{opacity:1},{opacity:0}],{duration:baseDuration});
+        cinetonMotionPlay(mb,[{opacity:0},{opacity:1}],{duration:baseDuration});
+      }
+      await a.finished.catch(()=>{});
+    }else{
       d.style.transform=target.transform;
+      /* Force the poster-sized FLIP frame through two browser paints before WAAPI. */
       void d.offsetWidth;
       await cinetonMotionPaintFrame();
-      a=cinetonMotionPlay(d,[
-        {transform:target.transform,opacity:1,offset:0},
-        {transform:'translate(0px,0px) scale(1,1)',opacity:1,offset:1}
+      const desktop=window.matchMedia('(min-width:641px)').matches;
+      const keyframes=desktop
+        ? [
+            {transform:'translate3d(0,108vh,0) scale(.94,.94)',opacity:0,offset:0},
+            {transform:'translate3d(0,18px,0) scale(.992,.992)',opacity:.94,offset:.72},
+            {transform:'translate3d(0,-4px,0) scale(1.012,1.012)',opacity:1,offset:.90},
+            {transform:'translate3d(0,0,0) scale(1,1)',opacity:1,offset:1}
+          ]
+        : [
+            {transform:target.transform,opacity:1,offset:0},
+            {transform:'translate(0px,0px) scale(1,1)',opacity:1,offset:1}
+          ];
+
+      const a=cinetonMotionPlay(d,keyframes,{duration:baseDuration});
+
+      cinetonMotionPlay(cinetonMotionOverlay,[
+        {opacity:0},
+        {opacity:.58}
       ],{duration:baseDuration});
-    }else{
-      d.style.transform='none';
-      a=cinetonMotionPlay(d,[{opacity:0},{opacity:1}],{duration:baseDuration});
-    }
 
-    cinetonMotionPlay(cinetonMotionOverlay,[{opacity:0},{opacity:.58}],{duration:baseDuration});
-
-    if(cover){
       cinetonMotionPlay(cover,[
         {opacity:1,offset:0},
         {opacity:1,offset:.35},
         {opacity:0,offset:1}
       ],{duration:baseDuration});
+
       cinetonMotionPlay(mb,[
         {opacity:0,offset:0},
         {opacity:0,offset:.35},
         {opacity:1,offset:1}
       ],{duration:baseDuration});
-    }
 
-    await a.finished.catch(()=>{});
+      await a.finished.catch(()=>{});
+    }
   }catch{}
 
   if(d.open){
@@ -1052,36 +1022,17 @@ async function cinetonMotionClose(){
   }
 
   const desktop=window.matchMedia('(min-width:641px)').matches;
-  if(desktop){
-    d.classList.remove('cineton-desktop-enter','cineton-desktop-exit');
-    d.style.animation='none';
-    d.style.removeProperty('transform');
-    d.style.removeProperty('opacity');
-    void d.offsetWidth;
-    await new Promise(resolve=>{
-      let finished=false;
-      const done=()=>{
-        if(finished)return;
-        finished=true;
-        d.removeEventListener('animationend',done);
-        d.style.animation='none';
-        d.classList.remove('cineton-desktop-exit');
-        resolve();
-      };
-      d.addEventListener('animationend',done,{once:false});
-      d.classList.add('cineton-desktop-exit');
-      d.style.translate='0 0';d.style.scale='1';d.style.animation='cinetonDesktopModalOut '+duration+'ms cubic-bezier(.4,0,.2,1) both';
-      setTimeout(done,duration+120);
-    });
-    finish();
-    return;
-  }
-
-  const closeKeyframes=[
-    {transform:'translate(0px,0px) scale(1,1)',opacity:1,offset:0},
-    {transform:target.transform,opacity:1,offset:.85},
-    {transform:target.transform,opacity:0,offset:1}
-  ];
+  const closeKeyframes=desktop
+    ? [
+        {transform:'translate3d(0,0,0) scale(1,1)',opacity:1,offset:0},
+        {transform:'translate3d(0,-18px,0) scale(.992,.992)',opacity:.96,offset:.18},
+        {transform:'translate3d(0,-108vh,0) scale(.94,.94)',opacity:0,offset:1}
+      ]
+    : [
+        {transform:'translate(0px,0px) scale(1,1)',opacity:1,offset:0},
+        {transform:target.transform,opacity:1,offset:.85},
+        {transform:target.transform,opacity:0,offset:1}
+      ];
   const a=cinetonMotionPlay(d,closeKeyframes,{duration});
 
   cinetonMotionPlay(cinetonMotionOverlay,[
