@@ -840,6 +840,11 @@ const cinetonMotionTarget=(from,to)=>{
     transform:`translate(${(from.left-to.left).toFixed(3)}px,${(from.top-to.top).toFixed(3)}px) scale(${(from.width/to.width).toFixed(5)},${(from.height/to.height).toFixed(5)})`
   };
 };
+const cinetonMotionNextFrame=()=>new Promise(resolve=>requestAnimationFrame(()=>resolve()));
+const cinetonMotionPaintFrame=async()=>{
+  await cinetonMotionNextFrame();
+  await cinetonMotionNextFrame();
+};
 const cinetonMotionFullyInViewport=rect=>{
   return !!rect&&rect.width>0&&rect.height>0&&
     rect.left>=0&&rect.top>=0&&
@@ -910,8 +915,9 @@ async function cinetonMotionOpen(sourcePoster,poster){
       await a.finished.catch(()=>{});
     }else{
       d.style.transform=target.transform;
-      /* Force the poster-sized FLIP start frame to be painted before WAAPI. */
+      /* Force the poster-sized FLIP frame through two browser paints before WAAPI. */
       void d.offsetWidth;
+      await cinetonMotionPaintFrame();
       const desktop=window.matchMedia('(min-width:641px)').matches;
       const keyframes=desktop
         ? [
