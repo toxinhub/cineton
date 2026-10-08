@@ -718,64 +718,23 @@ header{position:relative}
 html{scrollbar-gutter:stable;}
 .cinemodal{transform-origin:0 0!important;overscroll-behavior:contain;will-change:auto;}
 .cinemodal::backdrop{background:transparent!important;backdrop-filter:none!important;-webkit-backdrop-filter:none!important;}
-.movie-motion-overlay{
-  position:fixed;inset:0;z-index:2147483000;pointer-events:none;opacity:0;
-  background:rgb(0 0 0 / .58);
-  -webkit-backdrop-filter:blur(8px) saturate(105%) brightness(70%);
-  backdrop-filter:blur(8px) saturate(105%) brightness(70%);
-  will-change:opacity;
-}
-.movie-motion-cover{
-  position:absolute;inset:0;z-index:50;pointer-events:none;
-  background-position:center;background-repeat:no-repeat;background-size:cover;
-  background-color:var(--modal);background-blend-mode:normal;will-change:opacity;
-}
+.movie-motion-overlay{position:fixed;inset:0;z-index:2147483000;pointer-events:none;opacity:0;background:rgb(0 0 0 / .58);-webkit-backdrop-filter:blur(8px) saturate(105%) brightness(70%);backdrop-filter:blur(8px) saturate(105%) brightness(70%);will-change:opacity;}
+.movie-motion-cover{position:absolute;inset:0;z-index:50;pointer-events:none;background-position:center;background-repeat:no-repeat;background-size:cover;background-color:var(--modal);background-blend-mode:normal;will-change:opacity;}
 .cinemodal.movie-motion-running #mb{opacity:0}
-.movie-motion-dev{
-  position:fixed;right:10px;bottom:10px;z-index:2147483001;min-height:30px;
-  padding:6px 9px;border:1px solid #d8c8ae66;border-radius:5px;
-  background:#201b17ee;color:#f4eee5;font:600 11px/1.1 "Mina",sans-serif;
-  cursor:pointer;box-shadow:0 5px 18px #0006;
-}
+.movie-motion-dev{position:fixed;right:10px;bottom:10px;z-index:2147483001;min-height:30px;padding:6px 9px;border:1px solid #d8c8ae66;border-radius:5px;background:#201b17ee;color:#f4eee5;font:600 11px/1.1 "Mina",sans-serif;cursor:pointer;box-shadow:0 5px 18px #0006;}
 .movie-motion-dev[aria-pressed="true"]{border-color:#caa36e;color:#fff3dd;}
-@media(min-width:641px){
-  .cinemodal{width:min(760px,92vw)!important;max-width:min(760px,92vw)!important;}
-  .cinemodal .modal-top{grid-template-columns:190px minmax(0,1fr)!important;}
-}
+@media(min-width:641px){.cinemodal{width:min(760px,92vw)!important;max-width:min(760px,92vw)!important;}.cinemodal .modal-top{grid-template-columns:190px minmax(0,1fr)!important;}}
 @media(max-width:640px){
-  .cinemodal{
-    width:92vw!important;max-width:92vw!important;height:auto!important;
-    max-height:88dvh!important;min-height:0!important;
-    padding-top:env(safe-area-inset-top)!important;
-    padding-right:env(safe-area-inset-right)!important;
-    padding-bottom:env(safe-area-inset-bottom)!important;
-    padding-left:env(safe-area-inset-left)!important;
-  }
+  .cinemodal{width:92vw!important;max-width:92vw!important;height:auto!important;max-height:88dvh!important;min-height:0!important;padding-top:env(safe-area-inset-top)!important;padding-right:env(safe-area-inset-right)!important;padding-bottom:env(safe-area-inset-bottom)!important;padding-left:env(safe-area-inset-left)!important;}
   .cinemodal .m{max-height:calc(88dvh - env(safe-area-inset-top) - env(safe-area-inset-bottom));}
-  .cinemodal .modal-top{
-    display:grid!important;grid-template-columns:1fr!important;gap:12px!important;padding:14px!important;
-  }
-  .cinemodal .poster-wrap{
-    width:170px!important;min-width:170px!important;max-width:170px!important;margin:0 auto!important;
-  }
-  .cinemodal .modal-top .poster-wrap img,.cinemodal .m img{
-    width:170px!important;min-width:170px!important;max-width:170px!important;
-    height:255px!important;min-height:255px!important;max-height:255px!important;
-    aspect-ratio:2 / 3!important;object-fit:cover!important;
-  }
+  .cinemodal .modal-top{display:grid!important;grid-template-columns:1fr!important;gap:12px!important;padding:14px!important;}
+  .cinemodal .poster-wrap{width:170px!important;min-width:170px!important;max-width:170px!important;margin:0 auto!important;}
+  .cinemodal .modal-top .poster-wrap img,.cinemodal .m img{width:170px!important;min-width:170px!important;max-width:170px!important;height:255px!important;min-height:255px!important;max-height:255px!important;aspect-ratio:2 / 3!important;object-fit:cover!important;}
   .cinemodal .modal-side{padding:0 24px 0 0!important;}
-  .cinemodal .x{
-    width:44px!important;height:44px!important;min-width:44px!important;min-height:44px!important;
-    top:4px!important;right:4px!important;
-  }
-  .movie-motion-overlay{
-    -webkit-backdrop-filter:blur(5px) saturate(105%) brightness(70%);
-    backdrop-filter:blur(5px) saturate(105%) brightness(70%);
-  }
+  .cinemodal .x{width:44px!important;height:44px!important;min-width:44px!important;min-height:44px!important;top:4px!important;right:4px!important;}
+  .movie-motion-overlay{-webkit-backdrop-filter:blur(5px) saturate(105%) brightness(70%);backdrop-filter:blur(5px) saturate(105%) brightness(70%);}
 }
-@media(hover:hover){
-  .cinemodal .x:hover{color:var(--poster-accent,var(--gd));background:transparent;}
-}
+@media(hover:hover){.cinemodal .x:hover{color:var(--poster-accent,var(--gd));background:transparent;}}
 @media(prefers-reduced-motion:reduce){.movie-motion-dev{display:none!important}}
 </style>
 </head><body><header><a class="home-brand" href="./index.html" aria-label="Home"><h1><span class="title-mark" aria-hidden="true">🎬</span><span>CineTon</span></h1></a><p class="sub">Some of the films I've watched. Rest of the drama? I'm living it...</p><div class="social-links" aria-label="Social media"><a class="social-btn" href="https://www.facebook.com/share/1BznJkcQVk/" target="_blank" rel="noopener noreferrer" aria-label="Facebook" title="Facebook"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M13.5 21v-8h2.7l.4-3h-3.1V8.1c0-.87.24-1.46 1.5-1.46h1.7V4a20 20 0 0 0-2.48-.13c-2.45 0-4.12 1.5-4.12 4.24V10H7.3v3h2.8v8h3.4Z"/></svg></a><a class="social-btn" href="https://www.instagram.com/tonmoybelieve?stkn=bTFndTYzbGs3eXI5" target="_blank" rel="noopener noreferrer" aria-label="Instagram" title="Instagram"><svg viewBox="0 0 24 24" aria-hidden="true" fill="none"><rect x="3.5" y="3.5" width="17" height="17" rx="5" fill="none" stroke="currentColor" stroke-width="1.8"/><circle cx="12" cy="12" r="4" fill="none" stroke="currentColor" stroke-width="1.8"/><circle cx="17.4" cy="6.7" r="1.1" fill="currentColor" stroke="none"/></svg></a></div></header><div id="top-sentinel" aria-hidden="true"></div><div class="nav-bar"><div class="tabs"><button id="t-watched" class="on">Watched</button><button id="t-watchlist">Watchlist</button></div><button id="suggestMeBtn" class="suggest-me-btn" type="button" aria-haspopup="dialog" aria-controls="suggestionsDialog"><span aria-hidden="true">✦</span> Suggest Me</button></div><div class="stats-row"><div id="stats" class="stats" aria-label="Statistics"></div></div><div class="bar"><input id="q" type="search" placeholder="Search title, actor or director…" aria-label="Search"><div class="select-wrap"><button class="select-trigger" id="ge-trigger" type="button" aria-haspopup="listbox" aria-expanded="false">All genres <span>></span></button><div class="select-menu" id="ge-menu" role="listbox" aria-label="Genre"><button type="button" role="option" data-value="all" aria-selected="true">All genres</button></div></div><div class="select-wrap"><button class="select-trigger" id="so-trigger" type="button" aria-haspopup="listbox" aria-expanded="false">Newest first <span>></span></button><div class="select-menu" id="so-menu" role="listbox" aria-label="Sort"><button type="button" role="option" data-value="new" aria-selected="true">Newest first</button><button type="button" role="option" data-value="my">My rating</button><button type="button" role="option" data-value="im">IMDb rating</button><button type="button" role="option" data-value="yr">Release year</button><button type="button" role="option" data-value="az">Title (A–Z)</button></div></div><select id="ty" aria-hidden="true" tabindex="-1"><option value="all">All types</option><option value="movie">Movie</option><option value="tv">TV / Show</option></select><select id="ge" aria-hidden="true" tabindex="-1"><option value="all">All genres</option></select><select id="so" aria-hidden="true" tabindex="-1"><option value="new">Newest first</option><option value="my">My rating</option><option value="im">IMDb rating</option><option value="yr">Release year</option><option value="az">Title (A–Z)</option></select><button id="surprise" class="surprise" type="button" aria-label="Surprise Me" title="Open a random title">🎲 <span>Surprise Me</span></button><div class="views" role="group" aria-label="View"><button id="v-grid" class="on" aria-label="Grid view" title="Grid view">▦</button><button id="v-list" aria-label="List view" title="List view">☷</button></div><div id="person-filter" class="person-filter-bar" aria-live="polite"><span id="person-filter-label"></span><button class="clear-person" id="clear-person" type="button" aria-label="Clear person filter">×</button></div></div><main id="g" aria-live="polite"></main><dialog id="d" class="cinemodal"><button class="x" onclick="closeCinetonModal()" aria-label="Close">✕</button><div class="m" id="mb"></div></dialog><script>
@@ -833,225 +792,52 @@ const pic=(m,eager=false)=>m.poster?`<img loading="${eager?'eager':'lazy'}" deco
   });
   g.replaceChildren(frag);
 }
-function render(){applyView();const q=$('#q').value.trim().toLowerCase(),ge=$('#ge').value,so=$('#so').value;const hasPerson=m=>!personFilter||String(m.director||'').split(',').map(x=>x.trim()).includes(personFilter)||(m.cast||[]).includes(personFilter);const categoryFilter=statFilter==='movie'||statFilter==='tv',mediaType=m=>m.type==='tv'&&String(m.id||'').startsWith('tv-')?'tv':'movie';let L=D.filter(m=>(categoryFilter?mediaType(m)===statFilter:m.status===tab)&&(ge==='all'||(m.genres||[]).includes(ge))&&hasPerson(m)&&(!q||[m.title,m.director,(m.cast||[]).join(' '),m.year].join(' ').toLowerCase().includes(q)));const n=v=>parseFloat(v)||0;if(statFilter==='rated')L=L.filter(m=>n(m.my_rating)>0);else if(statFilter==='loved')L=L.filter(m=>m.loved);const w=D.filter(m=>m.status==='watched'),statsBase=D,rated=w.filter(m=>n(m.my_rating)>0);$('#stats').innerHTML=`<button class="stat" data-filter="movie" onclick="setStatFilter('movie')"><span>Movie</span><b>${statsBase.filter(m=>mediaType(m)==='movie').length}</b></button><button class="stat" data-filter="tv" onclick="setStatFilter('tv')"><span>TV / Show</span><b>${statsBase.filter(m=>mediaType(m)==='tv').length}</b></button><button class="stat" data-filter="rated" onclick="setStatFilter('rated')"><span>Rated</span><b>${rated.length}</b></button><button class="stat" data-filter="loved" onclick="setStatFilter('loved')"><span>Loved</span><b>${D.filter(m=>m.status===tab&&m.loved).length}</b></button>`;L.sort({new:(a,b)=>{const ad=(b.added_at||'').localeCompare(a.added_at||'');return ad||((b.watched_on||'').localeCompare(a.watched_on||''))},my:(a,b)=>n(b.my_rating)-n(a.my_rating),im:(a,b)=>n(b.imdb)-n(a.imdb),yr:(a,b)=>n(b.year)-n(a.year),az:(a,b)=>a.title.localeCompare(b.title)}[so]);renderGrid(L)}function applyGenreFilter(genre){const s=$('#ge'),exists=[...s.options].some(o=>o.value===genre);if(!exists)return false;s.value=genre;const menu=$('#ge-menu');menu.querySelectorAll('[role="option"]').forEach(o=>o.setAttribute('aria-selected',o.dataset.value===genre));$('#ge-trigger').firstChild.textContent=(s.options[s.selectedIndex]?.textContent||genre)+' ';personFilter=null;personFilterType='';$('#q').value='';statFilter='all';d.dataset.skipReturnScroll='1';closeCinetonModal();requestAnilet cinetonModalBusy=false;
+function render(){applyView();const q=$('#q').value.trim().toLowerCase(),ge=$('#ge').value,so=$('#so').value;const hasPerson=m=>!personFilter||String(m.director||'').split(',').map(x=>x.trim()).includes(personFilter)||(m.cast||[]).includes(personFilter);const categoryFilter=statFilter==='movie'||statFilter==='tv',mediaType=m=>m.type==='tv'&&String(m.id||'').startsWith('tv-')?'tv':'movie';let L=D.filter(m=>(categoryFilter?mediaType(m)===statFilter:m.status===tab)&&(ge==='all'||(m.genres||[]).includes(ge))&&hasPerson(m)&&(!q||[m.title,m.director,(m.cast||[]).join(' '),m.year].join(' ').toLowerCase().includes(q)));const n=v=>parseFloat(v)||0;if(statFilter==='rated')L=L.filter(m=>n(m.my_rating)>0);else if(statFilter==='loved')L=L.filter(m=>m.loved);const w=D.filter(m=>m.status==='watched'),statsBase=D,rated=w.filter(m=>n(m.my_rating)>0);$('#stats').innerHTML=`<button class="stat" data-filter="movie" onclick="setStatFilter('movie')"><span>Movie</span><b>${statsBase.filter(m=>mediaType(m)==='movie').length}</b></button><button class="stat" data-filter="tv" onclick="setStatFilter('tv')"><span>TV / Show</span><b>${statsBase.filter(m=>mediaType(m)==='tv').length}</b></button><button class="stat" data-filter="rated" onclick="setStatFilter('rated')"><span>Rated</span><b>${rated.length}</b></button><button class="stat" data-filter="loved" onclick="setStatFilter('loved')"><span>Loved</span><b>${D.filter(m=>m.status===tab&&m.loved).length}</b></button>`;L.sort({new:(a,b)=>{const ad=(b.added_at||'').localeCompare(a.added_at||'');return ad||((b.watched_on||'').localeCompare(a.watched_on||''))},my:(a,b)=>n(b.my_rating)-n(a.my_rating),im:(a,b)=>n(b.imdb)-n(a.imdb),yr:(a,b)=>n(b.year)-n(a.year),az:(a,b)=>a.title.localeCompare(b.title)}[so]);renderGrid(L)}function applyGenreFilter(genre){const s=$('#ge'),exists=[...s.options].some(o=>o.value===genre);if(!exists)return false;s.value=genre;const menu=$('#ge-menu');menu.querySelectorAll('[role="option"]').forEach(o=>o.setAttribute('aria-selected',o.dataset.value===genre));$('#ge-trigger').firstChild.textContent=(s.options[s.selectedIndex]?.textContent||genre)+' ';personFilter=null;personFilterType='';$('#q').value='';statFilter='all';d.dataset.skipReturnScroll='1';closeCinetonModal();requestAnimationFrame(()=>{render();window.scrollTo({top:document.querySelector('.bar').offsetTop,behavior:'smooth'})});return true}const CT_PUBLIC_COMMENTS={url:"https://osplbqpgxrfovjrumsnb.supabase.co",key:"sb_"+"publishable_"+"tcBaC8FqwlcFFw-IwKmiVA_y67PZNPX",fn:"https://osplbqpgxrfovjrumsnb.supabase.co/functions/v1/public-comments"};
+function setModalPosterAccent(d){const img=d.querySelector(".modal-top img"),btn=d.querySelector(".x");if(!img||!btn)return;const src=img.currentSrc||img.src;if(!src)return;const fallback=()=>d.style.setProperty("--poster-accent","var(--gd)");const proxy="https://wsrv.nl/?url="+encodeURIComponent(src)+"&w=72&h=108&fit=inside&output=webp";const dominant=async()=>{try{const res=await fetch(proxy,{mode:"cors",cache:"force-cache"});if(!res.ok)throw Error();const blob=await res.blob(),bmp=await createImageBitmap(blob),cv=document.createElement("canvas"),ctx=cv.getContext("2d",{willReadFrequently:true});if(!ctx)throw Error();cv.width=72;cv.height=108;ctx.drawImage(bmp,0,0,72,108);bmp.close();const p=ctx.getImageData(0,0,72,108).data,c=[];for(let i=0;i<p.length;i+=16){const a=p[i+3];if(a<180)continue;const r=p[i],g=p[i+1],b=p[i+2],mx=Math.max(r,g,b),mn=Math.min(r,g,b),v=mx/255,s=mx?((mx-mn)/mx):0;if(v<.28||s<.18)continue;const score=v*(.55+s*.9);c.push({r,g,b,score})}if(!c.length)throw Error();c.sort((a,b)=>b.score-a.score);const top=c.slice(0,Math.max(8,Math.floor(c.length*.12)));let w=0,r=0,g=0,b=0;for(const x of top){const q=x.score*x.score;w+=q;r+=x.r*q;g+=x.g*q;b+=x.b*q}const hex="#"+[r/w,g/w,b/w].map(v=>Math.round(v).toString(16).padStart(2,"0")).join("");d.style.setProperty("--poster-accent",hex)}catch{fallback()}};d.style.setProperty("--poster-accent","var(--gd)");dominant()}let cinetonModalBusy=false;
 let cinetonModalAnimations=[];
 let cinetonMotionOverlay=document.querySelector('.movie-motion-overlay');
-if(!cinetonMotionOverlay){
-  cinetonMotionOverlay=document.createElement('div');
-  cinetonMotionOverlay.className='movie-motion-overlay';
-  cinetonMotionOverlay.setAttribute('aria-hidden','true');
-  document.body.appendChild(cinetonMotionOverlay);
-}
+if(!cinetonMotionOverlay){cinetonMotionOverlay=document.createElement('div');cinetonMotionOverlay.className='movie-motion-overlay';cinetonMotionOverlay.setAttribute('aria-hidden','true');document.body.appendChild(cinetonMotionOverlay);}
 const cinetonMotionReduced=()=>window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-const cinetonMotionDuration=name=>{
-  const raw=getComputedStyle(document.documentElement).getPropertyValue(name).trim();
-  const value=parseFloat(raw);
-  return Number.isFinite(value)&&value>0?value:({open:240,close:210}[name]||210);
-};
-const cinetonMotionPlay=(el,keyframes,options)=>{
-  const a=el.animate(keyframes,{duration:options.duration,easing:'cubic-bezier(.4,0,.2,1)',fill:'both'});
-  cinetonModalAnimations.push(a);
-  return a;
-};
-const cinetonMotionCancel=()=>{
-  cinetonModalAnimations.forEach(a=>{try{a.cancel()}catch{}});
-  cinetonModalAnimations=[];
-};
+const cinetonMotionDuration=name=>{const raw=getComputedStyle(document.documentElement).getPropertyValue(name).trim();const value=parseFloat(raw);return Number.isFinite(value)&&value>0?value:({open:240,close:210}[name]||210);};
+const cinetonMotionPlay=(el,keyframes,options)=>{const a=el.animate(keyframes,{duration:options.duration,easing:'cubic-bezier(.4,0,.2,1)',fill:'both'});cinetonModalAnimations.push(a);return a;};
+const cinetonMotionCancel=()=>{cinetonModalAnimations.forEach(a=>{try{a.cancel()}catch{}});cinetonModalAnimations=[];};
 const cinetonMotionDev=location.search.includes('dev=1')||localStorage.getItem('cineton-motion-dev')==='1';
 let cinetonMotionSlow=cinetonMotionDev&&localStorage.getItem('cineton-motion-slow')==='1';
-if(cinetonMotionDev){
-  const b=document.createElement('button');
-  b.type='button';b.className='movie-motion-dev';b.textContent='Motion ×4';
-  b.setAttribute('aria-pressed',String(cinetonMotionSlow));
-  b.title='Toggle movie modal slow-motion preview';
-  b.onclick=()=>{
-    cinetonMotionSlow=!cinetonMotionSlow;
-    localStorage.setItem('cineton-motion-slow',String(cinetonMotionSlow));
-    b.setAttribute('aria-pressed',String(cinetonMotionSlow));
-  };
-  document.body.appendChild(b);
-}
+if(cinetonMotionDev){const b=document.createElement('button');b.type='button';b.className='movie-motion-dev';b.textContent='Motion ×4';b.setAttribute('aria-pressed',String(cinetonMotionSlow));b.title='Toggle movie modal slow-motion preview';b.onclick=()=>{cinetonMotionSlow=!cinetonMotionSlow;localStorage.setItem('cineton-motion-slow',String(cinetonMotionSlow));b.setAttribute('aria-pressed',String(cinetonMotionSlow));};document.body.appendChild(b);}
 const cinetonMotionRect=el=>el?.getBoundingClientRect?.();
-const cinetonMotionTarget=(from,to)=>{
-  if(!from||!to||from.width<=0||from.height<=0||to.width<=0||to.height<=0)return null;
-  return {transform:`translate(${(from.left-to.left).toFixed(3)}px,${(from.top-to.top).toFixed(3)}px) scale(${(from.width/to.width).toFixed(5)},${(from.height/to.height).toFixed(5)})`};
-};
-const cinetonMotionFullyInViewport=rect=>{
-  if(!rect||rect.width<=0||rect.height<=0)return false;
-  return rect.left>=0&&rect.top>=0&&rect.right<=window.innerWidth&&rect.bottom<=window.innerHeight;
-};
-const cinetonMotionCover=poster=>{
-  const cover=document.createElement('div');
-  cover.className='movie-motion-cover';
-  const src=poster?IMG+poster:'';
-  cover.style.backgroundImage=src
-    ? `linear-gradient(135deg,rgba(20,15,10,.18),rgba(20,15,10,.72)),url("${src}")`
-    : 'linear-gradient(135deg,#30251c,#120f0d)';
-  d.appendChild(cover);
-  return cover;
-};
-const cinetonMotionFinish=()=>{
-  cinetonModalAnimations=[];
-  d.style.transform='none';d.style.opacity='1';d.style.willChange='';
-  d.classList.remove('movie-motion-running');
-  const cover=d.querySelector('.movie-motion-cover');if(cover)cover.remove();
-  cinetonMotionOverlay.style.opacity='0';
-  cinetonMotionOverlay.style.pointerEvents='none';
-  cinetonMotionOverlay.style.willChange='';
-};
+const cinetonMotionTarget=(from,to)=>{if(!from||!to||from.width<=0||from.height<=0||to.width<=0||to.height<=0)return null;return{transform:`translate(${(from.left-to.left).toFixed(3)}px,${(from.top-to.top).toFixed(3)}px) scale(${(from.width/to.width).toFixed(5)},${(from.height/to.height).toFixed(5)})`};};
+const cinetonMotionFullyInViewport=rect=>!!rect&&rect.width>0&&rect.height>0&&rect.left>=0&&rect.top>=0&&rect.right<=window.innerWidth&&rect.bottom<=window.innerHeight;
+const cinetonMotionCover=poster=>{const cover=document.createElement('div');cover.className='movie-motion-cover';const src=poster?IMG+poster:'';cover.style.backgroundImage=src?`linear-gradient(135deg,rgba(20,15,10,.18),rgba(20,15,10,.72)),url("${src}")`:'linear-gradient(135deg,#30251c,#120f0d)';d.appendChild(cover);return cover;};
+const cinetonMotionFinish=()=>{cinetonModalAnimations=[];d.style.transform='none';d.style.opacity='1';d.style.willChange='';d.classList.remove('movie-motion-running');const cover=d.querySelector('.movie-motion-cover');if(cover)cover.remove();cinetonMotionOverlay.style.opacity='0';cinetonMotionOverlay.style.pointerEvents='none';cinetonMotionOverlay.style.willChange='';};
 async function cinetonMotionOpen(sourcePoster,poster){
-  const reduced=cinetonMotionReduced();
-  const from=cinetonMotionRect(sourcePoster);
-  const sourceOriginalVisibility=sourcePoster?.style.visibility||'';
-  if(sourcePoster){
-    sourcePoster.dataset.cinetonMotionVisibility=sourceOriginalVisibility;
-    sourcePoster.style.visibility='hidden';
-  }
-  cinetonMotionCancel();
-  cinetonMotionOverlay.style.opacity='0';
-  cinetonMotionOverlay.style.pointerEvents='none';
-  d.style.transformOrigin='0 0';d.style.transform='none';d.style.opacity='1';d.style.willChange='transform';
-  d.classList.remove('movie-motion-running');
-  if(!d.open)d.showModal();
-  const to=cinetonMotionRect(d);
-  const target=cinetonMotionTarget(from,to);
-  const cover=reduced?null:cinetonMotionCover(poster);
-  d.classList.add('movie-motion-running');
-  const mb=$('#mb');
-  const baseDuration=reduced?150:cinetonMotionDuration('--open-ms')*(cinetonMotionSlow?4:1);
+  const reduced=cinetonMotionReduced(),from=cinetonMotionRect(sourcePoster),sourceOriginalVisibility=sourcePoster?.style.visibility||'';
+  if(sourcePoster){sourcePoster.dataset.cinetonMotionVisibility=sourceOriginalVisibility;sourcePoster.style.visibility='hidden';}
+  cinetonMotionCancel();cinetonMotionOverlay.style.opacity='0';cinetonMotionOverlay.style.pointerEvents='none';d.style.transformOrigin='0 0';d.style.transform='none';d.style.opacity='1';d.style.willChange='transform';d.classList.remove('movie-motion-running');if(!d.open)d.showModal();
+  const to=cinetonMotionRect(d),target=cinetonMotionTarget(from,to),cover=reduced?null:cinetonMotionCover(poster);d.classList.add('movie-motion-running');const mb=$('#mb'),baseDuration=reduced?150:cinetonMotionDuration('--open-ms')*(cinetonMotionSlow?4:1);
   try{
     if(!target||reduced){
-      d.style.transform='none';
-      const a=cinetonMotionPlay(d,[{opacity:0},{opacity:1}],{duration:baseDuration});
-      cinetonMotionPlay(cinetonMotionOverlay,[{opacity:0},{opacity:.58}],{duration:baseDuration});
-      if(cover){
-        cinetonMotionPlay(cover,[{opacity:1},{opacity:0}],{duration:baseDuration});
-        cinetonMotionPlay(mb,[{opacity:0},{opacity:1}],{duration:baseDuration});
-      }
-      await a.finished.catch(()=>{});
+      d.style.transform='none';const a=cinetonMotionPlay(d,[{opacity:0},{opacity:1}],{duration:baseDuration});cinetonMotionPlay(cinetonMotionOverlay,[{opacity:0},{opacity:.58}],{duration:baseDuration});if(cover){cinetonMotionPlay(cover,[{opacity:1},{opacity:0}],{duration:baseDuration});cinetonMotionPlay(mb,[{opacity:0},{opacity:1}],{duration:baseDuration});}await a.finished.catch(()=>{});
     }else{
-      d.style.transform=target.transform;
-      const desktop=window.matchMedia('(min-width:641px)').matches;
-      const keyframes=desktop
-        ? [
-            {transform:target.transform,opacity:1,offset:0},
-            {transform:'translate(0px,-4px) scale(1.012,1.012)',opacity:1,offset:.82},
-            {transform:'translate(0px,0px) scale(1,1)',opacity:1,offset:1}
-          ]
-        : [
-            {transform:target.transform,opacity:1,offset:0},
-            {transform:'translate(0px,0px) scale(1,1)',opacity:1,offset:1}
-          ];
-      const a=cinetonMotionPlay(d,keyframes,{duration:baseDuration});
-      cinetonMotionPlay(cinetonMotionOverlay,[{opacity:0},{opacity:.58}],{duration:baseDuration});
-      cinetonMotionPlay(cover,[{opacity:1,offset:0},{opacity:1,offset:.35},{opacity:0,offset:1}],{duration:baseDuration});
-      cinetonMotionPlay(mb,[{opacity:0,offset:0},{opacity:0,offset:.35},{opacity:1,offset:1}],{duration:baseDuration});
-      await a.finished.catch(()=>{});
+      d.style.transform=target.transform;const desktop=window.matchMedia('(min-width:641px)').matches;
+      const keyframes=desktop?[{transform:target.transform,opacity:1,offset:0},{transform:'translate(0px,-4px) scale(1.012,1.012)',opacity:1,offset:.82},{transform:'translate(0px,0px) scale(1,1)',opacity:1,offset:1}]:[{transform:target.transform,opacity:1,offset:0},{transform:'translate(0px,0px) scale(1,1)',opacity:1,offset:1}];
+      const a=cinetonMotionPlay(d,keyframes,{duration:baseDuration});cinetonMotionPlay(cinetonMotionOverlay,[{opacity:0},{opacity:.58}],{duration:baseDuration});cinetonMotionPlay(cover,[{opacity:1,offset:0},{opacity:1,offset:.35},{opacity:0,offset:1}],{duration:baseDuration});cinetonMotionPlay(mb,[{opacity:0,offset:0},{opacity:0,offset:.35},{opacity:1,offset:1}],{duration:baseDuration});await a.finished.catch(()=>{});
     }
   }catch{}
-  if(d.open){
-    d.style.transform='none';d.style.opacity='1';d.style.willChange='';
-    const coverNow=d.querySelector('.movie-motion-cover');if(coverNow)coverNow.remove();
-    mb.style.opacity='1';cinetonMotionOverlay.style.opacity='.58';
-  }
+  if(d.open){d.style.transform='none';d.style.opacity='1';d.style.willChange='';const coverNow=d.querySelector('.movie-motion-cover');if(coverNow)coverNow.remove();mb.style.opacity='1';cinetonMotionOverlay.style.opacity='.58';}
 }
 async function cinetonMotionClose(){
-  if(!d.open||cinetonModalBusy)return;
-  cinetonModalBusy=true;
-  cinetonMotionCancel();
-  const sourceId=d.dataset.sourceMovieId;
-  const sourceCard=sourceId&&document.querySelector('.c[data-id="'+CSS.escape(sourceId)+'"]');
-  const sourcePoster=sourceCard?.querySelector('img,.ph');
-  const from=cinetonMotionRect(d);
-  const to=cinetonMotionRect(sourcePoster);
-  const reduced=cinetonMotionReduced();
-  const duration=(reduced?150:cinetonMotionDuration('--close-ms')*(cinetonMotionSlow?4:1));
-  const target=cinetonMotionFullyInViewport(to)?cinetonMotionTarget(to,from):null;
-  const originalVisibility=sourcePoster?.dataset.cinetonMotionVisibility??'';
-  const originalOpacity=sourcePoster?.style.opacity??'';
-  const computedOpacity=sourcePoster?getComputedStyle(sourcePoster).opacity:'1';
-  const restorePoster=()=>{
-    if(!sourcePoster)return;
-    sourcePoster.style.opacity=originalOpacity;
-    sourcePoster.style.visibility=originalVisibility;
-    delete sourcePoster.dataset.cinetonMotionVisibility;
-  };
-  const finish=()=>{
-    cinetonMotionCancel();
-    restorePoster();
-    if(d.open)d.close();
-    cinetonMotionFinish();
-    cinetonModalBusy=false;
-  };
+  if(!d.open||cinetonModalBusy)return;cinetonModalBusy=true;cinetonMotionCancel();
+  const sourceId=d.dataset.sourceMovieId,sourceCard=sourceId&&document.querySelector('.c[data-id="'+CSS.escape(sourceId)+'"]'),sourcePoster=sourceCard?.querySelector('img,.ph'),from=cinetonMotionRect(d),to=cinetonMotionRect(sourcePoster),reduced=cinetonMotionReduced(),duration=(reduced?150:cinetonMotionDuration('--close-ms')*(cinetonMotionSlow?4:1)),target=cinetonMotionFullyInViewport(to)?cinetonMotionTarget(to,from):null,originalVisibility=sourcePoster?.dataset.cinetonMotionVisibility??'',originalOpacity=sourcePoster?.style.opacity??'',computedOpacity=sourcePoster?getComputedStyle(sourcePoster).opacity:'1';
+  const restorePoster=()=>{if(!sourcePoster)return;sourcePoster.style.opacity=originalOpacity;sourcePoster.style.visibility=originalVisibility;delete sourcePoster.dataset.cinetonMotionVisibility;};
+  const finish=()=>{cinetonMotionCancel();restorePoster();if(d.open)d.close();cinetonMotionFinish();cinetonModalBusy=false;};
   d.style.transformOrigin='0 0';d.style.willChange='transform';
   if(!target||reduced){
-    const a=cinetonMotionPlay(d,[
-      {transform:'translate(0px,0px) scale(1,1)',opacity:1},
-      {transform:'translate(0px,0px) scale(.95,.95)',opacity:0}
-    ],{duration});
-    cinetonMotionPlay(cinetonMotionOverlay,[{opacity:.58},{opacity:0}],{duration});
-    await a.finished.catch(()=>{});
-    finish();
-    return;
+    const a=cinetonMotionPlay(d,[{transform:'translate(0px,0px) scale(1,1)',opacity:1},{transform:'translate(0px,0px) scale(.95,.95)',opacity:0}],{duration});cinetonMotionPlay(cinetonMotionOverlay,[{opacity:.58},{opacity:0}],{duration});await a.finished.catch(()=>{});finish();return;
   }
-  const a=cinetonMotionPlay(d,[
-    {transform:'translate(0px,0px) scale(1,1)',opacity:1,offset:0},
-    {transform:target.transform,opacity:1,offset:.85},
-    {transform:target.transform,opacity:0,offset:1}
-  ],{duration});
+  const a=cinetonMotionPlay(d,[{transform:'translate(0px,0px) scale(1,1)',opacity:1,offset:0},{transform:target.transform,opacity:1,offset:.85},{transform:target.transform,opacity:0,offset:1}],{duration});
   cinetonMotionPlay(cinetonMotionOverlay,[{opacity:.58},{opacity:0}],{duration});
-  if(sourcePoster){
-    cinetonMotionPlay(sourcePoster,[
-      {opacity:0,offset:0},{opacity:0,offset:.75},{opacity:Number(computedOpacity)||1,offset:1}
-    ],{duration});
-    window.setTimeout(()=>{sourcePoster.style.visibility='visible';},duration*.75);
-  }
-  await a.finished.catch(()=>{});
-  finish();
-}
-function closeCinetonModal(){cinetonMotionClose()}-id="'+CSS.escape(sourceId)+'"]');
-  const sourcePoster=sourceCard?.querySelector('img,.ph');
-  const from=cinetonMotionRect(d);
-  const to=cinetonMotionRect(sourcePoster);
-  const reduced=cinetonMotionReduced();
-  const duration=(reduced?150:cinetonMotionDuration('--close-ms')*(cinetonMotionSlow?4:1));
-  const target=cinetonMotionTarget(to,from);
-  const originalPosterOpacity=sourcePoster?.style.opacity||'';
-  const restorePoster=()=>{
-    if(!sourcePoster)return;
-    sourcePoster.style.opacity=originalPosterOpacity;
-  };
-  const finish=()=>{
-    cinetonMotionCancel();
-    if(d.open)d.close();
-    cinetonMotionFinish();
-    restorePoster();
-    cinetonModalBusy=false;
-  };
-  if(!target||reduced){
-    const a=cinetonMotionPlay(d,[{opacity:1},{opacity:0}],{duration});
-    cinetonMotionPlay(cinetonMotionOverlay,[{opacity:.58},{opacity:0}],{duration});
-    if(sourcePoster){
-      sourcePoster.style.visibility='';
-      sourcePoster.style.opacity='0';
-      cinetonMotionPlay(sourcePoster,[{opacity:0,offset:0},{opacity:0,offset:.75},{opacity:1,offset:1}],{duration});
-    }
-    await a.finished.catch(()=>{});
-    finish();
-    return;
-  }
-  const a=cinetonMotionPlay(d,[
-    {transform:'translate(0px,0px) scale(1,1)',opacity:1,offset:0},
-    {transform:target.transform,opacity:1,offset:.85},
-    {transform:target.transform,opacity:0,offset:1}
-  ],{duration});
-  cinetonMotionPlay(cinetonMotionOverlay,[{opacity:.58},{opacity:0}],{duration});
-  if(sourcePoster){
-    sourcePoster.style.opacity='0';
-    cinetonMotionPlay(sourcePoster,[{opacity:0,offset:0},{opacity:0,offset:.75},{opacity:1,offset:1}],{duration});
-  }
-  await a.finished.catch(()=>{});
-  finish();
+  if(sourcePoster){cinetonMotionPlay(sourcePoster,[{opacity:0,offset:0},{opacity:0,offset:.75},{opacity:Number(computedOpacity)||1,offset:1}],{duration});window.setTimeout(()=>{sourcePoster.style.visibility='visible';},duration*.75);}
+  await a.finished.catch(()=>{});finish();
 }
 function closeCinetonModal(){cinetonMotionClose()}
 async function openMovie(m){if(cinetonModalBusy)return;cinetonModalBusy=true;try{d.querySelector('.cineton-rating-layer')?.remove();const sourceCard=document.querySelector('.c[data-id="'+CSS.escape(m.id)+'"]');const sourcePoster=sourceCard?.querySelector('img,.ph');const watched=m.watched_on?'<span class="watched-chip">Watched · '+e(m.watched_on)+'</span>':'';let modal='<div class="modal-top"><div class="poster-wrap">'+pic(m)+'<span class="poster-status">'+(m.status==='watched'?'✓ Watched':'○ Watchlist')+'</span></div><div class="modal-side"><div class="detail-head"><h2 id="modal-title">'+e(m.title)+'</h2><p class="subline">'+e(m.year)+' · '+(m.type==='tv'?'TV / Show':'Movie')+'</p></div><div class="chips"><div class="modal-rating-main">'+(m.imdb?'<span class="imdb-chip">IMDb '+e(m.imdb)+'</span>':'')+(m.my_rating?'<span class="my-chip">★ Rating '+e(m.my_rating)+'/10</span>':'')+(m.loved?'<span class="love-chip" aria-label="Loved"><span class="love-mobile-emoji" aria-hidden="true">🩷</span><span class="love-desktop-emoji" aria-hidden="true">❤️</span></span>':'')+'</div><div class="modal-public-rating-slot"></div>'+watched+'</div>'+(m.director?'<div class="detail-section"><span class="detail-label">Director / Creator</span><p class="detail-value">'+String(m.director).split(',').map(n=>'<button type="button" class="person-filter" data-person="'+e(n.trim())+'" data-person-type="Director">'+e(n.trim())+'</button>').join(', ')+'</p></div>':'')+((m.cast||[]).length?'<div class="detail-section"><span class="detail-label">Cast</span><p class="detail-value person-list">'+m.cast.map(n=>'<button type="button" class="person-filter" data-person="'+e(n)+'" data-person-type="Actor">'+e(n)+'</button>').join(', ')+'</p></div>':'')+'</div></div>'+((m.genres||[]).length?'<div class="modal-wide detail-section"><span class="detail-label">Genres</span><p class="detail-value">'+(m.genres||[]).map(g=>'<button type="button" class="genre-filter" data-genre="'+e(g)+'">'+e(g)+'</button>').join(' · ')+'</p></div>':'')+(m.overview?'<div class="modal-wide detail-section"><span class="detail-label">Story</span><p class="detail-value story">'+e(m.overview)+'</p></div>':'')+(m.comment?'<p class="cm modal-wide">'+e(m.comment)+'</p>':'')+(m.watched_on?'<div class="modal-footer"><strong>CineTon</strong> · Watched on '+e(m.watched_on)+'</div>':'')+'<section class="public-comments" data-public-comments><button type="button" class="public-comments-head" aria-expanded="false"><span>PUBLIC COMMENTS <span class="public-comments-count" aria-label="0 comments">- 0</span></span></button><div class="public-comments-body"><div class="public-comments-inner"><h3 class="public-comments-title" hidden>Comments</h3><div class="public-comments-list"></div><button type="button" class="public-comments-toggle" aria-expanded="false" title="Open comment box">＋</button><form class="public-comment-composer"><input name="name" maxlength="80" autocomplete="nickname" placeholder="_নাম"><textarea name="comment" maxlength="1000" required placeholder="_আপনার মন্তব্য"></textarea><button class="public-comment-submit" type="submit" aria-label="Submit comment">⌲</button><button class="public-comment-resize" type="button" aria-label="Resize comment box" title="Resize comment box"></button></form></div></div></section>';$('#mb').innerHTML=modal;const mobileModalPoster=window.matchMedia('(max-width:600px)').matches?d.querySelector('.modal-top .poster-wrap'):null;if(mobileModalPoster){const mobileModalTop=mobileModalPoster.closest('.modal-top');if(mobileModalTop)mobileModalTop.style.setProperty('grid-template-columns','120px minmax(0,1fr)','important');mobileModalPoster.style.setProperty('width','120px','important');mobileModalPoster.style.setProperty('min-width','120px','important');mobileModalPoster.style.setProperty('max-width','120px','important');mobileModalPoster.style.setProperty('flex-basis','120px','important');const mobilePosterImg=mobileModalPoster.querySelector('img');if(mobilePosterImg){mobilePosterImg.style.setProperty('width','120px','important');mobilePosterImg.style.setProperty('min-width','120px','important');mobilePosterImg.style.setProperty('max-width','120px','important');mobilePosterImg.style.setProperty('height','180px','important');mobilePosterImg.style.setProperty('min-height','180px','important');mobilePosterImg.style.setProperty('max-height','180px','important');mobilePosterImg.style.setProperty('aspect-ratio','2 / 3','important')}}const savedScrollY=window.scrollY;d.style.setProperty('--modal-bg',m.poster?'url("'+IMG+m.poster+'")':'none');d.dataset.returnScroll=String(savedScrollY);d.dataset.sourceMovieId=m.id;
