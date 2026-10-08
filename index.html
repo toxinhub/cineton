@@ -893,7 +893,7 @@ async function cinetonMotionOpen(sourcePoster,poster){
   const from=cinetonMotionRect(sourcePoster);
   const to=cinetonMotionRect(d);
   const target=cinetonMotionTarget(from,to);
-  const cover=reduced?null:cinetonMotionCover(poster);
+  const cover=(!reduced&&!desktop)?cinetonMotionCover(poster):null;
   const mb=$('#mb');
   const baseDuration=reduced?150:cinetonMotionDuration('--open-ms')*(cinetonMotionSlow?4:1);
 
