@@ -2398,10 +2398,11 @@ update();
     try{const r=await fetch(API,{cache:"no-store",headers:{apikey:KEY,Accept:"application/json"}});if(!r.ok)throw Error();const j=await r.json();render(Array.isArray(j.suggestions)?j.suggestions:[]);}
     catch{list.innerHTML='<div class="suggestion-empty">Suggestions are temporarily unavailable.</div>';}
   };
-  btn.addEventListener("click",()=>{if(!dialog.open){dialog.showModal();document.body.classList.add("suggestions-modal-open")}loadLibrary();load();requestAnimationFrame(()=>{input.focus({preventScroll:true});updateGhost()});});
-  dialog.querySelector(".suggestions-close").addEventListener("click",()=>dialog.close());
-  dialog.addEventListener("close",()=>document.body.classList.remove("suggestions-modal-open"));
-  dialog.addEventListener("click",e=>{if(e.target===dialog)dialog.close()});
+  const closeSuggestions=()=>{if(!dialog.open||dialog.classList.contains("is-closing"))return;dialog.classList.remove("is-entering");dialog.classList.add("is-closing");window.setTimeout(()=>dialog.close(),190)};
+  btn.addEventListener("click",()=>{if(!dialog.open){dialog.classList.remove("is-closing");dialog.classList.add("is-entering");dialog.showModal();document.body.classList.add("suggestions-modal-open")}loadLibrary();load();requestAnimationFrame(()=>{input.focus({preventScroll:true});updateGhost()});});
+  dialog.querySelector(".suggestions-close").addEventListener("click",closeSuggestions);
+  dialog.addEventListener("close",()=>{dialog.classList.remove("is-entering","is-closing");document.body.classList.remove("suggestions-modal-open")});
+  dialog.addEventListener("click",e=>{if(e.target===dialog)closeSuggestions()});
   form.addEventListener("submit",async e=>{
     e.preventDefault();
     const titles=input.value.split(/\r?\n/).map(line=>line.replace(/^\s*\d+\s*[.)-]\s*/,"").replace(/\s+/g," ").trim()).filter(Boolean);
@@ -2919,5 +2920,83 @@ main.list .cineton-love-heart{
     animation:none!important;
     opacity:0!important;
   }
+}
+</style>
+
+<style id="public-suggestions-motion-balanced-v1">
+/* Suggest Me micro-motion: restrained cinematic feedback, no layout or content changes. */
+.suggest-me-btn{
+  position:relative;
+  overflow:hidden;
+  will-change:transform;
+  transition:background .18s ease,border-color .18s ease,color .18s ease,transform .14s cubic-bezier(.22,.7,.25,1),box-shadow .22s ease;
+}
+.suggest-me-btn::after{
+  content:"";
+  position:absolute;
+  top:-20%;left:-42%;
+  width:32%;height:140%;
+  background:linear-gradient(90deg,transparent,#ffffff18,transparent);
+  transform:skewX(-18deg) translateX(0);
+  opacity:0;
+  pointer-events:none;
+}
+.suggest-me-btn:hover::after,.suggest-me-btn:focus-visible::after{
+  opacity:1;
+  animation:suggestMeSheen .62s cubic-bezier(.22,.72,.24,1) both;
+}
+.suggest-me-btn:active{transform:scale(.955)!important}
+@keyframes suggestMeSheen{
+  from{transform:skewX(-18deg) translateX(0)}
+  to{transform:skewX(-18deg) translateX(430%)}
+}
+.suggestions-dialog{
+  opacity:1;
+  transform:translateY(0) scale(1);
+  transform-origin:50% 48%;
+}
+.suggestions-dialog.is-entering{
+  animation:suggestionsModalIn .32s cubic-bezier(.16,1,.3,1) both;
+}
+.suggestions-dialog.is-closing{
+  animation:suggestionsModalOut .18s cubic-bezier(.4,0,1,1) both;
+  pointer-events:none;
+}
+.suggestions-dialog.is-entering .suggestions-head,
+.suggestions-dialog.is-entering .suggestion-compose,
+.suggestions-dialog.is-entering .suggestion-list{
+  animation:suggestionsContentIn .26s cubic-bezier(.22,.8,.25,1) both;
+}
+.suggestions-dialog.is-entering .suggestion-compose{animation-delay:.035s}
+.suggestions-dialog.is-entering .suggestion-list{animation-delay:.065s}
+.suggestions-dialog.is-entering .suggestions-close{animation:suggestionsCloseIn .25s cubic-bezier(.22,.8,.25,1) .025s both}
+@keyframes suggestionsModalIn{
+  from{opacity:0;transform:translateY(14px) scale(.975)}
+  to{opacity:1;transform:translateY(0) scale(1)}
+}
+@keyframes suggestionsContentIn{
+  from{opacity:0;transform:translateY(7px)}
+  to{opacity:1;transform:translateY(0)}
+}
+@keyframes suggestionsCloseIn{
+  from{opacity:0;transform:translateY(-3px) scale(.9)}
+  to{opacity:1;transform:none}
+}
+@keyframes suggestionsModalOut{
+  from{opacity:1;transform:translateY(0) scale(1)}
+  to{opacity:0;transform:translateY(-8px) scale(.985)}
+}
+@media(max-width:600px){
+  .suggestions-dialog.is-entering{animation-duration:.30s}
+  .suggestions-dialog.is-closing{animation-duration:.17s}
+}
+@media(prefers-reduced-motion:reduce){
+  .suggest-me-btn::after{animation:none!important;display:none!important}
+  .suggestions-dialog.is-entering,
+  .suggestions-dialog.is-closing,
+  .suggestions-dialog.is-entering .suggestions-head,
+  .suggestions-dialog.is-entering .suggestion-compose,
+  .suggestions-dialog.is-entering .suggestion-list,
+  .suggestions-dialog.is-entering .suggestions-close{animation:none!important}
 }
 </style>
