@@ -2324,8 +2324,8 @@ update();
   .cineton-rating-fly-number.is-flying{animation:none;opacity:0}
 }
 </style>
-<style id="cineton-modal-motion-authoritative-v12">
-/* Shared-element modal motion — poster to dialog, inspired by native contact/profile transitions. */
+<style id="cineton-modal-motion-authoritative-v13">
+/* Native-feeling shared-element transition: lock the dialog to the poster BEFORE the first paint. */
 .cinemodal,.cinemodal[open]{
   transform-origin:center center!important;
   will-change:transform!important;
@@ -2334,7 +2334,7 @@ update();
 .cinemodal::backdrop{
   background:var(--modal-backdrop);
   opacity:1;
-  transition:opacity .38s cubic-bezier(.22,.7,.25,1);
+  transition:opacity .36s cubic-bezier(.22,.7,.25,1);
 }
 .cinemodal.cineton-modal-opening::backdrop,
 .cinemodal.cineton-modal-closing::backdrop{opacity:0}
@@ -2343,7 +2343,7 @@ update();
   .cinemodal::backdrop{transition:none!important}
 }
 </style>
-<script id="cineton-modal-motion-controller-v12">
+<script id="cineton-modal-motion-controller-v13">
 (function(){
   const modal=document.getElementById('d');if(!modal)return;
   let sourcePoster=null,sourceMovieId=null,sourceRect=null;
@@ -2356,9 +2356,7 @@ update();
   function captureSource(){
     let p=null;
     if(sourceMovieId){
-      try{
-        p=document.querySelector('.c[data-id="'+CSS.escape(sourceMovieId)+'"] img,.c[data-id="'+CSS.escape(sourceMovieId)+'"] .ph');
-      }catch{}
+      try{p=document.querySelector('.c[data-id="'+CSS.escape(sourceMovieId)+'"] img,.c[data-id="'+CSS.escape(sourceMovieId)+'"] .ph')}catch{}
     }
     p=p||sourcePoster;
     if(!p)return null;
@@ -2370,17 +2368,14 @@ update();
   }
 
   function clearAnimation(){
-    if(activeAnimation){
-      try{activeAnimation.cancel()}catch{}
-      activeAnimation=null;
-    }
+    if(activeAnimation){try{activeAnimation.cancel()}catch{}activeAnimation=null}
   }
 
   function origin(){
     if(!sourceRect)return null;
     const r=modal.getBoundingClientRect();
     if(!r.width||!r.height)return null;
-    return {
+    return{
       x:sourceRect.left+sourceRect.width/2-(r.left+r.width/2),
       y:sourceRect.top+sourceRect.height/2-(r.top+r.height/2),
       sx:Math.max(.01,sourceRect.width/r.width),
@@ -2388,8 +2383,7 @@ update();
     };
   }
 
-  const transform=(x,y,sx,sy)=>
-    'translate3d('+x+'px,'+y+'px,0) scale3d('+sx+','+sy+',1)';
+  const tf=(x,y,sx,sy)=>'translate3d('+x+'px,'+y+'px,0) scale3d('+sx+','+sy+',1)';
 
   function reset(){
     modal.style.removeProperty('opacity');
@@ -2419,11 +2413,12 @@ update();
       return;
     }
 
-    /* Let <dialog> finish its native open/layout pass before measuring. */
-    await raf();
-    await raf();
-    if(!modal.open||token!==openToken)return;
-
+    /*
+      Critical: showModal() puts <dialog> in the top layer immediately.
+      Lock its starting transform NOW, before yielding to requestAnimationFrame,
+      otherwise the browser can paint the full dialog first and the transition
+      looks like an instant popup.
+    */
     const rect=captureSource();
     const o=rect?origin():null;
     if(!o){
@@ -2433,36 +2428,40 @@ update();
       return;
     }
 
-    const start=transform(o.x,o.y,o.sx,o.sy);
-    const mid1=transform(
-      o.x*.94,o.y*.94,
-      Math.min(1,o.sx+(1-o.sx)*.22),
-      Math.min(1,o.sy+(1-o.sy)*.22)
-    );
-    const mid2=transform(
-      o.x*.55,o.y*.55,
-      Math.min(1,o.sx+(1-o.sx)*.72),
-      Math.min(1,o.sy+(1-o.sy)*.72)
-    );
-    const end=transform(0,0,1,1);
-
+    const start=tf(o.x,o.y,o.sx,o.sy);
     modal.style.visibility='visible';
     modal.style.opacity='1';
     modal.style.transform=start;
     modal.style.setProperty('will-change','transform');
+    modal.classList.add('cineton-modal-opening');
+
+    /* Commit the poster-sized state, then animate from that exact state. */
     void modal.getBoundingClientRect();
     await raf();
     if(!modal.open||token!==openToken)return;
 
-    modal.classList.add('cineton-modal-opening');
+    const fresh=captureSource();
+    const next=fresh?origin():o;
+    if(!next)return;
+    const mid1=tf(
+      next.x*.94,next.y*.94,
+      Math.min(1,next.sx+(1-next.sx)*.20),
+      Math.min(1,next.sy+(1-next.sy)*.20)
+    );
+    const mid2=tf(
+      next.x*.52,next.y*.52,
+      Math.min(1,next.sx+(1-next.sx)*.70),
+      Math.min(1,next.sy+(1-next.sy)*.70)
+    );
+    const end=tf(0,0,1,1);
 
     const anim=modal.animate([
-      {opacity:1,transform:start,offset:0,easing:'cubic-bezier(.22,.35,.3,1)'},
-      {opacity:1,transform:mid1,offset:.24,easing:'cubic-bezier(.2,.75,.25,1)'},
-      {opacity:1,transform:mid2,offset:.70,easing:'cubic-bezier(.16,.9,.28,1)'},
+      {opacity:1,transform:start,offset:0,easing:'cubic-bezier(.18,.32,.28,1)'},
+      {opacity:1,transform:mid1,offset:.25,easing:'cubic-bezier(.2,.7,.28,1)'},
+      {opacity:1,transform:mid2,offset:.70,easing:'cubic-bezier(.16,.86,.28,1)'},
       {opacity:1,transform:end,offset:1}
     ],{
-      duration:mobile()?760:840,
+      duration:mobile()?780:860,
       easing:'linear',
       fill:'forwards'
     });
@@ -2493,10 +2492,9 @@ update();
     const o=rect?origin():null;
     if(!o){modal.close();return}
 
-    const end=transform(o.x,o.y,o.sx,o.sy);
-
+    const end=tf(o.x,o.y,o.sx,o.sy);
     const anim=modal.animate([
-      {opacity:1,transform:transform(0,0,1,1),offset:0,easing:'cubic-bezier(.4,0,1,1)'},
+      {opacity:1,transform:tf(0,0,1,1),offset:0},
       {opacity:1,transform:end,offset:1}
     ],{
       duration:mobile()?390:450,
