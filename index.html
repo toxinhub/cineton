@@ -3131,6 +3131,18 @@ update();
   .cinemodal .chips .love-chip .love-mobile-emoji{display:inline!important}
 }
 </style>
+<style id="card-meta-symbol-separator-v1">
+/* Keep metadata symbols visually separated: Year · Type · Visitor Comment • Loved. */
+.visitor-comment-indicator{
+  margin-left:0!important;
+}
+.visitor-comment-indicator::before{
+  content:" · ";
+  color:var(--mu);
+  opacity:.82;
+  font:inherit;
+}
+</style>
 </html><style id="desktop-soft-square-radius-v1">
 /* Desktop surface geometry — restrained 2px corners for a sharper editorial cinema grid.
    Mobile remains completely untouched. Intentional pills/circles stay unchanged. */
