@@ -2446,7 +2446,7 @@ update();
   .cinemodal .chips .love-chip .love-mobile-emoji{display:inline!important}
 }
 </style>
-<script id="cineton-modal-motion-controller-v5">
+<script id="cineton-modal-motion-controller-v6">
 (function(){
   const modal=document.getElementById('d');
   if(!modal) return;
@@ -2456,9 +2456,8 @@ update();
   let closing=false;
   let activeAnimation=null;
 
-  function reducedMotion(){
-    return window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-  }
+  const reducedMotion=()=>window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const mobile=()=>window.matchMedia('(max-width:600px)').matches;
 
   function getPoster(){
     const live=sourceMovieId
@@ -2467,21 +2466,31 @@ update();
     return live||sourcePoster||null;
   }
 
-  function setOrigin(poster){
+  /*
+   * Measure the ACTUAL dialog after showModal() and the ACTUAL source poster.
+   * The old version compared the poster against a guessed modal size, which
+   * could never be a true rectangle-to-rectangle match.
+   */
+  function measure(poster){
     if(!poster) return null;
-    const r=poster.getBoundingClientRect();
-    const vw=window.innerWidth;
-    const vh=window.innerHeight;
-    const mw=Math.min(780,vw-24);
-    const mh=Math.min(vh*.9,760);
-    /* Fit the real poster rectangle inside the real modal box. */
-    const scale=Math.max(.08,Math.min(1,r.width/mw,r.height/mh));
-    const x=r.left+r.width/2-vw/2;
-    const y=r.top+r.height/2-vh/2;
-    modal.style.setProperty('--origin-x',x+'px');
-    modal.style.setProperty('--origin-y',y+'px');
-    modal.style.setProperty('--origin-scale',String(scale));
-    return {x,y,scale};
+    const pr=poster.getBoundingClientRect();
+    const mr=modal.getBoundingClientRect();
+    if(!pr.width||!pr.height||!mr.width||!mr.height) return null;
+
+    return {
+      x:pr.left+pr.width/2-(mr.left+mr.width/2),
+      y:pr.top+pr.height/2-(mr.top+mr.height/2),
+      sx:pr.width/mr.width,
+      sy:pr.height/mr.height
+    };
+  }
+
+  function setOriginVars(o){
+    if(!o) return;
+    modal.style.setProperty('--origin-x',o.x+'px');
+    modal.style.setProperty('--origin-y',o.y+'px');
+    modal.style.setProperty('--origin-scale-x',o.sx);
+    modal.style.setProperty('--origin-scale-y',o.sy);
   }
 
   function clearAnimation(){
@@ -2489,34 +2498,37 @@ update();
       try{activeAnimation.cancel()}catch{}
       activeAnimation=null;
     }
-    modal.getAnimations().forEach(a=>{
-      try{a.cancel()}catch{}
-    });
+    modal.getAnimations().forEach(a=>{try{a.cancel()}catch{}});
   }
 
-  function enableJsMotion(){
+  function prepare(){
     modal.style.setProperty('transition','none','important');
     modal.style.setProperty('animation','none','important');
+    modal.style.setProperty('will-change','transform,opacity');
   }
 
-  function restoreMotion(){
+  function finish(){
     modal.style.removeProperty('transition');
     modal.style.removeProperty('animation');
     modal.style.removeProperty('opacity');
     modal.style.removeProperty('transform');
+    modal.style.removeProperty('will-change');
+  }
+
+  function fromTransform(o){
+    return 'translate3d('+o.x+'px,'+o.y+'px,0) scale3d('+o.sx+','+o.sy+',1)';
   }
 
   window.setCinetonModalSource=function(card){
     sourcePoster=card?.querySelector?.('img,.ph')||null;
     sourceMovieId=card?.dataset?.id||null;
-    setOrigin(sourcePoster);
   };
 
   window.playCinetonModalOpen=function(){
     if(!modal.open) return;
     closing=false;
     clearAnimation();
-    enableJsMotion();
+    prepare();
 
     if(reducedMotion()){
       modal.style.opacity='1';
@@ -2524,33 +2536,37 @@ update();
       return;
     }
 
-    const o=setOrigin(getPoster());
+    /*
+     * One compositor animation only: exact poster rectangle -> exact dialog
+     * rectangle. No extra jump, no guessed scale, no multi-stage transform.
+     */
+    const o=measure(getPoster());
     if(!o){
       modal.style.opacity='1';
       modal.style.transform='none';
       return;
     }
+    setOriginVars(o);
 
-    const from='translate3d('+o.x+'px,'+o.y+'px,0) scale('+o.scale+')';
     const anim=modal.animate(
       [
-        {opacity:0,transform:from,offset:0},
-        {opacity:1,transform:'translate3d(0,0,0) scale(1.012)',offset:.86},
-        {opacity:1,transform:'translate3d(0,0,0) scale(1)',offset:1}
+        {opacity:0,transform:fromTransform(o)},
+        {opacity:.98,transform:'translate3d(0,0,0) scale3d(1.008,1.008,1)',offset:.90},
+        {opacity:1,transform:'translate3d(0,0,0) scale3d(1,1,1)'}
       ],
       {
-        duration:window.matchMedia('(max-width:600px)').matches?430:500,
-        easing:'cubic-bezier(.18,.82,.22,1)',
+        duration:mobile()?360:410,
+        easing:'cubic-bezier(.22,.72,.2,1)',
         fill:'forwards'
       }
     );
     activeAnimation=anim;
     anim.finished.catch(()=>{}).then(()=>{
-      if(activeAnimation===anim){
-        activeAnimation=null;
-        modal.style.opacity='1';
-        modal.style.transform='none';
-      }
+      if(activeAnimation!==anim) return;
+      activeAnimation=null;
+      modal.style.opacity='1';
+      modal.style.transform='none';
+      modal.style.removeProperty('will-change');
     });
   };
 
@@ -2563,25 +2579,25 @@ update();
 
     closing=true;
     clearAnimation();
-    enableJsMotion();
+    prepare();
 
-    const o=setOrigin(getPoster());
+    const o=measure(getPoster());
     if(!o){
       modal.close();
       return;
     }
+    setOriginVars(o);
 
-    const to='translate3d('+o.x+'px,'+o.y+'px,0) scale('+o.scale+')';
     const anim=modal.animate(
       [
-        {opacity:1,transform:'translate3d(0,0,0) scale(1)',offset:0},
-        {opacity:.94,transform:'translate3d('+o.x*.32+'px,'+o.y*.32+'px,0) scale('+(1-(1-o.scale)*.32)+')',offset:.42},
-        {opacity:.72,transform:'translate3d('+o.x*.76+'px,'+o.y*.76+'px,0) scale('+(1-(1-o.scale)*.76)+')',offset:.78},
-        {opacity:0,transform:to,offset:1}
+        {opacity:1,transform:'translate3d(0,0,0) scale3d(1,1,1)'},
+        {opacity:.9,transform:'translate3d('+o.x*.55+'px,'+o.y*.55+'px,0) scale3d('+(1+(o.sx-1)*.55)+','+(1+(o.sy-1)*.55)+',1)',offset:.58},
+        {opacity:.38,transform:'translate3d('+o.x*.88+'px,'+o.y*.88+'px,0) scale3d('+(o.sx+.08*(1-o.sx))+','+(o.sy+.08*(1-o.sy))+',1)',offset:.88},
+        {opacity:0,transform:fromTransform(o)}
       ],
       {
-        duration:window.matchMedia('(max-width:600px)').matches?380:450,
-        easing:'cubic-bezier(.32,.04,.32,1)',
+        duration:mobile()?320:370,
+        easing:'cubic-bezier(.34,.04,.22,1)',
         fill:'forwards'
       }
     );
@@ -2602,7 +2618,7 @@ update();
   modal.addEventListener('close',function(){
     closing=false;
     clearAnimation();
-    restoreMotion();
+    finish();
   });
 })();
 </script>
@@ -2612,6 +2628,17 @@ update();
 .cinemodal[open]{
   will-change:transform,opacity;
   transform-origin:center center;
+}
+</style>
+<style id="cineton-modal-motion-cinematic-v17">
+/* Exact source-poster rectangle morph. Transform/opacity stay compositor-friendly. */
+.cinemodal,
+.cinemodal[open]{
+  transform-origin:center center!important;
+  will-change:transform,opacity;
+}
+@media(prefers-reduced-motion:reduce){
+  .cinemodal,.cinemodal[open]{will-change:auto!important}
 }
 </style>
 </html><style id="desktop-soft-square-radius-v1">
