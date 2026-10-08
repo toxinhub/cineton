@@ -2879,6 +2879,45 @@ main.list .cineton-love-heart{
 </style>
 
 <style id="public-rating-glassy-number-hard-final-v2">
-.cineton-rating-fly-number{position:absolute!important;z-index:9999!important;pointer-events:none!important;transform-origin:center!important}
-.cinemodal{overflow:visible!important}
+/* Final polish: softer, smoother poster-bound rating flight. */
+.cineton-rating-fly-number{
+  z-index:9999!important;
+  will-change:transform,opacity,filter!important;
+  transform-origin:center!important;
+}
+.cineton-rating-fly-number.is-flying{
+  animation:cinetonRatingGlassFlySmooth .42s cubic-bezier(.22,.72,.24,1) both!important;
+}
+@keyframes cinetonRatingGlassFlySmooth{
+  0%{
+    opacity:0;
+    filter:blur(1px);
+    transform:translate(-50%,-50%) scale(.68);
+  }
+  16%{
+    opacity:.98;
+    filter:blur(0);
+    transform:translate(-50%,-50%) scale(.94);
+  }
+  38%{
+    opacity:1;
+    transform:translate(-50%,-50%) scale(1.02);
+  }
+  100%{
+    opacity:0;
+    filter:blur(.7px);
+    transform:translate(calc(-50% + var(--fly-x)),calc(-50% + var(--fly-y))) scale(.16);
+  }
+}
+@media(max-width:600px){
+  .cineton-rating-fly-number.is-flying{
+    animation-duration:.38s!important;
+  }
+}
+@media(prefers-reduced-motion:reduce){
+  .cineton-rating-fly-number.is-flying{
+    animation:none!important;
+    opacity:0!important;
+  }
+}
 </style>
