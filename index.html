@@ -1331,39 +1331,25 @@ const cinetonMotionFinish=()=>{cinetonModalAnimations=[];d.style.transform='';d.
 const cinetonWaitAnimation=async animation=>{if(animation?.finished)await animation.finished.catch(()=>{})};
 
 async function cinetonMotionOpen(sourcePoster,poster){
-  const reduced=cinetonMotionReduced(),desktop=window.matchMedia('(min-width:641px)').matches,mb=$('#mb');
+  const reduced=cinetonMotionReduced();
   cinetonMotionCancel();
   if(reduced&&!cinetonReducedMotionLogged){console.info("reduced motion: simple fade");cinetonReducedMotionLogged=true}
-  sourcePoster?.closest('.c')?.classList.add('is-opening');
-  cinetonMotionOverlay.style.opacity='0';cinetonMotionOverlay.style.pointerEvents='none';
-  d.style.transform='';d.style.opacity='';d.style.transformOrigin='0 0';d.style.willChange='transform, opacity';
-  /* Hide modal contents before showModal paints its first frame, preventing a poster flash. */
-  d.classList.add('movie-motion-running');mb.style.opacity='0';
-  if(!d.open)d.showModal();
-  await new Promise(resolve=>requestAnimationFrame(resolve));
-  const from=cinetonMotionRect(sourcePoster),to=cinetonMotionRect(d),target=cinetonMotionTarget(from,to);
-  const duration=reduced?150:cinetonMotionDuration('--open-ms')*(cinetonMotionSlow?4:1);
-  const cover=!reduced&&target?cinetonMotionCover(poster):null;
-  cinetonMotionOverlay.style.willChange='opacity';
-  try{
-    if(reduced){
-      const animation=cinetonMotionPlay(d,[{opacity:0},{opacity:1}],{duration:150});
-      cinetonMotionPlay(cinetonMotionOverlay,[{opacity:0},{opacity:.58}],{duration:150});await cinetonWaitAnimation(animation);
-    }else if(target){
-      const frames=desktop?[{transform:target.transform,opacity:1,offset:0},{transform:'translate(0,-4px) scale(1.012)',opacity:1,offset:.82},{transform:'translate(0,0) scale(1)',opacity:1,offset:1}]:[{transform:target.transform,opacity:1,offset:0},{transform:'translate(0,0) scale(1)',opacity:1,offset:1}];
-      const animation=cinetonMotionPlay(d,frames,{duration,easing:'cubic-bezier(0.4, 0, 0.2, 1)'});
-      cinetonMotionPlay(cinetonMotionOverlay,[{opacity:0},{opacity:.58}],{duration});
-      if(cover)cinetonMotionPlay(cover,[{opacity:1,offset:0},{opacity:1,offset:.35},{opacity:0,offset:1}],{duration,easing:'linear'});
-      cinetonMotionPlay(mb,[{opacity:0,offset:0},{opacity:0,offset:.35},{opacity:1,offset:1}],{duration});await cinetonWaitAnimation(animation);
-    }else{
-      const animation=cinetonMotionPlay(d,[{opacity:0},{opacity:1}],{duration});
-      cinetonMotionPlay(cinetonMotionOverlay,[{opacity:0},{opacity:.58}],{duration});await cinetonWaitAnimation(animation);
-    }
-  }catch(error){console.error('CineTon modal open transition failed:',error)}
-  if(d.open){d.style.transform='';d.style.opacity='';d.style.willChange='';d.style.transformOrigin='';d.querySelector('.movie-motion-cover')?.remove();mb.style.opacity='1';cinetonMotionOverlay.style.opacity='.58';cinetonMotionOverlay.style.willChange=''}
   sourcePoster?.closest('.c')?.classList.remove('is-opening');
+  /* No poster FLIP/zoom/cover reveal: show the complete modal content immediately. */
+  d.classList.remove('movie-motion-running');
+  d.querySelector('.movie-motion-cover')?.remove();
+  const mb=$('#mb');mb.style.opacity='1';
+  d.style.transform='';d.style.opacity='1';d.style.transformOrigin='';d.style.willChange='';
+  cinetonMotionOverlay.style.opacity='0';cinetonMotionOverlay.style.pointerEvents='none';
+  if(!d.open)d.showModal();
+  const duration=reduced?0:cinetonMotionDuration('--open-ms')*(cinetonMotionSlow?4:1);
+  cinetonMotionOverlay.style.willChange='opacity';
+  if(duration>0){
+    const animation=cinetonMotionPlay(cinetonMotionOverlay,[{opacity:0},{opacity:.58}],{duration});
+    await cinetonWaitAnimation(animation);
+  }else cinetonMotionOverlay.style.opacity='.58';
+  if(d.open){d.style.opacity='';d.style.willChange='';cinetonMotionOverlay.style.opacity='.58';cinetonMotionOverlay.style.willChange=''}
 }
-
 async function cinetonMotionClose(){
   if(!d.open||cinetonModalBusy)return;
   cinetonModalBusy=true;cinetonMotionCancel();
