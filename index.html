@@ -1337,12 +1337,14 @@ async function cinetonMotionOpen(sourcePoster,poster){
   sourcePoster?.closest('.c')?.classList.add('is-opening');
   cinetonMotionOverlay.style.opacity='0';cinetonMotionOverlay.style.pointerEvents='none';
   d.style.transform='';d.style.opacity='';d.style.transformOrigin='0 0';d.style.willChange='transform, opacity';
+  /* Hide modal contents before showModal paints its first frame, preventing a poster flash. */
+  d.classList.add('movie-motion-running');mb.style.opacity='0';
   if(!d.open)d.showModal();
   await new Promise(resolve=>requestAnimationFrame(resolve));
   const from=cinetonMotionRect(sourcePoster),to=cinetonMotionRect(d),target=cinetonMotionTarget(from,to);
   const duration=reduced?150:cinetonMotionDuration('--open-ms')*(cinetonMotionSlow?4:1);
   const cover=!reduced&&target?cinetonMotionCover(poster):null;
-  d.classList.add('movie-motion-running');cinetonMotionOverlay.style.willChange='opacity';
+  cinetonMotionOverlay.style.willChange='opacity';
   try{
     if(reduced){
       const animation=cinetonMotionPlay(d,[{opacity:0},{opacity:1}],{duration:150});
