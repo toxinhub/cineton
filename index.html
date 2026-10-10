@@ -1341,7 +1341,7 @@ function cinetonEnsureVeil(){
 async function cinetonPosterTransition(direction,sourcePoster,openingRect=null){
   const opening=direction==='open';
   const duration=cinetonMotionDuration(direction);
-  const ease='cubic-bezier(0.4, 0, 0.2, 1)';
+  const ease='cubic-bezier(0.22, 1, 0.36, 1)';
   const content=d.querySelector('.m');
   let animation=null,contentAnimation=null;
   const clear=()=>{
@@ -1373,7 +1373,7 @@ async function cinetonPosterTransition(direction,sourcePoster,openingRect=null){
     animation=d.animate(frames,{duration,easing:ease,fill:'both'});
     if(opening&&content){
       content.style.opacity='0';
-      contentAnimation=content.animate([{opacity:0,offset:0},{opacity:0,offset:.16},{opacity:1,offset:1}],{duration,easing:'cubic-bezier(0.4, 0, 0.2, 1)',fill:'both'});
+      contentAnimation=content.animate([{opacity:0,offset:0},{opacity:0,offset:.18},{opacity:1,offset:1}],{duration,easing:'cubic-bezier(0.22, 1, 0.36, 1)',fill:'both'});
     }
     await Promise.race([
       Promise.all([animation.finished,contentAnimation?contentAnimation.finished.catch(()=>{}):Promise.resolve()]),
@@ -3341,8 +3341,8 @@ main.list .cineton-love-heart{
 
 
 <style id="cineton-poster-modal-flip-v1">
-:root{--open-ms:500;--close-ms:400}
-@media(max-width:640px){:root{--open-ms:400;--close-ms:350}}
+:root{--open-ms:450;--close-ms:400}
+@media(max-width:640px){:root{--open-ms:380;--close-ms:340}}
 html{scrollbar-gutter:stable}
 .cinemodal{
   width:min(760px,92vw)!important;
