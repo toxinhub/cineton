@@ -1341,7 +1341,7 @@ function cinetonEnsureVeil(){
 async function cinetonPosterTransition(direction,sourcePoster,openingRect=null){
   const opening=direction==='open';
   const duration=cinetonMotionDuration(direction);
-  const ease=opening?'cubic-bezier(0.22, 1, 0.36, 1)':'cubic-bezier(0.4, 0, 0.2, 1)';
+  const ease=opening?'cubic-bezier(0.16, 1, 0.3, 1)':'cubic-bezier(0.32, 0.72, 0.35, 1)';
   const content=d.querySelector('.m');
   let animation=null,contentAnimation=null;
   const clear=()=>{
@@ -1371,9 +1371,19 @@ async function cinetonPosterTransition(direction,sourcePoster,openingRect=null){
       :[{transform:'none',opacity:1},{transform:flip,opacity:0}];
     /* Let WAAPI apply the first poster-aligned keyframe immediately; avoid a separate inline-style phase that can flash at the centered dialog position. */
     animation=d.animate(frames,{duration,easing:ease,fill:'both'});
-    if(opening&&content){
-      content.style.opacity='0';
-      contentAnimation=content.animate([{opacity:0,offset:0},{opacity:0,offset:.18},{opacity:1,offset:1}],{duration,easing:'cubic-bezier(0.22, 1, 0.36, 1)',fill:'both'});
+    if(content){
+      if(opening){
+        content.style.opacity='0';
+        contentAnimation=content.animate(
+          [{opacity:0,offset:0},{opacity:0,offset:.2},{opacity:1,offset:1}],
+          {duration:Math.min(duration+40,560),easing:'cubic-bezier(0.16, 1, 0.3, 1)',fill:'both'}
+        );
+      }else{
+        contentAnimation=content.animate(
+          [{opacity:1,offset:0},{opacity:1,offset:.42},{opacity:0,offset:1}],
+          {duration:Math.round(duration*.82),easing:'cubic-bezier(0.4, 0, 1, 1)',fill:'both'}
+        );
+      }
     }
     await Promise.race([
       Promise.all([animation.finished,contentAnimation?contentAnimation.finished.catch(()=>{}):Promise.resolve()]),
@@ -3343,8 +3353,8 @@ main.list .cineton-love-heart{
 
 
 <style id="cineton-poster-modal-flip-v1">
-:root{--open-ms:450;--close-ms:480}
-@media(max-width:640px){:root{--open-ms:380;--close-ms:420}}
+:root{--open-ms:520;--close-ms:500}
+@media(max-width:640px){:root{--open-ms:440;--close-ms:420}}
 html{scrollbar-gutter:stable}
 .cinemodal{
   width:min(760px,92vw)!important;
