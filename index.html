@@ -130,19 +130,19 @@ body.suggestions-modal-open{overflow:hidden}
 </style>
 
 <style id="desktop-cinematic-background-v1">
-/* Desktop-only ambient cinematic backdrop. Keeps all content, cards and modals above the background. */
+/* Desktop-only Deep Cocoa backdrop. Matte texture remains subtle; no content surfaces are restyled. */
 @media (min-width: 900px) {
   html {
-    background: var(--bg);
+    background: #17130f;
   }
   body {
-    background-color: var(--bg);
+    background-color: #17130f;
     background-image:
       url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 180 180'%3E%3Cfilter id='n' x='0' y='0' width='100%25' height='100%25'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.82' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.16'/%3E%3C/svg%3E"),
-      radial-gradient(ellipse at 8% 8%, color-mix(in srgb, var(--ac) 10%, transparent) 0%, transparent 38%),
-      radial-gradient(ellipse at 92% 24%, color-mix(in srgb, var(--gd) 7%, transparent) 0%, transparent 34%),
-      radial-gradient(ellipse at 52% 100%, color-mix(in srgb, var(--ac) 6%, transparent) 0%, transparent 48%),
-      linear-gradient(145deg, color-mix(in srgb, var(--sf) 18%, var(--bg)), var(--bg) 48%, color-mix(in srgb, var(--modal) 32%, var(--bg)));
+      radial-gradient(ellipse at 8% 8%, #302319 0%, transparent 38%),
+      radial-gradient(ellipse at 92% 24%, #292016 0%, transparent 34%),
+      radial-gradient(ellipse at 52% 100%, #251b13 0%, transparent 48%),
+      linear-gradient(145deg, #211b15, #17130f 48%, #1e1812);
     background-blend-mode: soft-light, normal, normal, normal, normal;
     background-attachment: fixed;
   }
