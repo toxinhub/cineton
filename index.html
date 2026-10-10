@@ -1318,7 +1318,7 @@ function cinetonMotionDuration(direction){
 function cinetonTrackAnimation(el,keyframes,options){
   try{
     if(!el||typeof el.animate!=='function')throw new Error('Web Animations API is unavailable');
-    el.style.willChange='transform';
+    el.style.willChange=el===d?'transform':'opacity';
     const animation=el.animate(keyframes,{fill:'both',...options});
     cinetonMotionAnimations.push({animation,el});
     return animation;
@@ -1379,7 +1379,7 @@ async function cinetonReducedFade(direction){
 async function cinetonPosterTransition(direction,sourcePoster,openingRect=null){
   const opening=direction==='open',duration=cinetonMotionDuration(direction),ease='cubic-bezier(0.4, 0, 0.2, 1)';
   const veil=cinetonEnsureVeil(),overlay=cinetonEnsurePosterOverlay(sourcePoster),content=d.querySelector('.m');
-  if(cinetonReducedMotion())return await cinetonReducedFade(direction);
+  if(cinetonReducedMotion()){const done=await cinetonReducedFade(direction);overlay.remove();return done;}
   cinetonClearAnimations();
   try{
     const dialogRect=cinetonRect(d);
@@ -1401,8 +1401,8 @@ async function cinetonPosterTransition(direction,sourcePoster,openingRect=null){
       ];
     const da=cinetonTrackAnimation(d,frames,{duration,easing:ease});
     const va=cinetonTrackAnimation(veil,opening?[{opacity:0},{opacity:1}]:[{opacity:1},{opacity:0}],{duration,easing:ease});
-    const oa=cinetonTrackAnimation(overlay,opening?[{opacity:1,offset:0},{opacity:1,offset:.35},{opacity:0,offset:1}]:[{opacity:0,offset:0},{opacity:1,offset:.5},{opacity:1,offset:1}],{duration,easing:ease});
-    const ca=cinetonTrackAnimation(content,opening?[{opacity:0,offset:0},{opacity:0,offset:.35},{opacity:1,offset:1}]:[{opacity:1,offset:0},{opacity:0,offset:.5},{opacity:0,offset:1}],{duration,easing:ease});
+    const oa=cinetonTrackAnimation(overlay,opening?[{opacity:1,offset:0},{opacity:1,offset:.35},{opacity:0,offset:1}]:[{opacity:0,offset:0},{opacity:0,offset:1}],{duration,easing:ease});
+    const ca=cinetonTrackAnimation(content,opening?[{opacity:0,offset:0},{opacity:0,offset:.35},{opacity:1,offset:1}]:[{opacity:1,offset:0},{opacity:1,offset:1}],{duration,easing:ease});
     const all=[da,va,oa,ca].filter(Boolean);
     if(!all.length)throw new Error('All modal animations failed to start');
     await Promise.all(all.map(a=>a.finished.catch(error=>{if(error?.name!=='AbortError')console.info('Cineton animation ended early:',error)})));
