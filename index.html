@@ -1353,7 +1353,7 @@ async function cinetonPosterTransition(direction,sourcePoster,openingRect=null){
     if(content){content.style.removeProperty('opacity');content.style.removeProperty('will-change')}
   };
   try{
-    if(cinetonReducedMotion()){
+    if(cinetonMotionReduced()){
       d.style.opacity=opening?'0':'1';
       const fade=d.animate(opening?[{opacity:0},{opacity:1}]:[{opacity:1},{opacity:0}],{duration:150,easing:'linear'});
       await Promise.race([fade.finished.catch(()=>{}),new Promise(resolve=>setTimeout(resolve,220))]);
