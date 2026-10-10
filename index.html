@@ -1365,6 +1365,7 @@ async function cinetonReducedFade(direction){
   }
   await Promise.all(tasks);
   cinetonClearAnimations();
+  veil.style.opacity=direction==='open'?'1':'0';
   return true;
 }
 async function cinetonPosterTransition(direction,sourcePoster,openingRect=null){
@@ -1405,6 +1406,7 @@ async function cinetonPosterTransition(direction,sourcePoster,openingRect=null){
     return false;
   }finally{
     cinetonClearAnimations();
+    veil.style.opacity=opening?'1':'0';
     overlay.remove();
     d.style.removeProperty('transform');
     d.style.removeProperty('opacity');
