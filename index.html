@@ -3362,6 +3362,29 @@ main.list .cineton-love-heart{
 }
 </style>
 
+<style id="mobile-modal-rating-love-clip-fix-v1">
+/* Keep the mobile detail column inset and let the rating row wrap instead of clipping the love emoji. */
+@media(max-width:640px){
+  .cinemodal .modal-side{padding-right:22px!important;min-width:0!important}
+  .cinemodal .modal-rating-main{
+    width:100%!important;
+    max-width:100%!important;
+    flex-wrap:wrap!important;
+    overflow:visible!important;
+    min-width:0!important;
+  }
+  .cinemodal .modal-rating-main .imdb-chip,
+  .cinemodal .modal-rating-main .my-chip,
+  .cinemodal .modal-rating-main .love-chip{
+    flex:0 0 auto!important;
+  }
+  .cinemodal .modal-rating-main .love-chip{
+    overflow:visible!important;
+    margin-right:2px!important;
+  }
+}
+</style>
+
 <style id="cineton-poster-modal-flip-v1">
 :root{--open-ms:360;--close-ms:480}
 @media(max-width:640px){:root{--open-ms:330;--close-ms:440}}
