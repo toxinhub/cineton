@@ -3397,3 +3397,22 @@ html[data-cineton-dev="1"] .cineton-dev-motion{display:inline-flex}
 })();
 </script>
 
+<!-- Cineton modal backdrop glass + grain -->
+<style id="cineton-glass-grain-backdrop-v1">
+/* Warm glass backdrop with a very fine, static film-grain layer. */
+.cinemodal::backdrop{
+  background-color:color-mix(in srgb,#40352c 42%,transparent)!important;
+  background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 180 180' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.82' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.16'/%3E%3C/svg%3E")!important;
+  background-size:180px 180px!important;
+  background-blend-mode:soft-light!important;
+  backdrop-filter:blur(4px) saturate(90%) brightness(96%)!important;
+  -webkit-backdrop-filter:blur(4px) saturate(90%) brightness(96%)!important;
+}
+@media(max-width:640px){
+  .cinemodal::backdrop{
+    background-color:color-mix(in srgb,#40352c 45%,transparent)!important;
+    backdrop-filter:blur(3px) saturate(90%) brightness(96%)!important;
+    -webkit-backdrop-filter:blur(3px) saturate(90%) brightness(96%)!important;
+  }
+}
+</style>
