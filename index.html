@@ -3844,3 +3844,27 @@ html[data-cineton-dev="1"] .cineton-dev-motion{display:inline-flex}
   #t-all{display:inline-flex;align-items:center}
 }
 </style>
+
+<style id="smooth-scrolling-both-v1">
+/* Smooth native page and in-panel scrolling on desktop and mobile. */
+html{
+  scroll-behavior:smooth!important;
+  scroll-padding-top:72px;
+  -webkit-overflow-scrolling:touch;
+}
+body{
+  background-attachment:scroll!important;
+}
+.cinemodal .m,
+.public-comments-body,
+.suggestions-body{
+  scroll-behavior:smooth;
+  -webkit-overflow-scrolling:touch;
+  overscroll-behavior-y:contain;
+}
+@media(prefers-reduced-motion:reduce){
+  html,.cinemodal .m,.public-comments-body,.suggestions-body{
+    scroll-behavior:auto!important;
+  }
+}
+</style>
