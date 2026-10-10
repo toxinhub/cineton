@@ -3354,7 +3354,7 @@ html{scrollbar-gutter:stable}
   transform-origin:0 0!important;
   will-change:auto;
 }
-.cinemodal::backdrop{background:transparent!important;backdrop-filter:none!important;-webkit-backdrop-filter:none!important}
+.cinemodal::backdrop{background:color-mix(in srgb,#40352c 42%,transparent)!important;backdrop-filter:blur(4px) saturate(90%) brightness(96%)!important;-webkit-backdrop-filter:blur(4px) saturate(90%) brightness(96%)!important}
 .cinemodal .m{height:auto!important;max-height:88dvh!important;overflow-y:auto!important;overscroll-behavior:contain!important;scrollbar-gutter:stable}
 .cinemodal .modal-top{grid-template-columns:190px minmax(0,1fr)!important;min-height:320px}
 .cinemodal .poster-wrap{width:190px!important;min-height:285px!important;aspect-ratio:2/3}
@@ -3376,6 +3376,7 @@ html{scrollbar-gutter:stable}
   .cinemodal .poster-wrap{width:113px!important;min-width:113px!important;min-height:170px!important;height:170px!important;aspect-ratio:2/3}
   .cinemodal .poster-wrap img{width:113px!important;min-width:113px!important;max-width:113px!important;height:170px!important;min-height:170px!important;max-height:170px!important;aspect-ratio:2/3!important}
   .cinemodal .modal-side{min-height:160px;padding:0 28px 0 0!important}
+  .cinemodal::backdrop{background:color-mix(in srgb,#40352c 45%,transparent)!important;backdrop-filter:blur(3px) saturate(90%) brightness(96%)!important;-webkit-backdrop-filter:blur(3px) saturate(90%) brightness(96%)!important}
   #cineton-motion-veil{backdrop-filter:blur(5px);-webkit-backdrop-filter:blur(5px)}
 }
 .cineton-dev-motion{display:none;align-items:center;gap:6px;font-size:.68rem;color:var(--mu)}
