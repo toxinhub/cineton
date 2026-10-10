@@ -1320,9 +1320,19 @@ function cinetonMotionLayer(image,from,to,duration){
   layer.appendChild(flight);
   document.body.appendChild(layer);
   try{layer.showModal()}catch{layer.remove();return null}
-  const a={left:from.left,top:from.top,width:from.width,height:from.height,borderRadius:from.radius||'4px'};
-  const b={left:to.left,top:to.top,width:to.width,height:to.height,borderRadius:to.radius||'4px'};
-  const animation=flight.animate([a,b],{duration,easing:'cubic-bezier(.22,.75,.25,1)',fill:'both'});
+  /* WAAPI length values must include units; animate a sized clone with transform. */
+  flight.style.left=from.left+'px';
+  flight.style.top=from.top+'px';
+  flight.style.width=from.width+'px';
+  flight.style.height=from.height+'px';
+  flight.style.borderRadius=from.radius||'4px';
+  flight.style.transformOrigin='top left';
+  const dx=to.left-from.left,dy=to.top-from.top;
+  const sx=to.width/from.width,sy=to.height/from.height;
+  const animation=flight.animate([
+    {transform:'translate(0px,0px) scale(1,1)',borderRadius:from.radius||'4px'},
+    {transform:'translate('+dx+'px,'+dy+'px) scale('+sx+','+sy+')',borderRadius:to.radius||'4px'}
+  ],{duration,easing:'cubic-bezier(.22,.75,.25,1)',fill:'both'});
   return {layer,flight,animation};
 }
 async function cinetonFade(direction,duration){
