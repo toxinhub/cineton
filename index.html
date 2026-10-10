@@ -1376,12 +1376,12 @@ async function cinetonPosterTransition(direction,sourcePoster,openingRect=null){
         content.style.opacity='0';
         contentAnimation=content.animate(
           [{opacity:0,offset:0},{opacity:0,offset:.2},{opacity:1,offset:1}],
-          {duration:Math.min(duration+40,560),easing:'cubic-bezier(0.16, 1, 0.3, 1)',fill:'both'}
+          {duration:Math.max(220,Math.min(duration-20,560)),easing:'cubic-bezier(0.16, 1, 0.3, 1)',fill:'both'}
         );
       }else{
         contentAnimation=content.animate(
           [{opacity:1,offset:0},{opacity:1,offset:.42},{opacity:0,offset:1}],
-          {duration:Math.round(duration*.82),easing:'cubic-bezier(0.4, 0, 1, 1)',fill:'both'}
+          {duration:Math.round(duration*.94),easing:'cubic-bezier(0.4, 0, 1, 1)',fill:'both'}
         );
       }
     }
@@ -3353,8 +3353,8 @@ main.list .cineton-love-heart{
 
 
 <style id="cineton-poster-modal-flip-v1">
-:root{--open-ms:420;--close-ms:400}
-@media(max-width:640px){:root{--open-ms:380;--close-ms:360}}
+:root{--open-ms:360;--close-ms:480}
+@media(max-width:640px){:root{--open-ms:330;--close-ms:440}}
 html{scrollbar-gutter:stable}
 .cinemodal{
   width:min(760px,92vw)!important;
