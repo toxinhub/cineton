@@ -1341,7 +1341,7 @@ function cinetonEnsureVeil(){
 async function cinetonPosterTransition(direction,sourcePoster,openingRect=null){
   const opening=direction==='open';
   const duration=cinetonMotionDuration(direction);
-  const ease=opening?'cubic-bezier(0.22, 1, 0.36, 1)':'cubic-bezier(0.4, 0, 0.2, 1)';
+  const ease='cubic-bezier(0.4, 0, 0.2, 1)';
   const content=d.querySelector('.m');
   let animation=null,contentAnimation=null;
   const clear=()=>{
@@ -1369,10 +1369,15 @@ async function cinetonPosterTransition(direction,sourcePoster,openingRect=null){
     const frames=opening
       ?[{transform:flip,opacity:0},{transform:'none',opacity:1}]
       :[{transform:'none',opacity:1},{transform:flip,opacity:0}];
+    /* Start from the poster-aligned state before the first animation frame to prevent a visible size/position snap. */
+    if(opening){
+      d.style.transform=flip;
+      d.style.opacity='0';
+    }
     animation=d.animate(frames,{duration,easing:ease,fill:'both'});
     if(opening&&content){
       content.style.opacity='0';
-      contentAnimation=content.animate([{opacity:0,offset:0},{opacity:0,offset:.20},{opacity:1,offset:1}],{duration,easing:'cubic-bezier(0.22, 1, 0.36, 1)',fill:'both'});
+      contentAnimation=content.animate([{opacity:0,offset:0},{opacity:0,offset:.16},{opacity:1,offset:1}],{duration,easing:'cubic-bezier(0.4, 0, 0.2, 1)',fill:'both'});
     }
     await Promise.race([
       Promise.all([animation.finished,contentAnimation?contentAnimation.finished.catch(()=>{}):Promise.resolve()]),
