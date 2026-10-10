@@ -1320,19 +1320,21 @@ function cinetonMotionLayer(image,from,to,duration){
   layer.appendChild(flight);
   document.body.appendChild(layer);
   try{layer.showModal()}catch{layer.remove();return null}
-  /* WAAPI length values must include units; animate a sized clone with transform. */
+  /* Keep the poster on a single composited layer for smoother scaling. */
   flight.style.left=from.left+'px';
   flight.style.top=from.top+'px';
   flight.style.width=from.width+'px';
   flight.style.height=from.height+'px';
+  flight.style.overflow='hidden';
   flight.style.borderRadius=from.radius||'4px';
   flight.style.transformOrigin='top left';
+  flight.style.backfaceVisibility='hidden';
   const dx=to.left-from.left,dy=to.top-from.top;
   const sx=to.width/from.width,sy=to.height/from.height;
   const animation=flight.animate([
-    {transform:'translate(0px,0px) scale(1,1)',borderRadius:from.radius||'4px'},
-    {transform:'translate('+dx+'px,'+dy+'px) scale('+sx+','+sy+')',borderRadius:to.radius||'4px'}
-  ],{duration,easing:'cubic-bezier(.22,.75,.25,1)',fill:'both'});
+    {transform:'translate3d(0px,0px,0) scale(1,1)',borderRadius:from.radius||'4px'},
+    {transform:'translate3d('+dx+'px,'+dy+'px,0) scale('+sx+','+sy+')',borderRadius:to.radius||'4px'}
+  ],{duration,easing:'cubic-bezier(.16,1,.3,1)',fill:'both'});
   return {layer,flight,animation};
 }
 async function cinetonFade(direction,duration){
@@ -1348,7 +1350,7 @@ async function cinetonFade(direction,duration){
   animation.cancel();
 }
 async function cinetonPosterTransition(direction,sourcePoster,modalPoster){
-  const opening=direction==='open',duration=opening?270:205;
+  const opening=direction==='open',duration=opening?330:285;
   if(cinetonMotionReduced())return false;
   const source=cinetonPosterImage(sourcePoster),target=cinetonPosterImage(modalPoster);
   if(!source||!target||!source.getBoundingClientRect().width||!target.getBoundingClientRect().width)return false;
