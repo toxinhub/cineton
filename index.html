@@ -1355,22 +1355,32 @@ async function cinetonPosterTransition(direction,sourcePoster,modalPoster){
   const opening=direction==='open',duration=opening?330:285;
   if(cinetonMotionReduced())return false;
   const source=cinetonPosterImage(sourcePoster),target=cinetonPosterImage(modalPoster);
-  if(!source||!target||!source.getBoundingClientRect().width||!target.getBoundingClientRect().width)return false;
-  const fromNode=opening?source:target,toNode=opening?target:source;
-  const rect=node=>{const r=node.getBoundingClientRect();return {left:r.left,top:r.top,width:r.width,height:r.height,radius:getComputedStyle(node).borderRadius}};
-  const from=rect(fromNode),to=rect(toNode);
-  const layerMotion=cinetonMotionLayer(source,from,to,duration);
-  if(!layerMotion)return false;
+  if(!source||!target)return false;
   const oldSourceVisibility=source.style.visibility,oldTargetVisibility=target.style.visibility;
-  source.style.visibility='hidden';target.style.visibility='hidden';
+  let layerMotion=null;
   try{
+    /* Hide both real posters before measuring or creating the flight layer.
+       This prevents the destination poster flashing in place before the clone moves. */
+    source.style.visibility='hidden';
+    target.style.visibility='hidden';
+    const fromNode=opening?source:target,toNode=opening?target:source;
+    const rect=node=>{const r=node.getBoundingClientRect();return {left:r.left,top:r.top,width:r.width,height:r.height,radius:getComputedStyle(node).borderRadius}};
+    const from=rect(fromNode),to=rect(toNode);
+    if(!from.width||!from.height||!to.width||!to.height)return false;
+    layerMotion=cinetonMotionLayer(source,from,to,duration);
+    if(!layerMotion)return false;
+    /* Commit the clone's starting geometry before its first animation frame. */
+    void layerMotion.flight.offsetWidth;
     await Promise.all([layerMotion.animation.finished,cinetonFade(direction,duration)]);
     return true;
   }catch{return false}
   finally{
-    source.style.visibility=oldSourceVisibility;target.style.visibility=oldTargetVisibility;
-    try{layerMotion.layer.close()}catch{}
-    layerMotion.layer.remove();
+    source.style.visibility=oldSourceVisibility;
+    target.style.visibility=oldTargetVisibility;
+    if(layerMotion){
+      try{layerMotion.layer.close()}catch{}
+      layerMotion.layer.remove();
+    }
   }
 }
 function cinetonDialogFallback(direction){
