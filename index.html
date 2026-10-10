@@ -1369,47 +1369,73 @@ async function cinetonReducedFade(direction){
   return true;
 }
 async function cinetonPosterTransition(direction,sourcePoster,openingRect=null){
-  const opening=direction==='open',duration=cinetonMotionDuration(direction),ease='cubic-bezier(0.4, 0, 0.2, 1)';
-  const veil=cinetonEnsureVeil(),overlay=cinetonEnsurePosterOverlay(sourcePoster),content=d.querySelector('.m');
-  if(cinetonReducedMotion()){const done=await cinetonReducedFade(direction);overlay.remove();return done;}
+  const opening=direction==='open';
+  const duration=cinetonMotionDuration(direction);
+  const ease='cubic-bezier(0.4, 0, 0.2, 1)';
+  const veil=cinetonEnsureVeil();
+  let overlay=null;
+  if(cinetonReducedMotion()){
+    const done=await cinetonReducedFade(direction);
+    d.querySelector('.cineton-transition-overlay')?.remove();
+    return done;
+  }
   cinetonClearAnimations();
   try{
+    overlay=cinetonEnsurePosterOverlay(sourcePoster);
     const dialogRect=cinetonRect(d);
-    /* Opening uses the click-time poster rectangle; closing re-measures it after scroll/resize/rotation. */
     const posterRect=opening?openingRect:(sourcePoster?cinetonRect(sourcePoster):null);
-    const valid=posterRect&&posterRect.width>0&&posterRect.height>0;
-    const onScreen=valid&&posterRect.left<window.innerWidth&&posterRect.top<window.innerHeight&&posterRect.left+posterRect.width>0&&posterRect.top+posterRect.height>0;
-    const transformToPoster=onScreen?cinetonFlipTransform(posterRect,dialogRect):'scale(.95)';
+    const valid=!!posterRect&&posterRect.width>0&&posterRect.height>0;
+    const onScreen=valid&&posterRect.left<window.innerWidth&&posterRect.top<window.innerHeight&&
+      posterRect.left+posterRect.width>0&&posterRect.top+posterRect.height>0;
+    const flip=onScreen?cinetonFlipTransform(posterRect,dialogRect):'scale(.95)';
     const frames=opening
       ?[
-        {transform:onScreen?cinetonFlipTransform(posterRect,dialogRect):'scale(.95)',opacity:1,offset:0},
-        ...(window.matchMedia('(min-width: 641px)').matches?[{transform:'translate(0,-4px) scale(1.012)',opacity:1,offset:.82}]:[]),
+        {transform:flip,opacity:1,offset:0},
+        ...(window.matchMedia('(min-width: 641px)').matches?[{transform:'translate(0, -4px) scale(1.012)',opacity:1,offset:.82}]:[]),
         {transform:'none',opacity:1,offset:1}
       ]
       :[
         {transform:'none',opacity:1,offset:0},
-        {transform:transformToPoster,opacity:1,offset:.85},
-        {transform:transformToPoster,opacity:0,offset:1}
+        {transform:flip,opacity:1,offset:.85},
+        {transform:flip,opacity:0,offset:1}
       ];
-    const da=cinetonTrackAnimation(d,frames,{duration,easing:ease});
-    const va=cinetonTrackAnimation(veil,opening?[{opacity:0},{opacity:1}]:[{opacity:1},{opacity:0}],{duration,easing:ease});
-    const oa=cinetonTrackAnimation(overlay,opening?[{opacity:1,offset:0},{opacity:1,offset:.35},{opacity:0,offset:1}]:[{opacity:0,offset:0},{opacity:0,offset:1}],{duration,easing:ease});
-    const ca=cinetonTrackAnimation(content,opening?[{opacity:0,offset:0},{opacity:0,offset:.35},{opacity:1,offset:1}]:[{opacity:1,offset:0},{opacity:1,offset:1}],{duration,easing:ease});
-    const all=[da,va,oa,ca].filter(Boolean);
-    if(!all.length)throw new Error('All modal animations failed to start');
-    await Promise.all(all.map(a=>a.finished.catch(error=>{if(error?.name!=='AbortError')console.info('Cineton animation ended early:',error)})));
+    const dialogAnimation=cinetonTrackAnimation(d,frames,{duration,easing:ease});
+    const veilAnimation=cinetonTrackAnimation(veil,opening?[{opacity:0},{opacity:1}]:[{opacity:1},{opacity:0}],{duration,easing:ease});
+    const overlayAnimation=overlay&&cinetonTrackAnimation(overlay,
+      opening?[{opacity:1,offset:0},{opacity:1,offset:.35},{opacity:0,offset:1}]:[{opacity:0},{opacity:0}],
+      {duration,easing:ease});
+    const content=d.querySelector('.m');
+    const contentAnimation=content&&cinetonTrackAnimation(content,
+      opening?[{opacity:0,offset:0},{opacity:0,offset:.35},{opacity:1,offset:1}]:[{opacity:1},{opacity:1}],
+      {duration,easing:ease});
+    const animations=[dialogAnimation,veilAnimation,overlayAnimation,contentAnimation].filter(Boolean);
+    if(!dialogAnimation)throw new Error('Dialog animation did not start');
+    /* Watchdog prevents a rejected or stalled WAAPI finished promise from locking the modal. */
+    await Promise.race([
+      Promise.all(animations.map(a=>a.finished.catch(error=>{
+        if(error?.name!=='AbortError')console.info('Cineton animation finished with an error:',error);
+      }))),
+      new Promise(resolve=>setTimeout(resolve,duration+120))
+    ]);
     return true;
   }catch(error){
     console.info('Cineton modal transition fallback:',error);
-    const fade=cinetonTrackAnimation(d,direction==='open'?[{opacity:0},{opacity:1}]:[{opacity:1},{opacity:0}],{duration:150,easing:'linear'});
-    if(fade)await fade.finished.catch(()=>{});
+    try{
+      cinetonClearAnimations();
+      d.style.removeProperty('transform');
+      d.style.removeProperty('opacity');
+      const fade=cinetonTrackAnimation(d,opening?[{opacity:0},{opacity:1}]:[{opacity:1},{opacity:0}],{duration:150,easing:'linear'});
+      if(fade)await Promise.race([fade.finished.catch(()=>{}),new Promise(resolve=>setTimeout(resolve,220))]);
+    }catch(fallbackError){console.info('Cineton modal fade fallback failed:',fallbackError)}
     return false;
   }finally{
     cinetonClearAnimations();
     veil.style.opacity=opening?'1':'0';
-    overlay.remove();
+    d.querySelector('.cineton-transition-overlay')?.remove();
     d.style.removeProperty('transform');
     d.style.removeProperty('opacity');
+    const content=d.querySelector('.m');
+    if(content)content.style.removeProperty('opacity');
   }
 }
 async function closeCinetonModal(){
@@ -3389,7 +3415,9 @@ html{scrollbar-gutter:stable}
   position:absolute;inset:0;z-index:20;pointer-events:none;opacity:1;
   background-size:cover;background-position:center;background-repeat:no-repeat;
 }
-.cinemodal .m{position:relative;z-index:1}
+.cinemodal .m{position:relative;z-index:21}
+.cinemodal .cineton-transition-overlay{z-index:20!important;pointer-events:none!important}
+.cinemodal .x{z-index:30!important}
 .cinemodal.is-opening{will-change:transform}
 .c.is-opening,.c.is-opening img,.c.is-opening .ph{transform:none!important;transition:none!important}
 @media(hover:hover){
