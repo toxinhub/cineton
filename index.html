@@ -3710,3 +3710,28 @@ html[data-cineton-dev="1"] .cineton-dev-motion{display:inline-flex}
   .public-comment-submit{right:4px!important;bottom:4px!important}
 }
 </style>
+
+<style id="comment-submit-hover-contrast-fix-v1">
+/* Keep the send glyph visible on hover/focus; avoid inherited white text or fill. */
+.public-comment-submit,
+.public-comment-submit:hover,
+.public-comment-submit:focus,
+.public-comment-submit:focus-visible,
+.public-comment-submit:active{
+  color:var(--gd,#caa36e)!important;
+  -webkit-text-fill-color:var(--gd,#caa36e)!important;
+  background:color-mix(in srgb,var(--sf) 88%,transparent)!important;
+  opacity:1!important;
+}
+.public-comment-submit::before,
+.public-comment-submit:hover::before,
+.public-comment-submit:focus::before,
+.public-comment-submit:focus-visible::before,
+.public-comment-submit:active::before{
+  color:var(--gd,#caa36e)!important;
+  -webkit-text-fill-color:var(--gd,#caa36e)!important;
+  opacity:1!important;
+}
+.public-comment-submit:disabled,
+.public-comment-submit:disabled::before{opacity:.45!important}
+</style>
