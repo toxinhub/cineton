@@ -1357,10 +1357,20 @@ async function cinetonPosterTransition(direction,sourcePoster,modalPoster){
   const source=cinetonPosterImage(sourcePoster),target=cinetonPosterImage(modalPoster);
   if(!source||!target)return false;
   const oldSourceVisibility=source.style.visibility,oldTargetVisibility=target.style.visibility;
+  const sourceCard=source.closest('.c');
+  const oldCardTransform=sourceCard?.style.getPropertyValue('transform')||'';
+  const oldCardTransformPriority=sourceCard?.style.getPropertyPriority('transform')||'';
+  const oldSourceTransform=source.style.getPropertyValue('transform')||'';
+  const oldSourceTransformPriority=source.style.getPropertyPriority('transform')||'';
   let layerMotion=null;
   try{
-    /* Hide both real posters before measuring or creating the flight layer.
-       This prevents the destination poster flashing in place before the clone moves. */
+    /* Root cause: the source card has :active transform and its poster has :hover scale.
+       getBoundingClientRect() includes those temporary transforms; they disappear as the
+       dialog opens, so the flight starts from a moving target. Measure stable layout boxes. */
+    if(sourceCard)sourceCard.style.setProperty('transform','none','important');
+    source.style.setProperty('transform','none','important');
+    void source.offsetWidth;
+    /* Hide both real posters before measuring or creating the flight layer. */
     source.style.visibility='hidden';
     target.style.visibility='hidden';
     const fromNode=opening?source:target,toNode=opening?target:source;
@@ -1377,6 +1387,8 @@ async function cinetonPosterTransition(direction,sourcePoster,modalPoster){
   finally{
     source.style.visibility=oldSourceVisibility;
     target.style.visibility=oldTargetVisibility;
+    if(sourceCard){if(oldCardTransform)sourceCard.style.setProperty('transform',oldCardTransform,oldCardTransformPriority);else sourceCard.style.removeProperty('transform')}
+    if(oldSourceTransform)source.style.setProperty('transform',oldSourceTransform,oldSourceTransformPriority);else source.style.removeProperty('transform');
     if(layerMotion){
       try{layerMotion.layer.close()}catch{}
       layerMotion.layer.remove();
