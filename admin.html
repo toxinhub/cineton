@@ -12,7 +12,7 @@
 /* CineTon Admin UI: one design system, no patches. Targets existing class names only. */
 :root{--bg:#e9e1d5;--surface:#f6f0e7;--surface2:#e9dfd1;--line:#d4c6b3;--text:#382e24;--muted:#786a59;--accent:#8b704c;--accent-ink:#fbf5eb;--ok:#4f755d;--warn:#927744;--danger:#9a5c51;--r:14px;--shadow:0 1px 2px rgba(54,42,29,.035),0 3px 10px rgba(54,42,29,.035);--side:236px;color-scheme:light}
 
-:root[data-theme="dark"]{--bg:#19130f;--surface:#241b15;--surface2:#302319;--line:#49372a;--text:#f3e8d7;--muted:#b9a58d;--accent:#d0ad6a;--accent-ink:#24180e;--ok:#78c39a;--warn:#e2bd73;--danger:#ed9287;--shadow:none;color-scheme:dark}
+/* Keep the Admin on its calm light palette regardless of OS/theme attributes. */
 *{box-sizing:border-box}
 html{scroll-behavior:smooth}
 body{margin:0;background:var(--bg);color:var(--text);font:15px/1.5 Inter,Mina,system-ui,-apple-system,"Segoe UI","Noto Sans Bengali",sans-serif;-webkit-text-size-adjust:100%}
