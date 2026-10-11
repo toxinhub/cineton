@@ -3140,7 +3140,7 @@ update();
 
   function centerRowEdgePosters() {
     const main = document.querySelector('main');
-    if (!main || main.classList.contains('list')) return [];
+    if (!main) return [];
     const mid = window.innerHeight * 0.5;
     const posters = Array.from(main.querySelectorAll('.c img'))
       .filter(img => img.complete && img.naturalWidth > 0)
