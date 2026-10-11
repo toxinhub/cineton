@@ -3073,7 +3073,7 @@ update();
     background-repeat: no-repeat;
     background-size: cover;
     background-position: center center;
-    filter: blur(9px) saturate(.92);
+    filter: blur(9px) saturate(1.12) contrast(1.06);
     transform: translateZ(0);
     transition: opacity 260ms ease;
     contain: paint;
@@ -3126,7 +3126,7 @@ update();
   function applyImage(panel, src, side) {
     if (!src || panel.dataset.posterSrc === src) return;
     panel.dataset.posterSrc = src;
-    panel.style.backgroundImage = 'linear-gradient(' + (side === 'left' ? '90deg' : '270deg') + ', rgba(23,19,15,.25), rgba(23,19,15,.60)), url("' + src.replace(/"/g, '%22') + '")';
+    panel.style.backgroundImage = 'linear-gradient(' + (side === 'left' ? '90deg' : '270deg') + ', rgba(23,19,15,.10), rgba(23,19,15,.34)), url("' + src.replace(/"/g, '%22') + '")';
   }
 
   function update() {
