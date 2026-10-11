@@ -3205,7 +3205,7 @@ update();
   const main = document.querySelector('main');
   if (main && 'MutationObserver' in window) {
     new MutationObserver(scheduleUpdate).observe(main, {
-      childList: true, subtree: true, attributes: true, attributeFilter: ['src']
+      childList: true, subtree: true, attributes: true, attributeFilter: ['src', 'class']
     });
   }
   window.addEventListener('load', scheduleUpdate, { once: true });
