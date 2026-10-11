@@ -3073,12 +3073,12 @@ update();
     background-repeat: no-repeat;
     background-size: cover;
     background-position: center center;
-    filter: blur(9px) saturate(1.12) contrast(1.06);
+    filter: blur(4px) saturate(1.34) contrast(1.12);
     transform: translateZ(0);
     transition: opacity 260ms ease;
     contain: paint;
   }
-  .cineton-side-reflection.is-visible { opacity: .22; }
+  .cineton-side-reflection.is-visible { opacity: .30; }
   .cineton-side-reflection.left {
     left: 0;
     -webkit-mask-image: linear-gradient(to right, #000 0%, rgba(0,0,0,.82) 48%, transparent 100%);
@@ -3126,7 +3126,7 @@ update();
   function applyImage(panel, src, side) {
     if (!src || panel.dataset.posterSrc === src) return;
     panel.dataset.posterSrc = src;
-    panel.style.backgroundImage = 'linear-gradient(' + (side === 'left' ? '90deg' : '270deg') + ', rgba(23,19,15,.10), rgba(23,19,15,.34)), url("' + src.replace(/"/g, '%22') + '")';
+    panel.style.backgroundImage = 'linear-gradient(' + (side === 'left' ? '90deg' : '270deg') + ', rgba(23,19,15,.02), rgba(23,19,15,.16)), url("' + src.replace(/"/g, '%22') + '")';
   }
 
   function update() {
