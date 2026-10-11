@@ -3868,3 +3868,110 @@ body{
   }
 }
 </style>
+
+
+<!-- Cineton desktop poster mirror reflection v1 -->
+<style id="desktop-poster-mirror-reflection-v1">
+/* Desktop-only cinematic poster reflections in the otherwise empty side gutters. */
+@media (min-width: 1201px) {
+  .cineton-side-reflection {
+    position: fixed;
+    z-index: 0;
+    top: 0;
+    bottom: 0;
+    width: max(0px, calc((100vw - 1200px) / 2 + 18px));
+    pointer-events: none;
+    overflow: hidden;
+    opacity: 0;
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center center;
+    filter: blur(19px) saturate(.72);
+    transform: translateZ(0);
+    transition: opacity 260ms ease, background-image 180ms ease;
+    contain: paint;
+  }
+  .cineton-side-reflection.is-visible { opacity: .24; }
+  .cineton-side-reflection.left {
+    left: 0;
+    -webkit-mask-image: linear-gradient(to right, #000 0%, rgba(0,0,0,.82) 48%, transparent 100%);
+    mask-image: linear-gradient(to right, #000 0%, rgba(0,0,0,.82) 48%, transparent 100%);
+  }
+  .cineton-side-reflection.right {
+    right: 0;
+    -webkit-mask-image: linear-gradient(to left, #000 0%, rgba(0,0,0,.82) 48%, transparent 100%);
+    mask-image: linear-gradient(to left, #000 0%, rgba(0,0,0,.82) 48%, transparent 100%);
+  }
+  /* Keep the actual interface above the reflections. */
+  header, .stats-row, .nav-bar, main, footer, #to-top { position: relative; z-index: 1; }
+}
+@media (max-width: 1200px), (prefers-reduced-motion: reduce) {
+  .cineton-side-reflection { display: none !important; }
+}
+</style>
+<script id="desktop-poster-mirror-reflection-script-v1">
+(function () {
+  if (window.matchMedia('(max-width: 1200px)').matches ||
+      window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+
+  const left = document.createElement('div');
+  const right = document.createElement('div');
+  left.className = 'cineton-side-reflection left';
+  right.className = 'cineton-side-reflection right';
+  left.setAttribute('aria-hidden', 'true');
+  right.setAttribute('aria-hidden', 'true');
+  document.body.append(left, right);
+
+  let lastLeft = '';
+  let lastRight = '';
+  let scheduled = false;
+
+  function visiblePosters() {
+    const main = document.querySelector('main');
+    if (!main) return [];
+    const mid = window.innerHeight * 0.5;
+    return Array.from(main.querySelectorAll('.c img'))
+      .filter(img => img.complete && img.naturalWidth > 0 && img.getBoundingClientRect().bottom > 0 && img.getBoundingClientRect().top < window.innerHeight)
+      .map(img => ({ img, rect: img.getBoundingClientRect() }))
+      .sort((a, b) => Math.abs((a.rect.top + a.rect.bottom) / 2 - mid) - Math.abs((b.rect.top + b.rect.bottom) / 2 - mid));
+  }
+
+  function applyImage(panel, src, side) {
+    if (!src || panel.dataset.posterSrc === src) return;
+    panel.dataset.posterSrc = src;
+    panel.style.backgroundImage = 'linear-gradient(' + (side === 'left' ? '90deg' : '270deg') + ', rgba(23,19,15,.12), rgba(23,19,15,.46)), url("' + src.replace(/"/g, '%22') + '")';
+  }
+
+  function update() {
+    scheduled = false;
+    const posters = visiblePosters();
+    if (!posters.length) {
+      left.classList.remove('is-visible');
+      right.classList.remove('is-visible');
+      return;
+    }
+    const leftSrc = posters[0].img.currentSrc || posters[0].img.src;
+    const rightSrc = (posters.find(item => (item.img.currentSrc || item.img.src) !== leftSrc) || posters[0]).img.currentSrc ||
+      (posters.find(item => (item.img.currentSrc || item.img.src) !== leftSrc) || posters[0]).img.src;
+    applyImage(left, leftSrc, 'left');
+    applyImage(right, rightSrc, 'right');
+    left.classList.add('is-visible');
+    right.classList.add('is-visible');
+  }
+
+  function scheduleUpdate() {
+    if (scheduled) return;
+    scheduled = true;
+    requestAnimationFrame(update);
+  }
+  window.addEventListener('scroll', scheduleUpdate, { passive: true });
+  window.addEventListener('resize', scheduleUpdate, { passive: true });
+  const main = document.querySelector('main');
+  if (main && 'MutationObserver' in window) {
+    new MutationObserver(scheduleUpdate).observe(main, { childList: true, subtree: true, attributes: true, attributeFilter: ['src'] });
+  }
+  window.addEventListener('load', scheduleUpdate, { once: true });
+  scheduleUpdate();
+})();
+</script>
+
