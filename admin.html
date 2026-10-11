@@ -307,6 +307,18 @@ dialog.admin-modal::backdrop{background:rgba(10,7,5,.5);-webkit-backdrop-filter:
 }
 @media(min-width:821px){.back-to-top{left:auto!important;right:24px!important;top:auto!important;bottom:24px!important;transform:none!important}.back-to-top.show{transform:none!important}}
 
+
+/* Mobile nav correction: all seven real tabs remain reachable; this markup has no More button. */
+@media(max-width:820px){
+ .admin-nav [data-target=connection],
+ .admin-nav [data-target=genres],
+ .admin-nav [data-target=suggestions]{display:flex!important}
+ .admin-nav .nav-more{display:none!important}
+ .admin-nav button{min-height:50px!important;padding:4px 0!important;font-size:9px!important;line-height:1.1!important;gap:3px!important;overflow-wrap:anywhere!important}
+ .admin-nav button::before{font-size:16px!important}
+ .admin-nav [data-target=rating],
+ .admin-nav [data-target=public-comments]{font-size:8.5px!important}
+}
 </style>
 
 
