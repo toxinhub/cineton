@@ -3138,18 +3138,28 @@ update();
   let scheduled = false;
   let lastPair = '';
 
-  function visiblePosters() {
+  function centerRowEdgePosters() {
     const main = document.querySelector('main');
-    if (!main) return [];
+    if (!main || main.classList.contains('list')) return [];
     const mid = window.innerHeight * 0.5;
-    return Array.from(main.querySelectorAll('.c img'))
+    const posters = Array.from(main.querySelectorAll('.c img'))
       .filter(img => img.complete && img.naturalWidth > 0)
       .map(img => ({ img, rect: img.getBoundingClientRect() }))
-      .filter(item => item.rect.bottom > 0 && item.rect.top < window.innerHeight)
-      .sort((a, b) =>
-        Math.abs((a.rect.top + a.rect.bottom) / 2 - mid) -
-        Math.abs((b.rect.top + b.rect.bottom) / 2 - mid)
-      );
+      .filter(item => item.rect.bottom > 0 && item.rect.top < window.innerHeight);
+    if (!posters.length) return [];
+
+    // Find the grid row closest to the vertical middle of the viewport.
+    const anchor = posters.reduce((best, item) =>
+      Math.abs((item.rect.top + item.rect.bottom) / 2 - mid) <
+      Math.abs((best.rect.top + best.rect.bottom) / 2 - mid) ? item : best
+    );
+    const rowTop = anchor.rect.top;
+    const row = posters.filter(item => Math.abs(item.rect.top - rowTop) < 12);
+    if (!row.length) return [anchor, anchor];
+
+    // Reflect the two outermost posters from that same row, not the center posters.
+    row.sort((a, b) => a.rect.left - b.rect.left);
+    return [row[0], row[row.length - 1]];
   }
 
   function applyImage(panel, src) {
@@ -3167,15 +3177,14 @@ update();
 
   function update() {
     scheduled = false;
-    const posters = visiblePosters();
-    if (!posters.length) {
+    const edgePosters = centerRowEdgePosters();
+    if (!edgePosters.length) {
       left.classList.remove('is-visible');
       right.classList.remove('is-visible');
       return;
     }
-    const leftSrc = posters[0].img.currentSrc || posters[0].img.src;
-    const rightPoster = posters.find(item => (item.img.currentSrc || item.img.src) !== leftSrc) || posters[0];
-    const rightSrc = rightPoster.img.currentSrc || rightPoster.img.src;
+    const leftSrc = edgePosters[0].img.currentSrc || edgePosters[0].img.src;
+    const rightSrc = edgePosters[1].img.currentSrc || edgePosters[1].img.src;
     const pair = leftSrc + '|' + rightSrc;
     if (pair !== lastPair) {
       applyImage(left, leftSrc);
