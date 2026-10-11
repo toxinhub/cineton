@@ -7,81 +7,291 @@
 <title>CineTon Admin</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600&family=Inter:wght@400;500;600;700&family=Mina:wght@400;700&display=swap">
-<style>/* Final responsive polish */
-.admin-nav{box-shadow:0 1px 0 var(--line)}
-.subsection-title{display:flex;align-items:center;justify-content:space-between;margin:2px 0 9px;font:600 11px/1.2 Mina,sans-serif;color:var(--text)}
-.subsection-title span{font-weight:400;color:var(--muted)}
-@media(min-width:801px){
- .app{width:min(100% - 48px,1180px)}
- .admin-nav{max-width:760px;margin-left:auto;margin-right:auto}
- .connection-overview{grid-template-columns:repeat(3,1fr)}
- .library{grid-template-columns:repeat(auto-fill,minmax(175px,1fr))}
- .panel{padding:20px}
-}
-@media(max-width:600px){
- .admin-nav{display:flex!important;align-items:stretch!important;flex-wrap:nowrap!important;gap:3px!important;overflow:hidden!important}
- .admin-nav button{flex:1 1 0!important;min-width:0!important;width:auto!important;min-height:40px;height:40px;padding:7px 3px!important;font-size:10px!important;line-height:1.1;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
- .head h2{font-size:14px}.head span{font-size:9px}
- .searchbar{grid-template-columns:minmax(0,1fr) auto;gap:5px}
- .searchbar .btn{min-width:66px}
- .itemActions{grid-template-columns:1fr 1fr}.itemActions .deleteBtn{grid-column:1/-1}
- .connection-card{min-height:50px}
-}
+<style id="cineton-admin-ui">
 
-:root{--bg:#0b0d11;--panel:#11151b;--panel2:#151a21;--line:#ffffff12;--line2:#ffffff1d;--text:#f4f6f8;--muted:#8e98a6;--accent:#ff5c8a;--ok:#63d39a;--warn:#f4c76b;--danger:#ff718e;--radius:16px;color-scheme:dark}
-*{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;background:radial-gradient(900px 500px at 50% -180px,#252b36 0,#101319 48%,var(--bg) 100%);color:var(--text);font:14px/1.5 Inter,system-ui,sans-serif;min-height:100vh}
-button,input,select,textarea{font:inherit}button{cursor:pointer}
-.app{width:min(100% - 28px,1040px);margin:0 auto;padding:22px 0 42px}
-.top{display:flex;align-items:center;justify-content:space-between;gap:16px;margin-bottom:18px}.brand{display:flex;align-items:center;gap:11px}.logo{width:38px;height:38px;border:1px solid var(--line2);border-radius:12px;background:#ffffff08;display:grid;place-items:center;font-size:18px}.brand h1{font-size:18px;margin:0;font-weight:700}.brand p{margin:2px 0 0;color:var(--muted);font-size:11px}.status{font-size:11px;color:var(--muted);white-space:nowrap}.status.ok{color:var(--ok)}
-.stats{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-bottom:10px}.stat{padding:11px 13px;background:#ffffff06;border:1px solid var(--line);border-radius:13px}.stat b{display:block;font-size:17px}.stat span{color:var(--muted);font-size:10px}
-.grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;align-items:start}.panel{background:linear-gradient(145deg,#151a21ee,#10141ae8);border:1px solid var(--line);border-radius:var(--radius);padding:15px;box-shadow:0 14px 40px #00000022;margin-bottom:10px}.panel.full{grid-column:1/-1}
-.head{display:flex;justify-content:space-between;align-items:baseline;gap:10px;margin-bottom:10px}.head h2{font-size:13px;margin:0;font-weight:600}.head span{font-size:10px;color:var(--muted)}
-.row{display:grid;grid-template-columns:1fr 1fr;gap:7px}.field{min-width:0}.field label{display:block;color:var(--muted);font-size:10px;margin:2px 0 4px}
-input,select,textarea{width:100%;border:1px solid var(--line2);border-radius:10px;background:#0c1015;color:var(--text);padding:9px 10px;outline:none;transition:.16s;border-radius:10px}input:focus,select:focus,textarea:focus{border-color:#ffffff3b;background:#10151b}textarea{min-height:92px;resize:vertical}
-.actions{display:flex;gap:7px;align-items:center;flex-wrap:wrap;margin-top:8px}.actions>*{margin:0}.btn{border:1px solid transparent;border-radius:10px;padding:8px 12px;background:var(--accent);color:#fff;font-weight:600}.btn.secondary{background:#ffffff08;border-color:var(--line2);color:var(--text)}.btn.danger{background:#ff718e12;border-color:#ff718e2b;color:#ff9eb2}.btn:disabled{opacity:.55;cursor:not-allowed}.hint{color:var(--muted);font-size:10px}.message{margin-top:8px;padding:8px 10px;border:1px solid var(--line);border-radius:10px;background:#ffffff05;font-size:11px;color:var(--muted)}.message.error{color:#ff9eb2;border-color:#ff718e25}.message.ok{color:var(--ok);border-color:#63d39a25}.hidden{display:none!important}
-.searchbar{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:7px}.results{margin-top:7px;display:grid;gap:4px}.result{display:flex;align-items:center;gap:9px;padding:7px;border:1px solid transparent;border-radius:10px;cursor:pointer}.result:hover{background:#ffffff07;border-color:var(--line)}.result img{width:34px;height:49px;object-fit:cover;border-radius:5px;background:#ffffff08}.result main{min-width:0}.result strong{display:block;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.result small{color:var(--muted);font-size:10px}
-.editor{margin-top:9px;padding-top:9px;border-top:1px solid var(--line)}.editorTitle{font-weight:600;font-size:12px;margin-bottom:7px}.preview{display:flex;gap:10px}.preview img{width:54px;height:80px;object-fit:cover;border-radius:7px;background:#ffffff08}.previewText{min-width:0}.previewText strong{display:block}.previewText p{margin:3px 0;color:var(--muted);font-size:10px}
-.bulkTools{display:grid;grid-template-columns:1fr auto;gap:7px;margin-top:7px}.parseBox{margin-top:8px;border:1px solid var(--line);border-radius:10px;overflow:hidden}.parseRow{display:grid;grid-template-columns:minmax(0,1fr) 48px 56px 30px;gap:7px;align-items:center;padding:7px 9px;border-bottom:1px solid var(--line);font-size:10px}.parseRow:last-child{border-bottom:0}.parseRow small{color:var(--muted);overflow:hidden;text-overflow:ellipsis;white-space:nowrap}.badge{font-size:9px;padding:3px 5px;border-radius:6px;background:#ffffff08;color:var(--muted);text-align:center}.badge.good{color:var(--ok)}.badge.warn{color:var(--warn)}.num{color:var(--muted)}
-.libraryTools{display:grid;grid-template-columns:minmax(0,1fr) 150px;gap:7px}.library{margin-top:7px}.item{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:10px;align-items:center;padding:9px 0;border-bottom:1px solid var(--line)}.item:last-child{border-bottom:0}.itemTitle{display:flex;gap:7px;min-width:0}.itemTitle strong{white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.meta{color:var(--muted);font-size:10px;white-space:nowrap}.itemActions{display:flex;gap:5px}.itemActions button{font-size:10px;padding:6px 8px}.empty{text-align:center;color:var(--muted);padding:18px 0;font-size:11px}
-@media(max-width:700px){.app{width:min(100% - 20px,1040px);padding-top:14px}.grid{grid-template-columns:1fr}.panel.full{grid-column:auto}.top{margin-bottom:12px}.brand h1{font-size:16px}.status{font-size:10px}.row{grid-template-columns:1fr 1fr}.libraryTools{grid-template-columns:1fr}.item{grid-template-columns:1fr;gap:7px}.itemActions button{flex:1}.searchbar{grid-template-columns:1fr}.searchbar .btn{width:100%}}
-@media(max-width:430px){.row{grid-template-columns:1fr}.stats{gap:6px}.stat{padding:9px}.stat b{font-size:15px}.bulkTools{grid-template-columns:1fr}.parseRow{grid-template-columns:minmax(0,1fr) 42px 48px 25px}.panel{padding:12px;border-radius:14px}}
+/* CineTon Admin UI: one design system, no patches. Targets existing class names only. */
+:root{
+  --bg:#f0e9dc;--surface:#fbf7ef;--surface2:#eee4d3;--line:#ddcfb8;--text:#2a2118;--muted:#766653;
+  --accent:#9b7847;--accent-ink:#fffaf1;--ok:#3c7958;--warn:#926b25;--danger:#a6473c;
+  --r:14px;--shadow:0 1px 2px rgba(35,28,20,.06),0 4px 14px rgba(35,28,20,.05);
+  --side:236px;color-scheme:light;
+}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#19130f;--surface:#241b15;--surface2:#302319;--line:#49372a;--text:#f3e8d7;--muted:#b9a58d;--accent:#d0ad6a;--accent-ink:#24180e;--ok:#78c39a;--warn:#e2bd73;--danger:#ed9287;--shadow:none;color-scheme:dark}}
+:root[data-theme="dark"]{--bg:#19130f;--surface:#241b15;--surface2:#302319;--line:#49372a;--text:#f3e8d7;--muted:#b9a58d;--accent:#d0ad6a;--accent-ink:#24180e;--ok:#78c39a;--warn:#e2bd73;--danger:#ed9287;--shadow:none;color-scheme:dark}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--bg);color:var(--text);font:15px/1.5 Inter,Mina,system-ui,-apple-system,"Segoe UI","Noto Sans Bengali",sans-serif;-webkit-text-size-adjust:100%}
+[hidden],.hidden{display:none!important}
+button,input,select,textarea{font:inherit;color:inherit}
+button{cursor:pointer}
+:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+img{max-width:100%}
 
-/* CineTon Admin redesign — targeted layer */
-:root{--bg:#f4ecdf;--panel:#fbf6ed;--panel2:#f7efe3;--line:#6b51321a;--line2:#6b51322b;--text:#2f241b;--muted:#58483a;--accent:#77583b;--ok:#55785f;--warn:#8a6a35;--danger:#9b514f;color-scheme:light}
-body{background:#f4ecdf;color:var(--text);background-image:radial-gradient(700px 360px at 50% -180px,#fffaf1 0,transparent 70%)}
-.app{width:min(100% - 20px,1120px);padding:18px 0 42px}
-.top{margin-bottom:10px}.logo{background:#77583b0d;border-color:var(--line2)}.brand h1{font-family:"Cormorant Garamond",Georgia,serif;font-size:25px}.brand p{font-family:Mina,system-ui,sans-serif;color:var(--muted)}
-.status{color:var(--muted)}.status.ok{color:var(--ok)}
-.stats{display:none}
-.admin-nav{display:flex;gap:4px;position:sticky;top:0;z-index:30;padding:6px 0 8px;background:#f4ecdfed;backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);margin-bottom:8px}
-.admin-nav button{flex:1;border:1px solid transparent;background:transparent;color:var(--muted);border-radius:9px;padding:9px 8px;font:600 12px/1.2 Mina,system-ui,sans-serif}
-.admin-nav button.active{background:#77583b10;border-color:var(--line2);color:var(--text)}
-.grid{display:block}.panel{background:#fbf6ed;border-color:var(--line);border-radius:15px;padding:16px;box-shadow:0 10px 30px #5b42250d;margin-bottom:10px}
-.panel[data-section]{display:none}.panel[data-section].active{display:block}
-.head{margin-bottom:12px}.head h2{font:600 15px/1.2 Mina,system-ui,sans-serif}.head span{color:var(--muted)}
-.connection-overview{display:grid;gap:7px;margin-bottom:9px}
-.connection-card{display:flex;align-items:center;justify-content:space-between;gap:10px;padding:10px 11px;border:1px solid var(--line);border-radius:11px;background:#fffaf1}
-.connection-card strong{font-size:12px}.connection-card small{display:block;color:var(--muted);font-size:10px;margin-top:2px}
-.connection-card .configure{border:0;background:transparent;color:var(--accent);padding:4px 2px;font-size:10px}
-.tech-label{display:flex;flex-direction:column;gap:2px;margin:10px 0 7px;padding:7px 9px;border:1px solid #77583b22;border-radius:10px;background:#77583b08}.tech-label span{font:700 10px/1.2 Mina,sans-serif;color:var(--text);letter-spacing:.03em}.tech-label small{font-size:9px;color:var(--muted)}
-details.configure-box{margin-top:10px;border:1px solid #77583b2b;border-radius:12px;background:#77583b08;overflow:hidden}details.configure-box summary{cursor:pointer;color:var(--text);font:600 11px/1.2 Mina,sans-serif;list-style:none;padding:10px 11px;position:relative}details.configure-box summary::-webkit-details-marker{display:none}details.configure-box summary::before{content:"";display:inline-block;width:6px;height:6px;margin:0 7px 1px 0;border-right:1px solid var(--accent);border-bottom:1px solid var(--accent);transform:rotate(-45deg);transition:transform .16s}.configure-box[open] summary::before{transform:rotate(45deg);margin-bottom:3px}details.configure-box summary::after{content:"Tap to open";float:right;color:var(--accent);font-size:9px;font-weight:500}details.configure-box[open] summary::after{content:"Tap to close"}details.configure-box[open]{background:#fffaf208}details.configure-box>div{padding:0 11px 11px;border-top:1px solid #77583b18}
-input,select,textarea{background:#fffaf2;color:var(--text);border-color:var(--line2)}input:focus,select:focus,textarea:focus{background:#fffdf8;border-color:#8a68436b;box-shadow:0 0 0 2px #b18a4a18;outline:none}
-.btn{background:var(--accent);color:#fffaf2}.btn.secondary{background:#77583b0b;border-color:var(--line2);color:var(--text)}.btn.danger{background:#9b514f0c;border-color:#9b514f30;color:#8f4b49}.hint,.message,.meta{color:var(--muted)}.message{background:#77583b07;border-color:var(--line)}
-.searchbar .btn{min-width:74px}
-.libraryTools{grid-template-columns:minmax(0,1fr) 150px}.library{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:10px;margin-top:10px}
-.item{display:flex;flex-direction:column;align-items:stretch;gap:0;padding:0;border:1px solid var(--line);border-radius:12px;overflow:hidden;background:#fffaf2;min-width:0}
-.itemPoster{width:100%;aspect-ratio:2/3;object-fit:cover;background:#ded0bc}.itemBody{padding:9px}.itemTitle{gap:5px}.itemTitle strong{font-size:12px;line-height:1.25}.itemActions{padding:0 9px 9px;display:grid;grid-template-columns:1fr 1fr;gap:5px}.itemActions button{font-size:10px}.itemActions .deleteBtn{grid-column:1/-1}
-.itemLove{color:#a54d45;font-size:11px;margin-left:3px}.itemRating{color:var(--accent);font-weight:700}
-.admin-modal{border:1px solid var(--line2);border-radius:16px;background:#fbf6ed;color:var(--text);width:min(680px,calc(100% - 18px));max-height:90vh;padding:0;box-shadow:0 24px 70px #40352c30;position:fixed;inset:0;margin:auto}
-.admin-modal::backdrop{background:#40352c55;backdrop-filter:blur(4px);-webkit-backdrop-filter:blur(4px)}
-.admin-modal .modal-inner{padding:16px;overflow:auto;max-height:90vh}.admin-modal h2{font:600 27px/.98 "Cormorant Garamond",serif;margin:0 38px 3px 0}.admin-modal .modal-meta{color:var(--muted);font-size:10px}.admin-detail{display:grid;grid-template-columns:120px 1fr;gap:14px;margin:12px 0}.admin-detail img{width:120px;aspect-ratio:2/3;object-fit:cover;border-radius:9px;background:#ded0bc}.personal-box{border-top:1px solid var(--line);padding-top:12px}.personal-box h3{font:600 13px/1.2 Mina,sans-serif;margin:0 0 9px}.personal-grid{display:grid;grid-template-columns:110px 1fr;gap:8px}.love-toggle{display:flex;align-items:center;justify-content:center;gap:6px;width:100%;min-height:40px;background:#fffaf2;border:1px solid var(--line2);border-radius:10px;color:var(--muted)}.love-toggle.loved{color:#a54d45;border-color:#a54d4540;background:#a54d4508}.draft-state{font-size:10px;color:var(--warn);min-height:15px}.admin-modal .x{position:absolute;top:7px;right:7px;width:38px;height:38px;border:0;background:transparent;color:#8f6258;font-size:22px;border-radius:50%}
-.personal-grid>.field:first-child{grid-column:1/-1}.personal-grid>.field:first-child>label{margin-bottom:5px}.rating-picker{display:flex;align-items:stretch;gap:0;width:100%;padding:4px 0 5px}.rating-choice{flex:1 1 0;width:auto;min-width:0;min-height:44px;padding:8px 3px;border:1px solid var(--line2);border-right:0;border-radius:0;background:#fffaf2;color:var(--muted);font:600 12px/1 Inter,sans-serif;cursor:pointer;transition:background .16s,border-color .16s,transform .12s,box-shadow .16s}.rating-choice:first-child{border-radius:10px 0 0 10px}.rating-choice:last-child{border-right:1px solid var(--line2);border-radius:0 10px 10px 0}.rating-choice:hover{background:#77583b0b;border-color:#77583b45;color:var(--text);transform:translateY(-1px);z-index:1}.rating-choice.selected{background:#77583b18;border-color:#77583b65;color:var(--accent);box-shadow:inset 0 0 0 1px #77583b20,0 3px 10px #77583b12;z-index:2}.rating-choice:focus-visible{outline:2px solid var(--accent);outline-offset:2px;z-index:3}
-@media(max-width:600px){.rating-picker{width:100%;padding:3px 0 4px}.rating-choice{min-height:40px;padding:7px 2px;font-size:11px}.app{width:calc(100% - 12px);padding-top:10px}.admin-nav{margin-left:-1px;margin-right:-1px}.panel{padding:12px;border-radius:13px}.library{grid-template-columns:repeat(2,minmax(0,1fr));gap:7px}.libraryTools{grid-template-columns:1fr}.admin-detail{grid-template-columns:82px 1fr;gap:11px}.admin-detail img{width:82px}.personal-grid{grid-template-columns:1fr}.admin-modal{width:calc(100% - 12px);max-height:92vh}.admin-modal .modal-inner{padding:13px}.admin-modal h2{font-size:24px}}
-@media(max-width:360px){.library{grid-template-columns:1fr}}
-</style>
-<style id="comment-sector-separation">.comment-sector .sector-note{display:block;margin-top:3px;color:var(--muted);font:400 9px/1.3 Mina,sans-serif}.comment-sector .head>div:first-child{min-width:0}.admin-comment-sector{border-left:2px solid #77583b35}.public-comment-sector{border-left:2px solid #a54d4538}@media(max-width:600px){.comment-sector .sector-note{font-size:8px}.admin-comment-sector,.public-comment-sector{border-left-width:1px}}</style><style id="public-comments-admin">.public-admin-list{display:grid;gap:7px}.public-admin-row{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:10px;align-items:start;padding:9px 0;border-bottom:1px solid var(--line)}.public-admin-title{font-size:12px;font-weight:700}.public-admin-meta{margin-top:2px;color:var(--muted);font-size:10px;overflow-wrap:anywhere}
-.public-admin-meta::first-line{}.public-admin-comment{margin-top:4px;font-size:11px;line-height:1.45;overflow-wrap:anywhere}.public-admin-delete{border:1px solid #9b514f30;background:#9b514f0c;color:#8f4b49;border-radius:8px;padding:5px 8px;font-size:9px}.public-admin-delete:disabled{opacity:.5}.public-admin-toolbar{display:flex;align-items:center;gap:9px;margin:8px 0 2px;padding:7px 0;border-top:1px solid var(--line);font-size:10px;color:var(--muted)}.public-admin-toolbar label{display:flex;align-items:center;gap:5px;cursor:pointer}.public-admin-toolbar input{width:auto;margin:0;accent-color:var(--accent)}.public-admin-toolbar #publicCommentsSelected{margin-right:auto}.public-admin-bulk-delete{border:1px solid #9b514f30;background:#9b514f0c;color:#8f4b49;border-radius:8px;padding:5px 8px;font-size:9px}.public-admin-bulk-delete:disabled{opacity:.45;cursor:not-allowed}.public-admin-row{grid-template-columns:auto minmax(0,1fr) auto}.public-admin-check{padding-top:2px}.public-admin-check input{width:auto;margin:0;accent-color:var(--accent)}.public-admin-actions{display:flex;gap:5px;align-items:start}.public-admin-edit{border:1px solid var(--line2);background:#77583b08;color:var(--text);border-radius:8px;padding:5px 8px;font-size:9px}.public-admin-edit-box{grid-column:2/-1;display:grid;gap:6px;margin-top:5px}.public-admin-edit-box textarea{min-height:64px;font-size:11px;line-height:1.4;padding:7px 8px}.public-admin-edit-actions{display:flex;gap:5px}.public-admin-edit-actions button{font-size:9px;padding:5px 8px}</style>
-<style id="add-new-polish">
+/* layout */
+.app{margin-left:var(--side);padding:24px clamp(16px,3vw,36px) 56px;max-width:1120px}
+.top{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:18px}
+.brand{display:flex;align-items:center;gap:12px}
+.logo{display:grid;place-items:center;width:40px;height:40px;border-radius:12px;background:var(--accent);color:var(--accent-ink);font-size:20px}
+.brand h1{margin:0;font-size:20px;letter-spacing:-.01em}
+.brand p{margin:0;color:var(--muted);font-size:13px}
+.top>div:last-child{display:flex;align-items:center;gap:8px}
+.status{font-size:13px;color:var(--muted);white-space:nowrap;padding:6px 12px;border:1px solid var(--line);border-radius:99px;background:var(--surface)}
+.status.ok{color:var(--ok)}
+.activity-bell,.theme-btn{position:relative;display:inline-flex;align-items:center;justify-content:center;gap:4px;min-width:44px;height:44px;padding:0 10px;border:1px solid var(--line);border-radius:12px;background:var(--surface)}
+.activity-bell:hover,.theme-btn:hover{background:var(--surface2)}
+.activity-badge{display:none;min-width:20px;height:20px;padding:0 6px;border-radius:99px;background:var(--accent);color:var(--accent-ink);font-size:12px;line-height:20px;text-align:center;font-weight:700}
+.has-unread .activity-badge,.activity-badge.has-unread{display:inline-block}
+.stats{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-bottom:16px}
+.stat{background:var(--surface);border:1px solid var(--line);border-radius:var(--r);padding:14px 16px;box-shadow:var(--shadow)}
+.stat b{display:block;font-size:26px;letter-spacing:-.02em;line-height:1.15}
+.stat span{color:var(--muted);font-size:14px}
+
+/* navigation: sidebar on desktop, tab bar on phones */
+.admin-nav{position:fixed;left:0;top:0;bottom:0;width:var(--side);z-index:60;display:flex;flex-direction:column;gap:4px;padding:76px 12px 16px;background:var(--surface);border-right:1px solid var(--line);overflow-y:auto}
+.admin-nav::before{content:"🎬  CineTon";position:absolute;left:22px;top:24px;font-weight:700;font-size:18px}
+.admin-nav button{display:flex;align-items:center;gap:12px;min-height:46px;padding:10px 12px;border:0;border-radius:11px;background:none;color:var(--muted);text-align:left;font-weight:550;position:relative}
+.admin-nav button::before{content:var(--ic,"•");width:22px;text-align:center;font-size:17px}
+.admin-nav button:hover{background:var(--surface2);color:var(--text)}
+.admin-nav button.active{background:var(--surface2);color:var(--text);font-weight:700;box-shadow:inset 3px 0 0 var(--accent)}
+.admin-nav button .activity-badge{margin-left:auto;display:none}
+.admin-nav button .activity-badge.has-unread,.admin-nav button .activity-badge[data-n]:not([data-n="0"]){display:inline-block}
+.admin-nav [data-target=activity]{order:1;--ic:"🔔"}.admin-nav [data-target=add]{order:2;--ic:"＋"}
+.admin-nav [data-target=rating]{order:3;--ic:"🎞"}.admin-nav [data-target=public-comments]{order:4;--ic:"💬"}
+.admin-nav [data-target=suggestions]{order:5;--ic:"💡"}.admin-nav [data-target=genres]{order:6;--ic:"🏷"}
+.admin-nav [data-target=connection]{order:7;--ic:"⚙️"}
+.nav-more{display:none!important;order:8;--ic:"⋯"}
+.more-sheet{position:fixed;left:12px;right:12px;bottom:calc(76px + env(safe-area-inset-bottom,0px));z-index:70;display:none;flex-direction:column;gap:4px;padding:8px;background:var(--surface);border:1px solid var(--line);border-radius:16px;box-shadow:0 12px 40px rgba(0,0,0,.25)}
+.more-sheet.open{display:flex}
+.more-sheet button{display:flex;align-items:center;gap:12px;min-height:48px;padding:10px 14px;border:0;border-radius:11px;background:none;text-align:left;font-weight:550}
+.more-sheet button:hover{background:var(--surface2)}
+.more-sheet button.active{background:var(--surface2);font-weight:700}
+.admin-sticky-bar{margin-bottom:16px}
+
+/* random bar */
+.rating-sticky-random{margin-top:0}
+.random-actions{display:flex;align-items:center;gap:10px;flex-wrap:wrap;padding:12px 14px;background:var(--surface);border:1px solid var(--line);border-radius:var(--r)}
+.random-context{margin-right:auto;display:flex;flex-direction:column;line-height:1.3}
+.random-context span{color:var(--muted);font-size:13px}
+
+/* panels */
+.panel[data-section]{display:none}
+.panel[data-section].active{display:block}
+.panel{background:var(--surface);border:1px solid var(--line);border-radius:var(--r);padding:18px;margin-bottom:16px;box-shadow:var(--shadow)}
+.grid{display:block}
+.head{display:flex;align-items:flex-start;justify-content:space-between;gap:12px;margin-bottom:14px}
+.head h2{margin:0;font-size:20px;letter-spacing:-.01em}
+.head>span,.head small,.sector-note{color:var(--muted);font-size:13px}
+.sector-note{display:block;margin-top:2px}
+.subsection-title,.add-group-title,.tech-label{display:flex;align-items:baseline;justify-content:space-between;gap:8px;font-weight:650;margin:0 0 10px}
+.subsection-title span,.add-group-title small,.tech-label small,.tech-label span+small{color:var(--muted);font-weight:400;font-size:13px}
+.tech-label{margin-bottom:12px}
+.add-group{margin-bottom:16px}
+.hint{color:var(--muted);font-size:13px}
+.empty,.activity-empty,.suggestions-admin-empty{padding:28px 12px;text-align:center;color:var(--muted);border:1px dashed var(--line);border-radius:12px}
+
+/* forms */
+.row{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:12px}
+.field{min-width:0;margin-bottom:0}
+.field label,label.field{display:block;margin:0 0 5px;color:var(--muted);font-size:13px;font-weight:550}
+.hint.hint{font-weight:400}
+input,select,textarea{width:100%;min-height:44px;padding:10px 12px;border:1px solid var(--line);border-radius:11px;background:var(--surface2)}
+input[type=checkbox],input[type=radio]{width:auto;min-height:0;accent-color:var(--accent)}
+input[type=file]{display:none}
+textarea{min-height:96px;resize:vertical}
+input::placeholder,textarea::placeholder{color:var(--muted);opacity:.8}
+.actions{display:flex;flex-wrap:wrap;gap:8px;margin-top:12px;align-items:center}
+.btn,.configure,.activity-open,.public-admin-edit,.public-admin-delete,.public-admin-bulk-delete,.activity-moderate button,.activity-filter{display:inline-flex;align-items:center;justify-content:center;gap:6px;min-height:44px;padding:9px 16px;border:1px solid var(--accent);border-radius:11px;background:var(--accent);color:var(--accent-ink);font-weight:650;text-decoration:none;white-space:nowrap}
+.btn:hover{filter:brightness(1.06)}
+.btn:disabled,button:disabled{opacity:.5;cursor:not-allowed}
+.btn.secondary,.configure,.activity-open,.public-admin-edit,.activity-filter{background:var(--surface);color:var(--text);border-color:var(--line)}
+.btn.secondary:hover,.configure:hover,.activity-open:hover,.activity-filter:hover{background:var(--surface2);filter:none}
+.btn.danger,.public-admin-delete,.public-admin-bulk-delete,.activity-moderate button{background:var(--surface);color:var(--danger);border-color:var(--line)}
+.btn.danger:hover,.public-admin-delete:hover,.public-admin-bulk-delete:hover{background:var(--surface2);filter:none}
+.message{margin-top:12px;padding:10px 12px;border-radius:11px;background:var(--surface2);border:1px solid var(--line);color:var(--muted);font-size:14px}
+.message.error{color:var(--danger)}.message.ok,.message.success{color:var(--ok)}
+.searchbar{display:flex;gap:8px;margin-bottom:12px}
+.searchbar input{flex:1}
+.results{display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:10px;margin-bottom:6px}
+.result{display:flex;gap:12px;align-items:center;padding:10px;border:1px solid var(--line);border-radius:12px;background:var(--surface2);cursor:pointer}
+.result:hover{border-color:var(--accent)}
+.result.is-selected{border-color:var(--accent);box-shadow:inset 0 0 0 1px var(--accent)}
+.result img{width:46px;aspect-ratio:2/3;object-fit:cover;border-radius:7px;flex:none}
+.result main{min-width:0}.result strong{display:block}.result small{color:var(--muted);font-size:13px}
+.selected-group{display:flex;gap:14px;align-items:flex-start;padding:12px;border:1px solid var(--line);border-radius:12px;background:var(--surface2)}
+.selected-poster{width:72px;aspect-ratio:2/3;object-fit:cover;border-radius:8px;background:var(--line);flex:none}
+.selected-copy strong{display:block;font-size:17px}.selected-meta,.selected-state{color:var(--muted);font-size:14px}
+.selected-state{color:var(--ok)}
+.add-actions{margin-top:4px}
+.bulk-group textarea{min-height:140px}
+.bulkTools{display:flex;gap:8px;flex-wrap:wrap;margin:10px 0}
+.bulkTools select{flex:1;min-width:160px;width:auto}
+.parseBox{margin-top:10px;border:1px solid var(--line);border-radius:12px;overflow:hidden}
+.parseRow{display:grid;grid-template-columns:1fr auto auto auto;gap:10px;align-items:center;padding:10px 12px;border-top:1px solid var(--line)}
+.parseRow:first-child{border-top:0}
+.badge{padding:2px 10px;border-radius:99px;border:1px solid var(--line);font-size:13px;color:var(--muted)}
+.badge.good{color:var(--ok)}.badge.warn{color:var(--warn)}
+.num{font-weight:700}
+
+/* connection and backup */
+.connection-head{align-items:center}
+.connection-overview{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:10px;margin-bottom:14px}
+.connection-card{display:flex;align-items:center;justify-content:space-between;gap:10px;padding:12px 14px;border:1px solid var(--line);border-radius:12px;background:var(--surface2)}
+.connection-card strong{display:block}.connection-card small{color:var(--muted);font-size:13px;overflow-wrap:anywhere}
+.configure{min-height:40px;padding:6px 12px}
+details.configure-box,details.backup-box{border:1px solid var(--line);border-radius:12px;margin-bottom:12px;background:var(--surface)}
+details>summary{display:flex;align-items:center;justify-content:space-between;gap:10px;min-height:48px;padding:10px 14px;cursor:pointer;font-weight:650;list-style:none}
+details>summary::-webkit-details-marker{display:none}
+details>summary::after{content:"＋";color:var(--muted)}
+details[open]>summary::after{content:"－"}
+details>summary small{margin-left:auto;color:var(--muted);font-weight:400;font-size:13px}
+details.configure-box>*:not(summary),.backup-content{padding:0 14px 14px}
+.backup-actions{display:flex;gap:8px;flex-wrap:wrap}
+.backup-note{margin-top:10px}
+.parseBox.hidden,#backupPreview.hidden{display:none}
+
+/* activity */
+.activity-live{display:inline-flex;align-items:center;gap:6px;font-size:13px;color:var(--muted)}
+.activity-live::before{content:"";width:8px;height:8px;border-radius:50%;background:var(--ok)}
+.activity-live.offline::before{background:var(--muted)}
+.activity-summary{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-bottom:12px}
+.activity-stat{padding:12px;border:1px solid var(--line);border-radius:12px;background:var(--surface2)}
+.activity-stat strong{display:block;font-size:22px;line-height:1.1}.activity-stat span{color:var(--muted);font-size:13px}
+.activity-toolbar{display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin:12px 0}
+.activity-filters{display:flex;gap:6px;flex-wrap:wrap}
+.activity-filter{min-height:40px;padding:6px 14px;border-radius:99px;font-weight:550}
+.activity-filter.active{background:var(--text);color:var(--bg);border-color:var(--text)}
+.activity-count{margin-right:auto;color:var(--muted);font-size:13px}
+.activity-list{display:flex;flex-direction:column;gap:8px}
+.activity-day,.activity-movie{margin:10px 2px 2px;color:var(--muted);font-size:13px;font-weight:650;text-transform:none}
+.activity-new-separator{display:flex;align-items:center;gap:10px;color:var(--accent);font-size:13px;font-weight:650}
+.activity-new-separator::before,.activity-new-separator::after{content:"";flex:1;height:1px;background:var(--accent);opacity:.4}
+.activity-row{display:grid;grid-template-columns:40px 1fr auto;gap:4px 12px;align-items:start;padding:12px;border:1px solid var(--line);border-radius:12px;background:var(--surface2)}
+.activity-row.unread{border-color:var(--accent);box-shadow:inset 3px 0 0 var(--accent)}
+.activity-icon{display:grid;place-items:center;width:40px;height:40px;border-radius:50%;background:var(--surface);border:1px solid var(--line)}
+.activity-copy{min-width:0}.activity-title{font-weight:650;overflow-wrap:anywhere}
+.activity-meta,.activity-time{color:var(--muted);font-size:13px}
+.activity-preview{margin-top:4px;overflow-wrap:anywhere}
+.activity-actions{grid-column:2/-1;display:flex;gap:8px;flex-wrap:wrap;margin-top:6px}
+.activity-open,.activity-moderate button{min-height:40px;padding:6px 14px}
+
+/* library list */
+.libraryTools{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:14px}
+.libraryTools input{flex:1;min-width:200px;width:auto}.libraryTools select{width:auto;min-width:140px}
+.library{display:grid;grid-template-columns:repeat(auto-fill,minmax(320px,1fr));gap:12px}
+.item{display:grid;grid-template-columns:68px 1fr;gap:6px 14px;padding:12px;border:1px solid var(--line);border-radius:12px;background:var(--surface2)}
+.itemPoster{width:68px;aspect-ratio:2/3;object-fit:cover;border-radius:8px;background:var(--line);cursor:pointer;grid-row:1}
+.itemBody{min-width:0}
+.itemTitle{display:flex;gap:6px;align-items:center;font-size:16px}.itemTitle strong{overflow-wrap:anywhere}
+.itemLove{color:var(--danger)}
+.meta{color:var(--muted);font-size:14px}
+.itemRating{color:var(--text);font-weight:600}
+.itemActions{grid-column:1/-1;display:flex;gap:8px;flex-wrap:wrap}
+.itemActions .btn{min-height:40px;padding:6px 14px;flex:1;min-width:84px}
+.back-to-top{position:fixed;right:18px;bottom:24px;z-index:55;width:48px;height:48px;border-radius:50%;border:1px solid var(--line);background:var(--surface);box-shadow:var(--shadow);font-size:20px;opacity:0;visibility:hidden;transition:opacity .18s,visibility .18s}
+.back-to-top.show{opacity:1;visibility:visible}
+
+/* public comments and suggestions */
+.public-admin-toolbar{display:flex;align-items:center;gap:12px;flex-wrap:wrap;margin:10px 0;padding:10px 0;border-top:1px solid var(--line);font-size:14px;color:var(--muted)}
+.public-admin-toolbar label{display:flex;align-items:center;gap:8px;cursor:pointer;min-height:40px}
+.public-admin-toolbar #publicCommentsSelected{margin-right:auto}
+.public-admin-list,.suggestions-admin-list{display:flex;flex-direction:column;gap:8px}
+.public-admin-row,.suggestions-admin-row{display:grid;gap:6px 12px;align-items:start;padding:12px;border:1px solid var(--line);border-radius:12px;background:var(--surface2)}
+.public-admin-row{grid-template-columns:auto minmax(0,1fr) auto}
+.suggestions-admin-row{grid-template-columns:auto minmax(0,1fr) auto}
+.public-admin-check,.public-comment-check{padding-top:4px}
+.public-admin-title,.suggestions-admin-title{font-weight:650;overflow-wrap:anywhere}
+.suggestions-admin-title-button{border:0;background:none;padding:0;text-align:left;color:var(--text);min-height:0}
+.suggestions-admin-title-button:hover{color:var(--accent);text-decoration:underline}
+.public-admin-meta,.suggestions-admin-meta,.suggestions-admin-number{color:var(--muted);font-size:13px;overflow-wrap:anywhere}
+.public-admin-comment{margin-top:4px;overflow-wrap:anywhere}
+.public-admin-actions,.suggestions-admin-actions,.public-admin-edit-actions,.suggestions-admin-edit-actions{display:flex;gap:6px;flex-wrap:wrap}
+.public-admin-edit,.public-admin-delete,.public-admin-bulk-delete,.suggestions-admin-actions .btn{min-height:40px;padding:6px 12px}
+.public-admin-edit-box{grid-column:1/-1;display:grid;gap:8px}
+
+/* modals */
+dialog.admin-modal{width:min(660px,calc(100vw - 20px));max-height:90dvh;padding:0;border:1px solid var(--line);border-radius:20px;background:var(--surface);color:var(--text);overflow:auto;transform-origin:0 0}
+dialog.admin-modal::backdrop{background:rgba(10,7,5,.5);-webkit-backdrop-filter:blur(4px);backdrop-filter:blur(4px)}
+.modal-inner{position:relative;padding:22px}
+.x{position:absolute;right:12px;top:12px;z-index:2;display:grid;place-items:center;width:44px;height:44px;border:1px solid var(--line);border-radius:50%;background:var(--surface2);font-size:22px;line-height:1}
+.admin-detail{display:grid;grid-template-columns:110px 1fr;gap:16px;margin:4px 40px 14px 0}
+.admin-detail img{width:110px;aspect-ratio:2/3;object-fit:cover;border-radius:10px;background:var(--line)}
+.admin-detail h2{margin:0 0 4px;font-size:21px}
+.modal-meta{color:var(--muted);font-size:14px}
+.modal-status-row{display:flex;gap:8px;align-items:center;margin-top:10px;flex-wrap:wrap}
+.modal-status-label{font-weight:650}
+.personal-box{padding:14px;border:1px solid var(--line);border-radius:14px;background:var(--surface2)}
+.personal-box h3{margin:0 0 10px;font-size:16px}
+.personal-grid{display:grid;gap:12px}
+.rating-picker{display:grid;grid-template-columns:repeat(10,1fr);gap:6px}
+.rating-choice{min-height:44px;padding:0;border:1px solid var(--line);border-radius:10px;background:var(--surface);font-weight:650}
+.rating-choice.selected{background:var(--accent);color:var(--accent-ink);border-color:var(--accent)}
+.love-toggle,.imdb-random-love{display:inline-flex;align-items:center;gap:8px;min-height:44px;padding:8px 16px;border:1px solid var(--line);border-radius:11px;background:var(--surface)}
+.love-toggle.loved,.love-toggle.is-loved,.imdb-random-love.is-loved,.imdb-random-love.loved{color:var(--danger);border-color:var(--danger)}
+.modal-actions-row{display:flex;gap:8px;flex-wrap:wrap;align-items:center;justify-content:space-between;margin-top:14px}
+.draft-state{margin-inline:auto;color:var(--muted);font-size:13px}
+.imdb-random-head{display:flex;align-items:flex-start;justify-content:space-between;gap:12px;margin:0 44px 12px 0}
+.imdb-random-head h2{margin:0;font-size:21px}.imdb-random-head p{margin:2px 0 0;color:var(--muted);font-size:14px}
+.imdb-random-category{padding:3px 12px;border:1px solid var(--line);border-radius:99px;font-size:13px;color:var(--muted);white-space:nowrap}
+.imdb-random-filter,.imdb-random-search{display:flex;gap:8px;flex-wrap:wrap;align-items:end;margin-bottom:12px}
+.imdb-random-filter label{width:100%;color:var(--muted);font-size:13px;font-weight:550}
+.imdb-random-filter select,.imdb-random-search input{flex:1;min-width:140px;width:auto}
+.imdb-random-search-hint,.imdb-random-state{color:var(--muted);font-size:13px}
+.imdb-random-result{display:grid;grid-template-columns:130px 1fr;gap:12px 16px;margin-bottom:12px}
+.imdb-random-poster{width:130px;aspect-ratio:2/3;object-fit:cover;border-radius:10px;background:var(--line)}
+.imdb-random-copy h3{margin:0 0 4px;font-size:19px}
+.imdb-random-rating{margin-top:6px;font-weight:700;color:var(--accent)}
+.imdb-random-credits{display:grid;gap:4px;margin-top:8px;padding-top:8px;border-top:1px solid var(--line);font-size:14px}
+.imdb-random-credits span{color:var(--muted);margin-right:6px}
+.imdb-random-genre-link{border:0;background:none;padding:0;min-height:0;color:var(--accent);text-decoration:underline}
+#imdbRandomOverview{grid-column:1/-1;margin:0;color:var(--muted)}
+.imdb-watched-details{padding:12px;border:1px solid var(--line);border-radius:12px;background:var(--surface2);margin-bottom:12px}
+.imdb-watched-fields{display:grid;grid-template-columns:130px 1fr auto;gap:10px;align-items:end}
+.imdb-watched-fields label{display:block;color:var(--muted);font-size:13px;font-weight:550}
+.imdb-random-actions{display:flex;gap:8px;flex-wrap:wrap}.imdb-random-actions .btn{flex:1;min-width:120px}
+
+/* phones */
+@media (max-width:820px){
+  .app{margin-left:0;padding:14px 14px calc(100px + env(safe-area-inset-bottom,0px))}
+  .brand h1{font-size:18px}.brand p{display:none}
+  .stat{padding:12px}.stat b{font-size:22px}
+  .admin-nav{top:auto;left:0;right:0;bottom:0;width:auto;flex-direction:row;gap:2px;padding:6px 6px calc(6px + env(safe-area-inset-bottom,0px));border-right:0;border-top:1px solid var(--line);overflow:visible}
+  .admin-nav::before{display:none}
+  .admin-nav button{flex:1 1 0;min-width:0;flex-direction:column;justify-content:center;gap:2px;min-height:58px;padding:6px 2px;font-size:12px;line-height:1.15;text-align:center;box-shadow:none!important;white-space:normal}
+  .admin-nav button::before{font-size:18px;width:auto}
+  .admin-nav button.active{background:none;color:var(--accent)}
+  .admin-nav [data-target=suggestions],.admin-nav [data-target=genres],.admin-nav [data-target=connection]{display:none}
+  .admin-nav .nav-more{display:flex!important}
+  .admin-nav button .activity-badge{position:absolute;top:2px;right:calc(50% - 26px);margin:0;min-width:18px;height:18px;line-height:18px;font-size:11px;padding:0 4px}
+  .random-actions{display:grid;grid-template-columns:1fr 1fr;gap:8px}.random-context{grid-column:1/-1}
+  .panel{padding:14px}
+  .row{grid-template-columns:1fr}
+  .activity-summary{grid-template-columns:repeat(2,1fr)}
+  .library{grid-template-columns:1fr}
+  .results{grid-template-columns:1fr}
+  .searchbar{flex-direction:column}
+  .parseRow{grid-template-columns:1fr auto}
+  .modal-inner{padding:16px}
+  .admin-detail{grid-template-columns:84px 1fr;gap:12px}.admin-detail img{width:84px}
+  .rating-picker{grid-template-columns:repeat(5,1fr)}
+  .imdb-random-result{grid-template-columns:96px 1fr}.imdb-random-poster{width:96px}
+  .imdb-watched-fields{grid-template-columns:1fr}
+  .back-to-top{bottom:calc(84px + env(safe-area-inset-bottom,0px))}
+  .public-admin-row,.suggestions-admin-row{grid-template-columns:auto minmax(0,1fr)}
+  .public-admin-actions,.suggestions-admin-actions{grid-column:1/-1}
+}
+@media (prefers-reduced-motion:reduce){*{transition:none!important;scroll-behavior:auto!important}}
+.nav-more[data-badge="1"]::after{content:"";position:absolute;top:8px;right:calc(50% - 20px);width:9px;height:9px;border-radius:50%;background:var(--accent)}
+
+
+/* Consolidated existing feature styles: comment-sector-separation */
+.comment-sector .sector-note{display:block;margin-top:3px;color:var(--muted);font:400 9px/1.3 Mina,sans-serif}.comment-sector .head>div:first-child{min-width:0}.admin-comment-sector{border-left:2px solid #77583b35}.public-comment-sector{border-left:2px solid #a54d4538}@media(max-width:600px){.comment-sector .sector-note{font-size:8px}.admin-comment-sector,.public-comment-sector{border-left-width:1px}}
+
+/* Consolidated existing feature styles: public-comments-admin */
+.public-admin-list{display:grid;gap:7px}.public-admin-row{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:10px;align-items:start;padding:9px 0;border-bottom:1px solid var(--line)}.public-admin-title{font-size:12px;font-weight:700}.public-admin-meta{margin-top:2px;color:var(--muted);font-size:10px;overflow-wrap:anywhere}
+.public-admin-meta::first-line{}.public-admin-comment{margin-top:4px;font-size:11px;line-height:1.45;overflow-wrap:anywhere}.public-admin-delete{border:1px solid #9b514f30;background:#9b514f0c;color:#8f4b49;border-radius:8px;padding:5px 8px;font-size:9px}.public-admin-delete:disabled{opacity:.5}.public-admin-toolbar{display:flex;align-items:center;gap:9px;margin:8px 0 2px;padding:7px 0;border-top:1px solid var(--line);font-size:10px;color:var(--muted)}.public-admin-toolbar label{display:flex;align-items:center;gap:5px;cursor:pointer}.public-admin-toolbar input{width:auto;margin:0;accent-color:var(--accent)}.public-admin-toolbar #publicCommentsSelected{margin-right:auto}.public-admin-bulk-delete{border:1px solid #9b514f30;background:#9b514f0c;color:#8f4b49;border-radius:8px;padding:5px 8px;font-size:9px}.public-admin-bulk-delete:disabled{opacity:.45;cursor:not-allowed}.public-admin-row{grid-template-columns:auto minmax(0,1fr) auto}.public-admin-check{padding-top:2px}.public-admin-check input{width:auto;margin:0;accent-color:var(--accent)}.public-admin-actions{display:flex;gap:5px;align-items:start}.public-admin-edit{border:1px solid var(--line2);background:#77583b08;color:var(--text);border-radius:8px;padding:5px 8px;font-size:9px}.public-admin-edit-box{grid-column:2/-1;display:grid;gap:6px;margin-top:5px}.public-admin-edit-box textarea{min-height:64px;font-size:11px;line-height:1.4;padding:7px 8px}.public-admin-edit-actions{display:flex;gap:5px}.public-admin-edit-actions button{font-size:9px;padding:5px 8px}
+
+/* Consolidated existing feature styles: add-new-polish */
+
 #quickAddSection .head,#bulkAddSection .head{margin-bottom:10px}
 .add-group{border:1px solid var(--line);border-radius:12px;background:#fffaf2;padding:10px;margin-top:8px}
 .add-group-title{display:flex;align-items:baseline;justify-content:space-between;gap:8px;margin-bottom:7px;font:600 11px/1.25 Mina,sans-serif;color:var(--text)}
@@ -123,7 +333,10 @@ input,select,textarea{background:#fffaf2;color:var(--text);border-color:var(--li
  #quickAddSection #addOne{min-width:0}
  #quickAddSection #addStatus{text-align:left}
 }
-</style><style id="desktop-size-polish">
+
+
+/* Consolidated existing feature styles: desktop-size-polish */
+
 @media(min-width:801px){
   .app{width:min(calc(100% - 56px),1240px);padding-top:24px}
   .top{margin-bottom:14px}.brand{gap:13px}.logo{width:44px;height:44px;border-radius:13px;font-size:21px}.brand h1{font-size:30px}.brand p{font-size:12px}.status{font-size:12px}
@@ -138,7 +351,10 @@ input,select,textarea{background:#fffaf2;color:var(--text);border-color:var(--li
   #quickAddSection .selected-group{grid-template-columns:68px minmax(0,1fr);gap:12px}.selected-poster{width:68px!important;height:98px!important}.selected-copy strong{font-size:17px!important}.selected-copy .selected-meta{font-size:11px!important}.selected-copy .selected-state{font-size:10px!important}
   .public-admin-title{font-size:13px}.public-admin-meta{font-size:11px}.public-admin-comment{font-size:12px}
 }
-</style><style id="rating-comments-compact-v2">
+
+
+/* Consolidated existing feature styles: rating-comments-compact-v2 */
+
 /* Rating & Comments — compact library cards */
 #librarySection .library{grid-template-columns:repeat(auto-fill,minmax(128px,1fr))!important;gap:8px!important;margin-top:8px!important}
 #librarySection .item{border-radius:9px!important}
@@ -153,7 +369,10 @@ input,select,textarea{background:#fffaf2;color:var(--text);border-color:var(--li
 @media(min-width:801px){#librarySection .library{grid-template-columns:repeat(auto-fill,minmax(132px,1fr))!important;gap:9px!important}}
 @media(max-width:600px){#librarySection .library{grid-template-columns:repeat(3,minmax(0,1fr))!important;gap:6px!important}#librarySection .itemBody{padding:6px!important}#librarySection .itemTitle strong{font-size:10px!important;line-height:1.2!important}#librarySection .meta{font-size:8px!important}#librarySection .itemActions{padding:0 6px 6px!important;grid-template-columns:1fr 1fr!important}#librarySection .itemActions button{min-height:28px!important;padding:4px 5px!important;font-size:8px!important}}
 @media(max-width:380px){#librarySection .library{grid-template-columns:repeat(2,minmax(0,1fr))!important;gap:7px!important}#librarySection .itemTitle strong{font-size:11px!important}#librarySection .meta{font-size:8.5px!important}}
-</style><style id="rating-comments-random-v1">
+
+
+/* Consolidated existing feature styles: rating-comments-random-v1 */
+
 #librarySection .libraryTools{grid-template-columns:minmax(0,1fr) 150px auto;align-items:stretch}
 #librarySection #randomMovieBtn{min-width:76px;white-space:nowrap}
 #librarySection .itemPoster{cursor:pointer;transition:transform .14s,filter .14s}
@@ -163,7 +382,10 @@ input,select,textarea{background:#fffaf2;color:var(--text);border-color:var(--li
 #librarySection .libraryTools{grid-template-columns:1fr}
 #librarySection #randomMovieBtn{width:100%}
 }
-</style><style id="admin-header-random-backtotop-v2">
+
+
+/* Consolidated existing feature styles: admin-header-random-backtotop-v2 */
+
 .top{position:relative;z-index:1}
 #librarySection .libraryTools{grid-template-columns:minmax(0,1fr) 150px auto;align-items:stretch}
 #librarySection #randomMovieBtn{min-width:76px;white-space:nowrap}
@@ -182,13 +404,22 @@ input,select,textarea{background:#fffaf2;color:var(--text);border-color:var(--li
  .back-to-top{top:65%;bottom:auto;width:34px;height:34px}
 }
 
-.rating-sticky-random{position:sticky;top:0;z-index:100;display:flex;flex-direction:column;align-items:flex-end;gap:3px;min-height:0;margin:-4px 0 6px;padding:4px 0 5px;background:#f4ecdfed;backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);pointer-events:none;border-bottom:1px solid var(--line)}.rating-sticky-random::before{content:"";display:block;width:100%;height:1px;background:var(--line);order:0}.rating-sticky-random #randomMovieBtn{pointer-events:auto;order:1;align-self:flex-end;min-width:68px;white-space:nowrap;padding:5px 9px;font-size:10px;line-height:1.1;box-shadow:0 2px 7px rgba(0,0,0,.08)}@media(max-width:600px){.rating-sticky-random{top:0;gap:2px;margin:-3px 0 5px;padding:3px 0 4px}.rating-sticky-random #randomMovieBtn{min-width:64px;min-height:28px;padding:4px 8px;font-size:9px}}.rating-sticky-random{position:static!important;display:flex!important;justify-content:flex-end!important;align-items:center!important;margin:0!important;padding:3px 0 5px!important;border-top:1px solid var(--line);border-bottom:1px solid var(--line);background:transparent!important;backdrop-filter:none!important;-webkit-backdrop-filter:none!important;pointer-events:auto!important}.rating-sticky-random #randomMovieBtn{min-width:68px;min-height:28px;padding:4px 9px;font-size:10px;box-shadow:none}.admin-sticky-bar{position:sticky;top:0;z-index:100;background:#f4ecdfed;backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);margin-bottom:8px}.admin-sticky-bar .admin-nav{position:static!important;margin:0!important;box-shadow:none!important;background:transparent!important;backdrop-filter:none!important;-webkit-backdrop-filter:none!important;padding:6px 0 4px!important}.admin-sticky-bar .rating-sticky-random{display:flex;justify-content:center;align-items:center}.admin-sticky-bar .rating-sticky-random #randomMovieBtn{margin-inline:auto}@media(max-width:600px){.admin-sticky-bar .admin-nav{padding:5px 0 3px!important}.rating-sticky-random{padding:2px 0 4px!important}.rating-sticky-random #randomMovieBtn{min-width:64px;min-height:28px;padding:4px 8px;font-size:9px}}\n/* Mobile nav sizing: 6 sections need a stable 3x2 grid at phone widths. */\n@media(max-width:600px){.admin-sticky-bar .admin-nav{display:grid!important;grid-template-columns:repeat(3,minmax(0,1fr));gap:4px!important;padding:4px 0!important}.admin-sticky-bar .admin-nav button{min-width:0;width:100%;min-height:38px;height:38px;padding:6px 2px!important;font-size:10px!important;line-height:1.1;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.admin-sticky-bar .rating-sticky-random{padding:3px 0 4px!important}}\n@media(max-width:360px){.admin-sticky-bar .admin-nav{grid-template-columns:repeat(2,minmax(0,1fr));gap:4px!important}.admin-sticky-bar .admin-nav button{font-size:11px!important;height:36px;min-height:36px}}</style><style id="modal-remove-polish">.modal-delete-row .btn.danger{font-size:10px;padding:6px 10px}.modal-actions-row{justify-content:space-between}.modal-actions-row .draft-state{margin-inline:auto;text-align:center}.modal-actions-row .btn.danger{font-size:10px;padding:6px 10px}@media(max-width:600px){.modal-actions-row{gap:5px}.modal-actions-row .btn.danger{min-height:34px}}</style><style id="touch-feedback-fix">
+.rating-sticky-random{position:sticky;top:0;z-index:100;display:flex;flex-direction:column;align-items:flex-end;gap:3px;min-height:0;margin:-4px 0 6px;padding:4px 0 5px;background:#f4ecdfed;backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);pointer-events:none;border-bottom:1px solid var(--line)}.rating-sticky-random::before{content:"";display:block;width:100%;height:1px;background:var(--line);order:0}.rating-sticky-random #randomMovieBtn{pointer-events:auto;order:1;align-self:flex-end;min-width:68px;white-space:nowrap;padding:5px 9px;font-size:10px;line-height:1.1;box-shadow:0 2px 7px rgba(0,0,0,.08)}@media(max-width:600px){.rating-sticky-random{top:0;gap:2px;margin:-3px 0 5px;padding:3px 0 4px}.rating-sticky-random #randomMovieBtn{min-width:64px;min-height:28px;padding:4px 8px;font-size:9px}}.rating-sticky-random{position:static!important;display:flex!important;justify-content:flex-end!important;align-items:center!important;margin:0!important;padding:3px 0 5px!important;border-top:1px solid var(--line);border-bottom:1px solid var(--line);background:transparent!important;backdrop-filter:none!important;-webkit-backdrop-filter:none!important;pointer-events:auto!important}.rating-sticky-random #randomMovieBtn{min-width:68px;min-height:28px;padding:4px 9px;font-size:10px;box-shadow:none}.admin-sticky-bar{position:sticky;top:0;z-index:100;background:#f4ecdfed;backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);margin-bottom:8px}.admin-sticky-bar .admin-nav{position:static!important;margin:0!important;box-shadow:none!important;background:transparent!important;backdrop-filter:none!important;-webkit-backdrop-filter:none!important;padding:6px 0 4px!important}.admin-sticky-bar .rating-sticky-random{display:flex;justify-content:center;align-items:center}.admin-sticky-bar .rating-sticky-random #randomMovieBtn{margin-inline:auto}@media(max-width:600px){.admin-sticky-bar .admin-nav{padding:5px 0 3px!important}.rating-sticky-random{padding:2px 0 4px!important}.rating-sticky-random #randomMovieBtn{min-width:64px;min-height:28px;padding:4px 8px;font-size:9px}}\n/* Mobile nav sizing: 6 sections need a stable 3x2 grid at phone widths. */\n@media(max-width:600px){.admin-sticky-bar .admin-nav{display:grid!important;grid-template-columns:repeat(3,minmax(0,1fr));gap:4px!important;padding:4px 0!important}.admin-sticky-bar .admin-nav button{min-width:0;width:100%;min-height:38px;height:38px;padding:6px 2px!important;font-size:10px!important;line-height:1.1;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.admin-sticky-bar .rating-sticky-random{padding:3px 0 4px!important}}\n@media(max-width:360px){.admin-sticky-bar .admin-nav{grid-template-columns:repeat(2,minmax(0,1fr));gap:4px!important}.admin-sticky-bar .admin-nav button{font-size:11px!important;height:36px;min-height:36px}}
+
+/* Consolidated existing feature styles: modal-remove-polish */
+.modal-delete-row .btn.danger{font-size:10px;padding:6px 10px}.modal-actions-row{justify-content:space-between}.modal-actions-row .draft-state{margin-inline:auto;text-align:center}.modal-actions-row .btn.danger{font-size:10px;padding:6px 10px}@media(max-width:600px){.modal-actions-row{gap:5px}.modal-actions-row .btn.danger{min-height:34px}}
+
+/* Consolidated existing feature styles: touch-feedback-fix */
+
 /* Keep Android/iOS touch feedback clean without removing keyboard focus. */
 html,body,*{-webkit-tap-highlight-color:transparent}
 button,a,[role="button"],summary,input,select,textarea{-webkit-tap-highlight-color:transparent}
 button:focus:not(:focus-visible),a:focus:not(:focus-visible),[role="button"]:focus:not(:focus-visible),summary:focus:not(:focus-visible){outline:none}
 button:active,a:active,[role="button"]:active,summary:active{background-image:none}
-</style><style id="library-tools-v1">
+
+
+/* Consolidated existing feature styles: library-tools-v1 */
+
 .library-tools-panel{font-family:Mina,system-ui,sans-serif}.tool-card{border:1px solid var(--line);border-radius:12px;background:#fffaf2;padding:11px;margin-top:9px}.tool-card-head{display:flex;align-items:center;justify-content:space-between;gap:10px}.tool-card-head strong{display:block;font-size:12px;font-weight:700}.tool-card-head small{display:block;margin-top:2px;color:var(--muted);font-size:9px;line-height:1.35}.tool-card-head .btn{font-size:10px;padding:7px 10px;white-space:nowrap}.tool-summary{margin-top:9px;padding:8px 9px;border:1px solid var(--line);border-radius:9px;background:#fffdf8;color:var(--muted);font-size:10px}.tool-summary.ok{color:var(--ok);border-color:#55785f35}.tool-summary.warn{color:var(--warn);border-color:#8a6a3535}.tool-summary.error{color:var(--danger);border-color:#9b514f35}.tool-list{display:grid;gap:5px;margin-top:6px}.tool-row{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:8px;align-items:center;padding:7px 8px;border-bottom:1px solid var(--line);font-size:10px}.tool-row:last-child{border-bottom:0}.tool-row strong{display:block;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.tool-row small{display:block;color:var(--muted);margin-top:2px;line-height:1.35}.tool-badge{font-size:9px;padding:3px 6px;border-radius:7px;background:#77583b0b;color:var(--accent);white-space:nowrap}.backup-actions{display:flex;gap:6px;flex-wrap:wrap;margin-top:9px}.backup-actions .btn{font-size:10px;padding:8px 11px}.backup-file-label{cursor:pointer}.backup-note{display:block;margin-top:8px}
 @media(max-width:600px){.tool-card{padding:10px}.tool-card-head{align-items:flex-start}.tool-card-head .btn{padding:7px 9px}.backup-actions{display:grid;grid-template-columns:1fr 1fr}.backup-actions .btn{width:100%;text-align:center}}
 <style id="library-tools-inline-balance">
@@ -202,7 +433,10 @@ button:active,a:active,[role="button"]:active,summary:active{background-image:no
 @media(max-width:360px){
  .admin-sticky-bar .admin-nav{gap:2px!important}
  .admin-sticky-bar .admin-nav button{height:36px!important;min-height:36px!important;font-size:9.5px!important;padding-inline:1px!important}
-}</style><style id="backup-inline-balance">
+}
+
+/* Consolidated existing feature styles: backup-inline-balance */
+
 .backup-box{margin-top:12px;border:1px solid #77583b2b;border-radius:12px;background:#77583b08;overflow:hidden}
 .backup-box summary{display:flex;align-items:center;justify-content:space-between;gap:10px;cursor:pointer;list-style:none;padding:10px 11px;font:600 11px/1.2 Mina,sans-serif;color:var(--text)}
 .backup-box summary::-webkit-details-marker{display:none}
@@ -212,17 +446,25 @@ button:active,a:active,[role="button"]:active,summary:active{background-image:no
 .backup-content{padding:0 11px 11px;border-top:1px solid #77583b20}
 .backup-content .backup-actions{margin-top:10px}
 @media(max-width:600px){.backup-box{margin-top:11px}.backup-box summary{min-height:42px;padding:9px 10px}.backup-content{padding:0 10px 10px}.backup-content .backup-actions{display:grid;grid-template-columns:1fr 1fr;gap:6px}.backup-content .backup-actions .btn{width:100%;text-align:center;padding:8px 7px}}
-</style><style id="admin-brand-balance">
+
+
+/* Consolidated existing feature styles: admin-brand-balance */
+
 .brand h1{font-size:16px;font-weight:650;letter-spacing:-.1px}
 .brand p{font-size:10px}
 @media(max-width:600px){.brand{gap:8px}.logo{width:34px;height:34px;font-size:16px}.brand h1{font-size:15px}.brand p{font-size:9px}}
-</style><style id="connection-header-one-line">
+
+
+/* Consolidated existing feature styles: connection-header-one-line */
+
 .connection-head{display:flex;align-items:center;justify-content:space-between;gap:10px;flex-wrap:nowrap}
 .connection-head h2{margin:0;white-space:nowrap}
 .connection-head span{white-space:nowrap;margin-left:auto}
 @media(max-width:600px){.connection-head{gap:7px}.connection-head h2{font-size:18px}.connection-head span{font-size:9px}}
-</style></style>
-<style id="activity-notifications-v1">
+
+
+/* Consolidated existing feature styles: activity-notifications-v1 */
+
 .activity-bell{
   position:relative;
   display:inline-flex;
@@ -278,8 +520,10 @@ button:active,a:active,[role="button"]:active,summary:active{background-image:no
   .activity-row .activity-open{grid-column:2;justify-self:start;margin-top:2px}
   .activity-title{font-size:10px}.activity-preview{font-size:9px}
 }
-</style>
-<style id="activity-polish-v4">
+
+
+/* Consolidated existing feature styles: activity-polish-v4 */
+
 /* Activity v4 — balanced activity metrics and clean sticky navigation */
 .activity-summary{display:grid!important;grid-template-columns:repeat(4,minmax(0,1fr));gap:7px!important;margin-bottom:9px!important}
 .activity-stat{min-width:0;min-height:58px;padding:9px 8px!important;display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center;border-radius:12px}
@@ -308,14 +552,19 @@ button:active,a:active,[role="button"]:active,summary:active{background-image:no
   .activity-stat{min-height:49px;padding:6px 2px!important}
   .activity-stat strong{font-size:13px}.activity-stat span{font-size:6.5px}
 }
-</style>
-<style id="random-modals-compact-v4">
+
+
+/* Consolidated existing feature styles: random-modals-compact-v4 */
+
 .imdb-random-modal{width:min(700px,calc(100% - 22px))!important;max-height:88vh!important}.imdb-random-modal .modal-inner{padding:15px!important;max-height:88vh!important}.imdb-random-head{margin-bottom:7px!important}.imdb-random-filter{margin-bottom:5px!important}.imdb-random-search{margin-bottom:2px!important}.imdb-random-search-hint{margin-bottom:6px!important}.imdb-random-state{margin-bottom:7px!important}.imdb-random-result{grid-template-columns:142px minmax(0,1fr)!important;gap:12px!important}.imdb-random-poster{width:142px!important}.imdb-random-copy h3{margin-bottom:3px!important}.imdb-random-credits{margin-top:6px!important;padding-top:6px!important;gap:3px!important}.imdb-random-copy p{margin-top:6px!important;-webkit-line-clamp:6!important}.imdb-random-actions{margin-top:9px!important;padding-top:8px!important;gap:5px!important}.imdb-random-actions .btn{min-height:36px!important}
 @media(max-width:600px){.imdb-random-modal{width:calc(100% - 10px)!important;max-height:89vh!important}.imdb-random-modal .modal-inner{padding:11px!important;max-height:89vh!important}.imdb-random-head{margin-bottom:5px!important}.imdb-random-filter{margin-bottom:4px!important}.imdb-random-search{margin-bottom:1px!important}.imdb-random-search-hint{margin-bottom:5px!important}.imdb-random-state{margin-bottom:5px!important}.imdb-random-result{grid-template-columns:86px minmax(0,1fr)!important;gap:9px!important}.imdb-random-poster{width:86px!important}.imdb-random-copy h3{margin-bottom:2px!important}.imdb-random-rating{margin-top:4px!important}.imdb-random-credits{margin-top:5px!important;padding-top:5px!important;gap:3px!important}.imdb-random-copy p{margin-top:5px!important;-webkit-line-clamp:6!important}.imdb-random-actions{margin-top:7px!important;padding-top:7px!important;gap:4px!important}.imdb-random-actions .btn{min-height:38px!important}}
 #editModal.local-random-edit{width:min(680px,calc(100% - 28px))!important;max-height:86vh!important}#editModal.local-random-edit .modal-inner{padding:15px!important;max-height:86vh!important}#editModal.local-random-edit .admin-detail{grid-template-columns:138px minmax(0,1fr)!important;gap:14px!important;padding-bottom:11px!important}#editModal.local-random-edit .admin-detail::before{left:153px!important}#editModal.local-random-edit .admin-detail img{width:138px!important}#editModal.local-random-edit .admin-detail>div{padding-top:18px!important}#editModal.local-random-edit .modal-status-row{margin-top:10px!important;padding-top:6px!important}#editModal.local-random-edit .personal-box{margin-top:10px!important}#editModal.local-random-edit .personal-box h3{margin-bottom:7px!important}#editModal.local-random-edit .personal-grid{gap:7px!important;padding:9px!important}#editModal.local-random-edit #editComment{min-height:76px!important}#editModal.local-random-edit .love-toggle{margin-top:7px!important;min-height:38px!important}#editModal.local-random-edit .modal-actions-row{margin-top:8px!important;padding-top:7px!important;gap:6px!important}#editModal.local-random-edit .modal-actions-row .btn{min-height:38px!important}
 @media(max-width:600px){#editModal.local-random-edit{width:calc(100% - 10px)!important;max-height:88vh!important}#editModal.local-random-edit .modal-inner{padding:11px!important;max-height:88vh!important}#editModal.local-random-edit .admin-detail{grid-template-columns:78px minmax(0,1fr)!important;gap:9px!important;padding-bottom:9px!important}#editModal.local-random-edit .admin-detail::before{left:87px!important}#editModal.local-random-edit .admin-detail img{width:78px!important}#editModal.local-random-edit .admin-detail>div{padding-top:16px!important}#editModal.local-random-edit .modal-status-row{margin-top:7px!important;padding-top:5px!important;column-gap:7px!important}#editModal.local-random-edit .personal-box{margin-top:8px!important}#editModal.local-random-edit .personal-grid{gap:7px!important;padding:8px!important}#editModal.local-random-edit #editComment{min-height:72px!important}#editModal.local-random-edit .love-toggle{margin-top:6px!important;min-height:36px!important}#editModal.local-random-edit .modal-actions-row{margin-top:7px!important;padding-top:6px!important;gap:5px!important}#editModal.local-random-edit .modal-actions-row .btn{min-height:36px!important}}
 @media(max-width:380px){#editModal.local-random-edit{width:calc(100% - 8px)!important}#editModal.local-random-edit .modal-inner{padding:10px!important}#editModal.local-random-edit .admin-detail{grid-template-columns:74px minmax(0,1fr)!important;gap:8px!important}#editModal.local-random-edit .admin-detail::before{left:82px!important}#editModal.local-random-edit .admin-detail img{width:74px!important}}
-</style><style id="random-modals-mobile-balance-v5">
+
+
+/* Consolidated existing feature styles: random-modals-mobile-balance-v5 */
+
 @media(max-width:600px){
   /* IMDb Random: remove the oversized stack above the poster. */
   .imdb-random-modal .modal-inner{padding-top:8px!important}
@@ -357,8 +606,10 @@ button:active,a:active,[role="button"]:active,summary:active{background-image:no
     padding-right:5px!important;
   }
 }
-</style>
-<style id="imdb-random-mobile-space-v6">
+
+
+/* Consolidated existing feature styles: imdb-random-mobile-space-v6 */
+
 /* IMDb Random mobile: remove non-essential vertical chrome above the result while keeping controls usable. */
 @media(max-width:600px){
   .imdb-random-modal .modal-inner{padding-top:6px!important}
@@ -393,9 +644,10 @@ button:active,a:active,[role="button"]:active,summary:active{background-image:no
   .imdb-random-modal .imdb-random-filter{grid-template-columns:auto minmax(0,1fr)!important;gap:5px!important}
   .imdb-random-modal .imdb-random-search .btn{padding-left:6px!important;padding-right:6px!important}
 }
-</style>
 
-<style id="imdb-random-story-below-v8">
+
+/* Consolidated existing feature styles: imdb-random-story-below-v8 */
+
 /* IMDb Random mobile — story spans the modal cleanly below the poster/content. */
 @media(max-width:600px){
   .imdb-random-modal .imdb-random-result{
@@ -418,9 +670,10 @@ button:active,a:active,[role="button"]:active,summary:active{background-image:no
   .imdb-random-modal .imdb-random-result{column-gap:7px!important}
   .imdb-random-modal #imdbRandomOverview{margin-top:8px!important}
 }
-</style>
 
-<style id="imdb-random-story-layout-v9">
+
+/* Consolidated existing feature styles: imdb-random-story-layout-v9 */
+
 /* Final mobile layout: poster + details are row 1; story is a separate full-width row 2. */
 @media(max-width:600px){
   .imdb-random-modal .imdb-random-result{
@@ -451,8 +704,10 @@ button:active,a:active,[role="button"]:active,summary:active{background-image:no
   .imdb-random-modal .imdb-random-result{grid-template-columns:78px minmax(0,1fr)!important;column-gap:7px!important}
   .imdb-random-modal #imdbRandomOverview{margin-top:8px!important}
 }
-</style>
-<style id="public-suggestions-admin-v1">
+
+
+/* Consolidated existing feature styles: public-suggestions-admin-v1 */
+
 .suggestions-admin-list{display:grid;gap:7px;margin-top:9px}
 .suggestions-admin-row{display:grid;grid-template-columns:34px minmax(0,1fr) auto;gap:10px;align-items:start;padding:10px 11px;border:1px solid var(--line);border-radius:5px;background:color-mix(in srgb,var(--surface,#fbf6ed) 72%,transparent)}
 .suggestions-admin-number{color:var(--accent,#77583b);font:700 11px/1.4 Mina,sans-serif;text-align:right}
@@ -472,7 +727,1184 @@ button:active,a:active,[role="button"]:active,summary:active{background-image:no
  .suggestions-admin-meta{font-size:9px}
  .suggestions-admin-actions button{min-height:32px}
 }
-</style></head>
+
+
+/* Consolidated existing feature styles: imdb-random-discovery-v1 */
+
+.random-actions{display:flex;align-items:center;justify-content:center;gap:5px;width:100%}
+.random-actions .btn{min-width:68px;min-height:28px;padding:4px 9px;font-size:10px;line-height:1.1}
+.random-actions #imdbRandomBtn{border-color:#8a68436b;background:#77583b0d;color:var(--accent)}
+.imdb-random-modal{width:min(700px,calc(100% - 18px))}
+.imdb-random-head{display:flex;align-items:flex-start;justify-content:space-between;gap:12px;margin-bottom:9px}
+.imdb-random-head h2{margin:0 38px 2px 0!important}
+.imdb-random-head p{margin:0;color:var(--muted);font:400 10px/1.35 Mina,sans-serif}
+.imdb-random-category{flex:0 0 auto;color:var(--accent);font:600 9px/1 Mina,sans-serif;border:1px solid #77583b2b;background:#77583b08;border-radius:7px;padding:5px 7px}
+.imdb-random-state{margin:0 0 10px;color:var(--muted);font-size:10px}
+.imdb-random-state.ok{color:var(--ok)}.imdb-random-state.error{color:var(--danger)}.imdb-random-state.busy{color:var(--accent)}
+.imdb-random-result{display:grid;grid-template-columns:150px minmax(0,1fr);gap:14px;align-items:start}
+.imdb-random-poster{width:150px;aspect-ratio:2/3;object-fit:cover;border-radius:9px;background:#ded0bc;border:1px solid var(--line)}
+.imdb-random-copy{min-width:0;padding-top:2px}
+.imdb-random-copy h3{margin:0 0 4px;font:600 25px/1 "Cormorant Garamond",serif}
+.imdb-random-rating{margin-top:7px;color:var(--accent);font:600 11px/1.3 Mina,sans-serif}
+.imdb-random-copy p{margin:9px 0 0;color:var(--muted);font:400 11px/1.55 Mina,sans-serif;display:-webkit-box;-webkit-line-clamp:7;-webkit-box-orient:vertical;overflow:hidden}
+.imdb-random-actions{display:grid;grid-template-columns:1fr 1fr 1fr;gap:6px;margin-top:13px;padding-top:11px;border-top:1px solid var(--line)}
+.imdb-random-actions .btn{min-height:38px}
+@media(max-width:600px){
+ .random-actions{gap:4px}.random-actions .btn{flex:1;min-width:0;padding:4px 6px;font-size:9px}
+ .imdb-random-modal{width:calc(100% - 12px);max-height:92vh}
+ .imdb-random-result{grid-template-columns:88px minmax(0,1fr);gap:10px}
+ .imdb-random-poster{width:88px;border-radius:7px}
+ .imdb-random-copy h3{font-size:21px}
+ .imdb-random-rating{font-size:9px;margin-top:5px}
+ .imdb-random-copy p{font-size:9px;line-height:1.45;-webkit-line-clamp:8;margin-top:7px}
+ .imdb-random-actions{grid-template-columns:1fr 1fr;gap:5px}
+ .imdb-random-actions #imdbAnother{grid-column:1/-1}
+ .imdb-random-actions .btn{min-height:40px;font-size:10px}
+}
+
+
+/* Consolidated existing feature styles: imdb-random-modal-balance-v1 */
+
+/* IMDb Random: keep the close button clear of the heading and give the discovery card more room. */
+.imdb-random-modal{width:min(760px,calc(100% - 18px))!important}
+.imdb-random-modal .modal-inner{position:relative!important}
+.imdb-random-modal #closeImdbRandom{position:absolute!important;top:12px!important;right:12px!important;z-index:5!important;width:34px!important;height:34px!important;min-width:34px!important;min-height:34px!important;padding:0!important;display:grid!important;place-items:center!important;line-height:1!important;font-size:22px!important}
+.imdb-random-head{padding-right:50px!important}
+@media(max-width:600px){
+  .imdb-random-modal{width:calc(100% - 8px)!important}
+  .imdb-random-modal #closeImdbRandom{top:9px!important;right:9px!important;width:32px!important;height:32px!important;min-width:32px!important;min-height:32px!important;font-size:20px!important}
+  .imdb-random-head{padding-right:42px!important}
+}
+
+
+/* Consolidated existing feature styles: imdb-random-watched-details-v1 */
+
+.imdb-watched-details{margin-top:10px;padding:8px 9px;border:1px solid var(--line2);border-radius:9px;background:#77583b08}
+.imdb-watched-fields{display:grid;grid-template-columns:92px minmax(0,1fr);gap:7px;align-items:end}
+.imdb-watched-fields label{display:grid;gap:3px;color:var(--muted);font:600 9px/1.1 Mina,sans-serif}
+.imdb-watched-fields select,.imdb-watched-fields input{width:100%;min-height:32px;padding:6px 8px;border:1px solid var(--line2);border-radius:7px;background:var(--panel);color:var(--text);font:500 10px/1.2 Mina,sans-serif;box-sizing:border-box}
+@media(max-width:600px){.imdb-watched-details{margin-top:8px;padding:7px}.imdb-watched-fields{grid-template-columns:82px minmax(0,1fr);gap:6px}.imdb-watched-fields select,.imdb-watched-fields input{min-height:34px;font-size:10px;padding:6px 7px}}
+
+
+/* Consolidated existing feature styles: imdb-random-modern-v2 */
+
+.imdb-random-result{grid-template-columns:168px minmax(0,1fr)!important;gap:17px!important}
+.imdb-random-copy{padding-top:1px!important}
+.imdb-random-copy h3{font-size:28px!important;letter-spacing:-.01em!important;margin-bottom:5px!important}
+.imdb-random-rating{margin-top:6px!important}
+.imdb-random-credits{display:grid;gap:5px;margin-top:9px;padding-top:8px;border-top:1px solid var(--line)}
+.imdb-random-credits div{display:grid;grid-template-columns:54px minmax(0,1fr);gap:7px;align-items:baseline;min-width:0}
+.imdb-random-credits span{font:600 8px/1.2 Mina,sans-serif;text-transform:uppercase;letter-spacing:.04em;color:var(--muted)}
+.imdb-random-credits strong{min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;font:500 10px/1.25 Mina,sans-serif;color:var(--text)}
+.imdb-random-copy p{margin-top:9px!important}
+@media(max-width:600px){
+ .imdb-random-result{grid-template-columns:100px minmax(0,1fr)!important;gap:11px!important}
+ .imdb-random-poster{width:100px!important}
+ .imdb-random-copy h3{font-size:22px!important}
+ .imdb-random-credits{margin-top:7px;padding-top:6px;gap:4px}
+ .imdb-random-credits div{grid-template-columns:46px minmax(0,1fr);gap:5px}
+ .imdb-random-credits span{font-size:7px}
+ .imdb-random-credits strong{font-size:9px}
+}
+
+
+/* Consolidated existing feature styles: imdb-random-text-contrast-v1 */
+
+.imdb-random-credits strong{color:#1f1711!important}
+.imdb-random-copy p{color:#1f1711!important}
+
+
+/* Consolidated existing feature styles: imdb-random-region-filter-v1 */
+
+.imdb-random-filter{display:grid;grid-template-columns:auto minmax(150px,220px);align-items:center;gap:7px;margin:0 0 7px}
+.imdb-random-filter label{font:600 9px/1.2 Mina,sans-serif;color:var(--muted)}
+.imdb-random-filter select{min-height:32px;padding:6px 8px;font-size:9px}
+@media(max-width:600px){.imdb-random-filter{grid-template-columns:1fr;gap:3px}.imdb-random-filter select{min-height:36px;font-size:10px}}
+
+
+/* Consolidated existing feature styles: admin-edit-modal-balance-v1 */
+
+/* Edit modal balance — give the poster, title and comment area enough room on desktop and mobile. */
+#editModal.admin-modal{
+  width:min(780px,calc(100% - 28px))!important;
+  max-height:92vh!important;
+}
+#editModal.admin-modal .modal-inner{
+  padding:22px!important;
+  max-height:92vh!important;
+}
+#editModal.admin-modal h2{
+  font-size:31px!important;
+  line-height:1.02!important;
+  margin-right:44px!important;
+}
+#editModal.admin-modal .modal-meta{
+  font-size:12px!important;
+  line-height:1.45!important;
+}
+#editModal.admin-modal .admin-detail{
+  grid-template-columns:150px minmax(0,1fr)!important;
+  gap:18px!important;
+  margin:16px 0!important;
+  align-items:start!important;
+}
+#editModal.admin-modal .admin-detail img{
+  width:150px!important;
+  border-radius:11px!important;
+  box-shadow:0 5px 16px #40352c18!important;
+}
+#editModal.admin-modal .personal-box{
+  padding-top:16px!important;
+  margin-top:14px!important;
+}
+#editModal.admin-modal .personal-box h3{
+  font-size:15px!important;
+  margin-bottom:11px!important;
+}
+#editModal.admin-modal .personal-grid{
+  grid-template-columns:140px minmax(0,1fr)!important;
+  gap:11px!important;
+}
+#editModal.admin-modal .field label{
+  font-size:11px!important;
+  margin-bottom:6px!important;
+}
+#editModal.admin-modal #editComment{
+  min-height:124px!important;
+  padding:11px 12px!important;
+  font-size:13px!important;
+  line-height:1.5!important;
+  resize:vertical!important;
+}
+#editModal.admin-modal .love-toggle{
+  min-height:42px!important;
+  font-size:12px!important;
+}
+#editModal.admin-modal .modal-actions-row{
+  margin-top:13px!important;
+  gap:9px!important;
+}
+#editModal.admin-modal .modal-actions-row .btn{
+  min-height:40px!important;
+}
+@media(max-width:600px){
+  #editModal.admin-modal{
+    width:calc(100% - 12px)!important;
+    max-height:94vh!important;
+  }
+  #editModal.admin-modal .modal-inner{
+    padding:15px!important;
+    max-height:94vh!important;
+  }
+  #editModal.admin-modal h2{
+    font-size:25px!important;
+    line-height:1.04!important;
+  }
+  #editModal.admin-modal .modal-meta{
+    font-size:10px!important;
+  }
+  #editModal.admin-modal .admin-detail{
+    grid-template-columns:94px minmax(0,1fr)!important;
+    gap:13px!important;
+    margin:13px 0!important;
+  }
+  #editModal.admin-modal .admin-detail img{
+    width:94px!important;
+    border-radius:9px!important;
+  }
+  #editModal.admin-modal .personal-box{
+    padding-top:13px!important;
+    margin-top:11px!important;
+  }
+  #editModal.admin-modal .personal-box h3{
+    font-size:13px!important;
+    margin-bottom:9px!important;
+  }
+  #editModal.admin-modal .personal-grid{
+    grid-template-columns:1fr!important;
+    gap:9px!important;
+  }
+  #editModal.admin-modal #editComment{
+    min-height:118px!important;
+    font-size:12px!important;
+  }
+  #editModal.admin-modal .modal-actions-row{
+    margin-top:10px!important;
+  }
+}
+@media(max-width:380px){
+  #editModal.admin-modal .admin-detail{
+    grid-template-columns:84px minmax(0,1fr)!important;
+    gap:11px!important;
+  }
+  #editModal.admin-modal .admin-detail img{width:84px!important}
+  #editModal.admin-modal h2{font-size:23px!important}
+}
+
+
+/* Consolidated existing feature styles: imdb-random-title-poster-balance-v11 */
+
+/* IMDb Random: compact single-line heading + balanced mobile poster. */
+.imdb-random-modal .imdb-random-head h2{
+  font-size:18px!important;
+  line-height:1!important;
+  white-space:nowrap!important;
+  margin:0 38px 2px 0!important;
+}
+@media(max-width:600px){
+  .imdb-random-modal .imdb-random-head h2{
+    font-size:15px!important;
+    line-height:1!important;
+    white-space:nowrap!important;
+  }
+  .imdb-random-modal .imdb-random-result{
+    grid-template-columns:112px minmax(0,1fr)!important;
+    column-gap:11px!important;
+  }
+  .imdb-random-modal .imdb-random-result > .imdb-random-poster{
+    width:112px!important;
+  }
+}
+@media(max-width:380px){
+  .imdb-random-modal .imdb-random-result{
+    grid-template-columns:100px minmax(0,1fr)!important;
+    column-gap:9px!important;
+  }
+  .imdb-random-modal .imdb-random-result > .imdb-random-poster{
+    width:100px!important;
+  }
+}
+
+
+/* Consolidated existing feature styles: imdb-random-mobile-balance-v12 */
+
+/* IMDb Random — restore a balanced mobile poster and story typography. */
+@media(max-width:600px){
+  .imdb-random-modal .imdb-random-result{
+    grid-template-columns:124px minmax(0,1fr)!important;
+    column-gap:11px!important;
+  }
+  .imdb-random-modal .imdb-random-result > .imdb-random-poster{
+    width:124px!important;
+    max-width:124px!important;
+  }
+  .imdb-random-modal .imdb-random-result > #imdbRandomOverview{
+    font:400 10px/1.5 Mina,sans-serif!important;
+    margin-top:9px!important;
+    -webkit-line-clamp:6!important;
+  }
+}
+@media(max-width:380px){
+  .imdb-random-modal .imdb-random-result{
+    grid-template-columns:112px minmax(0,1fr)!important;
+    column-gap:9px!important;
+  }
+  .imdb-random-modal .imdb-random-result > .imdb-random-poster{
+    width:112px!important;
+    max-width:112px!important;
+  }
+  .imdb-random-modal .imdb-random-result > #imdbRandomOverview{
+    font-size:9px!important;
+    line-height:1.5!important;
+    margin-top:8px!important;
+  }
+}
+
+
+/* Consolidated existing feature styles: imdb-random-mobile-final-balance-v13 */
+
+/* IMDb Random — final mobile sizing override. Keep poster flexible and text comfortably readable. */
+.imdb-random-modal .imdb-random-result > .imdb-random-poster{
+  width:168px!important;
+  max-width:100%!important;
+}
+.imdb-random-modal .imdb-random-result > #imdbRandomOverview{
+  font:400 11px/1.55 Mina,sans-serif!important;
+}
+.imdb-random-modal .imdb-random-credits strong{
+  font-size:10px!important;
+}
+@media(max-width:600px){
+  .imdb-random-modal .imdb-random-result{
+    grid-template-columns:minmax(124px,132px) minmax(0,1fr)!important;
+    column-gap:11px!important;
+  }
+  .imdb-random-modal .imdb-random-result > .imdb-random-poster{
+    width:132px!important;
+    max-width:132px!important;
+  }
+  .imdb-random-modal .imdb-random-result > #imdbRandomOverview{
+    font-size:10.5px!important;
+    line-height:1.5!important;
+    margin-top:9px!important;
+  }
+  .imdb-random-modal .imdb-random-credits strong{
+    font-size:10px!important;
+    line-height:1.3!important;
+  }
+}
+@media(max-width:380px){
+  .imdb-random-modal .imdb-random-result{
+    grid-template-columns:minmax(112px,120px) minmax(0,1fr)!important;
+    column-gap:9px!important;
+  }
+  .imdb-random-modal .imdb-random-result > .imdb-random-poster{
+    width:120px!important;
+    max-width:120px!important;
+  }
+  .imdb-random-modal .imdb-random-result > #imdbRandomOverview{
+    font-size:10px!important;
+    line-height:1.5!important;
+  }
+  .imdb-random-modal .imdb-random-credits strong{
+    font-size:9.5px!important;
+  }
+}
+
+
+/* Consolidated existing feature styles: imdb-random-absolute-final-v14 */
+
+/* IMDb Random: absolute final mobile sizing layer — placed after every earlier IMDb Random rule. */
+@media(max-width:600px){
+  .imdb-random-modal .imdb-random-result{
+    display:grid!important;
+    grid-template-columns:140px minmax(0,1fr)!important;
+    grid-template-rows:auto auto!important;
+    column-gap:11px!important;
+    row-gap:0!important;
+  }
+  .imdb-random-modal .imdb-random-result > .imdb-random-poster{
+    grid-column:1!important;
+    grid-row:1!important;
+    width:140px!important;
+    max-width:140px!important;
+  }
+  .imdb-random-modal .imdb-random-result > .imdb-random-copy{
+    grid-column:2!important;
+    grid-row:1!important;
+    min-width:0!important;
+  }
+  .imdb-random-modal .imdb-random-result > #imdbRandomOverview{
+    grid-column:1 / -1!important;
+    grid-row:2!important;
+    width:100%!important;
+    max-width:none!important;
+    margin-top:10px!important;
+    font:400 10.5px/1.5 Mina,sans-serif!important;
+  }
+  .imdb-random-modal .imdb-random-credits strong{
+    font:500 10px/1.3 Mina,sans-serif!important;
+  }
+}
+@media(max-width:380px){
+  .imdb-random-modal .imdb-random-result{
+    grid-template-columns:128px minmax(0,1fr)!important;
+    column-gap:9px!important;
+  }
+  .imdb-random-modal .imdb-random-result > .imdb-random-poster{
+    width:128px!important;
+    max-width:128px!important;
+  }
+  .imdb-random-modal .imdb-random-result > #imdbRandomOverview{
+    font-size:10px!important;
+    line-height:1.5!important;
+    margin-top:9px!important;
+  }
+  .imdb-random-modal .imdb-random-credits strong{
+    font-size:9.5px!important;
+  }
+}
+
+
+/* Consolidated existing feature styles: library-random-polish-v1 */
+
+/* Library Random — simple, calm and clearly separated from IMDb discovery. */
+.rating-sticky-random{
+  margin:7px 0 10px!important;
+  padding:7px 9px!important;
+  border:1px solid var(--line)!important;
+  border-radius:12px!important;
+  background:#fffaf2!important;
+  box-shadow:0 4px 14px #5b42250a!important;
+}
+.random-actions{
+  display:grid!important;
+  grid-template-columns:minmax(150px,1fr) auto auto!important;
+  align-items:center!important;
+  gap:7px!important;
+  width:100%!important;
+}
+.random-context{
+  min-width:0;
+  display:flex;
+  align-items:baseline;
+  gap:7px;
+  padding-left:2px;
+}
+.random-context strong{
+  color:var(--text);
+  font:600 11px/1.2 Mina,sans-serif;
+  white-space:nowrap;
+}
+.random-context span{
+  color:var(--muted);
+  font:400 9px/1.25 Mina,sans-serif;
+  white-space:nowrap;
+  overflow:hidden;
+  text-overflow:ellipsis;
+}
+.rating-sticky-random #randomMovieBtn,
+.rating-sticky-random #imdbRandomBtn{
+  min-height:34px!important;
+  min-width:0!important;
+  padding:7px 11px!important;
+  border-radius:9px!important;
+  font:600 10px/1.1 Mina,sans-serif!important;
+  white-space:nowrap;
+  transition:background .14s,border-color .14s,transform .12s,box-shadow .14s!important;
+}
+.rating-sticky-random #randomMovieBtn{
+  background:#77583b0b!important;
+  border-color:#77583b35!important;
+  color:var(--accent)!important;
+}
+.rating-sticky-random #imdbRandomBtn{
+  background:var(--accent)!important;
+  border-color:var(--accent)!important;
+  color:#fffaf2!important;
+  box-shadow:0 2px 7px #77583b18!important;
+}
+.rating-sticky-random #randomMovieBtn:hover,
+.rating-sticky-random #imdbRandomBtn:hover{
+  transform:translateY(-1px);
+}
+.rating-sticky-random #randomMovieBtn:hover{
+  background:#77583b15!important;
+  border-color:#77583b55!important;
+}
+.rating-sticky-random #imdbRandomBtn:hover{
+  box-shadow:0 4px 11px #77583b22!important;
+}
+.rating-sticky-random #randomMovieBtn:focus-visible,
+.rating-sticky-random #imdbRandomBtn:focus-visible{
+  outline:2px solid var(--accent)!important;
+  outline-offset:2px;
+}
+.rating-sticky-random #randomMovieBtn:active,
+.rating-sticky-random #imdbRandomBtn:active{
+  transform:translateY(0);
+}
+@media(max-width:600px){
+  .rating-sticky-random{
+    margin:5px 0 8px!important;
+    padding:7px!important;
+    border-radius:11px!important;
+  }
+  .random-actions{
+    grid-template-columns:1fr 1fr!important;
+    gap:5px!important;
+  }
+  .random-context{
+    grid-column:1/-1;
+    gap:6px;
+    padding:0 2px 2px;
+  }
+  .random-context strong{font-size:10px}
+  .random-context span{font-size:8px}
+  .rating-sticky-random #randomMovieBtn,
+  .rating-sticky-random #imdbRandomBtn{
+    width:100%!important;
+    min-height:38px!important;
+    padding:8px 8px!important;
+    font-size:10px!important;
+  }
+}
+@media(max-width:380px){
+  .random-context{
+    display:block;
+  }
+  .random-context span{
+    display:block;
+    margin-top:2px;
+  }
+}
+
+
+/* Consolidated existing feature styles: admin-submit-balance */
+
+/* Balanced admin action buttons */
+.actions{align-items:stretch}
+.actions>.btn{min-height:38px;display:inline-flex;align-items:center;justify-content:center;line-height:1.15}
+.actions>.btn:not(.secondary):not(.danger){min-width:132px}
+#quickAddSection .actions.add-actions .btn{min-width:0}
+#bulkAddSection .actions .btn{min-width:150px}
+.modal-actions-row>.btn{min-height:38px;display:inline-flex;align-items:center;justify-content:center}
+.searchbar>.btn,.bulkTools>.btn{min-height:38px;display:inline-flex;align-items:center;justify-content:center}
+@media(max-width:600px){
+ .actions{gap:7px}
+ .actions>.btn{min-height:40px;padding:9px 12px}
+ .actions>.btn:not(.secondary):not(.danger){min-width:0}
+ #quickAddSection .actions.add-actions .btn,#bulkAddSection .actions .btn{flex:1;min-width:0}
+ .modal-actions-row>.btn{min-height:40px}
+ .searchbar>.btn,.bulkTools>.btn{min-height:40px}
+}
+
+
+/* Consolidated existing feature styles: imdb-random-love-option-v1 */
+
+.imdb-random-love-row{display:flex;justify-content:flex-start;margin-top:9px}
+.imdb-random-love{min-height:30px;padding:5px 10px;border:1px solid var(--line2);border-radius:8px;background:#fffaf2;color:var(--muted);font:600 10px/1 Mina,sans-serif;cursor:pointer;transition:background .14s,border-color .14s,color .14s,transform .12s}
+.imdb-random-love:hover{background:#77583b0b;border-color:#a54d4540;color:#a54d45;transform:translateY(-1px)}
+.imdb-random-love.is-loved{background:#a54d450d;border-color:#a54d4540;color:#a54d45}
+.imdb-random-love:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+@media(max-width:600px){.imdb-random-love-row{margin-top:7px}.imdb-random-love{min-height:32px;padding:6px 9px;font-size:9px}}
+
+
+/* Consolidated existing feature styles: imdb-random-love-watched-only-v2 */
+
+.imdb-watched-fields{grid-template-columns:92px minmax(0,1fr) auto!important}
+.imdb-watched-fields .imdb-random-love{align-self:end;min-width:62px!important;white-space:nowrap;margin:0!important}
+@media(max-width:600px){.imdb-watched-fields{grid-template-columns:82px minmax(0,1fr) auto!important}.imdb-watched-fields .imdb-random-love{min-width:58px!important;padding-left:7px!important;padding-right:7px!important}}
+
+
+/* Consolidated existing feature styles: imdb-random-genre-v1 */
+
+#imdbRandomGenre{color:#1f1711!important}
+
+
+/* Consolidated existing feature styles: imdb-random-smart-search-v1 */
+.imdb-random-search{display:grid;grid-template-columns:minmax(0,1fr) auto auto;gap:5px;margin:0 0 4px}.imdb-random-search input{min-height:34px;padding:7px 9px;font-size:10px}.imdb-random-search .btn{min-height:34px;padding:7px 10px;font-size:9px;white-space:nowrap}.imdb-random-search-hint{margin:0 0 9px;color:var(--muted);font:400 9px/1.35 Mina,sans-serif}@media(max-width:600px){.imdb-random-search{grid-template-columns:minmax(0,1fr) auto;gap:5px}.imdb-random-search #imdbRandomClearBtn{grid-column:1/-1;min-height:30px}.imdb-random-search input{min-height:38px;font-size:10px}.imdb-random-search .btn{min-height:38px}.imdb-random-search-hint{font-size:8px;margin-bottom:8px}}
+
+/* Consolidated existing feature styles: imdb-random-clickable-genres-v1 */
+
+.imdb-random-genre-link{appearance:none;border:0;background:transparent;padding:0;margin:0;color:#1f1711;font:500 10px/1.25 Mina,sans-serif;text-decoration:none;cursor:pointer}
+.imdb-random-genre-link:hover{color:#77583b;text-decoration:underline;text-underline-offset:2px}
+.imdb-random-genre-link:focus-visible{outline:2px solid #77583b;outline-offset:2px;border-radius:3px}
+.imdb-random-genre-sep{color:#1f1711}
+@media(max-width:600px){.imdb-random-genre-link{font-size:9px}}
+
+
+/* Consolidated existing feature styles: local-random-modal-redesign-v1 */
+
+/* Local Library Random — a focused, editorial movie-pick modal. */
+#editModal.local-random-edit{
+  width:min(820px,calc(100% - 30px))!important;
+  max-height:90vh!important;
+  border-radius:18px!important;
+  background:#fbf6ed!important;
+  border-color:#77583b35!important;
+  box-shadow:0 28px 80px #40352c38,0 1px 0 #fffdf7 inset!important;
+}
+#editModal.local-random-edit .modal-inner{
+  padding:24px!important;
+  max-height:90vh!important;
+}
+#editModal.local-random-edit .admin-detail{
+  position:relative!important;
+  grid-template-columns:190px minmax(0,1fr)!important;
+  gap:22px!important;
+  margin:0!important;
+  padding:0 0 19px!important;
+  border-bottom:1px solid var(--line)!important;
+}
+#editModal.local-random-edit .admin-detail::before{
+  content:"LIBRARY RANDOM";
+  position:absolute;
+  left:212px;
+  top:0;
+  color:#77583b!important;
+  font:700 9px/1 Mina,sans-serif!important;
+  letter-spacing:.08em;
+}
+#editModal.local-random-edit .admin-detail img{
+  width:190px!important;
+  border-radius:12px!important;
+  box-shadow:0 9px 24px #40352c20!important;
+}
+#editModal.local-random-edit .admin-detail>div{
+  padding:25px 4px 0 0!important;
+  min-width:0!important;
+}
+#editModal.local-random-edit h2{
+  font-size:35px!important;
+  line-height:1.02!important;
+  letter-spacing:-.015em!important;
+  margin:0 44px 5px 0!important;
+}
+#editModal.local-random-edit .modal-meta{
+  font-size:11px!important;
+  line-height:1.5!important;
+  color:var(--muted)!important;
+}
+#editModal.local-random-edit .modal-status-row{
+  margin:18px 0 0!important;
+  padding:10px 0 0!important;
+  border-top:1px solid var(--line)!important;
+  border-bottom:0!important;
+}
+#editModal.local-random-edit .modal-status-label{
+  font-size:11px!important;
+  color:var(--text)!important;
+}
+#editModal.local-random-edit #editStatusToggle{
+  min-height:36px!important;
+  padding:7px 11px!important;
+  border-radius:9px!important;
+  font-size:10px!important;
+}
+#editModal.local-random-edit .personal-box{
+  margin-top:18px!important;
+  padding:16px 0 0!important;
+  border-top:0!important;
+}
+#editModal.local-random-edit .personal-box h3{
+  display:flex!important;
+  align-items:baseline!important;
+  justify-content:space-between!important;
+  gap:10px!important;
+  margin:0 0 10px!important;
+  font-size:14px!important;
+}
+#editModal.local-random-edit .personal-box h3::after{
+  content:"Your library details";
+  color:var(--muted);
+  font:400 9px/1.2 Mina,sans-serif;
+}
+#editModal.local-random-edit .personal-grid{
+  display:grid!important;
+  grid-template-columns:minmax(0,1fr)!important;
+  gap:12px!important;
+  padding:13px!important;
+  border:1px solid var(--line)!important;
+  border-radius:13px!important;
+  background:#fffaf2!important;
+}
+#editModal.local-random-edit .personal-grid>.field:first-child{
+  grid-column:auto!important;
+}
+#editModal.local-random-edit .rating-picker{
+  padding:3px 0 2px!important;
+}
+#editModal.local-random-edit .rating-choice{
+  min-height:40px!important;
+  font-size:11px!important;
+}
+#editModal.local-random-edit #editComment{
+  min-height:104px!important;
+  padding:10px 11px!important;
+  font-size:12px!important;
+  line-height:1.5!important;
+  border-radius:9px!important;
+}
+#editModal.local-random-edit .love-toggle{
+  margin-top:10px!important;
+  min-height:40px!important;
+  border-radius:9px!important;
+}
+#editModal.local-random-edit .modal-actions-row{
+  margin-top:13px!important;
+  padding-top:12px!important;
+  border-top:1px solid var(--line)!important;
+  gap:8px!important;
+}
+#editModal.local-random-edit .modal-actions-row .btn{
+  min-height:40px!important;
+}
+#editModal.local-random-edit .modal-actions-row #savePersonal{
+  min-width:138px!important;
+}
+@media(max-width:600px){
+  #editModal.local-random-edit{
+    width:calc(100% - 10px)!important;
+    max-height:94vh!important;
+    border-radius:15px!important;
+  }
+  #editModal.local-random-edit .modal-inner{
+    padding:15px!important;
+    max-height:94vh!important;
+  }
+  #editModal.local-random-edit .admin-detail{
+    grid-template-columns:108px minmax(0,1fr)!important;
+    gap:13px!important;
+    padding-bottom:14px!important;
+  }
+  #editModal.local-random-edit .admin-detail::before{
+    left:121px;
+    top:0;
+    font-size:8px!important;
+  }
+  #editModal.local-random-edit .admin-detail img{
+    width:108px!important;
+    border-radius:9px!important;
+  }
+  #editModal.local-random-edit .admin-detail>div{
+    padding:19px 0 0!important;
+  }
+  #editModal.local-random-edit h2{
+    font-size:25px!important;
+    line-height:1.04!important;
+    margin-right:36px!important;
+  }
+  #editModal.local-random-edit .modal-meta{
+    font-size:9px!important;
+  }
+  #editModal.local-random-edit .modal-status-row{
+    margin-top:11px!important;
+    padding-top:8px!important;
+    gap:6px!important;
+    align-items:center!important;
+  }
+  #editModal.local-random-edit .modal-status-label{
+    font-size:9px!important;
+  }
+  #editModal.local-random-edit #editStatusToggle{
+    min-height:32px!important;
+    padding:6px 8px!important;
+    font-size:8px!important;
+  }
+  #editModal.local-random-edit .personal-box{
+    margin-top:13px!important;
+    padding-top:0!important;
+  }
+  #editModal.local-random-edit .personal-box h3{
+    font-size:12px!important;
+    margin-bottom:8px!important;
+  }
+  #editModal.local-random-edit .personal-box h3::after{
+    font-size:8px!important;
+  }
+  #editModal.local-random-edit .personal-grid{
+    gap:9px!important;
+    padding:10px!important;
+    border-radius:11px!important;
+  }
+  #editModal.local-random-edit .rating-choice{
+    min-height:38px!important;
+    font-size:10px!important;
+  }
+  #editModal.local-random-edit #editComment{
+    min-height:92px!important;
+    font-size:11px!important;
+  }
+  #editModal.local-random-edit .love-toggle{
+    min-height:38px!important;
+    font-size:10px!important;
+  }
+  #editModal.local-random-edit .modal-actions-row{
+    margin-top:10px!important;
+    padding-top:9px!important;
+  }
+  #editModal.local-random-edit .modal-actions-row #savePersonal{
+    min-width:0!important;
+  }
+}
+@media(max-width:380px){
+  #editModal.local-random-edit .admin-detail{
+    grid-template-columns:88px minmax(0,1fr)!important;
+    gap:10px!important;
+  }
+  #editModal.local-random-edit .admin-detail::before{left:98px}
+  #editModal.local-random-edit .admin-detail img{width:88px!important}
+  #editModal.local-random-edit h2{font-size:22px!important}
+}
+
+
+/* Consolidated existing feature styles: local-random-modal-size-v2 */
+
+/* Local Random modal — tighter proportions without changing its redesign. */
+#editModal.local-random-edit{
+  width:min(700px,calc(100% - 32px))!important;
+  max-height:88vh!important;
+}
+#editModal.local-random-edit .modal-inner{
+  padding:19px!important;
+  max-height:88vh!important;
+}
+#editModal.local-random-edit .admin-detail{
+  grid-template-columns:154px minmax(0,1fr)!important;
+  gap:17px!important;
+  padding-bottom:15px!important;
+}
+#editModal.local-random-edit .admin-detail::before{left:171px!important}
+#editModal.local-random-edit .admin-detail img{width:154px!important}
+#editModal.local-random-edit .admin-detail>div{padding:22px 2px 0 0!important}
+#editModal.local-random-edit h2{font-size:30px!important;margin-right:40px!important}
+#editModal.local-random-edit .modal-status-row{margin-top:13px!important;padding-top:8px!important}
+#editModal.local-random-edit .personal-box{margin-top:14px!important}
+#editModal.local-random-edit .personal-grid{gap:9px!important;padding:11px!important}
+#editModal.local-random-edit .rating-choice{min-height:36px!important}
+#editModal.local-random-edit #editComment{min-height:88px!important}
+#editModal.local-random-edit .modal-actions-row{margin-top:10px!important;padding-top:9px!important}
+@media(max-width:600px){
+  #editModal.local-random-edit{
+    width:calc(100% - 18px)!important;
+    max-height:91vh!important;
+  }
+  #editModal.local-random-edit .modal-inner{padding:13px!important;max-height:91vh!important}
+  #editModal.local-random-edit .admin-detail{
+    grid-template-columns:88px minmax(0,1fr)!important;
+    gap:11px!important;
+    padding-bottom:12px!important;
+  }
+  #editModal.local-random-edit .admin-detail::before{left:99px!important}
+  #editModal.local-random-edit .admin-detail img{width:88px!important}
+  #editModal.local-random-edit .admin-detail>div{padding-top:18px!important}
+  #editModal.local-random-edit h2{font-size:22px!important;margin-right:32px!important}
+  #editModal.local-random-edit .personal-box{margin-top:11px!important}
+  #editModal.local-random-edit .personal-grid{gap:8px!important;padding:9px!important}
+  #editModal.local-random-edit .rating-choice{min-height:34px!important}
+  #editModal.local-random-edit #editComment{min-height:82px!important}
+}
+@media(max-width:380px){
+  #editModal.local-random-edit{
+    width:calc(100% - 12px)!important;
+  }
+  #editModal.local-random-edit .admin-detail{
+    grid-template-columns:78px minmax(0,1fr)!important;
+    gap:9px!important;
+  }
+  #editModal.local-random-edit .admin-detail::before{left:87px!important}
+  #editModal.local-random-edit .admin-detail img{width:78px!important}
+  #editModal.local-random-edit h2{font-size:20px!important}
+}
+
+
+/* Consolidated existing feature styles: local-random-modal-controls-v3 */
+
+#editModal.local-random-edit .x{
+  z-index:30!important;
+  pointer-events:auto!important;
+  top:10px!important;
+  right:10px!important;
+  width:36px!important;
+  height:36px!important;
+  display:grid!important;
+  place-items:center!important;
+  cursor:pointer!important;
+}
+#editModal.local-random-edit .modal-status-row{
+  display:grid!important;
+  grid-template-columns:minmax(0,1fr) auto!important;
+  align-items:center!important;
+  column-gap:14px!important;
+  width:100%!important;
+}
+#editModal.local-random-edit #editStatusToggle{
+  justify-self:end!important;
+  min-width:116px!important;
+}
+#editModal.local-random-edit .modal-actions-row{
+  display:grid!important;
+  grid-template-columns:auto auto minmax(0,1fr) auto!important;
+  align-items:center!important;
+  gap:8px!important;
+  justify-content:initial!important;
+}
+#editModal.local-random-edit .modal-actions-row #editDelete{justify-self:start!important}
+#editModal.local-random-edit .modal-actions-row .local-random-another{justify-self:start!important;min-width:104px!important}
+#editModal.local-random-edit .modal-actions-row #savePersonal{justify-self:end!important}
+#editModal.local-random-edit .modal-actions-row .draft-state{margin:0!important;text-align:center!important;min-width:0!important}
+@media(max-width:600px){
+  #editModal.local-random-edit .modal-status-row{
+    grid-template-columns:minmax(0,1fr) auto!important;
+    column-gap:9px!important;
+  }
+  #editModal.local-random-edit #editStatusToggle{
+    min-width:98px!important;
+  }
+  #editModal.local-random-edit .modal-actions-row{
+    grid-template-columns:auto minmax(0,1fr) auto!important;
+    gap:6px!important;
+  }
+  #editModal.local-random-edit .modal-actions-row .local-random-another{
+    grid-column:2!important;
+    justify-self:center!important;
+    min-width:96px!important;
+  }
+  #editModal.local-random-edit .modal-actions-row .draft-state{display:none!important}
+}
+@media(max-width:380px){
+  #editModal.local-random-edit .modal-actions-row .local-random-another{min-width:88px!important}
+}
+
+
+/* Consolidated existing feature styles: activity-polish-v2 */
+
+/* Activity — balanced information density */
+#activitySection{max-width:980px;margin-left:auto;margin-right:auto}
+#activitySection .head{align-items:center;margin-bottom:10px}
+#activitySection .sector-note{display:block;margin-top:3px;font:400 9px/1.3 Mina,sans-serif;color:var(--muted)}
+.activity-summary{grid-template-columns:repeat(4,minmax(0,1fr));gap:7px;margin-bottom:8px}
+.activity-stat{min-height:58px;padding:9px 10px;display:flex;flex-direction:column;justify-content:center}
+.activity-stat strong{font-size:16px;line-height:1}
+.activity-stat span{margin-top:4px}
+.activity-toolbar{display:grid;grid-template-columns:minmax(0,1fr) auto auto;gap:6px;align-items:center;margin:0 0 8px;padding:8px 0;border-top:1px solid var(--line)}
+.activity-filters{display:flex;gap:4px;min-width:0}
+.activity-filter{border:1px solid var(--line2);background:#77583b08;color:var(--muted);border-radius:8px;padding:6px 8px;font:600 9px/1 Mina,sans-serif;white-space:nowrap}
+.activity-filter.active{background:#77583b14;border-color:#77583b45;color:var(--text)}
+.activity-toolbar .btn{min-height:30px;padding:6px 9px;font-size:9px}
+.activity-count{font-size:9px!important}
+.activity-list{gap:5px}
+.activity-row{grid-template-columns:30px minmax(0,1fr) auto;gap:8px;padding:8px;border-radius:10px}
+.activity-row.unread{box-shadow:inset 3px 0 0 var(--accent)}
+.activity-title{font-size:11px}
+.activity-meta{font-size:8.5px}
+.activity-preview{font-size:9.5px;line-height:1.4}
+.activity-time{font-size:8px}
+.activity-open{min-height:27px}
+.activity-day{margin:9px 1px 4px;color:var(--muted);font:600 8px/1 Mina,sans-serif;letter-spacing:.04em;text-transform:uppercase}
+.activity-day:first-child{margin-top:2px}
+.activity-live{padding:4px 7px;border:1px solid var(--line);border-radius:99px;background:#fffaf2}
+@media(max-width:600px){
+  #activitySection{max-width:none}
+  .activity-summary{grid-template-columns:repeat(4,minmax(0,1fr));gap:4px}
+  .activity-stat{min-height:52px;padding:7px 5px;text-align:center}
+  .activity-stat strong{font-size:14px}
+  .activity-stat span{font-size:7px}
+  .activity-toolbar{grid-template-columns:1fr auto;gap:5px}
+  .activity-filters{grid-column:1/-1;display:grid;grid-template-columns:repeat(3,1fr);gap:4px}
+  .activity-filter{padding:7px 4px}
+  .activity-toolbar .activity-count{grid-column:1;grid-row:2;align-self:center}
+  .activity-toolbar #activityRefresh,.activity-toolbar #activityMarkRead{grid-row:2}
+  .activity-toolbar #activityRefresh{grid-column:2}
+  .activity-toolbar #activityMarkRead{grid-column:2;display:none}
+  .activity-row{grid-template-columns:27px minmax(0,1fr);padding:7px}
+  .activity-icon{width:27px;height:27px}
+  .activity-row .activity-time{grid-column:2;grid-row:2}
+  .activity-row .activity-open{grid-column:2;grid-row:3;justify-self:start;margin-top:2px}
+}
+@media(max-width:380px){
+  .activity-summary{gap:3px}
+  .activity-stat{min-height:49px;padding:6px 3px}
+  .activity-stat strong{font-size:13px}
+  .activity-stat span{font-size:6.5px}
+  .activity-filter{font-size:8px}
+}
+
+
+/* Consolidated existing feature styles: imdb-random-layout-final-v10 */
+
+/* Final separation: poster is an isolated column; title/rating/credits stay in the details column. */
+.imdb-random-modal .imdb-random-result{
+  display:grid!important;
+  grid-template-columns:168px minmax(0,1fr)!important;
+  grid-template-rows:auto!important;
+  column-gap:17px!important;
+  row-gap:0!important;
+  align-items:start!important;
+  position:relative!important;
+}
+.imdb-random-modal .imdb-random-result > .imdb-random-poster{
+  grid-column:1!important;
+  grid-row:1!important;
+  position:relative!important;
+  z-index:1!important;
+  width:168px!important;
+  max-width:100%!important;
+  margin:0!important;
+  align-self:start!important;
+}
+.imdb-random-modal .imdb-random-result > .imdb-random-copy{
+  grid-column:2!important;
+  grid-row:1!important;
+  position:relative!important;
+  z-index:2!important;
+  min-width:0!important;
+  width:100%!important;
+  margin:0!important;
+  padding:1px 0 0!important;
+  align-self:start!important;
+  overflow:visible!important;
+}
+.imdb-random-modal .imdb-random-copy h3,
+.imdb-random-modal .imdb-random-copy .modal-meta,
+.imdb-random-modal .imdb-random-copy .imdb-random-rating,
+.imdb-random-modal .imdb-random-copy .imdb-random-credits{
+  position:relative!important;
+  width:100%!important;
+  max-width:100%!important;
+}
+.imdb-random-modal .imdb-random-credits{margin-top:7px!important}
+.imdb-random-modal .imdb-random-result > #imdbRandomOverview{
+  grid-column:1 / -1!important;
+  grid-row:2!important;
+  position:static!important;
+  float:none!important;
+  display:block!important;
+  width:100%!important;
+  max-width:100%!important;
+  min-width:0!important;
+  margin:10px 0 0!important;
+  padding:0!important;
+  box-sizing:border-box!important;
+  transform:none!important;
+  overflow:visible!important;
+}
+@media(max-width:600px){
+  .imdb-random-modal .imdb-random-result{
+    grid-template-columns:86px minmax(0,1fr)!important;
+    grid-template-rows:auto auto!important;
+    column-gap:8px!important;
+    row-gap:0!important;
+  }
+  .imdb-random-modal .imdb-random-result > .imdb-random-poster{
+    grid-column:1!important;
+    grid-row:1!important;
+    width:86px!important;
+  }
+  .imdb-random-modal .imdb-random-result > .imdb-random-copy{
+    grid-column:2!important;
+    grid-row:1!important;
+  }
+  .imdb-random-modal .imdb-random-result > #imdbRandomOverview{
+    grid-column:1 / 3!important;
+    grid-row:2!important;
+    margin-top:9px!important;
+  }
+}
+@media(max-width:380px){
+  .imdb-random-modal .imdb-random-result{grid-template-columns:78px minmax(0,1fr)!important;column-gap:7px!important}
+  .imdb-random-modal .imdb-random-result > .imdb-random-poster{width:78px!important}
+  .imdb-random-modal .imdb-random-result > #imdbRandomOverview{margin-top:8px!important}
+}
+
+
+/* Consolidated existing feature styles: imdb-random-poster-true-final-v15 */
+
+/* IMDb Random — true final responsive poster sizing.
+   This layer intentionally comes after the older v10 rules, which were resetting the poster to 86/78px. */
+@media(max-width:600px){
+  .imdb-random-modal .imdb-random-result{
+    display:grid!important;
+    grid-template-columns:clamp(128px,38vw,150px) minmax(0,1fr)!important;
+    grid-template-rows:auto auto!important;
+    column-gap:11px!important;
+    row-gap:0!important;
+    align-items:start!important;
+  }
+  .imdb-random-modal .imdb-random-result > .imdb-random-poster{
+    grid-column:1!important;
+    grid-row:1!important;
+    width:100%!important;
+    max-width:none!important;
+    height:auto!important;
+    aspect-ratio:2 / 3!important;
+    object-fit:cover!important;
+    margin:0!important;
+    align-self:start!important;
+  }
+  .imdb-random-modal .imdb-random-result > .imdb-random-copy{
+    grid-column:2!important;
+    grid-row:1!important;
+    min-width:0!important;
+    width:100%!important;
+  }
+  .imdb-random-modal .imdb-random-result > #imdbRandomOverview{
+    grid-column:1 / -1!important;
+    grid-row:2!important;
+    width:100%!important;
+    max-width:none!important;
+    margin-top:10px!important;
+    font:400 10.5px/1.5 Mina,sans-serif!important;
+  }
+  .imdb-random-modal .imdb-random-credits strong{
+    font:500 10px/1.3 Mina,sans-serif!important;
+  }
+}
+@media(max-width:380px){
+  .imdb-random-modal .imdb-random-result{
+    grid-template-columns:clamp(128px,40vw,140px) minmax(0,1fr)!important;
+    column-gap:9px!important;
+  }
+  .imdb-random-modal .imdb-random-result > #imdbRandomOverview{
+    margin-top:9px!important;
+    font-size:10px!important;
+  }
+  .imdb-random-modal .imdb-random-credits strong{
+    font-size:9.5px!important;
+  }
+}
+
+
+/* Consolidated existing feature styles: imdb-random-credits-wrap-v16 */
+
+/* IMDb Random credits — labels and values may wrap naturally instead of clipping on narrow screens. */
+.imdb-random-modal .imdb-random-credits{
+  width:100%!important;
+  min-width:0!important;
+}
+.imdb-random-modal .imdb-random-credits div{
+  grid-template-columns:max-content minmax(0,1fr)!important;
+  min-width:0!important;
+  align-items:start!important;
+}
+.imdb-random-modal .imdb-random-credits span,
+.imdb-random-modal .imdb-random-credits strong{
+  min-width:0!important;
+  max-width:100%!important;
+  white-space:normal!important;
+  overflow:visible!important;
+  overflow-wrap:anywhere!important;
+  word-break:normal!important;
+}
+.imdb-random-modal .imdb-random-credits strong{
+  display:block!important;
+  line-height:1.35!important;
+}
+@media(max-width:600px){
+  .imdb-random-modal .imdb-random-credits div{
+    grid-template-columns:46px minmax(0,1fr)!important;
+    column-gap:5px!important;
+  }
+  .imdb-random-modal .imdb-random-credits span{
+    white-space:nowrap!important;
+  }
+  .imdb-random-modal .imdb-random-credits strong{
+    font-size:10px!important;
+    line-height:1.4!important;
+  }
+}
+@media(max-width:380px){
+  .imdb-random-modal .imdb-random-credits div{
+    grid-template-columns:43px minmax(0,1fr)!important;
+    column-gap:5px!important;
+  }
+  .imdb-random-modal .imdb-random-credits strong{
+    font-size:9.5px!important;
+    line-height:1.4!important;
+  }
+}
+
+
+/* Back-to-top placement: visible without colliding with mobile navigation. */
+.back-to-top{position:fixed!important;left:50%!important;right:auto!important;top:auto!important;bottom:24px!important;transform:translate(-50%,8px)!important}
+.back-to-top.show{transform:translate(-50%,0)!important}
+@media(max-width:820px){.back-to-top{bottom:calc(78px + env(safe-area-inset-bottom,0px))!important}}
+
+/* Unified palette: matte cocoa desktop canvas, warm-cream surfaces, muted-gold actions. */
+@media(min-width:821px){
+ body{background:radial-gradient(1100px 650px at 52% -230px,#584333 0%,#3b2b20 42%,#292019 100%);color:#f3e8d7}
+ .app{color:#f3e8d7}
+ .panel,.stat,.random-actions{color:var(--text)}
+ .brand p{color:#c8b49a}
+}
+@media(max-width:820px){
+ body{background:var(--bg);color:var(--text)}
+ .app{color:var(--text)}
+}
+
+</style>
+
+</style>
+
+
+
+
+
+
+
+
+</head>
 <body>
 <div class="app">
 <header class="top"><div class="brand"><div class="logo">🎬</div><div><h1>CineTon Admin</h1><p>Library management</p></div></div><div style="display:flex;align-items:center;gap:7px"><button id="activityBell" class="activity-bell" type="button" aria-label="Open activity notifications" title="Public activity"><span aria-hidden="true">🔔</span><b id="activityBadge" class="activity-badge">0</b></button><div id="status" class="status">Not connected</div></div></header>
@@ -1260,1143 +2692,45 @@ $('#importBackupFile').onchange=async e=>{
  load();
 })();
 </script></body>
-<style id="imdb-random-discovery-v1">
-.random-actions{display:flex;align-items:center;justify-content:center;gap:5px;width:100%}
-.random-actions .btn{min-width:68px;min-height:28px;padding:4px 9px;font-size:10px;line-height:1.1}
-.random-actions #imdbRandomBtn{border-color:#8a68436b;background:#77583b0d;color:var(--accent)}
-.imdb-random-modal{width:min(700px,calc(100% - 18px))}
-.imdb-random-head{display:flex;align-items:flex-start;justify-content:space-between;gap:12px;margin-bottom:9px}
-.imdb-random-head h2{margin:0 38px 2px 0!important}
-.imdb-random-head p{margin:0;color:var(--muted);font:400 10px/1.35 Mina,sans-serif}
-.imdb-random-category{flex:0 0 auto;color:var(--accent);font:600 9px/1 Mina,sans-serif;border:1px solid #77583b2b;background:#77583b08;border-radius:7px;padding:5px 7px}
-.imdb-random-state{margin:0 0 10px;color:var(--muted);font-size:10px}
-.imdb-random-state.ok{color:var(--ok)}.imdb-random-state.error{color:var(--danger)}.imdb-random-state.busy{color:var(--accent)}
-.imdb-random-result{display:grid;grid-template-columns:150px minmax(0,1fr);gap:14px;align-items:start}
-.imdb-random-poster{width:150px;aspect-ratio:2/3;object-fit:cover;border-radius:9px;background:#ded0bc;border:1px solid var(--line)}
-.imdb-random-copy{min-width:0;padding-top:2px}
-.imdb-random-copy h3{margin:0 0 4px;font:600 25px/1 "Cormorant Garamond",serif}
-.imdb-random-rating{margin-top:7px;color:var(--accent);font:600 11px/1.3 Mina,sans-serif}
-.imdb-random-copy p{margin:9px 0 0;color:var(--muted);font:400 11px/1.55 Mina,sans-serif;display:-webkit-box;-webkit-line-clamp:7;-webkit-box-orient:vertical;overflow:hidden}
-.imdb-random-actions{display:grid;grid-template-columns:1fr 1fr 1fr;gap:6px;margin-top:13px;padding-top:11px;border-top:1px solid var(--line)}
-.imdb-random-actions .btn{min-height:38px}
-@media(max-width:600px){
- .random-actions{gap:4px}.random-actions .btn{flex:1;min-width:0;padding:4px 6px;font-size:9px}
- .imdb-random-modal{width:calc(100% - 12px);max-height:92vh}
- .imdb-random-result{grid-template-columns:88px minmax(0,1fr);gap:10px}
- .imdb-random-poster{width:88px;border-radius:7px}
- .imdb-random-copy h3{font-size:21px}
- .imdb-random-rating{font-size:9px;margin-top:5px}
- .imdb-random-copy p{font-size:9px;line-height:1.45;-webkit-line-clamp:8;margin-top:7px}
- .imdb-random-actions{grid-template-columns:1fr 1fr;gap:5px}
- .imdb-random-actions #imdbAnother{grid-column:1/-1}
- .imdb-random-actions .btn{min-height:40px;font-size:10px}
-}
-</style>
-<style id="admin-desktop-scale-balance-v1">
-/* Desktop scale balance: bring Admin visually closer to the public CineTon desktop size without affecting phones. */
-@media(min-width:801px){
-  body{zoom:1.30}
-}
-</style>
 
-<style id="imdb-random-modal-balance-v1">
-/* IMDb Random: keep the close button clear of the heading and give the discovery card more room. */
-.imdb-random-modal{width:min(760px,calc(100% - 18px))!important}
-.imdb-random-modal .modal-inner{position:relative!important}
-.imdb-random-modal #closeImdbRandom{position:absolute!important;top:12px!important;right:12px!important;z-index:5!important;width:34px!important;height:34px!important;min-width:34px!important;min-height:34px!important;padding:0!important;display:grid!important;place-items:center!important;line-height:1!important;font-size:22px!important}
-.imdb-random-head{padding-right:50px!important}
-@media(max-width:600px){
-  .imdb-random-modal{width:calc(100% - 8px)!important}
-  .imdb-random-modal #closeImdbRandom{top:9px!important;right:9px!important;width:32px!important;height:32px!important;min-width:32px!important;min-height:32px!important;font-size:20px!important}
-  .imdb-random-head{padding-right:42px!important}
-}
-</style>
 
-<style id="imdb-random-watched-details-v1">
-.imdb-watched-details{margin-top:10px;padding:8px 9px;border:1px solid var(--line2);border-radius:9px;background:#77583b08}
-.imdb-watched-fields{display:grid;grid-template-columns:92px minmax(0,1fr);gap:7px;align-items:end}
-.imdb-watched-fields label{display:grid;gap:3px;color:var(--muted);font:600 9px/1.1 Mina,sans-serif}
-.imdb-watched-fields select,.imdb-watched-fields input{width:100%;min-height:32px;padding:6px 8px;border:1px solid var(--line2);border-radius:7px;background:var(--panel);color:var(--text);font:500 10px/1.2 Mina,sans-serif;box-sizing:border-box}
-@media(max-width:600px){.imdb-watched-details{margin-top:8px;padding:7px}.imdb-watched-fields{grid-template-columns:82px minmax(0,1fr);gap:6px}.imdb-watched-fields select,.imdb-watched-fields input{min-height:34px;font-size:10px;padding:6px 7px}}
-</style>
 
-<style id="imdb-random-modern-v2">
-.imdb-random-result{grid-template-columns:168px minmax(0,1fr)!important;gap:17px!important}
-.imdb-random-copy{padding-top:1px!important}
-.imdb-random-copy h3{font-size:28px!important;letter-spacing:-.01em!important;margin-bottom:5px!important}
-.imdb-random-rating{margin-top:6px!important}
-.imdb-random-credits{display:grid;gap:5px;margin-top:9px;padding-top:8px;border-top:1px solid var(--line)}
-.imdb-random-credits div{display:grid;grid-template-columns:54px minmax(0,1fr);gap:7px;align-items:baseline;min-width:0}
-.imdb-random-credits span{font:600 8px/1.2 Mina,sans-serif;text-transform:uppercase;letter-spacing:.04em;color:var(--muted)}
-.imdb-random-credits strong{min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;font:500 10px/1.25 Mina,sans-serif;color:var(--text)}
-.imdb-random-copy p{margin-top:9px!important}
-@media(max-width:600px){
- .imdb-random-result{grid-template-columns:100px minmax(0,1fr)!important;gap:11px!important}
- .imdb-random-poster{width:100px!important}
- .imdb-random-copy h3{font-size:22px!important}
- .imdb-random-credits{margin-top:7px;padding-top:6px;gap:4px}
- .imdb-random-credits div{grid-template-columns:46px minmax(0,1fr);gap:5px}
- .imdb-random-credits span{font-size:7px}
- .imdb-random-credits strong{font-size:9px}
-}
-</style>
 
-<style id="imdb-random-text-contrast-v1">
-.imdb-random-credits strong{color:#1f1711!important}
-.imdb-random-copy p{color:#1f1711!important}
-</style>
-<style id="imdb-random-region-filter-v1">
-.imdb-random-filter{display:grid;grid-template-columns:auto minmax(150px,220px);align-items:center;gap:7px;margin:0 0 7px}
-.imdb-random-filter label{font:600 9px/1.2 Mina,sans-serif;color:var(--muted)}
-.imdb-random-filter select{min-height:32px;padding:6px 8px;font-size:9px}
-@media(max-width:600px){.imdb-random-filter{grid-template-columns:1fr;gap:3px}.imdb-random-filter select{min-height:36px;font-size:10px}}
-</style><style id="admin-edit-modal-balance-v1">
-/* Edit modal balance — give the poster, title and comment area enough room on desktop and mobile. */
-#editModal.admin-modal{
-  width:min(780px,calc(100% - 28px))!important;
-  max-height:92vh!important;
-}
-#editModal.admin-modal .modal-inner{
-  padding:22px!important;
-  max-height:92vh!important;
-}
-#editModal.admin-modal h2{
-  font-size:31px!important;
-  line-height:1.02!important;
-  margin-right:44px!important;
-}
-#editModal.admin-modal .modal-meta{
-  font-size:12px!important;
-  line-height:1.45!important;
-}
-#editModal.admin-modal .admin-detail{
-  grid-template-columns:150px minmax(0,1fr)!important;
-  gap:18px!important;
-  margin:16px 0!important;
-  align-items:start!important;
-}
-#editModal.admin-modal .admin-detail img{
-  width:150px!important;
-  border-radius:11px!important;
-  box-shadow:0 5px 16px #40352c18!important;
-}
-#editModal.admin-modal .personal-box{
-  padding-top:16px!important;
-  margin-top:14px!important;
-}
-#editModal.admin-modal .personal-box h3{
-  font-size:15px!important;
-  margin-bottom:11px!important;
-}
-#editModal.admin-modal .personal-grid{
-  grid-template-columns:140px minmax(0,1fr)!important;
-  gap:11px!important;
-}
-#editModal.admin-modal .field label{
-  font-size:11px!important;
-  margin-bottom:6px!important;
-}
-#editModal.admin-modal #editComment{
-  min-height:124px!important;
-  padding:11px 12px!important;
-  font-size:13px!important;
-  line-height:1.5!important;
-  resize:vertical!important;
-}
-#editModal.admin-modal .love-toggle{
-  min-height:42px!important;
-  font-size:12px!important;
-}
-#editModal.admin-modal .modal-actions-row{
-  margin-top:13px!important;
-  gap:9px!important;
-}
-#editModal.admin-modal .modal-actions-row .btn{
-  min-height:40px!important;
-}
-@media(max-width:600px){
-  #editModal.admin-modal{
-    width:calc(100% - 12px)!important;
-    max-height:94vh!important;
-  }
-  #editModal.admin-modal .modal-inner{
-    padding:15px!important;
-    max-height:94vh!important;
-  }
-  #editModal.admin-modal h2{
-    font-size:25px!important;
-    line-height:1.04!important;
-  }
-  #editModal.admin-modal .modal-meta{
-    font-size:10px!important;
-  }
-  #editModal.admin-modal .admin-detail{
-    grid-template-columns:94px minmax(0,1fr)!important;
-    gap:13px!important;
-    margin:13px 0!important;
-  }
-  #editModal.admin-modal .admin-detail img{
-    width:94px!important;
-    border-radius:9px!important;
-  }
-  #editModal.admin-modal .personal-box{
-    padding-top:13px!important;
-    margin-top:11px!important;
-  }
-  #editModal.admin-modal .personal-box h3{
-    font-size:13px!important;
-    margin-bottom:9px!important;
-  }
-  #editModal.admin-modal .personal-grid{
-    grid-template-columns:1fr!important;
-    gap:9px!important;
-  }
-  #editModal.admin-modal #editComment{
-    min-height:118px!important;
-    font-size:12px!important;
-  }
-  #editModal.admin-modal .modal-actions-row{
-    margin-top:10px!important;
-  }
-}
-@media(max-width:380px){
-  #editModal.admin-modal .admin-detail{
-    grid-template-columns:84px minmax(0,1fr)!important;
-    gap:11px!important;
-  }
-  #editModal.admin-modal .admin-detail img{width:84px!important}
-  #editModal.admin-modal h2{font-size:23px!important}
-}
-</style>
 
-<style id="imdb-random-title-poster-balance-v11">
-/* IMDb Random: compact single-line heading + balanced mobile poster. */
-.imdb-random-modal .imdb-random-head h2{
-  font-size:18px!important;
-  line-height:1!important;
-  white-space:nowrap!important;
-  margin:0 38px 2px 0!important;
-}
-@media(max-width:600px){
-  .imdb-random-modal .imdb-random-head h2{
-    font-size:15px!important;
-    line-height:1!important;
-    white-space:nowrap!important;
-  }
-  .imdb-random-modal .imdb-random-result{
-    grid-template-columns:112px minmax(0,1fr)!important;
-    column-gap:11px!important;
-  }
-  .imdb-random-modal .imdb-random-result > .imdb-random-poster{
-    width:112px!important;
-  }
-}
-@media(max-width:380px){
-  .imdb-random-modal .imdb-random-result{
-    grid-template-columns:100px minmax(0,1fr)!important;
-    column-gap:9px!important;
-  }
-  .imdb-random-modal .imdb-random-result > .imdb-random-poster{
-    width:100px!important;
-  }
-}
-</style>
-<style id="imdb-random-mobile-balance-v12">
-/* IMDb Random — restore a balanced mobile poster and story typography. */
-@media(max-width:600px){
-  .imdb-random-modal .imdb-random-result{
-    grid-template-columns:124px minmax(0,1fr)!important;
-    column-gap:11px!important;
-  }
-  .imdb-random-modal .imdb-random-result > .imdb-random-poster{
-    width:124px!important;
-    max-width:124px!important;
-  }
-  .imdb-random-modal .imdb-random-result > #imdbRandomOverview{
-    font:400 10px/1.5 Mina,sans-serif!important;
-    margin-top:9px!important;
-    -webkit-line-clamp:6!important;
-  }
-}
-@media(max-width:380px){
-  .imdb-random-modal .imdb-random-result{
-    grid-template-columns:112px minmax(0,1fr)!important;
-    column-gap:9px!important;
-  }
-  .imdb-random-modal .imdb-random-result > .imdb-random-poster{
-    width:112px!important;
-    max-width:112px!important;
-  }
-  .imdb-random-modal .imdb-random-result > #imdbRandomOverview{
-    font-size:9px!important;
-    line-height:1.5!important;
-    margin-top:8px!important;
-  }
-}
-</style>
-<style id="imdb-random-mobile-final-balance-v13">
-/* IMDb Random — final mobile sizing override. Keep poster flexible and text comfortably readable. */
-.imdb-random-modal .imdb-random-result > .imdb-random-poster{
-  width:168px!important;
-  max-width:100%!important;
-}
-.imdb-random-modal .imdb-random-result > #imdbRandomOverview{
-  font:400 11px/1.55 Mina,sans-serif!important;
-}
-.imdb-random-modal .imdb-random-credits strong{
-  font-size:10px!important;
-}
-@media(max-width:600px){
-  .imdb-random-modal .imdb-random-result{
-    grid-template-columns:minmax(124px,132px) minmax(0,1fr)!important;
-    column-gap:11px!important;
-  }
-  .imdb-random-modal .imdb-random-result > .imdb-random-poster{
-    width:132px!important;
-    max-width:132px!important;
-  }
-  .imdb-random-modal .imdb-random-result > #imdbRandomOverview{
-    font-size:10.5px!important;
-    line-height:1.5!important;
-    margin-top:9px!important;
-  }
-  .imdb-random-modal .imdb-random-credits strong{
-    font-size:10px!important;
-    line-height:1.3!important;
-  }
-}
-@media(max-width:380px){
-  .imdb-random-modal .imdb-random-result{
-    grid-template-columns:minmax(112px,120px) minmax(0,1fr)!important;
-    column-gap:9px!important;
-  }
-  .imdb-random-modal .imdb-random-result > .imdb-random-poster{
-    width:120px!important;
-    max-width:120px!important;
-  }
-  .imdb-random-modal .imdb-random-result > #imdbRandomOverview{
-    font-size:10px!important;
-    line-height:1.5!important;
-  }
-  .imdb-random-modal .imdb-random-credits strong{
-    font-size:9.5px!important;
-  }
-}
-</style>
-<style id="imdb-random-absolute-final-v14">
-/* IMDb Random: absolute final mobile sizing layer — placed after every earlier IMDb Random rule. */
-@media(max-width:600px){
-  .imdb-random-modal .imdb-random-result{
-    display:grid!important;
-    grid-template-columns:140px minmax(0,1fr)!important;
-    grid-template-rows:auto auto!important;
-    column-gap:11px!important;
-    row-gap:0!important;
-  }
-  .imdb-random-modal .imdb-random-result > .imdb-random-poster{
-    grid-column:1!important;
-    grid-row:1!important;
-    width:140px!important;
-    max-width:140px!important;
-  }
-  .imdb-random-modal .imdb-random-result > .imdb-random-copy{
-    grid-column:2!important;
-    grid-row:1!important;
-    min-width:0!important;
-  }
-  .imdb-random-modal .imdb-random-result > #imdbRandomOverview{
-    grid-column:1 / -1!important;
-    grid-row:2!important;
-    width:100%!important;
-    max-width:none!important;
-    margin-top:10px!important;
-    font:400 10.5px/1.5 Mina,sans-serif!important;
-  }
-  .imdb-random-modal .imdb-random-credits strong{
-    font:500 10px/1.3 Mina,sans-serif!important;
-  }
-}
-@media(max-width:380px){
-  .imdb-random-modal .imdb-random-result{
-    grid-template-columns:128px minmax(0,1fr)!important;
-    column-gap:9px!important;
-  }
-  .imdb-random-modal .imdb-random-result > .imdb-random-poster{
-    width:128px!important;
-    max-width:128px!important;
-  }
-  .imdb-random-modal .imdb-random-result > #imdbRandomOverview{
-    font-size:10px!important;
-    line-height:1.5!important;
-    margin-top:9px!important;
-  }
-  .imdb-random-modal .imdb-random-credits strong{
-    font-size:9.5px!important;
-  }
-}
-</style>
+
+
+
+
+
+
+
+
+
+
+
 </html>
-<style id="library-random-polish-v1">
-/* Library Random — simple, calm and clearly separated from IMDb discovery. */
-.rating-sticky-random{
-  margin:7px 0 10px!important;
-  padding:7px 9px!important;
-  border:1px solid var(--line)!important;
-  border-radius:12px!important;
-  background:#fffaf2!important;
-  box-shadow:0 4px 14px #5b42250a!important;
-}
-.random-actions{
-  display:grid!important;
-  grid-template-columns:minmax(150px,1fr) auto auto!important;
-  align-items:center!important;
-  gap:7px!important;
-  width:100%!important;
-}
-.random-context{
-  min-width:0;
-  display:flex;
-  align-items:baseline;
-  gap:7px;
-  padding-left:2px;
-}
-.random-context strong{
-  color:var(--text);
-  font:600 11px/1.2 Mina,sans-serif;
-  white-space:nowrap;
-}
-.random-context span{
-  color:var(--muted);
-  font:400 9px/1.25 Mina,sans-serif;
-  white-space:nowrap;
-  overflow:hidden;
-  text-overflow:ellipsis;
-}
-.rating-sticky-random #randomMovieBtn,
-.rating-sticky-random #imdbRandomBtn{
-  min-height:34px!important;
-  min-width:0!important;
-  padding:7px 11px!important;
-  border-radius:9px!important;
-  font:600 10px/1.1 Mina,sans-serif!important;
-  white-space:nowrap;
-  transition:background .14s,border-color .14s,transform .12s,box-shadow .14s!important;
-}
-.rating-sticky-random #randomMovieBtn{
-  background:#77583b0b!important;
-  border-color:#77583b35!important;
-  color:var(--accent)!important;
-}
-.rating-sticky-random #imdbRandomBtn{
-  background:var(--accent)!important;
-  border-color:var(--accent)!important;
-  color:#fffaf2!important;
-  box-shadow:0 2px 7px #77583b18!important;
-}
-.rating-sticky-random #randomMovieBtn:hover,
-.rating-sticky-random #imdbRandomBtn:hover{
-  transform:translateY(-1px);
-}
-.rating-sticky-random #randomMovieBtn:hover{
-  background:#77583b15!important;
-  border-color:#77583b55!important;
-}
-.rating-sticky-random #imdbRandomBtn:hover{
-  box-shadow:0 4px 11px #77583b22!important;
-}
-.rating-sticky-random #randomMovieBtn:focus-visible,
-.rating-sticky-random #imdbRandomBtn:focus-visible{
-  outline:2px solid var(--accent)!important;
-  outline-offset:2px;
-}
-.rating-sticky-random #randomMovieBtn:active,
-.rating-sticky-random #imdbRandomBtn:active{
-  transform:translateY(0);
-}
-@media(max-width:600px){
-  .rating-sticky-random{
-    margin:5px 0 8px!important;
-    padding:7px!important;
-    border-radius:11px!important;
-  }
-  .random-actions{
-    grid-template-columns:1fr 1fr!important;
-    gap:5px!important;
-  }
-  .random-context{
-    grid-column:1/-1;
-    gap:6px;
-    padding:0 2px 2px;
-  }
-  .random-context strong{font-size:10px}
-  .random-context span{font-size:8px}
-  .rating-sticky-random #randomMovieBtn,
-  .rating-sticky-random #imdbRandomBtn{
-    width:100%!important;
-    min-height:38px!important;
-    padding:8px 8px!important;
-    font-size:10px!important;
-  }
-}
-@media(max-width:380px){
-  .random-context{
-    display:block;
-  }
-  .random-context span{
-    display:block;
-    margin-top:2px;
-  }
-}
-</style>
-
-<style id="admin-submit-balance">
-/* Balanced admin action buttons */
-.actions{align-items:stretch}
-.actions>.btn{min-height:38px;display:inline-flex;align-items:center;justify-content:center;line-height:1.15}
-.actions>.btn:not(.secondary):not(.danger){min-width:132px}
-#quickAddSection .actions.add-actions .btn{min-width:0}
-#bulkAddSection .actions .btn{min-width:150px}
-.modal-actions-row>.btn{min-height:38px;display:inline-flex;align-items:center;justify-content:center}
-.searchbar>.btn,.bulkTools>.btn{min-height:38px;display:inline-flex;align-items:center;justify-content:center}
-@media(max-width:600px){
- .actions{gap:7px}
- .actions>.btn{min-height:40px;padding:9px 12px}
- .actions>.btn:not(.secondary):not(.danger){min-width:0}
- #quickAddSection .actions.add-actions .btn,#bulkAddSection .actions .btn{flex:1;min-width:0}
- .modal-actions-row>.btn{min-height:40px}
- .searchbar>.btn,.bulkTools>.btn{min-height:40px}
-}
-</style><style id="imdb-random-love-option-v1">
-.imdb-random-love-row{display:flex;justify-content:flex-start;margin-top:9px}
-.imdb-random-love{min-height:30px;padding:5px 10px;border:1px solid var(--line2);border-radius:8px;background:#fffaf2;color:var(--muted);font:600 10px/1 Mina,sans-serif;cursor:pointer;transition:background .14s,border-color .14s,color .14s,transform .12s}
-.imdb-random-love:hover{background:#77583b0b;border-color:#a54d4540;color:#a54d45;transform:translateY(-1px)}
-.imdb-random-love.is-loved{background:#a54d450d;border-color:#a54d4540;color:#a54d45}
-.imdb-random-love:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
-@media(max-width:600px){.imdb-random-love-row{margin-top:7px}.imdb-random-love{min-height:32px;padding:6px 9px;font-size:9px}}
-</style>
-<style id="imdb-random-love-watched-only-v2">
-.imdb-watched-fields{grid-template-columns:92px minmax(0,1fr) auto!important}
-.imdb-watched-fields .imdb-random-love{align-self:end;min-width:62px!important;white-space:nowrap;margin:0!important}
-@media(max-width:600px){.imdb-watched-fields{grid-template-columns:82px minmax(0,1fr) auto!important}.imdb-watched-fields .imdb-random-love{min-width:58px!important;padding-left:7px!important;padding-right:7px!important}}
-</style>
-
-<style id="imdb-random-genre-v1">
-#imdbRandomGenre{color:#1f1711!important}
-</style>
-<style id="imdb-random-smart-search-v1">.imdb-random-search{display:grid;grid-template-columns:minmax(0,1fr) auto auto;gap:5px;margin:0 0 4px}.imdb-random-search input{min-height:34px;padding:7px 9px;font-size:10px}.imdb-random-search .btn{min-height:34px;padding:7px 10px;font-size:9px;white-space:nowrap}.imdb-random-search-hint{margin:0 0 9px;color:var(--muted);font:400 9px/1.35 Mina,sans-serif}@media(max-width:600px){.imdb-random-search{grid-template-columns:minmax(0,1fr) auto;gap:5px}.imdb-random-search #imdbRandomClearBtn{grid-column:1/-1;min-height:30px}.imdb-random-search input{min-height:38px;font-size:10px}.imdb-random-search .btn{min-height:38px}.imdb-random-search-hint{font-size:8px;margin-bottom:8px}}</style>
-<style id="imdb-random-clickable-genres-v1">
-.imdb-random-genre-link{appearance:none;border:0;background:transparent;padding:0;margin:0;color:#1f1711;font:500 10px/1.25 Mina,sans-serif;text-decoration:none;cursor:pointer}
-.imdb-random-genre-link:hover{color:#77583b;text-decoration:underline;text-underline-offset:2px}
-.imdb-random-genre-link:focus-visible{outline:2px solid #77583b;outline-offset:2px;border-radius:3px}
-.imdb-random-genre-sep{color:#1f1711}
-@media(max-width:600px){.imdb-random-genre-link{font-size:9px}}
-</style>
-
-<style id="local-random-modal-redesign-v1">
-/* Local Library Random — a focused, editorial movie-pick modal. */
-#editModal.local-random-edit{
-  width:min(820px,calc(100% - 30px))!important;
-  max-height:90vh!important;
-  border-radius:18px!important;
-  background:#fbf6ed!important;
-  border-color:#77583b35!important;
-  box-shadow:0 28px 80px #40352c38,0 1px 0 #fffdf7 inset!important;
-}
-#editModal.local-random-edit .modal-inner{
-  padding:24px!important;
-  max-height:90vh!important;
-}
-#editModal.local-random-edit .admin-detail{
-  position:relative!important;
-  grid-template-columns:190px minmax(0,1fr)!important;
-  gap:22px!important;
-  margin:0!important;
-  padding:0 0 19px!important;
-  border-bottom:1px solid var(--line)!important;
-}
-#editModal.local-random-edit .admin-detail::before{
-  content:"LIBRARY RANDOM";
-  position:absolute;
-  left:212px;
-  top:0;
-  color:#77583b!important;
-  font:700 9px/1 Mina,sans-serif!important;
-  letter-spacing:.08em;
-}
-#editModal.local-random-edit .admin-detail img{
-  width:190px!important;
-  border-radius:12px!important;
-  box-shadow:0 9px 24px #40352c20!important;
-}
-#editModal.local-random-edit .admin-detail>div{
-  padding:25px 4px 0 0!important;
-  min-width:0!important;
-}
-#editModal.local-random-edit h2{
-  font-size:35px!important;
-  line-height:1.02!important;
-  letter-spacing:-.015em!important;
-  margin:0 44px 5px 0!important;
-}
-#editModal.local-random-edit .modal-meta{
-  font-size:11px!important;
-  line-height:1.5!important;
-  color:var(--muted)!important;
-}
-#editModal.local-random-edit .modal-status-row{
-  margin:18px 0 0!important;
-  padding:10px 0 0!important;
-  border-top:1px solid var(--line)!important;
-  border-bottom:0!important;
-}
-#editModal.local-random-edit .modal-status-label{
-  font-size:11px!important;
-  color:var(--text)!important;
-}
-#editModal.local-random-edit #editStatusToggle{
-  min-height:36px!important;
-  padding:7px 11px!important;
-  border-radius:9px!important;
-  font-size:10px!important;
-}
-#editModal.local-random-edit .personal-box{
-  margin-top:18px!important;
-  padding:16px 0 0!important;
-  border-top:0!important;
-}
-#editModal.local-random-edit .personal-box h3{
-  display:flex!important;
-  align-items:baseline!important;
-  justify-content:space-between!important;
-  gap:10px!important;
-  margin:0 0 10px!important;
-  font-size:14px!important;
-}
-#editModal.local-random-edit .personal-box h3::after{
-  content:"Your library details";
-  color:var(--muted);
-  font:400 9px/1.2 Mina,sans-serif;
-}
-#editModal.local-random-edit .personal-grid{
-  display:grid!important;
-  grid-template-columns:minmax(0,1fr)!important;
-  gap:12px!important;
-  padding:13px!important;
-  border:1px solid var(--line)!important;
-  border-radius:13px!important;
-  background:#fffaf2!important;
-}
-#editModal.local-random-edit .personal-grid>.field:first-child{
-  grid-column:auto!important;
-}
-#editModal.local-random-edit .rating-picker{
-  padding:3px 0 2px!important;
-}
-#editModal.local-random-edit .rating-choice{
-  min-height:40px!important;
-  font-size:11px!important;
-}
-#editModal.local-random-edit #editComment{
-  min-height:104px!important;
-  padding:10px 11px!important;
-  font-size:12px!important;
-  line-height:1.5!important;
-  border-radius:9px!important;
-}
-#editModal.local-random-edit .love-toggle{
-  margin-top:10px!important;
-  min-height:40px!important;
-  border-radius:9px!important;
-}
-#editModal.local-random-edit .modal-actions-row{
-  margin-top:13px!important;
-  padding-top:12px!important;
-  border-top:1px solid var(--line)!important;
-  gap:8px!important;
-}
-#editModal.local-random-edit .modal-actions-row .btn{
-  min-height:40px!important;
-}
-#editModal.local-random-edit .modal-actions-row #savePersonal{
-  min-width:138px!important;
-}
-@media(max-width:600px){
-  #editModal.local-random-edit{
-    width:calc(100% - 10px)!important;
-    max-height:94vh!important;
-    border-radius:15px!important;
-  }
-  #editModal.local-random-edit .modal-inner{
-    padding:15px!important;
-    max-height:94vh!important;
-  }
-  #editModal.local-random-edit .admin-detail{
-    grid-template-columns:108px minmax(0,1fr)!important;
-    gap:13px!important;
-    padding-bottom:14px!important;
-  }
-  #editModal.local-random-edit .admin-detail::before{
-    left:121px;
-    top:0;
-    font-size:8px!important;
-  }
-  #editModal.local-random-edit .admin-detail img{
-    width:108px!important;
-    border-radius:9px!important;
-  }
-  #editModal.local-random-edit .admin-detail>div{
-    padding:19px 0 0!important;
-  }
-  #editModal.local-random-edit h2{
-    font-size:25px!important;
-    line-height:1.04!important;
-    margin-right:36px!important;
-  }
-  #editModal.local-random-edit .modal-meta{
-    font-size:9px!important;
-  }
-  #editModal.local-random-edit .modal-status-row{
-    margin-top:11px!important;
-    padding-top:8px!important;
-    gap:6px!important;
-    align-items:center!important;
-  }
-  #editModal.local-random-edit .modal-status-label{
-    font-size:9px!important;
-  }
-  #editModal.local-random-edit #editStatusToggle{
-    min-height:32px!important;
-    padding:6px 8px!important;
-    font-size:8px!important;
-  }
-  #editModal.local-random-edit .personal-box{
-    margin-top:13px!important;
-    padding-top:0!important;
-  }
-  #editModal.local-random-edit .personal-box h3{
-    font-size:12px!important;
-    margin-bottom:8px!important;
-  }
-  #editModal.local-random-edit .personal-box h3::after{
-    font-size:8px!important;
-  }
-  #editModal.local-random-edit .personal-grid{
-    gap:9px!important;
-    padding:10px!important;
-    border-radius:11px!important;
-  }
-  #editModal.local-random-edit .rating-choice{
-    min-height:38px!important;
-    font-size:10px!important;
-  }
-  #editModal.local-random-edit #editComment{
-    min-height:92px!important;
-    font-size:11px!important;
-  }
-  #editModal.local-random-edit .love-toggle{
-    min-height:38px!important;
-    font-size:10px!important;
-  }
-  #editModal.local-random-edit .modal-actions-row{
-    margin-top:10px!important;
-    padding-top:9px!important;
-  }
-  #editModal.local-random-edit .modal-actions-row #savePersonal{
-    min-width:0!important;
-  }
-}
-@media(max-width:380px){
-  #editModal.local-random-edit .admin-detail{
-    grid-template-columns:88px minmax(0,1fr)!important;
-    gap:10px!important;
-  }
-  #editModal.local-random-edit .admin-detail::before{left:98px}
-  #editModal.local-random-edit .admin-detail img{width:88px!important}
-  #editModal.local-random-edit h2{font-size:22px!important}
-}
-</style>
-
-<style id="local-random-modal-size-v2">
-/* Local Random modal — tighter proportions without changing its redesign. */
-#editModal.local-random-edit{
-  width:min(700px,calc(100% - 32px))!important;
-  max-height:88vh!important;
-}
-#editModal.local-random-edit .modal-inner{
-  padding:19px!important;
-  max-height:88vh!important;
-}
-#editModal.local-random-edit .admin-detail{
-  grid-template-columns:154px minmax(0,1fr)!important;
-  gap:17px!important;
-  padding-bottom:15px!important;
-}
-#editModal.local-random-edit .admin-detail::before{left:171px!important}
-#editModal.local-random-edit .admin-detail img{width:154px!important}
-#editModal.local-random-edit .admin-detail>div{padding:22px 2px 0 0!important}
-#editModal.local-random-edit h2{font-size:30px!important;margin-right:40px!important}
-#editModal.local-random-edit .modal-status-row{margin-top:13px!important;padding-top:8px!important}
-#editModal.local-random-edit .personal-box{margin-top:14px!important}
-#editModal.local-random-edit .personal-grid{gap:9px!important;padding:11px!important}
-#editModal.local-random-edit .rating-choice{min-height:36px!important}
-#editModal.local-random-edit #editComment{min-height:88px!important}
-#editModal.local-random-edit .modal-actions-row{margin-top:10px!important;padding-top:9px!important}
-@media(max-width:600px){
-  #editModal.local-random-edit{
-    width:calc(100% - 18px)!important;
-    max-height:91vh!important;
-  }
-  #editModal.local-random-edit .modal-inner{padding:13px!important;max-height:91vh!important}
-  #editModal.local-random-edit .admin-detail{
-    grid-template-columns:88px minmax(0,1fr)!important;
-    gap:11px!important;
-    padding-bottom:12px!important;
-  }
-  #editModal.local-random-edit .admin-detail::before{left:99px!important}
-  #editModal.local-random-edit .admin-detail img{width:88px!important}
-  #editModal.local-random-edit .admin-detail>div{padding-top:18px!important}
-  #editModal.local-random-edit h2{font-size:22px!important;margin-right:32px!important}
-  #editModal.local-random-edit .personal-box{margin-top:11px!important}
-  #editModal.local-random-edit .personal-grid{gap:8px!important;padding:9px!important}
-  #editModal.local-random-edit .rating-choice{min-height:34px!important}
-  #editModal.local-random-edit #editComment{min-height:82px!important}
-}
-@media(max-width:380px){
-  #editModal.local-random-edit{
-    width:calc(100% - 12px)!important;
-  }
-  #editModal.local-random-edit .admin-detail{
-    grid-template-columns:78px minmax(0,1fr)!important;
-    gap:9px!important;
-  }
-  #editModal.local-random-edit .admin-detail::before{left:87px!important}
-  #editModal.local-random-edit .admin-detail img{width:78px!important}
-  #editModal.local-random-edit h2{font-size:20px!important}
-}
-</style>
-
-<style id="local-random-modal-controls-v3">
-#editModal.local-random-edit .x{
-  z-index:30!important;
-  pointer-events:auto!important;
-  top:10px!important;
-  right:10px!important;
-  width:36px!important;
-  height:36px!important;
-  display:grid!important;
-  place-items:center!important;
-  cursor:pointer!important;
-}
-#editModal.local-random-edit .modal-status-row{
-  display:grid!important;
-  grid-template-columns:minmax(0,1fr) auto!important;
-  align-items:center!important;
-  column-gap:14px!important;
-  width:100%!important;
-}
-#editModal.local-random-edit #editStatusToggle{
-  justify-self:end!important;
-  min-width:116px!important;
-}
-#editModal.local-random-edit .modal-actions-row{
-  display:grid!important;
-  grid-template-columns:auto auto minmax(0,1fr) auto!important;
-  align-items:center!important;
-  gap:8px!important;
-  justify-content:initial!important;
-}
-#editModal.local-random-edit .modal-actions-row #editDelete{justify-self:start!important}
-#editModal.local-random-edit .modal-actions-row .local-random-another{justify-self:start!important;min-width:104px!important}
-#editModal.local-random-edit .modal-actions-row #savePersonal{justify-self:end!important}
-#editModal.local-random-edit .modal-actions-row .draft-state{margin:0!important;text-align:center!important;min-width:0!important}
-@media(max-width:600px){
-  #editModal.local-random-edit .modal-status-row{
-    grid-template-columns:minmax(0,1fr) auto!important;
-    column-gap:9px!important;
-  }
-  #editModal.local-random-edit #editStatusToggle{
-    min-width:98px!important;
-  }
-  #editModal.local-random-edit .modal-actions-row{
-    grid-template-columns:auto minmax(0,1fr) auto!important;
-    gap:6px!important;
-  }
-  #editModal.local-random-edit .modal-actions-row .local-random-another{
-    grid-column:2!important;
-    justify-self:center!important;
-    min-width:96px!important;
-  }
-  #editModal.local-random-edit .modal-actions-row .draft-state{display:none!important}
-}
-@media(max-width:380px){
-  #editModal.local-random-edit .modal-actions-row .local-random-another{min-width:88px!important}
-}
-</style>
 
 
-<style id="activity-polish-v2">
-/* Activity — balanced information density */
-#activitySection{max-width:980px;margin-left:auto;margin-right:auto}
-#activitySection .head{align-items:center;margin-bottom:10px}
-#activitySection .sector-note{display:block;margin-top:3px;font:400 9px/1.3 Mina,sans-serif;color:var(--muted)}
-.activity-summary{grid-template-columns:repeat(4,minmax(0,1fr));gap:7px;margin-bottom:8px}
-.activity-stat{min-height:58px;padding:9px 10px;display:flex;flex-direction:column;justify-content:center}
-.activity-stat strong{font-size:16px;line-height:1}
-.activity-stat span{margin-top:4px}
-.activity-toolbar{display:grid;grid-template-columns:minmax(0,1fr) auto auto;gap:6px;align-items:center;margin:0 0 8px;padding:8px 0;border-top:1px solid var(--line)}
-.activity-filters{display:flex;gap:4px;min-width:0}
-.activity-filter{border:1px solid var(--line2);background:#77583b08;color:var(--muted);border-radius:8px;padding:6px 8px;font:600 9px/1 Mina,sans-serif;white-space:nowrap}
-.activity-filter.active{background:#77583b14;border-color:#77583b45;color:var(--text)}
-.activity-toolbar .btn{min-height:30px;padding:6px 9px;font-size:9px}
-.activity-count{font-size:9px!important}
-.activity-list{gap:5px}
-.activity-row{grid-template-columns:30px minmax(0,1fr) auto;gap:8px;padding:8px;border-radius:10px}
-.activity-row.unread{box-shadow:inset 3px 0 0 var(--accent)}
-.activity-title{font-size:11px}
-.activity-meta{font-size:8.5px}
-.activity-preview{font-size:9.5px;line-height:1.4}
-.activity-time{font-size:8px}
-.activity-open{min-height:27px}
-.activity-day{margin:9px 1px 4px;color:var(--muted);font:600 8px/1 Mina,sans-serif;letter-spacing:.04em;text-transform:uppercase}
-.activity-day:first-child{margin-top:2px}
-.activity-live{padding:4px 7px;border:1px solid var(--line);border-radius:99px;background:#fffaf2}
-@media(max-width:600px){
-  #activitySection{max-width:none}
-  .activity-summary{grid-template-columns:repeat(4,minmax(0,1fr));gap:4px}
-  .activity-stat{min-height:52px;padding:7px 5px;text-align:center}
-  .activity-stat strong{font-size:14px}
-  .activity-stat span{font-size:7px}
-  .activity-toolbar{grid-template-columns:1fr auto;gap:5px}
-  .activity-filters{grid-column:1/-1;display:grid;grid-template-columns:repeat(3,1fr);gap:4px}
-  .activity-filter{padding:7px 4px}
-  .activity-toolbar .activity-count{grid-column:1;grid-row:2;align-self:center}
-  .activity-toolbar #activityRefresh,.activity-toolbar #activityMarkRead{grid-row:2}
-  .activity-toolbar #activityRefresh{grid-column:2}
-  .activity-toolbar #activityMarkRead{grid-column:2;display:none}
-  .activity-row{grid-template-columns:27px minmax(0,1fr);padding:7px}
-  .activity-icon{width:27px;height:27px}
-  .activity-row .activity-time{grid-column:2;grid-row:2}
-  .activity-row .activity-open{grid-column:2;grid-row:3;justify-self:start;margin-top:2px}
-}
-@media(max-width:380px){
-  .activity-summary{gap:3px}
-  .activity-stat{min-height:49px;padding:6px 3px}
-  .activity-stat strong{font-size:13px}
-  .activity-stat span{font-size:6.5px}
-  .activity-filter{font-size:8px}
-}
-</style>
-<style id="imdb-random-layout-final-v10">
-/* Final separation: poster is an isolated column; title/rating/credits stay in the details column. */
-.imdb-random-modal .imdb-random-result{
-  display:grid!important;
-  grid-template-columns:168px minmax(0,1fr)!important;
-  grid-template-rows:auto!important;
-  column-gap:17px!important;
-  row-gap:0!important;
-  align-items:start!important;
-  position:relative!important;
-}
-.imdb-random-modal .imdb-random-result > .imdb-random-poster{
-  grid-column:1!important;
-  grid-row:1!important;
-  position:relative!important;
-  z-index:1!important;
-  width:168px!important;
-  max-width:100%!important;
-  margin:0!important;
-  align-self:start!important;
-}
-.imdb-random-modal .imdb-random-result > .imdb-random-copy{
-  grid-column:2!important;
-  grid-row:1!important;
-  position:relative!important;
-  z-index:2!important;
-  min-width:0!important;
-  width:100%!important;
-  margin:0!important;
-  padding:1px 0 0!important;
-  align-self:start!important;
-  overflow:visible!important;
-}
-.imdb-random-modal .imdb-random-copy h3,
-.imdb-random-modal .imdb-random-copy .modal-meta,
-.imdb-random-modal .imdb-random-copy .imdb-random-rating,
-.imdb-random-modal .imdb-random-copy .imdb-random-credits{
-  position:relative!important;
-  width:100%!important;
-  max-width:100%!important;
-}
-.imdb-random-modal .imdb-random-credits{margin-top:7px!important}
-.imdb-random-modal .imdb-random-result > #imdbRandomOverview{
-  grid-column:1 / -1!important;
-  grid-row:2!important;
-  position:static!important;
-  float:none!important;
-  display:block!important;
-  width:100%!important;
-  max-width:100%!important;
-  min-width:0!important;
-  margin:10px 0 0!important;
-  padding:0!important;
-  box-sizing:border-box!important;
-  transform:none!important;
-  overflow:visible!important;
-}
-@media(max-width:600px){
-  .imdb-random-modal .imdb-random-result{
-    grid-template-columns:86px minmax(0,1fr)!important;
-    grid-template-rows:auto auto!important;
-    column-gap:8px!important;
-    row-gap:0!important;
-  }
-  .imdb-random-modal .imdb-random-result > .imdb-random-poster{
-    grid-column:1!important;
-    grid-row:1!important;
-    width:86px!important;
-  }
-  .imdb-random-modal .imdb-random-result > .imdb-random-copy{
-    grid-column:2!important;
-    grid-row:1!important;
-  }
-  .imdb-random-modal .imdb-random-result > #imdbRandomOverview{
-    grid-column:1 / 3!important;
-    grid-row:2!important;
-    margin-top:9px!important;
-  }
-}
-@media(max-width:380px){
-  .imdb-random-modal .imdb-random-result{grid-template-columns:78px minmax(0,1fr)!important;column-gap:7px!important}
-  .imdb-random-modal .imdb-random-result > .imdb-random-poster{width:78px!important}
-  .imdb-random-modal .imdb-random-result > #imdbRandomOverview{margin-top:8px!important}
-}
-</style>
 
 
-<style id="imdb-random-poster-true-final-v15">
-/* IMDb Random — true final responsive poster sizing.
-   This layer intentionally comes after the older v10 rules, which were resetting the poster to 86/78px. */
-@media(max-width:600px){
-  .imdb-random-modal .imdb-random-result{
-    display:grid!important;
-    grid-template-columns:clamp(128px,38vw,150px) minmax(0,1fr)!important;
-    grid-template-rows:auto auto!important;
-    column-gap:11px!important;
-    row-gap:0!important;
-    align-items:start!important;
-  }
-  .imdb-random-modal .imdb-random-result > .imdb-random-poster{
-    grid-column:1!important;
-    grid-row:1!important;
-    width:100%!important;
-    max-width:none!important;
-    height:auto!important;
-    aspect-ratio:2 / 3!important;
-    object-fit:cover!important;
-    margin:0!important;
-    align-self:start!important;
-  }
-  .imdb-random-modal .imdb-random-result > .imdb-random-copy{
-    grid-column:2!important;
-    grid-row:1!important;
-    min-width:0!important;
-    width:100%!important;
-  }
-  .imdb-random-modal .imdb-random-result > #imdbRandomOverview{
-    grid-column:1 / -1!important;
-    grid-row:2!important;
-    width:100%!important;
-    max-width:none!important;
-    margin-top:10px!important;
-    font:400 10.5px/1.5 Mina,sans-serif!important;
-  }
-  .imdb-random-modal .imdb-random-credits strong{
-    font:500 10px/1.3 Mina,sans-serif!important;
-  }
-}
-@media(max-width:380px){
-  .imdb-random-modal .imdb-random-result{
-    grid-template-columns:clamp(128px,40vw,140px) minmax(0,1fr)!important;
-    column-gap:9px!important;
-  }
-  .imdb-random-modal .imdb-random-result > #imdbRandomOverview{
-    margin-top:9px!important;
-    font-size:10px!important;
-  }
-  .imdb-random-modal .imdb-random-credits strong{
-    font-size:9.5px!important;
-  }
-}
-</style>
 
-<style id="imdb-random-credits-wrap-v16">
-/* IMDb Random credits — labels and values may wrap naturally instead of clipping on narrow screens. */
-.imdb-random-modal .imdb-random-credits{
-  width:100%!important;
-  min-width:0!important;
-}
-.imdb-random-modal .imdb-random-credits div{
-  grid-template-columns:max-content minmax(0,1fr)!important;
-  min-width:0!important;
-  align-items:start!important;
-}
-.imdb-random-modal .imdb-random-credits span,
-.imdb-random-modal .imdb-random-credits strong{
-  min-width:0!important;
-  max-width:100%!important;
-  white-space:normal!important;
-  overflow:visible!important;
-  overflow-wrap:anywhere!important;
-  word-break:normal!important;
-}
-.imdb-random-modal .imdb-random-credits strong{
-  display:block!important;
-  line-height:1.35!important;
-}
-@media(max-width:600px){
-  .imdb-random-modal .imdb-random-credits div{
-    grid-template-columns:46px minmax(0,1fr)!important;
-    column-gap:5px!important;
-  }
-  .imdb-random-modal .imdb-random-credits span{
-    white-space:nowrap!important;
-  }
-  .imdb-random-modal .imdb-random-credits strong{
-    font-size:10px!important;
-    line-height:1.4!important;
-  }
-}
-@media(max-width:380px){
-  .imdb-random-modal .imdb-random-credits div{
-    grid-template-columns:43px minmax(0,1fr)!important;
-    column-gap:5px!important;
-  }
-  .imdb-random-modal .imdb-random-credits strong{
-    font-size:9.5px!important;
-    line-height:1.4!important;
-  }
-}
-</style>
 
-<style id="back-to-top-final-bottom-center-v3">
-/* Back to top — fixed at the bottom-center of the viewport. */
-.back-to-top{
-  position:fixed!important;
-  left:50%!important;
-  right:auto!important;
-  top:auto!important;
-  bottom:8%!important;
-  transform:translate(-50%,8px)!important;
-}
-.back-to-top.show{
-  transform:translate(-50%,0)!important;
-}
-@media(max-width:600px){
-  .back-to-top{
-    left:50%!important;
-    right:auto!important;
-    top:auto!important;
-    bottom:7%!important;
-  }
-}
-</style>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
