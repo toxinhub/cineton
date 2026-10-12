@@ -328,6 +328,7 @@ dialog.admin-modal::backdrop{background:rgba(10,7,5,.5);-webkit-backdrop-filter:
 
 
 
+<style id="industry-admin-label-v1">.industry-meta{color:var(--mu);font-size:.78em;letter-spacing:.01em}</style>
 </head>
 <body>
 <div class="app">
@@ -389,6 +390,10 @@ dialog.admin-modal::backdrop{background:rgba(10,7,5,.5);-webkit-backdrop-filter:
 <p class="hint" style="margin:0 0 9px">Fetch official TMDB genres for every movie and TV show in your library. Existing data and personal fields stay unchanged.</p>
 <div class="actions"><button class="btn" id="syncGenres" type="button">Sync Genres</button></div>
 <div id="genreSyncMsg" class="message">Connect GitHub and configure TMDB to sync genres.</div>
+<div class="subsection-title" style="margin-top:14px">Original Industry <span>Source metadata</span></div>
+<p class="hint" style="margin:0 0 9px">Identify each title's original film industry from TMDB production countries and original language. This does not use genre to assign an industry.</p>
+<div class="actions"><button class="btn" id="syncIndustries" type="button">Sync Industries</button></div>
+<div id="industrySyncMsg" class="message">Connect GitHub and configure TMDB to identify original industries.</div>
 </section>
 
 <section class="panel" data-section="add" id="quickAddSection">
@@ -519,7 +524,59 @@ async function load(){const r=await gh();if(!r.sha||!r.content)throw Error('GitH
 async function loadPublicLibraryFallback(){try{const cached=LS.getItem('ct_library_cache');if(cached){const parsed=JSON.parse(cached);if(Array.isArray(parsed)&&parsed.length){data=parsed;return true}}}catch{}try{const r=await fetch('https://toxinhub.github.io/cineton/data.json?fallback='+Date.now(),{cache:'no-store'});if(!r.ok)return false;const parsed=await r.json();if(!Array.isArray(parsed)||!parsed.length)return false;data=parsed;try{LS.setItem('ct_library_cache',JSON.stringify(data))}catch{}return true}catch{return false}}
 async function save(message){if(!fileSha)throw Error('Connect to GitHub first.');const payload=JSON.stringify(data);const r=await gh('PUT',{message,sha:fileSha,content:encode(payload)});if(!r.content?.sha)throw Error('GitHub did not confirm the save.');fileSha=r.content.sha;requestAnimationFrame(renderAll)}
 async function connect(){const repo=$('#repo').value.trim(),tok=$('#tok').value.trim();if(!repo||!/^[^\s/]+\/[^\s/]+$/.test(repo))return setConnection('error','Enter a valid repository as username/repository.');if(!tok)return setConnection('error','Enter your GitHub token.');saved('ct_repo',repo);SS.setItem('ct_tok',tok);saved('ct_tmdb',$('#tmdb').value.trim());saved('ct_omdb',$('#omdb').value.trim());setConnection('busy','Verifying GitHub access and loading data.json…');try{await load();setConnection('ok','GitHub verified · library loaded successfully.');renderAll();initPublicActivity();if($('#tmdb').value.trim()&&data.some(m=>!Array.isArray(m.genres)||m.genres.length===0)){await syncGenres(true)}}catch(e){setConnection('error',connError(e))}}
-$('#connect').onclick=connect;async function syncGenres(auto=false){
+$('#connect').onclick=connect;function inferIndustry(countries,language){
+ const countryList=(Array.isArray(countries)?countries:[]).map(x=>String(typeof x==='string'?x:x?.iso_3166_1||'').toUpperCase()).filter(Boolean);
+ const lang=String(language||'').toLowerCase();
+ const primary=countryList[0]||'';
+ const map={'US':'Hollywood','KR':'Korean','JP':'Japanese','BD':'Bangladeshi','CN':'Chinese','HK':'Hong Kong','TW':'Taiwanese','GB':'British','FR':'French','DE':'German','IT':'Italian','ES':'Spanish','MX':'Mexican','BR':'Brazilian','RU':'Russian','TH':'Thai','ID':'Indonesian','PH':'Filipino','TR':'Turkish','IR':'Iranian','PK':'Pakistani','EG':'Egyptian','NG':'Nigerian','ZA':'South African','AU':'Australian','CA':'Canadian','AR':'Argentine','SE':'Swedish','DK':'Danish','NO':'Norwegian','PL':'Polish','NL':'Dutch','IE':'Irish','NZ':'New Zealand'};
+ if(primary==='IN'){
+  if(lang==='hi')return 'Bollywood';
+  if(lang==='bn')return 'Kolkata';
+  if(lang==='ta')return 'Tamil';
+  if(lang==='ml')return 'Malayalam';
+  if(lang==='te')return 'Telugu';
+  if(lang==='kn')return 'Kannada';
+  if(lang==='mr')return 'Marathi';
+  if(lang==='pa')return 'Punjabi';
+  return 'Indian';
+ }
+ if(primary && map[primary])return map[primary];
+ if(lang==='ko')return 'Korean';
+ if(lang==='ja')return 'Japanese';
+ if(lang==='bn')return 'Bangladeshi';
+ if(lang==='zh')return 'Chinese';
+ if(lang==='ta')return 'Tamil';
+ if(lang==='ml')return 'Malayalam';
+ return '';
+}
+async function syncIndustries(){
+ if(!fileSha)throw Error('Connect to GitHub first.');
+ if(!$('#tmdb').value.trim())throw Error('Add your TMDB API key in Connection first.');
+ const btn=$('#syncIndustries'),msg=$('#industrySyncMsg');btn.disabled=true;
+ let updated=0,missing=0,failed=0;
+ try{
+  for(let i=0;i<data.length;i++){
+   const m=data[i],type=m.type==='tv'?'tv':'movie',id=String(m.id||'').replace(/^(movie|tv)-/,'');
+   if(!id){missing++;continue}
+   msg.textContent='Checking original industry · '+(i+1)+' / '+data.length+' · '+m.title;
+   try{
+    const x=await tmdb('/'+type+'/'+encodeURIComponent(id));
+    const countries=type==='tv'?(Array.isArray(x.origin_country)?x.origin_country:[]):(Array.isArray(x.production_countries)?x.production_countries.map(c=>c.iso_3166_1):[]);
+    const industry=inferIndustry(countries,x.original_language);
+    if(industry){if(m.industry!==industry){m.industry=industry;updated++}}
+    else{delete m.industry;missing++}
+   }catch(e){failed++}
+   await new Promise(r=>setTimeout(r,100));
+  }
+  await save('Sync original film industries from TMDB');
+  msg.className='message '+(failed?'':'ok');
+  msg.textContent='Industry sync complete · '+updated+' updated · '+missing+' not confidently classified · '+failed+' failed. Review ambiguous titles manually.';
+ }catch(e){msg.className='message error';msg.textContent=e.message||'Industry sync failed.'}
+ finally{btn.disabled=false}
+}
+$('#syncIndustries').onclick=()=>syncIndustries().catch(e=>{const m=$('#industrySyncMsg');m.className='message error';m.textContent=e.message||'Industry sync failed.'});
+
+async function syncGenres(auto=false){
  if(!fileSha)throw Error('Connect to GitHub first.');
  if(!$('#tmdb').value.trim())throw Error('Add your TMDB API key in Connection first.');
  const btn=$('#syncGenres'),msg=$('#genreSyncMsg');btn.disabled=true;
@@ -560,6 +617,7 @@ function renderLibrary(){
   return '<article class="item">'+(poster?'<img class="itemPoster" src="'+esc(poster)+'" alt="" role="button" tabindex="0" aria-label="Edit '+esc(m.title)+'" onclick="editTitle('+i+')" onkeydown="if(event.key===\'Enter\'||event.key===\' \'){event.preventDefault();editTitle('+i+')}" title="Edit">':'<div class="itemPoster" role="button" tabindex="0" aria-label="Edit '+esc(m.title)+'" onclick="editTitle('+i+')" onkeydown="if(event.key===\'Enter\'||event.key===\' \'){event.preventDefault();editTitle('+i+')}" title="Edit"></div>')+
   '<div class="itemBody"><div class="itemTitle"><strong>'+esc(m.title)+'</strong>'+(m.loved?'<span class="itemLove" aria-label="Loved">♥</span>':'')+'</div>'+
   '<div class="meta">'+esc(m.year||'')+' · IMDb '+esc(m.imdb||'—')+'</div>'+
+  (m.industry?'<div class="meta industry-meta">'+esc(m.industry)+'</div>':'')+
   '<div class="meta itemRating">'+(m.my_rating!==null&&m.my_rating!==undefined&&m.my_rating!==''?'★ '+esc(m.my_rating)+'/10':'No rating')+'</div>'+
   (m.comment?'<div class="meta" style="margin-top:3px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">'+esc(m.comment)+'</div>':'')+
   '</div><div class="itemActions">'+
@@ -570,7 +628,7 @@ function renderLibrary(){
 function renderAll(){stats();renderLibrary();$('#repoSummary').textContent=$('#repo').value.trim()||'Not connected';$('#tmdbSummary').textContent=$('#tmdb').value.trim()?'● Configured':'Not configured';$('#omdbSummary').textContent=$('#omdb').value.trim()?'● Configured':'Optional'}
 async function tmdb(path){const key=$('#tmdb').value.trim();if(!key)throw Error('Add your TMDB API key in Connection first.');const r=await fetch('https://api.themoviedb.org/3'+path+(path.includes('?')?'&':'?')+'api_key='+encodeURIComponent(key)+'&language=en-US');const j=await r.json();if(!r.ok)throw Error(j.status_message||'TMDB request failed.');return j}
 function yearOf(h){return(h.release_date||h.first_air_date||'').slice(0,4)}
-async function enrich(h){const type=h.media_type,x=await tmdb('/'+type+'/'+h.id+'?append_to_response=credits,external_ids');let imdb='';const imdbId=x.imdb_id||x.external_ids?.imdb_id,ok=$('#omdb').value.trim();if(imdbId&&ok){try{const o=await fetch('https://www.omdbapi.com/?i='+encodeURIComponent(imdbId)+'&apikey='+encodeURIComponent(ok)).then(r=>r.json());if(o.imdbRating&&o.imdbRating!=='N/A')imdb=o.imdbRating}catch{}}const director=type==='movie'?(x.credits?.crew||[]).filter(c=>c.job==='Director').map(c=>c.name).join(', '):(x.created_by||[]).map(c=>c.name).join(', ');return{id:type+'-'+h.id,type,title:x.title||x.name,year:yearOf(x),poster:x.poster_path||'',overview:x.overview||'',director,cast:(x.credits?.cast||[]).slice(0,8).map(c=>c.name),imdb,genres:(x.genres||[]).map(g=>g.name)}}
+async function enrich(h){const type=h.media_type,x=await tmdb('/'+type+'/'+h.id+'?append_to_response=credits,external_ids');let imdb='';const imdbId=x.imdb_id||x.external_ids?.imdb_id,ok=$('#omdb').value.trim();if(imdbId&&ok){try{const o=await fetch('https://www.omdbapi.com/?i='+encodeURIComponent(imdbId)+'&apikey='+encodeURIComponent(ok)).then(r=>r.json());if(o.imdbRating&&o.imdbRating!=='N/A')imdb=o.imdbRating}catch{}}const director=type==='movie'?(x.credits?.crew||[]).filter(c=>c.job==='Director').map(c=>c.name).join(', '):(x.created_by||[]).map(c=>c.name).join(', ');return{id:type+'-'+h.id,type,title:x.title||x.name,year:yearOf(x),poster:x.poster_path||'',overview:x.overview||'',director,cast:(x.credits?.cast||[]).slice(0,8).map(c=>c.name),imdb,genres:(x.genres||[]).map(g=>g.name),industry:inferIndustry(type==='tv'?(Array.isArray(x.origin_country)?x.origin_country:[]):(Array.isArray(x.production_countries)?x.production_countries.map(c=>c.iso_3166_1):[]),x.original_language)}}
 async function doSearch(){const q=$('#search').value.trim();if(q.length<2)return;try{const r=await tmdb('/search/multi?query='+encodeURIComponent(q)),hits=(r.results||[]).filter(x=>x.media_type==='movie'||x.media_type==='tv').slice(0,8);$('#results').innerHTML=hits.length?hits.map((h,i)=>'<div class="result" data-i="'+i+'">'+(h.poster_path?'<img src="'+IMG+h.poster_path+'" alt="">':'')+'<main><strong>'+esc(h.title||h.name)+'</strong><small>'+yearOf(h)+' · '+(h.media_type==='tv'?'TV / Show':'Movie')+'</small></main></div>').join(''):'<div class="hint">No matches found.</div>';$('#results').hits=hits}catch(e){$('#results').innerHTML='<div class="message error">'+esc(e.message)+'</div>'}}
 $('#searchBtn').onclick=doSearch;$('#search').addEventListener('keydown',e=>{if(e.key==='Enter')doSearch()});
 $('#results').onclick=async e=>{const row=e.target.closest('.result');if(!row)return;selected=$('#results').hits[+row.dataset.i];document.querySelectorAll('#results .result').forEach(x=>x.classList.remove('is-selected'));row.classList.add('is-selected');const title=selected.title||selected.name,meta=(yearOf(selected)||'Year unknown')+' · '+(selected.media_type==='tv'?'TV / Show':'Movie');$('#selected').innerHTML=(selected.poster_path?'<img class="selected-poster" src="'+IMG+selected.poster_path+'" alt="">':'<div class="selected-poster"></div>')+'<div class="selected-copy"><strong>'+esc(title)+'</strong><div class="selected-meta">'+esc(meta)+'</div><div class="selected-state">Selected — ready to add</div></div>';$('#editor').classList.remove('hidden');$('#addStatus').textContent='';requestAnimationFrame(()=>$('#editor').scrollIntoView({behavior:'smooth',block:'nearest'}))};
@@ -591,7 +649,7 @@ function openEdit(i){
  const m=data[i],d=$('#editModal');
  $('#editPoster').src=m.poster?'https://image.tmdb.org/t/p/w342'+m.poster:'';
  $('#editTitle').textContent=m.title;
- $('#editMeta').textContent=(m.year||'')+' · '+(m.type==='tv'?'TV / Show':'Movie')+' · IMDb '+(m.imdb||'—');
+ $('#editMeta').textContent=(m.year||'')+' · '+(m.type==='tv'?'TV / Show':'Movie')+' · IMDb '+(m.imdb||'—')+(m.industry?' · '+m.industry:'');
  $('#editStatusLabel').textContent='Status: '+(m.status==='watched'?'Watched':'Watchlist');
  $('#editStatusToggle').textContent=m.status==='watched'?'Move to Watchlist':'Mark as Watched';
  $('#editStatusToggle').setAttribute('aria-label',m.status==='watched'?'Move this title to watchlist':'Mark this title as watched');
