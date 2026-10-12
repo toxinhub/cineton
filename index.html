@@ -4973,42 +4973,51 @@ main.list .c:active{
 </style>
 
 
-<style id="poster-adaptive-soft-warm-modal-v5">
-/* Richer warm porcelain: visible cocoa-beige tone without glow or poster shadows. */
+<style id="poster-adaptive-poster-tint-modal-v6">
+/* Let each poster softly tint the modal; keep the tint subtle, balanced, and readable. */
 .cinemodal{
-  --modal-warm-accent:color-mix(in srgb,var(--poster-accent,var(--gd)) 28%,#a9794d 72%);
-  background:color-mix(in srgb,#e8d3ba 84%,var(--modal-warm-accent) 16%)!important;
-  color:#35271e!important;
+  --modal-poster-tint:var(--poster-accent,#b88f65);
+  background:color-mix(in srgb,#eee4d8 91%,var(--modal-poster-tint) 9%)!important;
+  color:#352b24!important;
 }
-.cinemodal::before{background:none!important;background-image:none!important;filter:none!important;opacity:0!important}
+.cinemodal::before{
+  content:""!important;
+  background:radial-gradient(ellipse at 24% 18%,
+    color-mix(in srgb,var(--modal-poster-tint) 17%,transparent) 0%,
+    color-mix(in srgb,var(--modal-poster-tint) 8%,transparent) 48%,
+    transparent 78%)!important;
+  filter:none!important;
+  opacity:1!important;
+  pointer-events:none!important;
+}
 .cinemodal::after{
   background:linear-gradient(135deg,
-    color-mix(in srgb,#ead7c1 86%,var(--modal-warm-accent) 14%) 0%,
-    color-mix(in srgb,#dfc5a6 80%,var(--modal-warm-accent) 20%) 52%,
-    color-mix(in srgb,#ead7c1 86%,var(--modal-warm-accent) 14%) 100%)!important;
+    color-mix(in srgb,#f0e6db 92%,var(--modal-poster-tint) 8%) 0%,
+    color-mix(in srgb,#e9ddcf 89%,var(--modal-poster-tint) 11%) 54%,
+    color-mix(in srgb,#f0e6db 93%,var(--modal-poster-tint) 7%) 100%)!important;
+  pointer-events:none!important;
 }
 .cinemodal .modal-top{background:transparent!important}
 .cinemodal .poster-wrap,
 .cinemodal .modal-top .poster-wrap,
 .cinemodal .poster-wrap>img,
-.cinemodal .modal-top .poster-wrap>img{
-  box-shadow:none!important;filter:none!important;
-}
+.cinemodal .modal-top .poster-wrap>img{box-shadow:none!important;filter:none!important}
 .cinemodal .m,
 .cinemodal .modal-top,
 .cinemodal .modal-side,
 .cinemodal .modal-wide,
 .cinemodal .public-comments,
 .cinemodal .public-comments-body,
-.cinemodal .public-comments-inner{color:#35271e!important}
-.cinemodal :is(p,small,.subline,.meta,.muted,.year,.genre,.description){color:#65503f!important}
+.cinemodal .public-comments-inner{color:#352b24!important}
+.cinemodal :is(p,small,.subline,.meta,.muted,.year,.genre,.description){color:#6b594a!important}
 @media(max-width:600px){
-  .cinemodal{background:color-mix(in srgb,#e8d3ba 87%,var(--modal-warm-accent) 13%)!important}
+  .cinemodal{background:color-mix(in srgb,#eee4d8 93%,var(--modal-poster-tint) 7%)!important}
+  .cinemodal::before{background:radial-gradient(ellipse at 20% 12%,color-mix(in srgb,var(--modal-poster-tint) 13%,transparent),transparent 74%)!important}
   .cinemodal::after{
     background:linear-gradient(145deg,
-      color-mix(in srgb,#ead7c1 87%,var(--modal-warm-accent) 13%),
-      color-mix(in srgb,#dfc5a6 83%,var(--modal-warm-accent) 17%),
-      color-mix(in srgb,#ead7c1 87%,var(--modal-warm-accent) 13%))!important;
+      color-mix(in srgb,#f0e6db 94%,var(--modal-poster-tint) 6%),
+      color-mix(in srgb,#e9ddcf 91%,var(--modal-poster-tint) 9%),
+      color-mix(in srgb,#f0e6db 94%,var(--modal-poster-tint) 6%))!important;
   }
 }
 </style>
