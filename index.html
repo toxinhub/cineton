@@ -4784,3 +4784,86 @@ button,.btn,.chip,.filter-chip,.tab{
   .suggestions-head{background:#eee4d8!important}
 }
 </style>
+
+
+<style id="cineton-list-view-warm-balance-v1">
+/* List view: match the porcelain modal and matte-cocoa global palette. */
+main.list{
+  gap:8px!important;
+}
+main.list .c{
+  background:#eee6dc!important;
+  color:#352b24!important;
+  border:1px solid #6b51352b!important;
+  border-radius:8px!important;
+  box-shadow:0 1px 4px #4c382010!important;
+  outline-color:#936b42!important;
+}
+main.list .c .ci{
+  min-width:0!important;
+  background:linear-gradient(90deg,#eee6dc 0%,#f1e9df 100%)!important;
+  color:#352b24!important;
+}
+main.list .c .ci b,
+main.list .c .ci b a,
+main.list .c .ci :is(a,h2,h3,.title,.name){
+  color:#352b24!important;
+  text-shadow:none!important;
+}
+main.list .c .ci small,
+main.list .c .ci :is(.sub,.meta,.year,.genre,.description,.ci small){
+  color:#6e5e50!important;
+  opacity:1!important;
+  text-shadow:none!important;
+}
+main.list .c img,
+main.list .c .ph{
+  border-right:1px solid #6b51352b!important;
+}
+main.list .c .ph{
+  background:linear-gradient(145deg,#e0d2c1,#cdbba5)!important;
+  color:#5f4b39!important;
+}
+main.list .c .bd{
+  color:#75501f!important;
+  text-shadow:none!important;
+  background:#f2c94c!important;
+  border:1px solid #d9ad32!important;
+  border-radius:4px!important;
+  padding:2px 5px!important;
+}
+main.list .c .rv,
+main.list .c .ci .my-rating{
+  color:#65472f!important;
+  background:#e5d5c2!important;
+  border:1px solid #b99b79!important;
+  border-radius:5px!important;
+  text-shadow:none!important;
+}
+main.list .c:hover,
+main.list .c:focus-visible{
+  background:#f3ece2!important;
+  border-color:#936b426b!important;
+  box-shadow:0 3px 10px #4c38201a!important;
+}
+main.list .c:hover .ci{
+  background:#f3ece2!important;
+}
+main.list .c:focus-visible{
+  outline:2px solid #936b42!important;
+  outline-offset:2px!important;
+}
+main.list .c:active{
+  background:#e9dfd2!important;
+  border-color:#936b42!important;
+}
+@media(max-width:600px){
+  main.list{gap:7px!important}
+  main.list .c{border-radius:7px!important}
+  main.list .c .ci{
+    background:#eee6dc!important;
+    padding-left:10px!important;
+    padding-right:9px!important;
+  }
+}
+</style>
