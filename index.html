@@ -4475,3 +4475,97 @@ body input::placeholder,body textarea::placeholder{color:#6a596f!important}
   }
 }
 </style>
+
+
+
+<style id="cineton-modal-color-balance-v1">
+/* Modal-only palette refinement: warm porcelain, cocoa text, muted bronze accents.
+   Keeps the main catalogue palette and modal layout untouched. */
+.cinemodal{
+  --modal:#f3ece2;
+  --sf:#e9dfd2;
+  --tx:#352b24;
+  --mu:#6e5e50;
+  --ac:#936b42;
+  --gd:#9b7448;
+  --line:#6b51351c;
+  --line-strong:#6b513542;
+  color:var(--tx)!important;
+  background:#f3ece2!important;
+  border-color:#6b513538!important;
+  box-shadow:0 22px 58px #24180f42!important;
+}
+.cinemodal::before{opacity:.012!important}
+.cinemodal::after{background:linear-gradient(145deg,#f7f0e7f5 0%,#eee4d8f7 100%)!important}
+.cinemodal .m,
+.cinemodal .modal-top,
+.cinemodal .modal-side,
+.cinemodal .modal-wide,
+.cinemodal .public-comments,
+.cinemodal .public-comments-body,
+.cinemodal .public-comments-inner{
+  background-color:transparent!important;
+  color:#352b24!important;
+}
+.cinemodal :is(h1,h2,h3,p,small,label,li,dt,dd,figcaption,.subline,
+.detail-value,.person-filter,.genre-filter,.modal-footer,.public-comments-title,
+.public-comment-text,.public-comment-name,.public-comments-count){
+  color:#352b24!important;
+  opacity:1!important;
+  text-shadow:none!important;
+}
+.cinemodal .detail-label,
+.cinemodal .modal-footer,
+.cinemodal .person-filter,
+.cinemodal .genre-filter,
+.cinemodal .subline{
+  color:#6e5e50!important;
+  opacity:1!important;
+}
+.cinemodal .chips span{
+  background:#e8ded1!important;
+  border-color:#8a71582e!important;
+  color:#655344!important;
+}
+.cinemodal .chips .imdb-chip{
+  background:#f2c94c!important;border-color:#d9ad32!important;color:#302516!important;
+}
+.cinemodal .chips .my-chip,
+.cinemodal .chips .cineton-public-rating-chip{
+  background:#e5d5c2!important;border-color:#b99b79!important;color:#493729!important;
+}
+.cinemodal .chips .love-chip{
+  background:#eadbd5!important;border-color:#c5a59b!important;color:#704943!important;
+}
+.cinemodal .chips .imdb-chip *,
+.cinemodal .chips .my-chip *,
+.cinemodal .chips .cineton-public-rating-chip *,
+.cinemodal .chips .love-chip *{color:inherit!important}
+.cinemodal :is(.detail-value,.modal-footer strong){color:#2f251e!important}
+.cinemodal :is(input,textarea,select),
+.cinemodal .public-comment-composer.on input,
+.cinemodal .public-comment-composer.on textarea{
+  background:#fffaf3!important;
+  border-color:#b9a48e!important;
+  color:#352b24!important;
+}
+.cinemodal :is(input,textarea)::placeholder{color:#827061!important;opacity:1!important}
+.cinemodal .public-comments{
+  background:#eee4d8!important;
+  border-color:#c7b5a1!important;
+}
+.cinemodal .public-comment{
+  background:#f7f0e7!important;
+  border-color:#d5c5b3!important;
+  color:#352b24!important;
+}
+.cinemodal .public-comment-name,
+.cinemodal .public-comment-text{color:#352b24!important}
+.cinemodal .x{color:#80634c!important}
+.cinemodal .x:hover{color:#4a3526!important;background:#8b694814!important}
+@media(max-width:639px){
+  .cinemodal{
+    --modal:#f3ece2;--sf:#e9dfd2;--tx:#352b24;--mu:#6e5e50;
+  }
+}
+</style>
