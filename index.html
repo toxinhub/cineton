@@ -3342,7 +3342,7 @@ update();
 
 <!-- Cineton desktop cinematic poster wall v2 -->
 <style id="desktop-poster-mirror-reflection-v2">
-/* Poster-colour side gradients. Keep the existing Cocoa theme; never render poster artwork in the gutters. */
+/* Fixed cinematic side gradients — independent of poster colors, preserving the Cocoa theme. */
 @media (min-width: 1201px) {
   .cineton-side-reflection {
     position: fixed !important;
@@ -3354,10 +3354,10 @@ update();
     opacity: 0;
     background-color: #211b15;
     background-image:
-      radial-gradient(ellipse 105% 56% at 12% 20%, var(--poster-glow-a, rgba(170,124,80,.62)) 0%, transparent 72%),
-      radial-gradient(ellipse 95% 62% at 88% 51%, var(--poster-glow-b, rgba(116,83,57,.54)) 0%, transparent 74%),
-      radial-gradient(ellipse 110% 52% at 30% 92%, var(--poster-glow-c, rgba(72,54,42,.56)) 0%, transparent 72%),
-      linear-gradient(160deg, rgba(33,27,21,.12), rgba(23,19,15,.62));
+      radial-gradient(ellipse 108% 58% at 12% 18%, rgba(139,101,69,.62) 0%, transparent 72%),
+      radial-gradient(ellipse 96% 64% at 88% 49%, rgba(91,69,78,.48) 0%, transparent 74%),
+      radial-gradient(ellipse 112% 54% at 28% 94%, rgba(65,76,66,.40) 0%, transparent 72%),
+      linear-gradient(160deg, rgba(33,27,21,.10), rgba(23,19,15,.66));
     background-size: 150% 125%, 140% 130%, 150% 120%, 100% 100%;
     background-position: 0% 0%, 100% 40%, 0% 100%, center;
     transition: opacity 460ms ease;
@@ -3462,117 +3462,15 @@ body {
 (function () {
   if (window.matchMedia('(max-width: 1200px)').matches) return;
   function makePanel(side) {
-    const panel=document.createElement('div');
-    panel.className='cineton-side-reflection '+side;
-    panel.setAttribute('aria-hidden','true');
-    panel._src='';
+    const panel = document.createElement('div');
+    panel.className = 'cineton-side-reflection ' + side;
+    panel.setAttribute('aria-hidden', 'true');
     document.body.appendChild(panel);
+    requestAnimationFrame(() => panel.classList.add('is-visible'));
     return panel;
   }
-  const left=makePanel('left'), right=makePanel('right');
-  let scheduled=false,lastPair='';
-  const colorCache=new Map();
-  const fallback=[[153,103,64],[116,77,51],[77,56,42]];
-  const rgba=(c,a)=>'rgba('+c[0]+','+c[1]+','+c[2]+','+a+')';
-
-  function centerRowEdgePosters(){
-    const main=document.querySelector('main');
-    if(!main)return [];
-    const mid=window.innerHeight*.5;
-    const posters=Array.from(main.querySelectorAll('.c img'))
-      .filter(img=>img.complete&&img.naturalWidth>0)
-      .map(img=>({img,rect:img.getBoundingClientRect()}))
-      .filter(x=>x.rect.bottom>0&&x.rect.top<window.innerHeight);
-    if(!posters.length)return [];
-    const anchor=posters.reduce((best,x)=>
-      Math.abs((x.rect.top+x.rect.bottom)/2-mid)<Math.abs((best.rect.top+best.rect.bottom)/2-mid)?x:best);
-    const row=posters.filter(x=>Math.abs(x.rect.top-anchor.rect.top)<12).sort((a,b)=>a.rect.left-b.rect.left);
-    return row.length?[row[0],row[row.length-1]]:[anchor,anchor];
-  }
-
-  function readImage(src){
-    return new Promise(resolve=>{
-      const img=new Image();
-      img.crossOrigin='anonymous';
-      img.onload=()=>{
-        try{
-          const canvas=document.createElement('canvas');
-          canvas.width=32;canvas.height=48;
-          const ctx=canvas.getContext('2d',{willReadFrequently:true});
-          if(!ctx)throw new Error('Canvas unavailable');
-          ctx.drawImage(img,0,0,32,48);
-          const px=ctx.getImageData(0,0,32,48).data;
-          const groups=[
-            {r:0,g:0,b:0,n:0}, {r:0,g:0,b:0,n:0}, {r:0,g:0,b:0,n:0}
-          ];
-          for(let y=1;y<47;y+=2)for(let x=1;x<31;x+=2){
-            const i=(y*32+x)*4,r=px[i],g=px[i+1],b=px[i+2];
-            const lum=(.2126*r+.7152*g+.0722*b)/255;
-            if(lum<.045||lum>.97)continue;
-            const sat=Math.max(r,g,b)-Math.min(r,g,b);
-            const k=sat>38?0:(lum>.43?1:2),v=groups[k];
-            v.r+=r;v.g+=g;v.b+=b;v.n++;
-          }
-          const colors=groups.map((v,i)=>v.n?[Math.round(v.r/v.n),Math.round(v.g/v.n),Math.round(v.b/v.n)]:fallback[i]);
-          resolve(colors);
-        }catch(_){resolve(null);}
-      };
-      img.onerror=()=>resolve(null);
-      img.src=src;
-    });
-  }
-
-  async function samplePoster(src){
-    if(!src)return fallback;
-    if(colorCache.has(src))return colorCache.get(src);
-    const task=(async()=>{
-      const u=new URL(src);
-      const path=u.host+u.pathname;
-      const candidates=[
-        src,
-        'https://images.weserv.nl/?url='+encodeURIComponent(path)+'&w=32&h=48&fit=cover&output=jpg',
-        'https://wsrv.nl/?url='+encodeURIComponent(path)+'&w=32&h=48&fit=cover&output=jpg'
-      ];
-      for(const candidate of candidates){
-        const colors=await readImage(candidate);
-        if(colors&&colors.some((c,i)=>c.join(',')!==fallback[i].join(',')))return colors;
-        if(colors)return colors;
-      }
-      return fallback;
-    })();
-    colorCache.set(src,task);
-    return task;
-  }
-
-  async function applyColors(panel,src){
-    if(!src||panel._src===src)return;
-    panel._src=src;
-    const colors=await samplePoster(src);
-    if(panel._src!==src)return;
-    const tint=c=>c.map(v=>Math.max(0,Math.min(255,Math.round(v*.82+8))));
-    panel.style.setProperty('--poster-glow-a',rgba(tint(colors[0]),.70));
-    panel.style.setProperty('--poster-glow-b',rgba(tint(colors[1]),.58));
-    panel.style.setProperty('--poster-glow-c',rgba(tint(colors[2]),.60));
-    panel.dataset.paletteSource=colors===fallback?'fallback':'poster';
-  }
-
-  function update(){
-    scheduled=false;
-    const edges=centerRowEdgePosters();
-    if(!edges.length){left.classList.remove('is-visible');right.classList.remove('is-visible');return;}
-    const a=edges[0].img.currentSrc||edges[0].img.src;
-    const b=edges[1].img.currentSrc||edges[1].img.src;
-    const pair=a+'|'+b;
-    if(pair!==lastPair){applyColors(left,a);applyColors(right,b);lastPair=pair;}
-    left.classList.add('is-visible');right.classList.add('is-visible');
-  }
-  function schedule(){if(scheduled)return;scheduled=true;requestAnimationFrame(update);}
-  window.addEventListener('scroll',schedule,{passive:true});
-  window.addEventListener('resize',schedule,{passive:true});
-  window.addEventListener('load',schedule,{once:true});
-  const main=document.querySelector('main');
-  if(main&&'MutationObserver'in window)new MutationObserver(schedule).observe(main,{childList:true,subtree:true,attributes:true,attributeFilter:['src','class']});
-  schedule();
+  makePanel('left');
+  makePanel('right');
 })();
 </script>
 
