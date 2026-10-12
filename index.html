@@ -4368,49 +4368,59 @@ main.list .c::before{
 
 
 <style id="cineton-two-tone-background-v1">
-/* Noticeably lighter soft plum + muted bronze background; preserve strong text contrast. */
+/* Cineton balanced palette: lighter warm mauve canvas, pale plum surfaces, deep readable text. */
 :root{
   color-scheme:dark;
-  --bg:#76657b;--sf:#66566b;--tx:#fffaff;--mu:#f7edf6;
-  --ac:#d9bda5;--gd:#f5d7b9;--line:#fffaff42;--line-strong:#fffaff66;
+  --bg:#d8cdda;--sf:#f0e9f0;--tx:#34283a;--mu:#594b60;
+  --ac:#876044;--gd:#795438;--line:#503d551f;--line-strong:#503d5545;
   --modal:#49394b;--modal-overlay:#49394bf2;--modal-backdrop:#17111a58;--modal-shadow:#120d1590;
 }
 body{
-  color:#fffaff!important;
-  background-color:#76657b!important;
+  color:#34283a!important;
+  background-color:#d8cdda!important;
   background-image:
-    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180' viewBox='0 0 180 180'%3E%3Cfilter id='grain'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.78' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23grain)' opacity='.025'/%3E%3C/svg%3E"),
-    linear-gradient(138deg,#76657b 0%,#76657b 38%,#897887 72%,#a18b7e 100%)!important;
-  background-size:180px 180px,100% 100%!important;
+    radial-gradient(ellipse at 14% 0%,rgba(255,255,255,.30),transparent 48%),
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180' viewBox='0 0 180 180'%3E%3Cfilter id='grain'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.78' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23grain)' opacity='.018'/%3E%3C/svg%3E"),
+    linear-gradient(138deg,#d8cdda 0%,#ddd0df 46%,#e5d7d0 100%)!important;
+  background-size:100% 100%,180px 180px,100% 100%!important;
   background-attachment:fixed!important;
-  background-repeat:repeat,no-repeat!important;
+  background-repeat:no-repeat,repeat,no-repeat!important;
 }
-/* Keep all commonly muted text readable, including nested spans and helper labels. */
+/* Main-page secondary text must stay dark on the newly light canvas and cards. */
 body :is(p,small,label,li,dt,dd,figcaption),
-body :is(.sub,.ci small,.ph,.empty,.detail-label,.person-filter,.modal-footer,
-.hint,.muted,.meta,.year,.genre,.description,.helper-text,.secondary,.caption,
-.movie-meta,.card-meta,.filter-label,.section-label,.stat,.stat span),
-body input::placeholder,body textarea::placeholder,body select,
-body button{
-  text-shadow:none;
+body :is(.sub,.ci small,.ph,.empty,.hint,.muted,.meta,.year,.genre,.description,
+.helper-text,.secondary,.caption,.movie-meta,.card-meta,.filter-label,.section-label,
+.stat,.stat span,.person-filter-bar,.public-comments-count,.public-comment-name),
+body input::placeholder,body textarea::placeholder{
+  color:#594b60!important;
+  opacity:1!important;
+  text-shadow:none!important;
 }
-body :is(p,small,label,li,dt,dd,figcaption),
-body :is(.sub,.ci small,.ph,.empty,.detail-label,.person-filter,.modal-footer,
-.hint,.muted,.meta,.year,.genre,.description,.helper-text,.secondary,.caption,
-.movie-meta,.card-meta,.filter-label,.section-label){
-  color:#f7edf6!important;
+/* Keep the movie detail and suggestion dialogs intentionally dark, with bright readable copy. */
+.cinemodal{color:#fff8ff!important}
+.cinemodal :is(.subline,.chips span,.detail-label,.person-filter,.modal-footer,
+p,small,label,li,dt,dd,figcaption,.sub,.empty,.hint,.muted,.meta,.year,.genre,
+.description,.helper-text,.secondary,.caption,.movie-meta,.card-meta){
+  color:#f4eaf5!important;
   opacity:1!important;
 }
 .cinemodal .detail-label,.cinemodal .person-filter{
-  color:#f7edf6!important;font-size:.64rem!important;letter-spacing:.055em!important;opacity:1!important;
+  font-size:.68rem!important;letter-spacing:.045em!important
 }
-.cinemodal .modal-footer{color:#f7edf6!important;font-size:.7rem!important;opacity:1!important}
-body input::placeholder,body textarea::placeholder{color:#f7edf6!important;opacity:1!important}
+.cinemodal .modal-footer{font-size:.72rem!important}
+.cinemodal .poster-status{color:#e6d8e8!important;opacity:1!important}
+.suggestions-dialog{color:#f7efe5}
+.suggestions-dialog :is(.suggestions-kicker,.suggestions-title,.suggestions-sub,
+.suggestions-close,.suggestion-compose label,.suggestion-compose textarea,
+.suggestion-note,.suggestion-empty,.suggestion-date,.suggestion-number,
+.suggestion-title-text,.suggestion-time,.suggestion-message){opacity:1}
+body input::placeholder,body textarea::placeholder{color:#6a596f!important}
 @media(max-width:600px){
   body{
     background-image:
-      url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180' viewBox='0 0 180 180'%3E%3Cfilter id='grain'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.78' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23grain)' opacity='.02'/%3E%3C/svg%3E"),
-      linear-gradient(155deg,#76657b 0%,#76657b 45%,#897887 77%,#a18b7e 100%)!important;
+      radial-gradient(ellipse at 18% 0%,rgba(255,255,255,.24),transparent 48%),
+      url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180' viewBox='0 0 180 180'%3E%3Cfilter id='grain'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.78' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23grain)' opacity='.016'/%3E%3C/svg%3E"),
+      linear-gradient(155deg,#d8cdda 0%,#dfd2e0 54%,#e5d7d0 100%)!important;
   }
 }
 </style>
