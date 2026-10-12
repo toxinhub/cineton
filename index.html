@@ -4802,3 +4802,108 @@ body {
   }
 }
 </style>
+
+
+<style id="cineton-live-poster-color-grade-v1">
+/* The ambience now uses real dominant colors sampled from the site's movie posters. */
+html, body { background-color:#17130f !important; }
+body {
+  --poster-grade-a: 119,66,55;
+  --poster-grade-b: 95,91,57;
+  --poster-grade-c: 102,62,83;
+  --poster-grade-d: 55,79,77;
+  background-image:
+    radial-gradient(ellipse at 8% 12%, rgba(var(--poster-grade-a),.30) 0%, transparent 52%),
+    radial-gradient(ellipse at 92% 26%, rgba(var(--poster-grade-b),.24) 0%, transparent 50%),
+    radial-gradient(ellipse at 78% 72%, rgba(var(--poster-grade-c),.22) 0%, transparent 52%),
+    radial-gradient(ellipse at 14% 88%, rgba(var(--poster-grade-d),.23) 0%, transparent 52%),
+    linear-gradient(135deg,#17130f 0%,#211812 45%,#1c1512 75%,#17130f 100%) !important;
+  background-size:auto,auto,auto,auto,cover !important;
+  background-position:center !important;
+  background-repeat:no-repeat !important;
+  background-attachment:fixed !important;
+}
+@media(max-width:600px) {
+  body {
+    background-image:
+      radial-gradient(ellipse at 0% 10%,rgba(var(--poster-grade-a),.25) 0%,transparent 56%),
+      radial-gradient(ellipse at 100% 38%,rgba(var(--poster-grade-b),.19) 0%,transparent 56%),
+      radial-gradient(ellipse at 0% 78%,rgba(var(--poster-grade-d),.20) 0%,transparent 56%),
+      linear-gradient(160deg,#17130f 0%,#211812 48%,#1c1512 76%,#17130f 100%) !important;
+    background-size:auto,auto,auto,cover !important;
+    background-repeat:no-repeat !important;
+    background-attachment:fixed !important;
+  }
+}
+</style>
+<script id="cineton-live-poster-color-grade-v1-script">
+(() => {
+  const root = document.body;
+  if (!root || root.dataset.posterGradeSampler === '1') return;
+  root.dataset.posterGradeSampler = '1';
+  const cache = new Map();
+  let timer = 0, runId = 0;
+  const fallback = [[119,66,55],[95,91,57],[102,62,83],[55,79,77]];
+  function posterColor(src) {
+    if (cache.has(src)) return Promise.resolve(cache.get(src));
+    const proxy = 'https://wsrv.nl/?url=' + encodeURIComponent(src) + '&w=48&h=72&fit=inside&output=webp';
+    return fetch(proxy, {mode:'cors', cache:'force-cache'}).then(r => {
+      if (!r.ok) throw Error('poster image proxy failed');
+      return r.blob();
+    }).then(blob => createImageBitmap(blob)).then(bitmap => {
+      const canvas = document.createElement('canvas');
+      canvas.width = 48; canvas.height = 72;
+      const ctx = canvas.getContext('2d', {willReadFrequently:true});
+      if (!ctx) throw Error('canvas unavailable');
+      ctx.drawImage(bitmap, 0, 0, 48, 72); bitmap.close();
+      const data = ctx.getImageData(0,0,48,72).data, bins = new Map();
+      for (let i=0; i<data.length; i+=16) {
+        const r=data[i], g=data[i+1], b=data[i+2];
+        const max=Math.max(r,g,b), min=Math.min(r,g,b), sat=max ? (max-min)/max : 0;
+        if (max < 30 || (max > 245 && sat < .08)) continue;
+        const key=[Math.round(r/32),Math.round(g/32),Math.round(b/32)].join(',');
+        const score=(.45+sat)*(.4+max/255);
+        const old=bins.get(key) || {r:0,g:0,b:0,w:0};
+        old.r+=r*score; old.g+=g*score; old.b+=b*score; old.w+=score;
+        bins.set(key,old);
+      }
+      const best=[...bins.values()].sort((a,b)=>b.w-a.w)[0];
+      if (!best) throw Error('no poster color found');
+      const color=[best.r/best.w,best.g/best.w,best.b/best.w].map(v=>Math.round(v));
+      cache.set(src,color); return color;
+    }).catch(() => null);
+  }
+  function posterSources() {
+    const grid = document.querySelector('#g');
+    if (!grid) return [];
+    const seen = new Set(), out = [];
+    for (const img of grid.querySelectorAll('img')) {
+      const src = img.currentSrc || img.src;
+      if (!src || src.startsWith('data:') || seen.has(src)) continue;
+      seen.add(src); out.push(src);
+      if (out.length >= 12) break;
+    }
+    return out;
+  }
+  async function update() {
+    const thisRun = ++runId, sources = posterSources();
+    if (!sources.length) return;
+    const colors = (await Promise.all(sources.map(posterColor))).filter(Boolean);
+    if (thisRun !== runId || !colors.length) return;
+    const chosen = [];
+    for (const color of colors) {
+      if (chosen.every(old => Math.sqrt(old.reduce((sum,v,i)=>sum+(v-color[i])**2,0)) > 42)) chosen.push(color);
+      if (chosen.length === 4) break;
+    }
+    while (chosen.length < 4) chosen.push(fallback[chosen.length]);
+    const vars=['--poster-grade-a','--poster-grade-b','--poster-grade-c','--poster-grade-d'];
+    chosen.forEach((c,i)=>root.style.setProperty(vars[i],c.join(',')));
+  }
+  function schedule() { clearTimeout(timer); timer=setTimeout(update, 500); }
+  if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', schedule, {once:true});
+  else schedule();
+  const grid = document.querySelector('#g');
+  if (grid && 'MutationObserver' in window) new MutationObserver(schedule).observe(grid,{childList:true,subtree:true});
+  window.addEventListener('load', schedule, {once:true});
+})();
+</script>
