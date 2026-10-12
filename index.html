@@ -2947,6 +2947,20 @@ update();
     return raw?(Array.isArray(data)?data:[]):(Array.isArray(data)?(data[0]||{}):(data||{}));
   };
 
+  const submitRating=async(body)=>{
+    const r=await fetch(CT_PUBLIC_RATINGS.url+"/functions/v1/public-ratings",{
+      method:"POST",
+      headers:{
+        apikey:CT_PUBLIC_RATINGS.key,
+        "Content-Type":"application/json",
+        Accept:"application/json"
+      },
+      body:JSON.stringify(body)
+    });
+    if(!r.ok) throw new Error("Public rating request failed.");
+    return await r.json();
+  };
+
   const formatRating=v=>{
     if(v===null || v===undefined || v==="") return "";
     const n=Number(v);
@@ -3047,7 +3061,7 @@ update();
         closeLayer(layer,button);
 
         try{
-          const data=await rpc("submit_public_rating",{
+          const data=await submitRating({
             p_media_item_id:String(mediaId),
             p_client_id:clientId,
             p_rating:n
