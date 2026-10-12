@@ -5078,3 +5078,16 @@ main.list .c:active{
   }
 }
 </style>
+<style id="poster-adaptive-poster-cinematic-stack-fix-v11">
+/* Keep the modal's own background behind its layered mesh, not over it. */
+.cinemodal{
+  isolation:isolate!important;
+  position:relative!important;
+}
+.cinemodal::before{
+  z-index:-2!important;
+}
+.cinemodal::after{
+  z-index:-1!important;
+}
+</style>
