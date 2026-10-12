@@ -4677,3 +4677,86 @@ body {
   }
 }
 </style>
+
+
+<style id="cineton-poster-palette-gradient-v1">
+/* Replace visible poster reflections with a continuous, softly blended cinematic color atmosphere. */
+.cineton-side-reflection {
+  display: none !important;
+}
+html {
+  background-color: #17130f !important;
+}
+body {
+  background-color: #17130f !important;
+  background-image:
+    radial-gradient(ellipse 36% 30% at 12% 8%,
+      rgba(119, 66, 55, .22) 0%,
+      transparent 76%),
+    radial-gradient(ellipse 42% 34% at 84% 18%,
+      rgba(95, 91, 57, .18) 0%,
+      transparent 74%),
+    radial-gradient(ellipse 38% 32% at 72% 54%,
+      rgba(102, 62, 83, .16) 0%,
+      transparent 76%),
+    radial-gradient(ellipse 42% 36% at 18% 72%,
+      rgba(55, 79, 77, .15) 0%,
+      transparent 76%),
+    radial-gradient(ellipse 48% 38% at 56% 94%,
+      rgba(145, 102, 55, .16) 0%,
+      transparent 78%),
+    linear-gradient(132deg,
+      #17130f 0%,
+      #211812 36%,
+      #1b1512 66%,
+      #17130f 100%),
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180' viewBox='0 0 180 180'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.82' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.10'/%3E%3C/svg%3E") !important;
+  background-size:
+    100% 900px,
+    100% 1100px,
+    100% 1000px,
+    100% 1200px,
+    100% 1100px,
+    100% 100%,
+    180px 180px !important;
+  background-position:
+    top center,
+    12% 8%,
+    70% 35%,
+    10% 65%,
+    center bottom,
+    center,
+    center !important;
+  background-repeat:
+    no-repeat,
+    no-repeat,
+    no-repeat,
+    no-repeat,
+    no-repeat,
+    no-repeat,
+    repeat !important;
+  background-attachment: scroll !important;
+}
+@media (max-width: 600px) {
+  body {
+    background-image:
+      radial-gradient(ellipse 90% 18% at 10% 5%,
+        rgba(119, 66, 55, .17) 0%,
+        transparent 78%),
+      radial-gradient(ellipse 90% 20% at 90% 34%,
+        rgba(95, 91, 57, .13) 0%,
+        transparent 78%),
+      radial-gradient(ellipse 95% 22% at 15% 66%,
+        rgba(55, 79, 77, .12) 0%,
+        transparent 78%),
+      radial-gradient(ellipse 100% 22% at 80% 92%,
+        rgba(145, 102, 55, .13) 0%,
+        transparent 80%),
+      linear-gradient(160deg, #17130f 0%, #211812 48%, #17130f 100%),
+      url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180' viewBox='0 0 180 180'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.82' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.10'/%3E%3C/svg%3E") !important;
+    background-size: 100% 780px, 100% 900px, 100% 900px, 100% 900px, 100% 100%, 180px 180px !important;
+    background-position: top center, center 25%, center 55%, center bottom, center, center !important;
+    background-repeat: no-repeat, no-repeat, no-repeat, no-repeat, no-repeat, repeat !important;
+  }
+}
+</style>
