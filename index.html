@@ -4103,3 +4103,44 @@ body{
   update();
 })();
 </script>
+
+
+<style id="cineton-initial-skeleton-polish-v1">
+/* Initial catalogue loading: calm, low-contrast shimmer with no layout movement. */
+#g .skel{
+  background:linear-gradient(105deg,
+    color-mix(in srgb,var(--sf) 94%,var(--line) 6%) 28%,
+    color-mix(in srgb,var(--sf) 72%,var(--gd,#caa36e) 28%) 46%,
+    color-mix(in srgb,var(--sf) 94%,var(--line) 6%) 64%);
+  background-size:220% 100%;
+  animation:cinetonSkeletonShimmer 1.45s ease-in-out infinite;
+}
+@keyframes cinetonSkeletonShimmer{
+  0%{background-position:100% 0}
+  100%{background-position:-120% 0}
+}
+@media(prefers-reduced-motion:reduce){
+  #g .skel{
+    animation:none!important;
+    background:color-mix(in srgb,var(--sf) 90%,var(--line) 10%);
+  }
+}
+/* Keep the established mobile bottom-center placement stable in hidden, shown and active states. */
+@media(max-width:600px){
+  #to-top{
+    left:50%!important;
+    right:auto!important;
+    bottom:14px!important;
+    transform:translate3d(-50%,8px,0)!important;
+  }
+  #to-top.show{
+    left:50%!important;
+    right:auto!important;
+    bottom:14px!important;
+    transform:translate3d(-50%,0,0)!important;
+  }
+  #to-top:active{
+    transform:translate3d(-50%,0,0) scale(.94)!important;
+  }
+}
+</style>
