@@ -3437,7 +3437,7 @@ update();
 }
 </style>
 <style id="cineton-reeded-glass-v1">
-/* Optimized reeded-glass ambience across the desktop backdrop, behind all readable content. */
+/* Full-viewport reeded-glass ambience, optimized for the desktop poster-wall layout. */
 @media (min-width: 1201px) {
   body::after {
     content: "";
@@ -3469,43 +3469,6 @@ update();
     -webkit-backdrop-filter: blur(1.15px) saturate(108%);
     backdrop-filter: blur(1.15px) saturate(108%);
     contain: strict;
-    will-change: auto;
-  }
-}
-@media (min-width: 601px) and (max-width: 1200px) {
-  body::after {
-    content: "";
-    position: fixed;
-    inset: 0;
-    z-index: 0;
-    pointer-events: none;
-    background:
-      repeating-linear-gradient(
-        90deg,
-        rgba(236, 216, 190, .012) 0px,
-        rgba(236, 216, 190, .012) 1px,
-        transparent 4px,
-        transparent 8px
-      ),
-      linear-gradient(105deg, transparent 12%, rgba(168, 124, 80, .018) 50%, transparent 88%);
-    opacity: .65;
-  }
-}
-@media (max-width: 600px) {
-  body::after {
-    content: "";
-    position: fixed;
-    inset: 0;
-    z-index: 0;
-    pointer-events: none;
-    background: repeating-linear-gradient(
-      90deg,
-      rgba(236, 216, 190, .009) 0px,
-      rgba(236, 216, 190, .009) 1px,
-      transparent 5px,
-      transparent 9px
-    );
-    opacity: .55;
   }
 }
 @media (prefers-reduced-transparency: reduce) {
