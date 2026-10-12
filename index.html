@@ -3411,6 +3411,31 @@ update();
   .cineton-side-reflection { display: none !important; }
 }
 </style>
+<style id="cineton-center-ambience-v1">
+/* A quiet warm bridge between the mirrored poster gutters; stays behind all catalogue content. */
+@media (min-width: 1201px) {
+  body::before {
+    content: "";
+    position: fixed;
+    z-index: 0;
+    inset: 0;
+    pointer-events: none;
+    background:
+      radial-gradient(ellipse 42% 68% at 50% 42%,
+        rgba(130, 91, 53, .105) 0%,
+        rgba(91, 62, 39, .065) 38%,
+        rgba(35, 29, 24, .025) 68%,
+        transparent 100%),
+      linear-gradient(90deg,
+        rgba(103, 76, 52, .035) 0%,
+        transparent 18%,
+        rgba(106, 77, 49, .025) 50%,
+        transparent 82%,
+        rgba(103, 76, 52, .035) 100%);
+    opacity: .9;
+  }
+}
+</style>
 <script id="desktop-poster-mirror-reflection-script-v2">
 (function () {
   if (window.matchMedia('(max-width: 1200px)').matches ||
