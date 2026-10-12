@@ -2933,14 +2933,14 @@ update();
   const clientId=getClientId();
 
   const rpc=async(name,body,raw=false)=>{
-    const r=await fetch(CT_PUBLIC_RATINGS.url+"/rest/v1/rpc/"+name,{
+    const r=await fetch(CT_PUBLIC_RATINGS.url+"/functions/v1/public-ratings",{
       method:"POST",
       headers:{
         apikey:CT_PUBLIC_RATINGS.key,
         "Content-Type":"application/json",
         Accept:"application/json"
       },
-      body:JSON.stringify(body)
+      body:JSON.stringify({action:name,...body})
     });
     if(!r.ok) throw new Error("Public rating request failed.");
     const data=await r.json();
@@ -2955,7 +2955,7 @@ update();
         "Content-Type":"application/json",
         Accept:"application/json"
       },
-      body:JSON.stringify(body)
+      body:JSON.stringify({action:"submit_public_rating",...body})
     });
     if(!r.ok) throw new Error("Public rating request failed.");
     return await r.json();
