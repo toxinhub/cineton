@@ -831,7 +831,7 @@ body.cineton-page-ready .title-mark::after{
   filter:brightness(1.45) saturate(.8);
   clip-path:polygon(-45% 0,-27% 0,-1% 100%,-19% 100%);
   opacity:0;
-  animation:cinetonMarkLightSweep 20s cubic-bezier(.4,0,.2,1) 900ms infinite;
+  animation:cinetonMarkLightSweep 15s cubic-bezier(.4,0,.2,1) 900ms infinite;
 }
 body.cineton-page-ready .home-brand h1 > span:not(.title-mark){
   position:relative;
@@ -853,7 +853,7 @@ body.cineton-page-ready .home-brand h1 > span:not(.title-mark)::after{
   letter-spacing:inherit;
   white-space:pre;
   opacity:0;
-  animation:cinetonTitleLightSweep 20s cubic-bezier(.4,0,.2,1) 900ms infinite;
+  animation:cinetonTitleLightSweep 15s cubic-bezier(.4,0,.2,1) 900ms infinite;
 }
 @keyframes cinetonMarkReveal{
   0%{opacity:0;transform:translateY(4px) scale(.82) rotate(-5deg);filter:brightness(.9)}
@@ -862,15 +862,15 @@ body.cineton-page-ready .home-brand h1 > span:not(.title-mark)::after{
   100%{opacity:1;transform:translateY(0) scale(1) rotate(0);filter:brightness(1)}
 }
 @keyframes cinetonMarkLightSweep{
-  0%,88%{opacity:0;clip-path:polygon(-45% 0,-27% 0,-1% 100%,-19% 100%)}
-  90%{opacity:.95}
-  94%{opacity:.65;clip-path:polygon(80% 0,98% 0,124% 100%,106% 100%)}
+  0%,82%{opacity:0;clip-path:polygon(-45% 0,-27% 0,-1% 100%,-19% 100%)}
+  84%{opacity:.95}
+  98%{opacity:.65;clip-path:polygon(80% 0,98% 0,124% 100%,106% 100%)}
   100%{opacity:0;clip-path:polygon(80% 0,98% 0,124% 100%,106% 100%)}
 }
 @keyframes cinetonTitleLightSweep{
-  0%,88%{opacity:0;background-position:180% 0}
-  90%{opacity:1}
-  94%{opacity:.75;background-position:-80% 0}
+  0%,82%{opacity:0;background-position:180% 0}
+  84%{opacity:1}
+  98%{opacity:.75;background-position:-80% 0}
   100%{opacity:0;background-position:-80% 0}
 }
 @media(prefers-reduced-motion:reduce){
