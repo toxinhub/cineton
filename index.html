@@ -4919,3 +4919,55 @@ main.list .c:active{
   .cinemodal .chips .love-chip .love-mobile-emoji{display:inline!important}
 }
 </style>
+
+
+<style id="poster-adaptive-ambient-v1">
+/* Poster-adaptive ambient color: restrained glow derived from the existing --poster-accent. */
+.cinemodal{
+  --poster-glow: color-mix(in srgb, var(--poster-accent, var(--gd)) 12%, transparent);
+  background:var(--modal)!important;
+}
+.cinemodal::before{
+  background-image:
+    radial-gradient(ellipse at 15% 18%, color-mix(in srgb, var(--poster-accent, var(--gd)) 22%, transparent) 0%, transparent 58%),
+    var(--modal-bg)!important;
+  background-size:100% 100%,cover!important;
+  background-position:center,center!important;
+  filter:blur(30px)!important;
+  opacity:.18!important;
+}
+.cinemodal::after{
+  background:
+    radial-gradient(ellipse at 12% 16%, color-mix(in srgb, var(--poster-accent, var(--gd)) 9%, transparent) 0%, transparent 56%),
+    var(--modal-overlay)!important;
+}
+.cinemodal .modal-top{
+  background:radial-gradient(ellipse at 12% 18%, color-mix(in srgb, var(--poster-accent, var(--gd)) 7%, transparent), transparent 68%);
+}
+.cinemodal .poster-wrap > img,
+.cinemodal .modal-top .poster-wrap > img{
+  box-shadow:0 8px 22px color-mix(in srgb, var(--poster-accent, var(--gd)) 14%, #352b2418), 0 3px 9px #352b2410!important;
+}
+.cinemodal .x:focus-visible{
+  outline:1px solid color-mix(in srgb, var(--poster-accent, var(--gd)) 52%, transparent)!important;
+  outline-offset:2px!important;
+}
+@media(max-width:600px){
+  .cinemodal::before{
+    opacity:.13!important;
+    filter:blur(24px)!important;
+  }
+  .cinemodal::after{
+    background:
+      radial-gradient(ellipse at 18% 12%, color-mix(in srgb, var(--poster-accent, var(--gd)) 7%, transparent) 0%, transparent 52%),
+      var(--modal-overlay)!important;
+  }
+  .cinemodal .modal-top{
+    background:radial-gradient(ellipse at 18% 12%, color-mix(in srgb, var(--poster-accent, var(--gd)) 5%, transparent), transparent 65%);
+  }
+}
+@media(prefers-reduced-transparency:reduce){
+  .cinemodal::before{opacity:.06!important}
+  .cinemodal::after{background:var(--modal-overlay)!important}
+}
+</style>
