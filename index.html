@@ -813,12 +813,10 @@ main.cineton-grid-reveal .c:hover{
   }
 }
 </style><style id="cineton-logo-cinematic-v1">
-/* Shine stays inside the emoji/text silhouette, with a slower, brighter sweep. */
+/* Original restrained cinematic sweep, clipped to the emoji and letter shapes. */
 body.cineton-page-ready .title-mark{
   display:inline-block;
   position:relative;
-  overflow:hidden;
-  isolation:isolate;
   transform-origin:center bottom;
   animation:cinetonMarkReveal 680ms cubic-bezier(.22,.61,.36,1) both;
 }
@@ -830,18 +828,13 @@ body.cineton-page-ready .title-mark::after{
   pointer-events:none;
   font:inherit;
   line-height:inherit;
-  filter:brightness(2.2) saturate(.6);
-  -webkit-mask-image:linear-gradient(105deg,transparent 0%,#000 22%,#000 78%,transparent 100%);
-  mask-image:linear-gradient(105deg,transparent 0%,#000 22%,#000 78%,transparent 100%);
-  clip-path:inset(0);
-  transform:translateX(-130%);
+  filter:brightness(1.45) saturate(.8);
+  clip-path:polygon(-45% 0,-27% 0,-1% 100%,-19% 100%);
   opacity:0;
-  animation:cinetonMarkLightSweep 18s ease-in-out 1s infinite;
+  animation:cinetonMarkLightSweep 15s cubic-bezier(.4,0,.2,1) 900ms infinite;
 }
 body.cineton-page-ready .home-brand h1 > span:not(.title-mark){
   position:relative;
-  overflow:hidden;
-  isolation:isolate;
 }
 body.cineton-page-ready .home-brand h1 > span:not(.title-mark)::after{
   content:attr(data-cineton-shine);
@@ -849,19 +842,18 @@ body.cineton-page-ready .home-brand h1 > span:not(.title-mark)::after{
   inset:0;
   display:block;
   pointer-events:none;
-  color:#fff0c2;
+  color:transparent;
+  background-image:linear-gradient(118deg,transparent 35%,#fff1cf00 43%,#fff1cfb8 50%,#fff1cf00 57%,transparent 65%);
+  background-size:230% 100%;
+  background-position:180% 0;
+  background-clip:text;
+  -webkit-background-clip:text;
   font:inherit;
   line-height:inherit;
   letter-spacing:inherit;
   white-space:pre;
-  text-shadow:0 0 2px #fff0c2,0 0 5px #f3d18a;
-  mix-blend-mode:screen;
-  -webkit-mask-image:linear-gradient(105deg,transparent 0%,#000 22%,#000 78%,transparent 100%);
-  mask-image:linear-gradient(105deg,transparent 0%,#000 22%,#000 78%,transparent 100%);
-  clip-path:inset(0);
-  transform:translateX(-130%);
   opacity:0;
-  animation:cinetonTitleLightSweep 18s ease-in-out 2.2s infinite;
+  animation:cinetonTitleLightSweep 15s cubic-bezier(.4,0,.2,1) 900ms infinite;
 }
 @keyframes cinetonMarkReveal{
   0%{opacity:0;transform:translateY(4px) scale(.82) rotate(-5deg);filter:brightness(.9)}
@@ -870,25 +862,23 @@ body.cineton-page-ready .home-brand h1 > span:not(.title-mark)::after{
   100%{opacity:1;transform:translateY(0) scale(1) rotate(0);filter:brightness(1)}
 }
 @keyframes cinetonMarkLightSweep{
-  0%,72%{opacity:0;transform:translateX(-130%)}
-  77%{opacity:1}
-  88%{opacity:.95;transform:translateX(130%)}
-  94%{opacity:.45;transform:translateX(130%)}
-  100%{opacity:0;transform:translateX(130%)}
+  0%,88%{opacity:0;clip-path:polygon(-45% 0,-27% 0,-1% 100%,-19% 100%)}
+  90%{opacity:.95}
+  94%{opacity:.65;clip-path:polygon(80% 0,98% 0,124% 100%,106% 100%)}
+  100%{opacity:0;clip-path:polygon(80% 0,98% 0,124% 100%,106% 100%)}
 }
 @keyframes cinetonTitleLightSweep{
-  0%,72%{opacity:0;transform:translateX(-130%)}
-  77%{opacity:1}
-  90%{opacity:.95;transform:translateX(130%)}
-  96%{opacity:.45;transform:translateX(130%)}
-  100%{opacity:0;transform:translateX(130%)}
+  0%,88%{opacity:0;background-position:180% 0}
+  90%{opacity:1}
+  94%{opacity:.75;background-position:-80% 0}
+  100%{opacity:0;background-position:-80% 0}
 }
 @media(prefers-reduced-motion:reduce){
   body.cineton-page-ready .title-mark{animation:none!important;transform:none!important;filter:none!important}
   body.cineton-page-ready .title-mark::after,
   body.cineton-page-ready .home-brand h1 > span:not(.title-mark)::after{animation:none!important;opacity:0!important}
 }
-</style><style id="cineton-title-cinematic-v1">
+<style id="cineton-title-cinematic-v1">
 body.cineton-page-ready .home-brand h1 > span:not(.title-mark){
   display:inline-block;
   transform-origin:left center;
@@ -1316,7 +1306,7 @@ main.cineton-grid-reveal .c:hover{
   background-color:color-mix(in srgb,var(--sf) 90%,var(--line) 10%)!important;
 }
 #cineton-scroll-progress::before{will-change:auto!important}
-/* Logo shine remains clipped to the emoji/text silhouette. */
+/* Preserve the restrained glyph-clipped logo lighting. */
 @media(min-width:601px){
   body{background-attachment:scroll!important}
 }
