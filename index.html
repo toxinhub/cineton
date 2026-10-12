@@ -4973,31 +4973,26 @@ main.list .c:active{
 </style>
 
 
-<style id="poster-adaptive-soft-warm-modal-v4">
-/* A visible but gentle warm porcelain tone; poster hues are softened before they tint the surface. */
+<style id="poster-adaptive-soft-warm-modal-v5">
+/* Richer warm porcelain: visible cocoa-beige tone without glow or poster shadows. */
 .cinemodal{
-  --modal-warm-accent:color-mix(in srgb,var(--poster-accent,var(--gd)) 24%,#b88f65 76%);
-  background:color-mix(in srgb,#f1e5d5 92%,var(--modal-warm-accent) 8%)!important;
-  color:#352b24!important;
+  --modal-warm-accent:color-mix(in srgb,var(--poster-accent,var(--gd)) 28%,#a9794d 72%);
+  background:color-mix(in srgb,#e8d3ba 84%,var(--modal-warm-accent) 16%)!important;
+  color:#35271e!important;
 }
-.cinemodal::before{
-  background-image:none!important;
-  filter:none!important;
-  opacity:0!important;
-}
+.cinemodal::before{background:none!important;background-image:none!important;filter:none!important;opacity:0!important}
 .cinemodal::after{
   background:linear-gradient(135deg,
-    color-mix(in srgb,#f1e5d5 93%,var(--modal-warm-accent) 7%) 0%,
-    color-mix(in srgb,#f1e5d5 90%,var(--modal-warm-accent) 10%) 52%,
-    color-mix(in srgb,#f1e5d5 93%,var(--modal-warm-accent) 7%) 100%)!important;
+    color-mix(in srgb,#ead7c1 86%,var(--modal-warm-accent) 14%) 0%,
+    color-mix(in srgb,#dfc5a6 80%,var(--modal-warm-accent) 20%) 52%,
+    color-mix(in srgb,#ead7c1 86%,var(--modal-warm-accent) 14%) 100%)!important;
 }
 .cinemodal .modal-top{background:transparent!important}
 .cinemodal .poster-wrap,
 .cinemodal .modal-top .poster-wrap,
 .cinemodal .poster-wrap>img,
 .cinemodal .modal-top .poster-wrap>img{
-  box-shadow:none!important;
-  filter:none!important;
+  box-shadow:none!important;filter:none!important;
 }
 .cinemodal .m,
 .cinemodal .modal-top,
@@ -5005,17 +5000,15 @@ main.list .c:active{
 .cinemodal .modal-wide,
 .cinemodal .public-comments,
 .cinemodal .public-comments-body,
-.cinemodal .public-comments-inner{color:#352b24!important}
-.cinemodal :is(p,small,.subline,.meta,.muted,.year,.genre,.description){color:#6e5e50}
+.cinemodal .public-comments-inner{color:#35271e!important}
+.cinemodal :is(p,small,.subline,.meta,.muted,.year,.genre,.description){color:#65503f!important}
 @media(max-width:600px){
-  .cinemodal{
-    background:color-mix(in srgb,#f1e5d5 94%,var(--modal-warm-accent) 6%)!important;
-  }
+  .cinemodal{background:color-mix(in srgb,#e8d3ba 87%,var(--modal-warm-accent) 13%)!important}
   .cinemodal::after{
     background:linear-gradient(145deg,
-      color-mix(in srgb,#f1e5d5 94%,var(--modal-warm-accent) 6%),
-      color-mix(in srgb,#f1e5d5 91%,var(--modal-warm-accent) 9%),
-      color-mix(in srgb,#f1e5d5 94%,var(--modal-warm-accent) 6%))!important;
+      color-mix(in srgb,#ead7c1 87%,var(--modal-warm-accent) 13%),
+      color-mix(in srgb,#dfc5a6 83%,var(--modal-warm-accent) 17%),
+      color-mix(in srgb,#ead7c1 87%,var(--modal-warm-accent) 13%))!important;
   }
 }
 </style>
