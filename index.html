@@ -3436,6 +3436,82 @@ update();
   }
 }
 </style>
+<style id="cineton-reeded-glass-v1">
+/* Optimized reeded-glass ambience across the desktop backdrop, behind all readable content. */
+@media (min-width: 1201px) {
+  body::after {
+    content: "";
+    position: fixed;
+    inset: 0;
+    z-index: 0;
+    pointer-events: none;
+    background:
+      repeating-linear-gradient(
+        90deg,
+        rgba(236, 216, 190, .018) 0px,
+        rgba(236, 216, 190, .018) 1px,
+        rgba(27, 21, 16, .022) 2px,
+        transparent 4px,
+        transparent 7px
+      ),
+      linear-gradient(
+        104deg,
+        transparent 0%,
+        rgba(214, 183, 148, .025) 24%,
+        rgba(242, 224, 199, .045) 49%,
+        rgba(126, 91, 60, .025) 72%,
+        transparent 100%
+      ),
+      radial-gradient(ellipse at 50% 38%,
+        rgba(168, 124, 80, .035) 0%,
+        transparent 68%);
+    opacity: .78;
+    -webkit-backdrop-filter: blur(1.15px) saturate(108%);
+    backdrop-filter: blur(1.15px) saturate(108%);
+    contain: strict;
+    will-change: auto;
+  }
+}
+@media (min-width: 601px) and (max-width: 1200px) {
+  body::after {
+    content: "";
+    position: fixed;
+    inset: 0;
+    z-index: 0;
+    pointer-events: none;
+    background:
+      repeating-linear-gradient(
+        90deg,
+        rgba(236, 216, 190, .012) 0px,
+        rgba(236, 216, 190, .012) 1px,
+        transparent 4px,
+        transparent 8px
+      ),
+      linear-gradient(105deg, transparent 12%, rgba(168, 124, 80, .018) 50%, transparent 88%);
+    opacity: .65;
+  }
+}
+@media (max-width: 600px) {
+  body::after {
+    content: "";
+    position: fixed;
+    inset: 0;
+    z-index: 0;
+    pointer-events: none;
+    background: repeating-linear-gradient(
+      90deg,
+      rgba(236, 216, 190, .009) 0px,
+      rgba(236, 216, 190, .009) 1px,
+      transparent 5px,
+      transparent 9px
+    );
+    opacity: .55;
+  }
+}
+@media (prefers-reduced-transparency: reduce) {
+  body::after { -webkit-backdrop-filter: none !important; backdrop-filter: none !important; }
+}
+</style>
 <script id="desktop-poster-mirror-reflection-script-v2">
 (function () {
   if (window.matchMedia('(max-width: 1200px)').matches ||
