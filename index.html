@@ -3461,95 +3461,102 @@ body {
 <script id="desktop-poster-mirror-reflection-script-v2">
 (function () {
   if (window.matchMedia('(max-width: 1200px)').matches) return;
-
   function makePanel(side) {
-    const panel = document.createElement('div');
-    panel.className = 'cineton-side-reflection ' + side;
-    panel.setAttribute('aria-hidden', 'true');
-    panel._src = '';
+    const panel=document.createElement('div');
+    panel.className='cineton-side-reflection '+side;
+    panel.setAttribute('aria-hidden','true');
+    panel._src='';
     document.body.appendChild(panel);
     return panel;
   }
-  const left = makePanel('left'), right = makePanel('right');
-  let scheduled = false, lastPair = '';
-  const colorCache = new Map();
-  const fallback = [[153,103,64],[116,77,51],[77,56,42]];
+  const left=makePanel('left'), right=makePanel('right');
+  let scheduled=false,lastPair='';
+  const colorCache=new Map();
+  const fallback=[[153,103,64],[116,77,51],[77,56,42]];
+  const rgba=(c,a)=>'rgba('+c[0]+','+c[1]+','+c[2]+','+a+')';
 
-  function centerRowEdgePosters() {
-    const main = document.querySelector('main');
-    if (!main) return [];
-    const mid = window.innerHeight * .5;
-    const posters = Array.from(main.querySelectorAll('.c img'))
-      .filter(img => img.complete && img.naturalWidth > 0)
-      .map(img => ({img, rect: img.getBoundingClientRect()}))
-      .filter(x => x.rect.bottom > 0 && x.rect.top < window.innerHeight);
-    if (!posters.length) return [];
-    const anchor = posters.reduce((best, x) =>
-      Math.abs((x.rect.top+x.rect.bottom)/2-mid) < Math.abs((best.rect.top+best.rect.bottom)/2-mid) ? x : best);
-    const row = posters.filter(x => Math.abs(x.rect.top-anchor.rect.top) < 12).sort((a,b)=>a.rect.left-b.rect.left);
-    return row.length ? [row[0],row[row.length-1]] : [anchor,anchor];
+  function centerRowEdgePosters(){
+    const main=document.querySelector('main');
+    if(!main)return [];
+    const mid=window.innerHeight*.5;
+    const posters=Array.from(main.querySelectorAll('.c img'))
+      .filter(img=>img.complete&&img.naturalWidth>0)
+      .map(img=>({img,rect:img.getBoundingClientRect()}))
+      .filter(x=>x.rect.bottom>0&&x.rect.top<window.innerHeight);
+    if(!posters.length)return [];
+    const anchor=posters.reduce((best,x)=>
+      Math.abs((x.rect.top+x.rect.bottom)/2-mid)<Math.abs((best.rect.top+best.rect.bottom)/2-mid)?x:best);
+    const row=posters.filter(x=>Math.abs(x.rect.top-anchor.rect.top)<12).sort((a,b)=>a.rect.left-b.rect.left);
+    return row.length?[row[0],row[row.length-1]]:[anchor,anchor];
   }
-  const rgba = (c,a) => 'rgba('+c[0]+','+c[1]+','+c[2]+','+a+')';
 
-  function loadAndRead(src, useProxy) {
-    return new Promise(resolve => {
-      const image = new Image();
-      image.crossOrigin = 'anonymous';
-      image.onload = () => {
-        try {
-          const canvas = document.createElement('canvas');
-          canvas.width = 24; canvas.height = 36;
-          const ctx = canvas.getContext('2d', {willReadFrequently:true});
-          if (!ctx) throw new Error('canvas unavailable');
-          ctx.drawImage(image,0,0,24,36);
-          const pixels=ctx.getImageData(0,0,24,36).data;
-          const buckets=[[0,0,0,0],[0,0,0,0],[0,0,0,0]];
-          for(let y=1;y<35;y+=2) for(let x=1;x<23;x+=2){
-            const i=(y*24+x)*4, r=pixels[i],g=pixels[i+1],b=pixels[i+2];
-            const lum=(r*.2126+g*.7152+b*.0722)/255;
-            if(lum<.055||lum>.96) continue;
+  function readImage(src){
+    return new Promise(resolve=>{
+      const img=new Image();
+      img.crossOrigin='anonymous';
+      img.onload=()=>{
+        try{
+          const canvas=document.createElement('canvas');
+          canvas.width=32;canvas.height=48;
+          const ctx=canvas.getContext('2d',{willReadFrequently:true});
+          if(!ctx)throw new Error('Canvas unavailable');
+          ctx.drawImage(img,0,0,32,48);
+          const px=ctx.getImageData(0,0,32,48).data;
+          const groups=[
+            {r:0,g:0,b:0,n:0}, {r:0,g:0,b:0,n:0}, {r:0,g:0,b:0,n:0}
+          ];
+          for(let y=1;y<47;y+=2)for(let x=1;x<31;x+=2){
+            const i=(y*32+x)*4,r=px[i],g=px[i+1],b=px[i+2];
+            const lum=(.2126*r+.7152*g+.0722*b)/255;
+            if(lum<.045||lum>.97)continue;
             const sat=Math.max(r,g,b)-Math.min(r,g,b);
-            const k=sat>42?0:(lum>.44?1:2);
-            buckets[k][0]+=r; buckets[k][1]+=g; buckets[k][2]+=b; buckets[k][3]++;
+            const k=sat>38?0:(lum>.43?1:2),v=groups[k];
+            v.r+=r;v.g+=g;v.b+=b;v.n++;
           }
-          const colors=buckets.map((v,i)=>v[3]?[Math.round(v[0]/v[3]),Math.round(v[1]/v[3]),Math.round(v[2]/v[3])]:fallback[i]);
-          resolve({ok:true,colors});
-        } catch (_) {
-          if (!useProxy) resolve({ok:false});
-          else resolve({ok:true,colors:fallback});
-        }
+          const colors=groups.map((v,i)=>v.n?[Math.round(v.r/v.n),Math.round(v.g/v.n),Math.round(v.b/v.n)]:fallback[i]);
+          resolve(colors);
+        }catch(_){resolve(null);}
       };
-      image.onerror = () => resolve({ok:false});
-      image.src = useProxy
-        ? 'https://images.weserv.nl/?url='+encodeURIComponent((new URL(src)).host+(new URL(src)).pathname)+'&w=24&h=36&fit=cover&output=jpg'
-        : src;
+      img.onerror=()=>resolve(null);
+      img.src=src;
     });
   }
 
-  async function samplePoster(src) {
-    if (!src) return fallback;
-    if (colorCache.has(src)) return colorCache.get(src);
+  async function samplePoster(src){
+    if(!src)return fallback;
+    if(colorCache.has(src))return colorCache.get(src);
     const task=(async()=>{
-      let result=await loadAndRead(src,false);
-      if (!result.ok) result=await loadAndRead(src,true);
-      return result.colors || fallback;
+      const u=new URL(src);
+      const path=u.host+u.pathname;
+      const candidates=[
+        src,
+        'https://images.weserv.nl/?url='+encodeURIComponent(path)+'&w=32&h=48&fit=cover&output=jpg',
+        'https://wsrv.nl/?url='+encodeURIComponent(path)+'&w=32&h=48&fit=cover&output=jpg'
+      ];
+      for(const candidate of candidates){
+        const colors=await readImage(candidate);
+        if(colors&&colors.some((c,i)=>c.join(',')!==fallback[i].join(',')))return colors;
+        if(colors)return colors;
+      }
+      return fallback;
     })();
     colorCache.set(src,task);
     return task;
   }
 
-  async function applyColors(panel,src) {
-    if(!src||panel._src===src) return;
+  async function applyColors(panel,src){
+    if(!src||panel._src===src)return;
     panel._src=src;
     const colors=await samplePoster(src);
-    if(panel._src!==src) return;
+    if(panel._src!==src)return;
     const tint=c=>c.map(v=>Math.max(0,Math.min(255,Math.round(v*.82+8))));
     panel.style.setProperty('--poster-glow-a',rgba(tint(colors[0]),.70));
     panel.style.setProperty('--poster-glow-b',rgba(tint(colors[1]),.58));
     panel.style.setProperty('--poster-glow-c',rgba(tint(colors[2]),.60));
+    panel.dataset.paletteSource=colors===fallback?'fallback':'poster';
   }
 
-  function update() {
+  function update(){
     scheduled=false;
     const edges=centerRowEdgePosters();
     if(!edges.length){left.classList.remove('is-visible');right.classList.remove('is-visible');return;}
@@ -3557,7 +3564,7 @@ body {
     const b=edges[1].img.currentSrc||edges[1].img.src;
     const pair=a+'|'+b;
     if(pair!==lastPair){applyColors(left,a);applyColors(right,b);lastPair=pair;}
-    left.classList.add('is-visible'); right.classList.add('is-visible');
+    left.classList.add('is-visible');right.classList.add('is-visible');
   }
   function schedule(){if(scheduled)return;scheduled=true;requestAnimationFrame(update);}
   window.addEventListener('scroll',schedule,{passive:true});
