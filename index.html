@@ -4973,41 +4973,12 @@ main.list .c:active{
 </style>
 
 
-<style id="poster-adaptive-full-modal-grade-v2">
-/* Full-surface poster color grading: the dominant poster hue subtly influences the entire modal, not just the poster area. */
-.cinemodal{
-  background:
-    linear-gradient(128deg,
-      color-mix(in srgb, var(--modal) 90%, var(--poster-accent, var(--gd)) 10%) 0%,
-      color-mix(in srgb, var(--modal) 95%, var(--poster-accent, var(--gd)) 5%) 48%,
-      color-mix(in srgb, var(--modal) 92%, var(--poster-accent, var(--gd)) 8%) 100%)!important;
-}
-.cinemodal::after{
-  background:
-    radial-gradient(ellipse at 8% 8%, color-mix(in srgb, var(--poster-accent, var(--gd)) 11%, transparent) 0%, transparent 58%),
-    radial-gradient(ellipse at 92% 78%, color-mix(in srgb, var(--poster-accent, var(--gd)) 7%, transparent) 0%, transparent 62%),
-    linear-gradient(145deg,
-      color-mix(in srgb, var(--poster-accent, var(--gd)) 3%, transparent),
-      transparent 48%,
-      color-mix(in srgb, var(--poster-accent, var(--gd)) 4%, transparent))!important;
-}
-.cinemodal .modal-top{
-  background:linear-gradient(120deg,
-    color-mix(in srgb, var(--poster-accent, var(--gd)) 5%, transparent),
-    transparent 62%)!important;
-}
-@media(max-width:600px){
-  .cinemodal{
-    background:
-      linear-gradient(145deg,
-        color-mix(in srgb, var(--modal) 93%, var(--poster-accent, var(--gd)) 7%),
-        color-mix(in srgb, var(--modal) 96%, var(--poster-accent, var(--gd)) 4%),
-        color-mix(in srgb, var(--modal) 94%, var(--poster-accent, var(--gd)) 6%))!important;
-  }
-  .cinemodal::after{
-    background:
-      radial-gradient(ellipse at 10% 8%, color-mix(in srgb, var(--poster-accent, var(--gd)) 8%, transparent) 0%, transparent 58%),
-      radial-gradient(ellipse at 90% 76%, color-mix(in srgb, var(--poster-accent, var(--gd)) 5%, transparent) 0%, transparent 64%)!important;
-  }
-}
+<style id="poster-adaptive-soft-warm-modal-v3">
+.cinemodal{background:color-mix(in srgb,#f3ece2 97%,var(--poster-accent,var(--gd)))!important;color:#352b24!important}
+.cinemodal::before{background-image:none!important;filter:none!important;opacity:0!important}
+.cinemodal::after{background:linear-gradient(135deg,color-mix(in srgb,#f3ece2 98%,var(--poster-accent,var(--gd))),color-mix(in srgb,#f3ece2 97%,var(--poster-accent,var(--gd))),color-mix(in srgb,#f3ece2 98%,var(--poster-accent,var(--gd))))!important}
+.cinemodal .modal-top{background:transparent!important}
+.cinemodal .m,.cinemodal .modal-top,.cinemodal .modal-side,.cinemodal .modal-wide,.cinemodal .public-comments,.cinemodal .public-comments-body,.cinemodal .public-comments-inner{color:#352b24!important}
+.cinemodal :is(p,small,.subline,.meta,.muted,.year,.genre,.description){color:#6e5e50}
+@media(max-width:600px){.cinemodal{background:color-mix(in srgb,#f3ece2 98%,var(--poster-accent,var(--gd)))!important}.cinemodal::after{background:linear-gradient(145deg,color-mix(in srgb,#f3ece2 98%,var(--poster-accent,var(--gd))),color-mix(in srgb,#f3ece2 97.5%,var(--poster-accent,var(--gd))),color-mix(in srgb,#f3ece2 98%,var(--poster-accent,var(--gd))))!important}}
 </style>
