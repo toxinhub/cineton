@@ -3342,57 +3342,51 @@ update();
 
 <!-- Cineton desktop cinematic poster wall v2 -->
 <style id="desktop-poster-mirror-reflection-v2">
-/* Poster-derived colour atmosphere in the side gutters — never display poster artwork here. */
+/* Poster-colour side gradients. Keep the existing Cocoa theme; never render poster artwork in the gutters. */
 @media (min-width: 1201px) {
   .cineton-side-reflection {
-    position: fixed;
-    z-index: 0;
-    top: 0;
-    bottom: 0;
+    position: fixed !important;
+    z-index: 0 !important;
+    top: 0; bottom: 0;
     width: max(0px, calc((100vw - 1200px) / 2 + 22px));
     pointer-events: none;
     overflow: hidden;
     opacity: 0;
     background-color: #211b15;
     background-image:
-      radial-gradient(ellipse at 22% 22%, var(--poster-glow-a, rgba(170,124,80,.25)) 0%, transparent 58%),
-      radial-gradient(ellipse at 78% 52%, var(--poster-glow-b, rgba(116,83,57,.22)) 0%, transparent 62%),
-      radial-gradient(ellipse at 35% 88%, var(--poster-glow-c, rgba(72,54,42,.30)) 0%, transparent 58%),
-      linear-gradient(160deg, rgba(33,27,21,.42), rgba(23,19,15,.94));
+      radial-gradient(ellipse 105% 56% at 12% 20%, var(--poster-glow-a, rgba(170,124,80,.62)) 0%, transparent 72%),
+      radial-gradient(ellipse 95% 62% at 88% 51%, var(--poster-glow-b, rgba(116,83,57,.54)) 0%, transparent 74%),
+      radial-gradient(ellipse 110% 52% at 30% 92%, var(--poster-glow-c, rgba(72,54,42,.56)) 0%, transparent 72%),
+      linear-gradient(160deg, rgba(33,27,21,.12), rgba(23,19,15,.62));
     background-size: 150% 125%, 140% 130%, 150% 120%, 100% 100%;
     background-position: 0% 0%, 100% 40%, 0% 100%, center;
-    transition: opacity 460ms ease, background-position 700ms ease;
+    transition: opacity 460ms ease;
     contain: paint;
     isolation: isolate;
   }
-  .cineton-side-reflection.is-visible { opacity: .94; }
+  .cineton-side-reflection.is-visible { opacity: 1 !important; }
   .cineton-side-reflection::before {
     content: "";
-    position: absolute;
-    z-index: 2;
-    inset: 0;
+    position: absolute; z-index: 2; inset: 0;
     pointer-events: none;
     background:
       repeating-linear-gradient(90deg, rgba(236,216,190,.018) 0 1px, rgba(27,21,16,.018) 2px, transparent 4px 8px),
-      linear-gradient(145deg, rgba(205,201,210,.055) 0%, rgba(205,201,210,.018) 28%, transparent 52%),
-      linear-gradient(180deg, rgba(35,34,38,.06) 0%, rgba(18,17,20,.35) 100%);
-    -webkit-backdrop-filter: blur(4px) saturate(108%);
-    backdrop-filter: blur(4px) saturate(108%);
-    box-shadow: inset 0 0 28px rgba(218,205,224,.035);
+      linear-gradient(145deg, rgba(205,201,210,.035) 0%, rgba(205,201,210,.012) 28%, transparent 52%),
+      linear-gradient(180deg, rgba(35,34,38,.02) 0%, rgba(18,17,20,.18) 100%);
   }
   .cineton-side-reflection.left {
     left: 0;
-    -webkit-mask-image: linear-gradient(to right, #000 0%, rgba(0,0,0,.84) 46%, transparent 100%);
-    mask-image: linear-gradient(to right, #000 0%, rgba(0,0,0,.84) 46%, transparent 100%);
+    -webkit-mask-image: linear-gradient(to right, #000 0%, rgba(0,0,0,.92) 58%, transparent 100%);
+    mask-image: linear-gradient(to right, #000 0%, rgba(0,0,0,.92) 58%, transparent 100%);
   }
   .cineton-side-reflection.right {
     right: 0;
-    -webkit-mask-image: linear-gradient(to left, #000 0%, rgba(0,0,0,.84) 46%, transparent 100%);
-    mask-image: linear-gradient(to left, #000 0%, rgba(0,0,0,.84) 46%, transparent 100%);
+    -webkit-mask-image: linear-gradient(to left, #000 0%, rgba(0,0,0,.92) 58%, transparent 100%);
+    mask-image: linear-gradient(to left, #000 0%, rgba(0,0,0,.92) 58%, transparent 100%);
   }
   header, .stats-row, .nav-bar, main, footer, #to-top { position: relative; z-index: 1; }
 }
-@media (max-width: 1200px), (prefers-reduced-motion: reduce) {
+@media (max-width: 1200px) {
   .cineton-side-reflection { display: none !important; }
 }
 </style>
@@ -3466,8 +3460,7 @@ body {
 </style>
 <script id="desktop-poster-mirror-reflection-script-v2">
 (function () {
-  if (window.matchMedia('(max-width: 1200px)').matches ||
-      window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+  if (window.matchMedia('(max-width: 1200px)').matches) return;
 
   function makePanel(side) {
     const panel = document.createElement('div');
@@ -3477,129 +3470,83 @@ body {
     document.body.appendChild(panel);
     return panel;
   }
-
-  const left = makePanel('left');
-  const right = makePanel('right');
-  let scheduled = false;
-  let lastPair = '';
+  const left = makePanel('left'), right = makePanel('right');
+  let scheduled = false, lastPair = '';
   const colorCache = new Map();
+  const fallback = [[153,103,64],[116,77,51],[77,56,42]];
 
   function centerRowEdgePosters() {
     const main = document.querySelector('main');
     if (!main) return [];
-    const mid = window.innerHeight * 0.5;
+    const mid = window.innerHeight * .5;
     const posters = Array.from(main.querySelectorAll('.c img'))
       .filter(img => img.complete && img.naturalWidth > 0)
-      .map(img => ({ img, rect: img.getBoundingClientRect() }))
-      .filter(item => item.rect.bottom > 0 && item.rect.top < window.innerHeight);
+      .map(img => ({img, rect: img.getBoundingClientRect()}))
+      .filter(x => x.rect.bottom > 0 && x.rect.top < window.innerHeight);
     if (!posters.length) return [];
-    const anchor = posters.reduce((best, item) =>
-      Math.abs((item.rect.top + item.rect.bottom) / 2 - mid) <
-      Math.abs((best.rect.top + best.rect.bottom) / 2 - mid) ? item : best
-    );
-    const rowTop = anchor.rect.top;
-    const row = posters.filter(item => Math.abs(item.rect.top - rowTop) < 12);
-    if (!row.length) return [anchor, anchor];
-    row.sort((a, b) => a.rect.left - b.rect.left);
-    return [row[0], row[row.length - 1]];
+    const anchor = posters.reduce((best, x) =>
+      Math.abs((x.rect.top+x.rect.bottom)/2-mid) < Math.abs((best.rect.top+best.rect.bottom)/2-mid) ? x : best);
+    const row = posters.filter(x => Math.abs(x.rect.top-anchor.rect.top) < 12).sort((a,b)=>a.rect.left-b.rect.left);
+    return row.length ? [row[0],row[row.length-1]] : [anchor,anchor];
   }
-
-  function rgbToRgba(rgb, alpha) {
-    return 'rgba(' + rgb[0] + ',' + rgb[1] + ',' + rgb[2] + ',' + alpha + ')';
-  }
-  function tone(rgb, amount) {
-    return rgb.map(value => Math.max(0, Math.min(255, Math.round(value * amount + (amount < 1 ? 10 : 0)))));
-  }
+  const rgba = (c,a) => 'rgba('+c[0]+','+c[1]+','+c[2]+','+a+')';
   function samplePoster(src) {
-    if (!src) return Promise.resolve([[126,91,60],[91,65,46],[54,42,33]]);
+    if (!src) return Promise.resolve(fallback);
     if (colorCache.has(src)) return colorCache.get(src);
-    const result = new Promise(resolve => {
+    const task = new Promise(resolve => {
       const image = new Image();
       image.crossOrigin = 'anonymous';
       image.onload = () => {
         try {
-          const canvas = document.createElement('canvas');
-          canvas.width = 24; canvas.height = 36;
-          const ctx = canvas.getContext('2d', { willReadFrequently: true });
-          ctx.drawImage(image, 0, 0, canvas.width, canvas.height);
-          const data = ctx.getImageData(0, 0, canvas.width, canvas.height).data;
-          const buckets = [[0,0,0,0],[0,0,0,0],[0,0,0,0]];
-          for (let y = 2; y < 34; y += 3) {
-            for (let x = 2; x < 22; x += 3) {
-              const i = (y * canvas.width + x) * 4;
-              const r = data[i], g = data[i+1], b = data[i+2];
-              const lum = (r * .2126 + g * .7152 + b * .0722) / 255;
-              if (lum < .09 || lum > .92) continue;
-              const sat = Math.max(r,g,b) - Math.min(r,g,b);
-              const bucket = sat > 65 ? 0 : (lum > .48 ? 1 : 2);
-              buckets[bucket][0] += r; buckets[bucket][1] += g;
-              buckets[bucket][2] += b; buckets[bucket][3]++;
-            }
+          const canvas = document.createElement('canvas'); canvas.width=24; canvas.height=36;
+          const ctx = canvas.getContext('2d', {willReadFrequently:true});
+          if (!ctx) throw new Error('canvas unavailable');
+          ctx.drawImage(image,0,0,24,36);
+          const pixels=ctx.getImageData(0,0,24,36).data;
+          const buckets=[[0,0,0,0],[0,0,0,0],[0,0,0,0]];
+          for(let y=1;y<35;y+=2) for(let x=1;x<23;x+=2){
+            const i=(y*24+x)*4, r=pixels[i],g=pixels[i+1],b=pixels[i+2];
+            const lum=(r*.2126+g*.7152+b*.0722)/255;
+            if(lum<.055||lum>.96) continue;
+            const sat=Math.max(r,g,b)-Math.min(r,g,b);
+            const k=sat>42?0:(lum>.44?1:2);
+            buckets[k][0]+=r;buckets[k][1]+=g;buckets[k][2]+=b;buckets[k][3]++;
           }
-          const fallback = [[126,91,60],[91,65,46],[54,42,33]];
-          const colors = buckets.map((bucket, i) => bucket[3]
-            ? [Math.round(bucket[0]/bucket[3]), Math.round(bucket[1]/bucket[3]), Math.round(bucket[2]/bucket[3])]
-            : fallback[i]);
-          resolve(colors);
-        } catch (_) {
-          resolve([[126,91,60],[91,65,46],[54,42,33]]);
-        }
+          resolve(buckets.map((v,i)=>v[3]?[Math.round(v[0]/v[3]),Math.round(v[1]/v[3]),Math.round(v[2]/v[3])]:fallback[i]));
+        } catch (_) { resolve(fallback); }
       };
-      image.onerror = () => resolve([[126,91,60],[91,65,46],[54,42,33]]);
-      image.src = src;
+      image.onerror=()=>resolve(fallback);
+      image.src=src;
     });
-    colorCache.set(src, result);
-    return result;
+    colorCache.set(src,task); return task;
   }
-
-  async function applyPosterColors(panel, src) {
-    if (!src || panel._src === src) return;
-    panel._src = src;
-    const colors = await samplePoster(src);
-    if (panel._src !== src) return;
-    const a = tone(colors[0], .72);
-    const b = tone(colors[1], .62);
-    const c = tone(colors[2], .48);
-    panel.style.setProperty('--poster-glow-a', rgbToRgba(a, .46));
-    panel.style.setProperty('--poster-glow-b', rgbToRgba(b, .36));
-    panel.style.setProperty('--poster-glow-c', rgbToRgba(c, .42));
+  async function applyColors(panel,src) {
+    if(!src||panel._src===src) return;
+    panel._src=src;
+    const colors=await samplePoster(src);
+    if(panel._src!==src) return;
+    const tint=c=>c.map(v=>Math.max(0,Math.min(255,Math.round(v*.82+8))));
+    panel.style.setProperty('--poster-glow-a',rgba(tint(colors[0]),.70));
+    panel.style.setProperty('--poster-glow-b',rgba(tint(colors[1]),.58));
+    panel.style.setProperty('--poster-glow-c',rgba(tint(colors[2]),.60));
   }
-
   function update() {
-    scheduled = false;
-    const edgePosters = centerRowEdgePosters();
-    if (!edgePosters.length) {
-      left.classList.remove('is-visible');
-      right.classList.remove('is-visible');
-      return;
-    }
-    const leftSrc = edgePosters[0].img.currentSrc || edgePosters[0].img.src;
-    const rightSrc = edgePosters[1].img.currentSrc || edgePosters[1].img.src;
-    const pair = leftSrc + '|' + rightSrc;
-    if (pair !== lastPair) {
-      applyPosterColors(left, leftSrc);
-      applyPosterColors(right, rightSrc);
-      lastPair = pair;
-    }
-    left.classList.add('is-visible');
-    right.classList.add('is-visible');
+    scheduled=false;
+    const edges=centerRowEdgePosters();
+    if(!edges.length){left.classList.remove('is-visible');right.classList.remove('is-visible');return;}
+    const a=edges[0].img.currentSrc||edges[0].img.src;
+    const b=edges[1].img.currentSrc||edges[1].img.src;
+    const pair=a+'|'+b;
+    if(pair!==lastPair){applyColors(left,a);applyColors(right,b);lastPair=pair;}
+    left.classList.add('is-visible');right.classList.add('is-visible');
   }
-
-  function scheduleUpdate() {
-    if (scheduled) return;
-    scheduled = true;
-    requestAnimationFrame(update);
-  }
-  window.addEventListener('scroll', scheduleUpdate, { passive: true });
-  window.addEventListener('resize', scheduleUpdate, { passive: true });
-  const main = document.querySelector('main');
-  if (main && 'MutationObserver' in window) {
-    new MutationObserver(scheduleUpdate).observe(main, {
-      childList: true, subtree: true, attributes: true, attributeFilter: ['src', 'class']
-    });
-  }
-  window.addEventListener('load', scheduleUpdate, { once: true });
-  scheduleUpdate();
+  function schedule(){if(scheduled)return;scheduled=true;requestAnimationFrame(update);}
+  window.addEventListener('scroll',schedule,{passive:true});
+  window.addEventListener('resize',schedule,{passive:true});
+  window.addEventListener('load',schedule,{once:true});
+  const main=document.querySelector('main');
+  if(main&&'MutationObserver'in window)new MutationObserver(schedule).observe(main,{childList:true,subtree:true,attributes:true,attributeFilter:['src','class']});
+  schedule();
 })();
 </script>
 
