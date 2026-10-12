@@ -1727,66 +1727,37 @@ function cinetonEnsureVeil(){
 }
 async function cinetonPosterTransition(direction,sourcePoster,openingRect=null){
   const opening=direction==='open';
-  const duration=cinetonMotionDuration(direction);
-  const ease=opening?'cubic-bezier(0.16, 1, 0.3, 1)':'cubic-bezier(0.4, 0, 1, 1)';
-  const content=d.querySelector('.m');
-  let animation=null,contentAnimation=null;
-  const clear=()=>{
-    try{animation?.cancel()}catch{}
-    try{contentAnimation?.cancel()}catch{}
-    d.style.removeProperty('transform');
-    d.style.removeProperty('opacity');
-    d.style.removeProperty('will-change');
-    if(content){content.style.removeProperty('opacity');content.style.removeProperty('will-change')}
-  };
+  const duration=cinetonMotionReduced()?110:cinetonMotionDuration(direction);
+  const ease=opening?'cubic-bezier(0.22, 1, 0.36, 1)':'cubic-bezier(0.4, 0, 1, 1)';
+  let animation=null;
   try{
-    if(cinetonMotionReduced()){
-      d.style.opacity=opening?'0':'1';
-      const fade=d.animate(opening?[{opacity:0},{opacity:1}]:[{opacity:1},{opacity:0}],{duration:150,easing:'linear'});
-      await Promise.race([fade.finished.catch(()=>{}),new Promise(resolve=>setTimeout(resolve,220))]);
-      return true;
-    }
-    const dialogRect=cinetonRect(d);
-    const posterRect=opening?openingRect:(sourcePoster?cinetonRect(sourcePoster):null);
-    const valid=!!posterRect&&posterRect.width>0&&posterRect.height>0;
-    const onScreen=valid&&posterRect.left<window.innerWidth&&posterRect.top<window.innerHeight&&posterRect.left+posterRect.width>0&&posterRect.top+posterRect.height>0;
-    const flip=onScreen?cinetonFlipTransform(posterRect,dialogRect):'scale(.96)';
+    if(typeof d.animate!=='function')throw new Error('Web Animations API is unavailable');
     d.style.willChange='transform,opacity';
-    if(content)content.style.willChange='opacity';
+    /* Animate the dialog as one unit: no poster-sized FLIP distortion or separate poster reveal. */
     const frames=opening
-      ?[{transform:flip,opacity:0},{transform:'none',opacity:1}]
-      :[{transform:'none',opacity:1},{transform:flip,opacity:0}];
-    /* Let WAAPI apply the first poster-aligned keyframe immediately; avoid a separate inline-style phase that can flash at the centered dialog position. */
+      ?[{transform:'translate3d(0, 9px, 0) scale(.985)',opacity:0},{transform:'translate3d(0, 0, 0) scale(1)',opacity:1}]
+      :[{transform:'translate3d(0, 0, 0) scale(1)',opacity:1},{transform:'translate3d(0, 5px, 0) scale(.99)',opacity:0}];
     animation=d.animate(frames,{duration,easing:ease,fill:'both'});
-    if(content){
-      if(opening){
-        content.style.opacity='0';
-        contentAnimation=content.animate(
-          [{opacity:0,offset:0},{opacity:0,offset:.2},{opacity:1,offset:1}],
-          {duration:Math.max(220,Math.min(duration-20,560)),easing:'cubic-bezier(0.16, 1, 0.3, 1)',fill:'both'}
-        );
-      }else{
-        contentAnimation=content.animate(
-          [{opacity:1,offset:0},{opacity:1,offset:.42},{opacity:0,offset:1}],
-          {duration:Math.round(duration*.94),easing:'cubic-bezier(0.4, 0, 1, 1)',fill:'both'}
-        );
-      }
-    }
-    await Promise.race([
-      Promise.all([animation.finished,contentAnimation?contentAnimation.finished.catch(()=>{}):Promise.resolve()]),
-      new Promise(resolve=>setTimeout(resolve,duration+180))
-    ]);
+    await animation.finished;
     return true;
   }catch(error){
     console.info('Cineton modal transition fallback:',error);
     try{
-      clear();
-      const fade=d.animate(opening?[{opacity:0},{opacity:1}]:[{opacity:1},{opacity:0}],{duration:140,easing:'linear'});
-      await Promise.race([fade.finished.catch(()=>{}),new Promise(resolve=>setTimeout(resolve,200))]);
-    }catch(fallbackError){console.info('Cineton modal fallback failed:',fallbackError)}
-    return false;
+      const fade=d.animate(opening?[{opacity:0},{opacity:1}]:[{opacity:1},{opacity:0}],{duration:120,easing:'linear',fill:'both'});
+      await fade.finished;
+      return true;
+    }catch(fallbackError){
+      console.info('Cineton modal fallback failed:',fallbackError);
+      return false;
+    }
   }finally{
-    clear();
+    d.style.removeProperty('will-change');
+    /* Opening can clean up immediately; closing keeps its final frame until dialog.close(). */
+    if(opening){
+      try{animation?.cancel()}catch{}
+      d.style.removeProperty('transform');
+      d.style.removeProperty('opacity');
+    }
   }
 }
 async function closeCinetonModal(){
@@ -1801,6 +1772,9 @@ async function closeCinetonModal(){
     const animated=await cinetonPosterTransition('close',sourcePoster);
     if(!animated){d.style.removeProperty('transform');d.style.removeProperty('opacity')}
     d.close();
+    /* Remove the finished WAAPI effect only after the dialog leaves the top layer, avoiding a close-frame snap. */
+    d.getAnimations({subtree:true}).forEach(animation=>{try{animation.cancel()}catch{}});
+    d.style.removeProperty('transform');d.style.removeProperty('opacity');d.style.removeProperty('will-change');
   }finally{
     const sourceId=d.dataset.sourceMovieId;
     const sourceCard=sourceId&&document.querySelector('.c[data-id="'+CSS.escape(sourceId)+'"]');
@@ -3972,8 +3946,8 @@ main.list .cineton-love-heart{
 </style>
 
 <style id="cineton-poster-modal-flip-v1">
-:root{--open-ms:280;--close-ms:220}
-@media(max-width:640px){:root{--open-ms:260;--close-ms:210}}
+:root{--open-ms:300;--close-ms:240}
+@media(max-width:640px){:root{--open-ms:260;--close-ms:220}}
 html{scrollbar-gutter:stable}
 .cinemodal{
   width:min(760px,92vw)!important;
