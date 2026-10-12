@@ -1307,7 +1307,7 @@ async function refreshPublicCommentIndicators(){
   }catch{}
 }
 let cinetonInitialReveal=true;function skeleton(){const g=$('#g');g.innerHTML=Array.from({length:12},()=>'<div class="skel" aria-hidden="true"></div>').join('')}skeleton();fetch('data.json?v=20261006-2',{cache:'no-store'}).then(r=>{if(!r.ok)throw Error('HTTP '+r.status);return r.json()}).then(x=>{D=x;populateGenres();render();refreshPublicCommentIndicators();document.body.classList.remove('cineton-page-loading');document.body.classList.add('cineton-page-ready');requestAnimationFrame(()=>requestAnimationFrame(()=>pageLoadFade.remove()));}).catch(()=>{document.body.classList.remove('cineton-page-loading');document.body.classList.add('cineton-page-ready');pageLoadFade.remove();$('#g').innerHTML='<p class="empty">Couldn’t load your library.</p>'});function populateGenres(){const names=[...new Set(D.flatMap(m=>Array.isArray(m.genres)?m.genres:[]).filter(Boolean))].sort((a,b)=>a.localeCompare(b));const s=$('#ge'),menu=$('#ge-menu'),current=s.value||'all';s.innerHTML='<option value="all">All genres</option>'+names.map(g=>'<option value="'+e(g)+'">'+e(g)+'</option>').join('');menu.innerHTML='<button type="button" role="option" data-value="all">All genres</button>'+names.map(g=>'<button type="button" role="option" data-value="'+e(g)+'">'+e(g)+'</button>').join('');const selected=[...s.options].some(o=>o.value===current)?current:'all';s.value=selected;menu.querySelectorAll('[role="option"]').forEach(o=>o.setAttribute('aria-selected',o.dataset.value===selected));const chosen=s.options[s.selectedIndex]?.textContent||'All genres';$('#ge-trigger').firstChild.textContent=chosen+' ';initSelect('ge')}
-const pic=(m,eager=false)=>m.poster?`<img loading="${eager?'eager':'lazy'}" decoding="async" fetchpriority="${eager?'high':'auto'}" src="https://image.tmdb.org/t/p/w500${e(m.poster)}" srcset="https://image.tmdb.org/t/p/w342${e(m.poster)} 342w, https://image.tmdb.org/t/p/w500${e(m.poster)} 500w" sizes="(max-width:600px) 45vw, 190px" alt="${e(m.title)} poster" onerror="this.replaceWith(Object.assign(document.createElement('div'),{className:'ph',textContent:this.alt.replace(/ poster$/,'')}))">`:`<div class="ph">${e(m.title)}</div>`;function applyView(){const g=$('#g');g.classList.toggle('list',view==='list');$('#v-grid').classList.toggle('on',view==='grid');$('#v-list').classList.toggle('on',view==='list');const pf=$('#person-filter'),pl=$('#person-filter-label');pf.classList.toggle('on',!!personFilter);if(personFilter)pl.textContent=(personFilterType||'Person')+' · '+personFilter}function setStatFilter(f){statFilter=statFilter===f?'all':f;document.querySelectorAll('.stat').forEach(x=>x.classList.toggle('active',x.dataset.filter===statFilter));if(f==='movie'||f==='tv'){$('#ty').value=f}else if(f==='rated'){$('#ty').value='all';$('#so').value='my'}else if(f==='loved'){$('#ty').value='all';$('#so').value='new'}render();window.scrollTo({top:document.querySelector('.bar').offsetTop,behavior:'smooth'})}function renderGrid(L){
+const pic=(m,eager=false)=>m.poster?`<img class="poster-loading" loading="${eager?'eager':'lazy'}" decoding="async" fetchpriority="${eager?'high':'auto'}" src="https://image.tmdb.org/t/p/w500${e(m.poster)}" srcset="https://image.tmdb.org/t/p/w342${e(m.poster)} 342w, https://image.tmdb.org/t/p/w500${e(m.poster)} 500w" sizes="(max-width:600px) 45vw, 190px" alt="${e(m.title)} poster" onload="this.classList.remove('poster-loading')" onerror="this.replaceWith(Object.assign(document.createElement('div'),{className:'ph',textContent:this.alt.replace(/ poster$/,'')}))">`:`<div class="ph">${e(m.title)}</div>`;function applyView(){const g=$('#g');g.classList.toggle('list',view==='list');$('#v-grid').classList.toggle('on',view==='grid');$('#v-list').classList.toggle('on',view==='list');const pf=$('#person-filter'),pl=$('#person-filter-label');pf.classList.toggle('on',!!personFilter);if(personFilter)pl.textContent=(personFilterType||'Person')+' · '+personFilter}function setStatFilter(f){statFilter=statFilter===f?'all':f;document.querySelectorAll('.stat').forEach(x=>x.classList.toggle('active',x.dataset.filter===statFilter));if(f==='movie'||f==='tv'){$('#ty').value=f}else if(f==='rated'){$('#ty').value='all';$('#so').value='my'}else if(f==='loved'){$('#ty').value='all';$('#so').value='new'}render();window.scrollTo({top:document.querySelector('.bar').offsetTop,behavior:'smooth'})}function renderGrid(L){
   const g=$('#g');
   const frag=document.createDocumentFragment();
   if(!L.length){
@@ -4179,5 +4179,54 @@ body{
   height:auto;
   object-fit:cover;
   background:color-mix(in srgb,var(--sf) 88%,var(--line) 12%);
+}
+</style>
+
+<style id="cineton-poster-placeholder-v2">
+/* Reserve every poster tile and paint a warm placeholder until its image is ready. */
+#g .c{
+  background:linear-gradient(180deg,color-mix(in srgb,var(--sf) 92%,var(--line) 8%),var(--sf));
+}
+#g .c img{
+  display:block;
+  width:100%;
+  aspect-ratio:2/3;
+  height:auto;
+  object-fit:cover;
+  background-color:color-mix(in srgb,var(--sf) 86%,var(--line) 14%);
+}
+#g .c img.poster-loading{
+  background-image:linear-gradient(105deg,
+    color-mix(in srgb,var(--sf) 92%,var(--line) 8%) 28%,
+    color-mix(in srgb,var(--sf) 70%,var(--gd,#caa36e) 30%) 46%,
+    color-mix(in srgb,var(--sf) 92%,var(--line) 8%) 64%);
+  background-size:220% 100%;
+  animation:cinetonPosterPlaceholder 1.5s ease-in-out infinite;
+}
+@keyframes cinetonPosterPlaceholder{
+  from{background-position:100% 0}
+  to{background-position:-120% 0}
+}
+#g .c .ph{
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  min-width:0;
+  width:100%;
+  aspect-ratio:2/3;
+  padding:12px;
+  overflow:hidden;
+  text-align:center;
+  overflow-wrap:anywhere;
+  color:var(--tx);
+  background:linear-gradient(145deg,color-mix(in srgb,var(--sf) 78%,var(--line) 22%),var(--sf));
+}
+main.list .c img,main.list .c .ph{
+  width:58px;
+  height:78px;
+  aspect-ratio:auto;
+}
+@media(prefers-reduced-motion:reduce){
+  #g .c img.poster-loading{animation:none}
 }
 </style>
