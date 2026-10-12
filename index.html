@@ -1639,7 +1639,43 @@ const pic=(m,eager=false)=>m.poster?`<img class="poster-loading" loading="${eage
   g.replaceChildren(frag);
 }
 function render(){applyView();const q=$('#q').value.trim().toLowerCase(),ge=$('#ge').value,so=$('#so').value;const hasPerson=m=>!personFilter||String(m.director||'').split(',').map(x=>x.trim()).includes(personFilter)||(m.cast||[]).includes(personFilter);const categoryFilter=statFilter==='movie'||statFilter==='tv',mediaType=m=>m.type==='tv'&&String(m.id||'').startsWith('tv-')?'tv':'movie';let L=D.filter(m=>(categoryFilter?mediaType(m)===statFilter:(tab==='all'||m.status===tab))&&(ge==='all'||(m.genres||[]).includes(ge))&&hasPerson(m)&&(!q||[m.title,m.director,(m.cast||[]).join(' '),m.year].join(' ').toLowerCase().includes(q)));const n=v=>parseFloat(v)||0;if(statFilter==='rated')L=L.filter(m=>n(m.my_rating)>0);else if(statFilter==='loved')L=L.filter(m=>m.loved);const w=D.filter(m=>m.status==='watched'),statsBase=D,rated=w.filter(m=>n(m.my_rating)>0);$('#stats').innerHTML=`<button class="stat" data-filter="movie" onclick="setStatFilter('movie')"><span>Movie</span><b>${statsBase.filter(m=>mediaType(m)==='movie').length}</b></button><button class="stat" data-filter="tv" onclick="setStatFilter('tv')"><span>TV / Show</span><b>${statsBase.filter(m=>mediaType(m)==='tv').length}</b></button><button class="stat" data-filter="rated" onclick="setStatFilter('rated')"><span>Rated</span><b>${rated.length}</b></button><button class="stat" data-filter="loved" onclick="setStatFilter('loved')"><span>Loved</span><b>${D.filter(m=>(tab==='all'||m.status===tab)&&m.loved).length}</b></button>`;L.sort({new:(a,b)=>{const ad=(b.added_at||'').localeCompare(a.added_at||'');return ad||((b.watched_on||'').localeCompare(a.watched_on||''))},my:(a,b)=>n(b.my_rating)-n(a.my_rating),im:(a,b)=>n(b.imdb)-n(a.imdb),yr:(a,b)=>n(b.year)-n(a.year),az:(a,b)=>a.title.localeCompare(b.title)}[so]);renderGrid(L)}function applyGenreFilter(genre){const s=$('#ge'),exists=[...s.options].some(o=>o.value===genre);if(!exists)return false;s.value=genre;const menu=$('#ge-menu');menu.querySelectorAll('[role="option"]').forEach(o=>o.setAttribute('aria-selected',o.dataset.value===genre));$('#ge-trigger').firstChild.textContent=(s.options[s.selectedIndex]?.textContent||genre)+' ';personFilter=null;personFilterType='';$('#q').value='';statFilter='all';d.dataset.skipReturnScroll='1';closeCinetonModal();requestAnimationFrame(()=>{render();window.scrollTo({top:document.querySelector('.bar').offsetTop,behavior:'smooth'})});return true}const CT_PUBLIC_COMMENTS={url:"https://osplbqpgxrfovjrumsnb.supabase.co",key:"sb_"+"publishable_"+"tcBaC8FqwlcFFw-IwKmiVA_y67PZNPX",fn:"https://osplbqpgxrfovjrumsnb.supabase.co/functions/v1/public-comments"};
-function setModalPosterAccent(d){const img=d.querySelector(".modal-top img"),btn=d.querySelector(".x");if(!img||!btn)return;const src=img.currentSrc||img.src;if(!src)return;const fallback=()=>d.style.setProperty("--poster-accent","var(--gd)");const proxy="https://wsrv.nl/?url="+encodeURIComponent(src)+"&w=72&h=108&fit=inside&output=webp";const dominant=async()=>{try{const res=await fetch(proxy,{mode:"cors",cache:"force-cache"});if(!res.ok)throw Error();const blob=await res.blob(),bmp=await createImageBitmap(blob),cv=document.createElement("canvas"),ctx=cv.getContext("2d",{willReadFrequently:true});if(!ctx)throw Error();cv.width=72;cv.height=108;ctx.drawImage(bmp,0,0,72,108);bmp.close();const p=ctx.getImageData(0,0,72,108).data,c=[];for(let i=0;i<p.length;i+=16){const a=p[i+3];if(a<180)continue;const r=p[i],g=p[i+1],b=p[i+2],mx=Math.max(r,g,b),mn=Math.min(r,g,b),v=mx/255,s=mx?((mx-mn)/mx):0;if(v<.28||s<.18)continue;const score=v*(.55+s*.9);c.push({r,g,b,score})}if(!c.length)throw Error();c.sort((a,b)=>b.score-a.score);const top=c.slice(0,Math.max(8,Math.floor(c.length*.12)));let w=0,r=0,g=0,b=0;for(const x of top){const q=x.score*x.score;w+=q;r+=x.r*q;g+=x.g*q;b+=x.b*q}const hex="#"+[r/w,g/w,b/w].map(v=>Math.round(v).toString(16).padStart(2,"0")).join("");d.style.setProperty("--poster-accent",hex)}catch{fallback()}};d.style.setProperty("--poster-accent","var(--gd)");dominant()}let cinetonModalBusy=false;let cinetonCloseQueued=false;function cinetonFlushQueuedClose(){if(!cinetonCloseQueued)return;cinetonCloseQueued=false;if(d.open)queueMicrotask(()=>closeCinetonModal())}
+function setModalPosterAccent(d){
+  const img=d.querySelector(".modal-top img"),btn=d.querySelector(".x");if(!img||!btn)return;
+  const src=img.currentSrc||img.src;if(!src)return;
+  const fallback=()=>{d.style.setProperty("--poster-accent","#b88f65");d.style.setProperty("--poster-color-1","#b88f65");d.style.setProperty("--poster-color-2","#8c7564");d.style.setProperty("--poster-color-3","#d3b99a")};
+  const proxy="https://wsrv.nl/?url="+encodeURIComponent(src)+"&w=72&h=108&fit=inside&output=webp";
+  const extract=async()=>{
+    try{
+      const res=await fetch(proxy,{mode:"cors",cache:"force-cache"});if(!res.ok)throw Error();
+      const blob=await res.blob(),bmp=await createImageBitmap(blob),cv=document.createElement("canvas"),ctx=cv.getContext("2d",{willReadFrequently:true});
+      if(!ctx)throw Error();cv.width=72;cv.height=108;ctx.drawImage(bmp,0,0,72,108);bmp.close();
+      const p=ctx.getImageData(0,0,72,108).data,bins=new Map();
+      for(let i=0;i<p.length;i+=16){
+        if(p[i+3]<180)continue;
+        const r=p[i],g=p[i+1],b=p[i+2],mx=Math.max(r,g,b),mn=Math.min(r,g,b),sat=mx?((mx-mn)/mx):0,lum=(r+g+b)/3;
+        if(lum<22||lum>246||sat<.12)continue;
+        const key=[r>>4,g>>4,b>>4].join(",");
+        const score=(.35+sat)*(.6+Math.min(lum,220)/220);
+        const old=bins.get(key)||{r:0,g:0,b:0,n:0,score:0};
+        old.r+=r;old.g+=g;old.b+=b;old.n++;old.score+=score;bins.set(key,old);
+      }
+      const colors=[...bins.values()].map(x=>({r:x.r/x.n,g:x.g/x.n,b:x.b/x.n,score:x.score}));
+      colors.sort((x,y)=>y.score-x.score);
+      const chosen=[];
+      for(const c of colors){
+        if(chosen.every(q=>Math.hypot(c.r-q.r,c.g-q.g,c.b-q.b)>72))chosen.push(c);
+        if(chosen.length===3)break;
+      }
+      if(!chosen.length)throw Error();
+      while(chosen.length<3)chosen.push(chosen[chosen.length-1]);
+      const hex=c=>"#"+[c.r,c.g,c.b].map(v=>Math.round(v).toString(16).padStart(2,"0")).join("");
+      const [c1,c2,c3]=chosen.map(hex);
+      d.style.setProperty("--poster-color-1",c1);d.style.setProperty("--poster-color-2",c2);d.style.setProperty("--poster-color-3",c3);d.style.setProperty("--poster-accent",c1);
+    }catch{fallback()}
+  };
+  fallback();extract();
+}
+let cinetonModalBusy=false;let cinetonCloseQueued=false;function cinetonFlushQueuedClose(){if(!cinetonCloseQueued)return;cinetonCloseQueued=false;if(d.open)queueMicrotask(()=>closeCinetonModal())}
 let cinetonMotionAnimations=[];
 let cinetonReducedMotionLogged=false;
 const cinetonMotionReduced=()=>window.matchMedia('(prefers-reduced-motion: reduce)').matches;
@@ -4973,27 +5009,27 @@ main.list .c:active{
 </style>
 
 
-<style id="poster-adaptive-poster-tint-modal-v7">
-/* Smooth, even poster-led color grading with restrained saturation and readable contrast. */
+<style id="poster-adaptive-poster-tricolor-grade-v8">
+/* Cinematic grading blended from three distinct colors sampled from each poster. */
 .cinemodal{
-  --modal-poster-tint:var(--poster-accent,#b88f65);
-  background:color-mix(in srgb,#eee3d6 90%,var(--modal-poster-tint) 10%)!important;
+  --modal-poster-tint:var(--poster-color-1,#b88f65);
+  background:color-mix(in srgb,#eee4d8 91%,var(--poster-color-2,#8c7564) 9%)!important;
   color:#352b24!important;
 }
 .cinemodal::before{
   content:""!important;
-  background:radial-gradient(ellipse at 22% 16%,
-    color-mix(in srgb,var(--modal-poster-tint) 15%,transparent) 0%,
-    color-mix(in srgb,var(--modal-poster-tint) 8%,transparent) 42%,
-    transparent 76%)!important;
+  background:
+    radial-gradient(ellipse at 14% 12%,color-mix(in srgb,var(--poster-color-1,#b88f65) 22%,transparent),transparent 62%),
+    radial-gradient(ellipse at 88% 36%,color-mix(in srgb,var(--poster-color-2,#8c7564) 18%,transparent),transparent 65%),
+    radial-gradient(ellipse at 52% 100%,color-mix(in srgb,var(--poster-color-3,#d3b99a) 20%,transparent),transparent 68%)!important;
   filter:none!important;opacity:1!important;pointer-events:none!important;
 }
 .cinemodal::after{
-  background:linear-gradient(125deg,
-    color-mix(in srgb,#f0e6da 91%,var(--modal-poster-tint) 9%) 0%,
-    color-mix(in srgb,#e9ddcf 87%,var(--modal-poster-tint) 13%) 48%,
-    color-mix(in srgb,#e6d8c9 89%,var(--modal-poster-tint) 11%) 72%,
-    color-mix(in srgb,#f0e6da 92%,var(--modal-poster-tint) 8%) 100%)!important;
+  background:linear-gradient(128deg,
+    color-mix(in srgb,#f0e6da 88%,var(--poster-color-1,#b88f65) 12%) 0%,
+    color-mix(in srgb,#e9ddcf 86%,var(--poster-color-2,#8c7564) 14%) 48%,
+    color-mix(in srgb,#e7d8c8 88%,var(--poster-color-3,#d3b99a) 12%) 76%,
+    color-mix(in srgb,#f0e6da 91%,var(--poster-color-1,#b88f65) 9%) 100%)!important;
   pointer-events:none!important;
 }
 .cinemodal .modal-top{background:transparent!important}
@@ -5010,16 +5046,18 @@ main.list .c:active{
 .cinemodal .public-comments-inner{color:#352b24!important}
 .cinemodal :is(p,small,.subline,.meta,.muted,.year,.genre,.description){color:#6b594a!important}
 @media(max-width:600px){
-  .cinemodal{background:color-mix(in srgb,#eee3d6 92%,var(--modal-poster-tint) 8%)!important}
+  .cinemodal{background:color-mix(in srgb,#eee4d8 93%,var(--poster-color-2,#8c7564) 7%)!important}
   .cinemodal::before{
-    background:radial-gradient(ellipse at 20% 14%,
-      color-mix(in srgb,var(--modal-poster-tint) 12%,transparent),transparent 74%)!important;
+    background:
+      radial-gradient(ellipse at 14% 12%,color-mix(in srgb,var(--poster-color-1,#b88f65) 16%,transparent),transparent 65%),
+      radial-gradient(ellipse at 88% 38%,color-mix(in srgb,var(--poster-color-2,#8c7564) 13%,transparent),transparent 66%),
+      radial-gradient(ellipse at 52% 100%,color-mix(in srgb,var(--poster-color-3,#d3b99a) 15%,transparent),transparent 68%)!important;
   }
   .cinemodal::after{
     background:linear-gradient(135deg,
-      color-mix(in srgb,#f0e6da 93%,var(--modal-poster-tint) 7%) 0%,
-      color-mix(in srgb,#e9ddcf 89%,var(--modal-poster-tint) 11%) 52%,
-      color-mix(in srgb,#f0e6da 93%,var(--modal-poster-tint) 7%) 100%)!important;
+      color-mix(in srgb,#f0e6da 92%,var(--poster-color-1,#b88f65) 8%) 0%,
+      color-mix(in srgb,#e9ddcf 89%,var(--poster-color-2,#8c7564) 11%) 52%,
+      color-mix(in srgb,#f0e6da 93%,var(--poster-color-3,#d3b99a) 7%) 100%)!important;
   }
 }
 </style>
