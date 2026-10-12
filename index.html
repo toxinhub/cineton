@@ -4230,3 +4230,55 @@ main.list .c img,main.list .c .ph{
   #g .c img.poster-loading{animation:none}
 }
 </style>
+
+<style id="cineton-poster-underlay-v3">
+/* A real card-layer placeholder stays visible beneath the poster while the browser fetches/decodes it. */
+#g .c{
+  position:relative;
+  isolation:isolate;
+}
+#g .c::before{
+  content:"";
+  position:absolute;
+  z-index:0;
+  top:0;
+  left:0;
+  width:100%;
+  aspect-ratio:2/3;
+  pointer-events:none;
+  background:linear-gradient(105deg,
+    color-mix(in srgb,var(--sf) 92%,var(--line) 8%) 28%,
+    color-mix(in srgb,var(--sf) 72%,var(--gd,#caa36e) 28%) 46%,
+    color-mix(in srgb,var(--sf) 92%,var(--line) 8%) 64%);
+  background-size:220% 100%;
+  animation:cinetonPosterUnderlay 1.5s ease-in-out infinite;
+}
+#g .c > img{
+  position:relative;
+  z-index:1;
+  background:transparent!important;
+}
+#g .c > img.poster-loading{
+  background:transparent!important;
+}
+#g .c > .ci{
+  position:relative;
+  z-index:2;
+}
+#g .c > .bd,
+#g .c > .rv{
+  z-index:3;
+}
+@keyframes cinetonPosterUnderlay{
+  from{background-position:100% 0}
+  to{background-position:-120% 0}
+}
+main.list .c::before{
+  width:58px;
+  height:78px;
+  aspect-ratio:auto;
+}
+@media(prefers-reduced-motion:reduce){
+  #g .c::before{animation:none}
+}
+</style>
