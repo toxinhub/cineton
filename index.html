@@ -4569,3 +4569,129 @@ body input::placeholder,body textarea::placeholder{color:#6a596f!important}
   }
 }
 </style>
+
+
+<style id="cineton-global-warm-neutral-v1">
+/* Global color harmony: calm matte cocoa canvas, matching the porcelain modal.
+   Intentionally removes the high-chroma mauve canvas and bright textured glow. */
+:root{
+  color-scheme:light;
+  --bg:#d9d1c6;
+  --sf:#eee6dc;
+  --tx:#352b24;
+  --mu:#6e5e50;
+  --ac:#936b42;
+  --gd:#9b7448;
+  --line:#6b51351c;
+  --line-strong:#6b513542;
+  --modal:#f3ece2;
+  --modal-overlay:#f3ece2f2;
+  --modal-backdrop:#24180f55;
+  --modal-shadow:#24180f35;
+}
+html,body{
+  background:#d9d1c6!important;
+  color:#352b24!important;
+}
+body{
+  background-image:linear-gradient(145deg,#d9d1c6 0%,#d5ccc0 52%,#ded5ca 100%)!important;
+  background-attachment:fixed!important;
+  background-repeat:no-repeat!important;
+  background-size:cover!important;
+  text-shadow:none!important;
+}
+/* Main page surfaces: restrained contrast, no glossy or strongly tinted blocks. */
+header,.header,.topbar,.bar,.toolbar,.filters,.filter-bar,.person-filter-bar,
+.panel,.section,.empty,.notice,.search-wrap,.search-box,.select-menu,
+.select-trigger,.dropdown-menu,.menu,.pagination,.page-footer,footer{
+  color:#352b24;
+}
+:is(.bar,.toolbar,.filters,.filter-bar,.person-filter-bar,.panel,.section,
+.search-wrap,.search-box,.select-menu,.select-trigger,.dropdown-menu,.menu,
+.pagination,.page-footer,footer){
+  border-color:#6b513526!important;
+}
+input,textarea,select,.select-trigger,.select-menu button,.filter button,
+.filters button,.toolbar button{
+  color:#352b24;
+  border-color:#8b735a55;
+}
+input,textarea,select{
+  background:#f0e8de;
+}
+input::placeholder,textarea::placeholder{
+  color:#766657!important;
+  opacity:1!important;
+}
+button,.btn,.chip,.filter-chip,.tab{
+  border-color:#8b735a55;
+}
+:is(.bar button,.toolbar button,.filters button,.filter button,.select-menu button,
+.pagination button,.tab,.chip,.filter-chip){
+  background-color:#e9dfd2;
+  color:#49382b;
+}
+:is(.bar button,.toolbar button,.filters button,.filter button,.select-menu button,
+.pagination button,.tab,.chip,.filter-chip):hover{
+  background-color:#ded0bf;
+  color:#352b24;
+}
+:is(.bar button,.toolbar button,.filters button,.filter button,.select-menu button,
+.pagination button,.tab,.chip,.filter-chip).active,
+:is(.bar button,.toolbar button,.filters button,.filter button,.select-menu button,
+.pagination button,.tab,.chip,.filter-chip)[aria-pressed="true"]{
+  background:#936b42!important;
+  border-color:#936b42!important;
+  color:#fff8ef!important;
+}
+/* Movie cards retain poster color; only their surrounding UI is neutralized. */
+#g .c{
+  background:#eee6dc!important;
+  border-color:#6b51352b!important;
+  box-shadow:0 2px 8px #4c382012!important;
+}
+#g .c .ci{
+  background:#eee6dc!important;
+  color:#352b24!important;
+}
+#g .c :is(h2,h3,.title,.name,.ci a){
+  color:#352b24!important;
+}
+#g .c :is(small,.sub,.meta,.year,.genre,.description,.ci small){
+  color:#6e5e50!important;
+}
+#g .c:hover{
+  border-color:#936b4266!important;
+  box-shadow:0 5px 16px #4c38201c!important;
+}
+#g .c::before{
+  background-color:#cbbba7!important;
+  background-image:linear-gradient(135deg,#d8c9b7 0%,#c3b19b 48%,#d3c2ad 100%)!important;
+}
+/* Suggestions and secondary dialogs follow the same muted warm-neutral family. */
+.suggestions-dialog{
+  background:#f3ece2!important;
+  color:#352b24!important;
+  border-color:#6b513538!important;
+  box-shadow:0 22px 58px #24180f42!important;
+}
+.suggestions-dialog :is(h1,h2,h3,p,label,small,span,.suggestions-title,
+.suggestions-sub,.suggestion-note,.suggestion-empty,.suggestion-date,
+.suggestion-number,.suggestion-title-text,.suggestion-time,.suggestion-message){
+  color:#352b24!important;
+}
+.suggestions-dialog :is(input,textarea,select){
+  background:#fffaf3!important;
+  color:#352b24!important;
+  border-color:#b9a48e!important;
+}
+.suggestions-dialog :is(input,textarea)::placeholder{
+  color:#827061!important;
+}
+@media(max-width:640px){
+  body{
+    background-image:linear-gradient(160deg,#d9d1c6 0%,#d5ccc0 58%,#ded5ca 100%)!important;
+  }
+  #g .c{box-shadow:0 1px 5px #4c382010!important}
+}
+</style>
