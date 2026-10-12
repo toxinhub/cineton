@@ -5009,8 +5009,8 @@ main.list .c:active{
 </style>
 
 
-<style id="poster-adaptive-poster-cinematic-finish-v13">
-/* Soft poster-driven duotone: two hues, blended through curved organic fields. */
+<style id="poster-adaptive-poster-cinematic-finish-v14">
+/* Seam-free duotone blend: broad overlapping radial fields only; preserve the original close-button anchoring. */
 .cinemodal{
   position:fixed!important;
   inset:0!important;
@@ -5023,16 +5023,15 @@ main.list .c:active{
 .cinemodal::before{
   content:""!important;
   position:absolute!important;
-  inset:0!important;
+  inset:-2%!important;
   z-index:0!important;
   background-color:transparent!important;
   background-image:
-    radial-gradient(ellipse 105% 76% at 2% 4%,color-mix(in srgb,var(--poster-color-1,#b88f65) 38%,#eee2d4 62%) 0%,transparent 72%),
-    radial-gradient(ellipse 94% 78% at 100% 24%,color-mix(in srgb,var(--poster-color-2,#8c7564) 35%,#eee2d4 65%) 0%,transparent 73%),
-    radial-gradient(ellipse 90% 64% at 75% 104%,color-mix(in srgb,var(--poster-color-1,#b88f65) 24%,#eee2d4 76%) 0%,transparent 72%),
-    radial-gradient(ellipse 74% 80% at 15% 86%,color-mix(in srgb,var(--poster-color-2,#8c7564) 20%,#eee2d4 80%) 0%,transparent 70%),
-    conic-gradient(from 218deg at 54% 49%,transparent 0deg,color-mix(in srgb,var(--poster-color-1,#b88f65) 13%,transparent) 62deg,transparent 126deg,color-mix(in srgb,var(--poster-color-2,#8c7564) 13%,transparent) 218deg,transparent 300deg)!important;
-  filter:none!important;
+    radial-gradient(ellipse 112% 86% at -8% -8%,color-mix(in srgb,var(--poster-color-1,#b88f65) 32%,#eee2d4 68%) 0%,color-mix(in srgb,var(--poster-color-1,#b88f65) 13%,#eee2d4 87%) 35%,transparent 76%),
+    radial-gradient(ellipse 110% 88% at 108% 22%,color-mix(in srgb,var(--poster-color-2,#8c7564) 29%,#eee2d4 71%) 0%,color-mix(in srgb,var(--poster-color-2,#8c7564) 12%,#eee2d4 88%) 39%,transparent 77%),
+    radial-gradient(ellipse 108% 80% at 82% 110%,color-mix(in srgb,var(--poster-color-1,#b88f65) 22%,#eee2d4 78%) 0%,color-mix(in srgb,var(--poster-color-1,#b88f65) 9%,#eee2d4 91%) 40%,transparent 76%),
+    radial-gradient(ellipse 94% 86% at 6% 96%,color-mix(in srgb,var(--poster-color-2,#8c7564) 18%,#eee2d4 82%) 0%,transparent 73%)!important;
+  filter:blur(9px)!important;
   opacity:1!important;
   pointer-events:none!important;
 }
@@ -5043,12 +5042,10 @@ main.list .c:active{
   z-index:0!important;
   background-color:transparent!important;
   background-image:
-    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='g'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.82' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23g)' opacity='.07'/%3E%3C/svg%3E"),
-    radial-gradient(ellipse 100% 80% at 0% 0%,color-mix(in srgb,#f5ede4 88%,var(--poster-color-1,#b88f65) 12%) 0%,transparent 76%),
-    radial-gradient(ellipse 90% 74% at 100% 100%,color-mix(in srgb,#f5ede4 87%,var(--poster-color-2,#8c7564) 13%) 0%,transparent 74%)!important;
-  background-size:180px 180px,auto,auto!important;
-  background-repeat:repeat,no-repeat,no-repeat!important;
-  background-blend-mode:soft-light,normal,normal!important;
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='g'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.82' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23g)' opacity='.045'/%3E%3C/svg%3E")!important;
+  background-size:180px 180px!important;
+  background-repeat:repeat!important;
+  background-blend-mode:soft-light!important;
   pointer-events:none!important;
 }
 .cinemodal .m{
@@ -5066,7 +5063,8 @@ main.list .c:active{
   background-color:transparent!important;
   color:#352b24!important;
 }
-.cinemodal .x{position:relative!important;z-index:30!important}
+/* Do not set position on .x: the existing stylesheet controls its top/right anchor. */
+.cinemodal .x{z-index:30!important}
 .cinemodal .poster-wrap,
 .cinemodal .modal-top .poster-wrap,
 .cinemodal .poster-wrap>img,
@@ -5080,20 +5078,13 @@ main.list .c:active{
     background-color:#eee2d4!important;
   }
   .cinemodal::before{
+    inset:-3%!important;
     background-image:
-      radial-gradient(ellipse 110% 76% at 0% 4%,color-mix(in srgb,var(--poster-color-1,#b88f65) 29%,#eee2d4 71%) 0%,transparent 74%),
-      radial-gradient(ellipse 100% 78% at 100% 24%,color-mix(in srgb,var(--poster-color-2,#8c7564) 27%,#eee2d4 73%) 0%,transparent 75%),
-      radial-gradient(ellipse 100% 64% at 75% 104%,color-mix(in srgb,var(--poster-color-1,#b88f65) 19%,#eee2d4 81%) 0%,transparent 74%),
-      conic-gradient(from 218deg at 54% 49%,transparent 0deg,color-mix(in srgb,var(--poster-color-1,#b88f65) 10%,transparent) 62deg,transparent 126deg,color-mix(in srgb,var(--poster-color-2,#8c7564) 10%,transparent) 218deg,transparent 300deg)!important;
-  }
-  .cinemodal::after{
-    background-image:
-      url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='g'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.82' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23g)' opacity='.06'/%3E%3C/svg%3E"),
-      radial-gradient(ellipse 100% 80% at 0% 0%,color-mix(in srgb,#f5ede4 91%,var(--poster-color-1,#b88f65) 9%) 0%,transparent 76%),
-      radial-gradient(ellipse 90% 74% at 100% 100%,color-mix(in srgb,#f5ede4 90%,var(--poster-color-2,#8c7564) 10%) 0%,transparent 74%)!important;
-    background-size:180px 180px,auto,auto!important;
-    background-repeat:repeat,no-repeat,no-repeat!important;
-    background-blend-mode:soft-light,normal,normal!important;
+      radial-gradient(ellipse 118% 90% at -10% -8%,color-mix(in srgb,var(--poster-color-1,#b88f65) 26%,#eee2d4 74%) 0%,color-mix(in srgb,var(--poster-color-1,#b88f65) 10%,#eee2d4 90%) 39%,transparent 77%),
+      radial-gradient(ellipse 112% 92% at 110% 20%,color-mix(in srgb,var(--poster-color-2,#8c7564) 23%,#eee2d4 77%) 0%,color-mix(in srgb,var(--poster-color-2,#8c7564) 9%,#eee2d4 91%) 42%,transparent 78%),
+      radial-gradient(ellipse 112% 82% at 82% 112%,color-mix(in srgb,var(--poster-color-1,#b88f65) 17%,#eee2d4 83%) 0%,transparent 77%),
+      radial-gradient(ellipse 96% 88% at 4% 96%,color-mix(in srgb,var(--poster-color-2,#8c7564) 14%,#eee2d4 86%) 0%,transparent 74%)!important;
+    filter:blur(8px)!important;
   }
 }
 </style>
