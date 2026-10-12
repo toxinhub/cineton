@@ -3521,7 +3521,7 @@ body {
       };
       image.onerror = () => resolve({ok:false});
       image.src = useProxy
-        ? 'https://images.weserv.nl/?url='+encodeURIComponent(src.replace(/^https?:\\/\\//,''))+'&w=24&h=36&fit=cover&output=jpg'
+        ? 'https://images.weserv.nl/?url='+encodeURIComponent((new URL(src)).host+(new URL(src)).pathname)+'&w=24&h=36&fit=cover&output=jpg'
         : src;
     });
   }
