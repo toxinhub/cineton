@@ -3437,65 +3437,40 @@ update();
 }
 </style>
 <style id="cineton-reeded-glass-v1">
-/* Balanced, low-contrast reeded-glass texture across the complete site on desktop and mobile. */
-body::after {
-  content: "";
-  position: fixed;
-  inset: 0;
-  z-index: 0;
-  pointer-events: none;
-  background:
+/* Apply the reeded texture to the BODY BACKGROUND itself, so it follows the full document, not just a viewport overlay. */
+body {
+  background-image:
     repeating-linear-gradient(
       90deg,
-      rgba(236, 216, 190, .014) 0px,
-      rgba(236, 216, 190, .014) 1px,
-      rgba(27, 21, 16, .018) 2px,
+      rgba(236, 216, 190, .035) 0px,
+      rgba(236, 216, 190, .035) 1px,
+      rgba(27, 21, 16, .032) 2px,
       transparent 4px,
       transparent 8px
     ),
-    linear-gradient(
-      104deg,
-      transparent 0%,
-      rgba(214, 183, 148, .018) 24%,
-      rgba(242, 224, 199, .032) 49%,
-      rgba(126, 91, 60, .018) 72%,
-      transparent 100%
-    ),
-    radial-gradient(ellipse at 50% 38%,
-      rgba(168, 124, 80, .026) 0%,
-      transparent 68%);
-  opacity: .78;
-  contain: strict;
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180' viewBox='0 0 180 180'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.82' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.16'/%3E%3C/svg%3E");
+  background-size: auto, 180px 180px;
+  background-repeat: repeat, repeat;
 }
-body > .stats-row,
-body > .nav-bar,
-body > main,
-body > footer {
-  position: relative;
-  z-index: 1;
-}
+/* A very subtle extra glass sheen on wide screens only; the full-page texture above works at every size. */
 @media (min-width: 1201px) {
   body::after {
+    content: "";
+    position: fixed;
+    inset: 0;
+    z-index: 0;
+    pointer-events: none;
     background:
-      repeating-linear-gradient(
-        90deg,
-        rgba(236, 216, 190, .018) 0px,
-        rgba(236, 216, 190, .018) 1px,
-        rgba(27, 21, 16, .022) 2px,
-        transparent 4px,
-        transparent 7px
-      ),
-      linear-gradient(
-        104deg,
+      linear-gradient(104deg,
         transparent 0%,
-        rgba(214, 183, 148, .025) 24%,
-        rgba(242, 224, 199, .045) 49%,
-        rgba(126, 91, 60, .025) 72%,
-        transparent 100%
-      ),
+        rgba(214, 183, 148, .018) 24%,
+        rgba(242, 224, 199, .032) 49%,
+        rgba(126, 91, 60, .018) 72%,
+        transparent 100%),
       radial-gradient(ellipse at 50% 38%,
-        rgba(168, 124, 80, .035) 0%,
+        rgba(168, 124, 80, .026) 0%,
         transparent 68%);
+    opacity: .78;
     -webkit-backdrop-filter: blur(1.15px) saturate(108%);
     backdrop-filter: blur(1.15px) saturate(108%);
   }
