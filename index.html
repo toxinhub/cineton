@@ -1421,7 +1421,7 @@ function cinetonEnsureVeil(){
 async function cinetonPosterTransition(direction,sourcePoster,openingRect=null){
   const opening=direction==='open';
   const duration=cinetonMotionDuration(direction);
-  const ease=opening?'cubic-bezier(0.16, 1, 0.3, 1)':'cubic-bezier(0.32, 0.72, 0.35, 1)';
+  const ease=opening?'cubic-bezier(0.16, 1, 0.3, 1)':'cubic-bezier(0.4, 0, 1, 1)';
   const content=d.querySelector('.m');
   let animation=null,contentAnimation=null;
   const clear=()=>{
@@ -3822,8 +3822,8 @@ main.list .cineton-love-heart{
 </style>
 
 <style id="cineton-poster-modal-flip-v1">
-:root{--open-ms:360;--close-ms:480}
-@media(max-width:640px){:root{--open-ms:330;--close-ms:440}}
+:root{--open-ms:280;--close-ms:220}
+@media(max-width:640px){:root{--open-ms:260;--close-ms:210}}
 html{scrollbar-gutter:stable}
 .cinemodal{
   width:min(760px,92vw)!important;
