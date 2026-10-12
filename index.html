@@ -3342,7 +3342,7 @@ update();
 
 <!-- Cineton desktop cinematic poster wall v2 -->
 <style id="desktop-poster-mirror-reflection-v2">
-/* Desktop-only poster artwork in the side gutters; keep the main catalogue crisp. */
+/* Poster-derived colour atmosphere in the side gutters — never display poster artwork here. */
 @media (min-width: 1201px) {
   .cineton-side-reflection {
     position: fixed;
@@ -3353,26 +3353,19 @@ update();
     pointer-events: none;
     overflow: hidden;
     opacity: 0;
-    background: linear-gradient(180deg, #262528 0%, #171619 100%);
-    transition: opacity 460ms ease;
+    background-color: #211b15;
+    background-image:
+      radial-gradient(ellipse at 22% 22%, var(--poster-glow-a, rgba(170,124,80,.25)) 0%, transparent 58%),
+      radial-gradient(ellipse at 78% 52%, var(--poster-glow-b, rgba(116,83,57,.22)) 0%, transparent 62%),
+      radial-gradient(ellipse at 35% 88%, var(--poster-glow-c, rgba(72,54,42,.30)) 0%, transparent 58%),
+      linear-gradient(160deg, rgba(33,27,21,.42), rgba(23,19,15,.94));
+    background-size: 150% 125%, 140% 130%, 150% 120%, 100% 100%;
+    background-position: 0% 0%, 100% 40%, 0% 100%, center;
+    transition: opacity 460ms ease, background-position 700ms ease;
     contain: paint;
     isolation: isolate;
   }
-  .cineton-side-reflection.is-visible { opacity: .78; }
-  .cineton-reflection-layer {
-    position: absolute;
-    inset: -12px;
-    opacity: 0;
-    background-repeat: no-repeat;
-    background-size: cover;
-    background-position: center center;
-    filter: blur(1.2px) saturate(.48) grayscale(.42) contrast(1.04) brightness(.77);
-    transform: translateZ(0) scale(1.02);
-    transition: opacity 520ms ease;
-    will-change: opacity;
-  }
-  .cineton-reflection-layer.is-active { opacity: 1; }
-  /* Warm glassmorphism veil: preserve poster colour while adding a translucent glass finish. */
+  .cineton-side-reflection.is-visible { opacity: .94; }
   .cineton-side-reflection::before {
     content: "";
     position: absolute;
@@ -3380,12 +3373,12 @@ update();
     inset: 0;
     pointer-events: none;
     background:
-      linear-gradient(145deg, rgba(205,201,210,.11) 0%, rgba(205,201,210,.035) 28%, transparent 52%),
-      linear-gradient(180deg, rgba(35,34,38,.08) 0%, rgba(18,17,20,.32) 100%),
-      rgba(78,67,83,.12);
-    -webkit-backdrop-filter: blur(4px) saturate(112%);
-    backdrop-filter: blur(4px) saturate(112%);
-    box-shadow: inset 0 0 28px rgba(218,205,224,.045);
+      repeating-linear-gradient(90deg, rgba(236,216,190,.018) 0 1px, rgba(27,21,16,.018) 2px, transparent 4px 8px),
+      linear-gradient(145deg, rgba(205,201,210,.055) 0%, rgba(205,201,210,.018) 28%, transparent 52%),
+      linear-gradient(180deg, rgba(35,34,38,.06) 0%, rgba(18,17,20,.35) 100%);
+    -webkit-backdrop-filter: blur(4px) saturate(108%);
+    backdrop-filter: blur(4px) saturate(108%);
+    box-shadow: inset 0 0 28px rgba(218,205,224,.035);
   }
   .cineton-side-reflection.left {
     left: 0;
@@ -3396,14 +3389,6 @@ update();
     right: 0;
     -webkit-mask-image: linear-gradient(to left, #000 0%, rgba(0,0,0,.84) 46%, transparent 100%);
     mask-image: linear-gradient(to left, #000 0%, rgba(0,0,0,.84) 46%, transparent 100%);
-  }
-  .cineton-reflection-layer::after {
-    content: "";
-    position: absolute;
-    inset: 0;
-    background:
-      linear-gradient(180deg, rgba(20,19,22,.10) 0%, rgba(17,16,19,.44) 100%),
-      linear-gradient(90deg, rgba(170,143,184,.075), rgba(20,19,22,.10));
   }
   header, .stats-row, .nav-bar, main, footer, #to-top { position: relative; z-index: 1; }
 }
@@ -3488,12 +3473,6 @@ body {
     const panel = document.createElement('div');
     panel.className = 'cineton-side-reflection ' + side;
     panel.setAttribute('aria-hidden', 'true');
-    panel._layers = [document.createElement('div'), document.createElement('div')];
-    panel._layers.forEach(layer => {
-      layer.className = 'cineton-reflection-layer';
-      panel.appendChild(layer);
-    });
-    panel._activeLayer = 0;
     panel._src = '';
     document.body.appendChild(panel);
     return panel;
@@ -3503,6 +3482,7 @@ body {
   const right = makePanel('right');
   let scheduled = false;
   let lastPair = '';
+  const colorCache = new Map();
 
   function centerRowEdgePosters() {
     const main = document.querySelector('main');
@@ -3513,8 +3493,6 @@ body {
       .map(img => ({ img, rect: img.getBoundingClientRect() }))
       .filter(item => item.rect.bottom > 0 && item.rect.top < window.innerHeight);
     if (!posters.length) return [];
-
-    // Find the grid row closest to the vertical middle of the viewport.
     const anchor = posters.reduce((best, item) =>
       Math.abs((item.rect.top + item.rect.bottom) / 2 - mid) <
       Math.abs((best.rect.top + best.rect.bottom) / 2 - mid) ? item : best
@@ -3522,23 +3500,69 @@ body {
     const rowTop = anchor.rect.top;
     const row = posters.filter(item => Math.abs(item.rect.top - rowTop) < 12);
     if (!row.length) return [anchor, anchor];
-
-    // Reflect the two outermost posters from that same row, not the center posters.
     row.sort((a, b) => a.rect.left - b.rect.left);
     return [row[0], row[row.length - 1]];
   }
 
-  function applyImage(panel, src) {
+  function rgbToRgba(rgb, alpha) {
+    return 'rgba(' + rgb[0] + ',' + rgb[1] + ',' + rgb[2] + ',' + alpha + ')';
+  }
+  function tone(rgb, amount) {
+    return rgb.map(value => Math.max(0, Math.min(255, Math.round(value * amount + (amount < 1 ? 10 : 0)))));
+  }
+  function samplePoster(src) {
+    if (!src) return Promise.resolve([[126,91,60],[91,65,46],[54,42,33]]);
+    if (colorCache.has(src)) return colorCache.get(src);
+    const result = new Promise(resolve => {
+      const image = new Image();
+      image.crossOrigin = 'anonymous';
+      image.onload = () => {
+        try {
+          const canvas = document.createElement('canvas');
+          canvas.width = 24; canvas.height = 36;
+          const ctx = canvas.getContext('2d', { willReadFrequently: true });
+          ctx.drawImage(image, 0, 0, canvas.width, canvas.height);
+          const data = ctx.getImageData(0, 0, canvas.width, canvas.height).data;
+          const buckets = [[0,0,0,0],[0,0,0,0],[0,0,0,0]];
+          for (let y = 2; y < 34; y += 3) {
+            for (let x = 2; x < 22; x += 3) {
+              const i = (y * canvas.width + x) * 4;
+              const r = data[i], g = data[i+1], b = data[i+2];
+              const lum = (r * .2126 + g * .7152 + b * .0722) / 255;
+              if (lum < .09 || lum > .92) continue;
+              const sat = Math.max(r,g,b) - Math.min(r,g,b);
+              const bucket = sat > 65 ? 0 : (lum > .48 ? 1 : 2);
+              buckets[bucket][0] += r; buckets[bucket][1] += g;
+              buckets[bucket][2] += b; buckets[bucket][3]++;
+            }
+          }
+          const fallback = [[126,91,60],[91,65,46],[54,42,33]];
+          const colors = buckets.map((bucket, i) => bucket[3]
+            ? [Math.round(bucket[0]/bucket[3]), Math.round(bucket[1]/bucket[3]), Math.round(bucket[2]/bucket[3])]
+            : fallback[i]);
+          resolve(colors);
+        } catch (_) {
+          resolve([[126,91,60],[91,65,46],[54,42,33]]);
+        }
+      };
+      image.onerror = () => resolve([[126,91,60],[91,65,46],[54,42,33]]);
+      image.src = src;
+    });
+    colorCache.set(src, result);
+    return result;
+  }
+
+  async function applyPosterColors(panel, src) {
     if (!src || panel._src === src) return;
     panel._src = src;
-    const next = 1 - panel._activeLayer;
-    const layer = panel._layers[next];
-    layer.style.backgroundImage =
-      'url("' + src.replace(/["\\]/g, c => encodeURIComponent(c)) + '")';
-    requestAnimationFrame(() => {
-      panel._layers.forEach((item, index) => item.classList.toggle('is-active', index === next));
-      panel._activeLayer = next;
-    });
+    const colors = await samplePoster(src);
+    if (panel._src !== src) return;
+    const a = tone(colors[0], .72);
+    const b = tone(colors[1], .62);
+    const c = tone(colors[2], .48);
+    panel.style.setProperty('--poster-glow-a', rgbToRgba(a, .46));
+    panel.style.setProperty('--poster-glow-b', rgbToRgba(b, .36));
+    panel.style.setProperty('--poster-glow-c', rgbToRgba(c, .42));
   }
 
   function update() {
@@ -3553,8 +3577,8 @@ body {
     const rightSrc = edgePosters[1].img.currentSrc || edgePosters[1].img.src;
     const pair = leftSrc + '|' + rightSrc;
     if (pair !== lastPair) {
-      applyImage(left, leftSrc);
-      applyImage(right, rightSrc);
+      applyPosterColors(left, leftSrc);
+      applyPosterColors(right, rightSrc);
       lastPair = pair;
     }
     left.classList.add('is-visible');
