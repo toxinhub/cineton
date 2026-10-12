@@ -4760,3 +4760,45 @@ body {
   }
 }
 </style>
+
+
+<style id="cineton-poster-palette-gradient-v2">
+/* Fix: use viewport-sized color fields instead of stretched document-sized gradients. */
+.cineton-side-reflection { display: none !important; }
+@media (min-width: 1px) {
+  body::before { content: none !important; display: none !important; }
+}
+html {
+  background: #17130f !important;
+  min-height: 100%;
+}
+body {
+  min-height: 100vh;
+  background-color: #17130f !important;
+  background-image:
+    radial-gradient(ellipse at 8% 12%, rgba(126, 65, 53, .34) 0%, rgba(126, 65, 53, 0) 48%),
+    radial-gradient(ellipse at 92% 24%, rgba(108, 101, 55, .25) 0%, rgba(108, 101, 55, 0) 46%),
+    radial-gradient(ellipse at 78% 72%, rgba(95, 57, 77, .23) 0%, rgba(95, 57, 77, 0) 48%),
+    radial-gradient(ellipse at 18% 88%, rgba(47, 83, 79, .24) 0%, rgba(47, 83, 79, 0) 48%),
+    linear-gradient(135deg, #17130f 0%, #211812 44%, #1c1512 72%, #17130f 100%),
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180' viewBox='0 0 180 180'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.82' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.08'/%3E%3C/svg%3E") !important;
+  background-size: auto, auto, auto, auto, cover, 180px 180px !important;
+  background-position: center, center, center, center, center, top left !important;
+  background-repeat: no-repeat, no-repeat, no-repeat, no-repeat, no-repeat, repeat !important;
+  background-attachment: fixed, fixed, fixed, fixed, fixed, scroll !important;
+}
+@media (max-width: 600px) {
+  body {
+    background-image:
+      radial-gradient(ellipse at 0% 10%, rgba(126, 65, 53, .25) 0%, transparent 55%),
+      radial-gradient(ellipse at 100% 38%, rgba(108, 101, 55, .18) 0%, transparent 54%),
+      radial-gradient(ellipse at 0% 78%, rgba(47, 83, 79, .19) 0%, transparent 55%),
+      linear-gradient(160deg, #17130f 0%, #211812 48%, #1c1512 76%, #17130f 100%),
+      url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180' viewBox='0 0 180 180'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.82' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.07'/%3E%3C/svg%3E") !important;
+    background-size: auto, auto, auto, cover, 180px 180px !important;
+    background-position: center, center, center, center, top left !important;
+    background-repeat: no-repeat, no-repeat, no-repeat, no-repeat, repeat !important;
+    background-attachment: fixed, fixed, fixed, fixed, scroll !important;
+  }
+}
+</style>
