@@ -1,0 +1,61 @@
+name: Encrypted Supabase Backup
+
+on:
+  workflow_dispatch:
+  schedule:
+    # 01:17 Bangladesh time (UTC+6)
+    - cron: "17 19 * * *"
+
+permissions:
+  contents: read
+
+concurrency:
+  group: cineton-supabase-backup
+  cancel-in-progress: false
+
+jobs:
+  backup:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    env:
+      SUPABASE_DB_URL: ${{ secrets.SUPABASE_DB_URL }}
+      BACKUP_AGE_RECIPIENT: ${{ vars.BACKUP_AGE_RECIPIENT }}
+    steps:
+      - name: Validate required settings
+        shell: bash
+        run: |
+          set -euo pipefail
+          if [[ -z "$SUPABASE_DB_URL" ]]; then
+            echo "::error::Add SUPABASE_DB_URL as a GitHub Actions secret (use the Supavisor session pooler connection string)."
+            exit 1
+          fi
+          if [[ -z "$BACKUP_AGE_RECIPIENT" ]]; then
+            echo "::error::Add BACKUP_AGE_RECIPIENT as a repository variable (age public recipient only)."
+            exit 1
+          fi
+
+      - name: Install PostgreSQL client and age
+        run: |
+          sudo apt-get update
+          sudo apt-get install --yes postgresql-client age
+
+      - name: Create and encrypt database dump
+        shell: bash
+        run: |
+          set -euo pipefail
+          umask 077
+          raw="$RUNNER_TEMP/cineton-db.dump"
+          encrypted="cineton-db-$(date -u +%F).dump.age"
+          pg_dump --format=custom --no-owner --no-acl --dbname="$SUPABASE_DB_URL" --file="$raw"
+          age --encrypt --recipient "$BACKUP_AGE_RECIPIENT" --output "$encrypted" "$raw"
+          rm -f "$raw"
+          test -s "$encrypted"
+          echo "BACKUP_FILE=$encrypted" >> "$GITHUB_ENV"
+
+      - name: Store encrypted backup artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: ${{ env.BACKUP_FILE }}
+          path: ${{ env.BACKUP_FILE }}
+          if-no-files-found: error
+          retention-days: 30
