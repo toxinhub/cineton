@@ -1330,7 +1330,7 @@ const pic=(m,eager=false)=>m.poster?`<img loading="${eager?'eager':'lazy'}" deco
       card.appendChild(badge);
     }
     const imageWrap=document.createElement('div');
-    imageWrap.innerHTML=pic(m,i<6);
+    imageWrap.innerHTML=pic(m,i<12);
     const img=imageWrap.firstElementChild;
     if(img) card.insertBefore(img,card.firstChild);
     const info=document.createElement('div');
@@ -4143,4 +4143,42 @@ body{
     transform:translate3d(-50%,0,0) scale(.94)!important;
   }
 }
+</style>
+
+
+<style id="cineton-scroll-gap-and-top-fix-v1">
+/* Keep Back to Top fixed above desktop reflection layers and all page content. */
+#to-top{
+  position:fixed!important;
+  z-index:2147481000!important;
+  right:20px!important;
+  bottom:20px!important;
+  display:grid!important;
+}
+#to-top.show{
+  opacity:1!important;
+  visibility:visible!important;
+  pointer-events:auto!important;
+}
+@media(max-width:600px){
+  #to-top{
+    left:50%!important;
+    right:auto!important;
+    bottom:14px!important;
+  }
+}
+/* While lazy poster requests are pending, show a stable warm placeholder instead of an empty-looking gap. */
+#g .c{
+  min-width:0;
+  min-height:0;
+}
+#g .c img{
+  display:block;
+  width:100%;
+  aspect-ratio:2/3;
+  height:auto;
+  object-fit:cover;
+  background:color-mix(in srgb,var(--sf) 88%,var(--line) 12%);
+}
+# g .c img{background:var(--sf)}
 </style>
