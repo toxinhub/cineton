@@ -4867,3 +4867,55 @@ main.list .c:active{
   }
 }
 </style>
+
+
+<style id="modal-love-bare-emoji-v1">
+/* Render the modal love reaction as only the native emoji glyph, with no chip/container treatment. */
+.cinemodal .chips .love-chip,
+.cinemodal .chips .love-chip:hover,
+.cinemodal .chips .love-chip:focus,
+.cinemodal .chips .love-chip:active{
+  appearance:none!important;
+  -webkit-appearance:none!important;
+  display:inline!important;
+  width:auto!important;
+  height:auto!important;
+  min-width:0!important;
+  min-height:0!important;
+  margin:0!important;
+  padding:0!important;
+  border:0!important;
+  outline:0!important;
+  border-radius:0!important;
+  background:none!important;
+  box-shadow:none!important;
+  filter:none!important;
+  text-decoration:none!important;
+  transform:none!important;
+}
+.cinemodal .chips .love-chip::before,
+.cinemodal .chips .love-chip::after{
+  content:none!important;
+  display:none!important;
+}
+.cinemodal .chips .love-chip .love-mobile-emoji,
+.cinemodal .chips .love-chip .love-desktop-emoji{
+  display:inline!important;
+  width:auto!important;
+  height:auto!important;
+  margin:0!important;
+  padding:0!important;
+  border:0!important;
+  outline:0!important;
+  border-radius:0!important;
+  background:none!important;
+  box-shadow:none!important;
+  filter:none!important;
+  text-decoration:none!important;
+}
+.cinemodal .chips .love-chip .love-mobile-emoji{display:none!important}
+@media(max-width:600px){
+  .cinemodal .chips .love-chip .love-desktop-emoji{display:none!important}
+  .cinemodal .chips .love-chip .love-mobile-emoji{display:inline!important}
+}
+</style>
