@@ -4396,19 +4396,70 @@ body input::placeholder,body textarea::placeholder{
   opacity:1!important;
   text-shadow:none!important;
 }
-/* Keep the movie detail and suggestion dialogs intentionally dark, with bright readable copy. */
-.cinemodal{color:#fff8ff!important}
-.cinemodal :is(.subline,.chips span,.detail-label,.person-filter,.modal-footer,
-p,small,label,li,dt,dd,figcaption,.sub,.empty,.hint,.muted,.meta,.year,.genre,
-.description,.helper-text,.secondary,.caption,.movie-meta,.card-meta){
-  color:#f4eaf5!important;
+/* Unified modal palette: one deep plum surface, soft ivory text, restrained bronze accents. */
+.cinemodal{
+  --modal:#403443;
+  --sf:#493d4c;
+  --tx:#f5edf4;
+  --mu:#d0c2d1;
+  --ac:#c1a083;
+  --gd:#d6b28e;
+  --line:#f5edf426;
+  --line-strong:#f5edf44a;
+  color:#f5edf4!important;
+  background:#403443!important;
+  border:1px solid #f5edf42b!important;
+  box-shadow:0 22px 58px #21182566!important;
+  backdrop-filter:none!important;
+  -webkit-backdrop-filter:none!important;
+}
+.cinemodal .m,
+.cinemodal .modal-top,
+.cinemodal .modal-side,
+.cinemodal .modal-wide,
+.cinemodal .public-comments,
+.cinemodal .public-comments-body,
+.cinemodal .public-comments-inner{
+  background-color:transparent!important;
+  color:#f5edf4!important;
+}
+.cinemodal :is(h1,h2,h3,p,small,label,li,dt,dd,figcaption,.subline,
+.detail-label,.detail-value,.person-filter,.modal-footer,.sub,.empty,
+.hint,.muted,.meta,.year,.genre,.description,.helper-text,.secondary,
+.caption,.movie-meta,.card-meta,.public-comments-title,.public-comment-text,
+.public-comment-name,.public-comments-count){
+  color:#eee4ef!important;
+  opacity:1!important;
+  text-shadow:none!important;
+}
+.cinemodal .detail-label,.cinemodal .person-filter,
+.cinemodal .modal-footer,.cinemodal .poster-status{
+  color:#cdbed0!important;
   opacity:1!important;
 }
-.cinemodal .detail-label,.cinemodal .person-filter{
-  font-size:.68rem!important;letter-spacing:.045em!important
+.cinemodal .chips .imdb-chip{
+  background:#f2c94c!important;border-color:#f2c94c!important;color:#302516!important;
 }
-.cinemodal .modal-footer{font-size:.72rem!important}
-.cinemodal .poster-status{color:#e6d8e8!important;opacity:1!important}
+.cinemodal .chips .my-chip,
+.cinemodal .chips .cineton-public-rating-chip{
+  background:#58465c!important;border-color:#8d7692!important;color:#f5edf4!important;
+}
+.cinemodal .chips .love-chip{
+  background:#58434f!important;border-color:#826878!important;color:#f5edf4!important;
+}
+.cinemodal .chips .imdb-chip *,
+.cinemodal .chips .my-chip *,
+.cinemodal .chips .cineton-public-rating-chip *,
+.cinemodal .chips .love-chip *{color:inherit!important}
+.cinemodal :is(.detail-value,.modal-footer strong){color:#fff8ff!important}
+.cinemodal :is(input,textarea,select),
+.cinemodal .public-comment-composer.on input,
+.cinemodal .public-comment-composer.on textarea{
+  background:#332837!important;border-color:#79677e!important;color:#fff8ff!important;
+}
+.cinemodal :is(input,textarea)::placeholder{color:#c5b5c8!important;opacity:1!important}
+.cinemodal .x{color:#e8dce9!important}
+.cinemodal .x:hover{color:#fff8ff!important;background:#ffffff0a!important}
 .suggestions-dialog{color:#f7efe5}
 .suggestions-dialog :is(.suggestions-kicker,.suggestions-title,.suggestions-sub,
 .suggestions-close,.suggestion-compose label,.suggestion-compose textarea,
