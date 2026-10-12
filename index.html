@@ -4231,8 +4231,8 @@ main.list .c img,main.list .c .ph{
 }
 </style>
 
-<style id="cineton-poster-underlay-v3">
-/* A real card-layer placeholder stays visible beneath the poster while the browser fetches/decodes it. */
+<style id="cineton-poster-underlay-v4">
+/* Use plain, widely supported colors so the placeholder survives fast scrolling and pending images. */
 #g .c{
   position:relative;
   isolation:isolate;
@@ -4246,20 +4246,18 @@ main.list .c img,main.list .c .ph{
   width:100%;
   aspect-ratio:2/3;
   pointer-events:none;
-  background:linear-gradient(105deg,
-    color-mix(in srgb,var(--sf) 92%,var(--line) 8%) 28%,
-    color-mix(in srgb,var(--sf) 72%,var(--gd,#caa36e) 28%) 46%,
-    color-mix(in srgb,var(--sf) 92%,var(--line) 8%) 64%);
+  background-color:#cbb79e;
+  background-image:linear-gradient(135deg,#ddcbb3 0%,#b9a58b 48%,#d5c1a7 100%);
   background-size:220% 100%;
   animation:cinetonPosterUnderlay 1.5s ease-in-out infinite;
 }
 #g .c > img{
   position:relative;
   z-index:1;
-  background:transparent!important;
 }
 #g .c > img.poster-loading{
-  background:transparent!important;
+  opacity:.16!important;
+  background-color:#cbb79e!important;
 }
 #g .c > .ci{
   position:relative;
