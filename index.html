@@ -3179,6 +3179,10 @@ update();
           open();
         }
       });
+      // Load existing community rating as soon as the movie modal appears.
+      // Previously this ran only after visitors tapped the poster to open the rating picker.
+      const mediaId=dialog.dataset.sourceMovieId;
+      if(mediaId)loadRating(dialog,mediaId);
     });
   };
 
