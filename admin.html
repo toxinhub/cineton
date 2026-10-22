@@ -329,6 +329,53 @@ dialog.admin-modal::backdrop{background:rgba(10,7,5,.5);-webkit-backdrop-filter:
 
 
 <style id="industry-admin-label-v1">.industry-meta{color:var(--mu);font-size:.78em;letter-spacing:.01em}</style>
+<style id="suggestion-desk-compact-palette-v1">
+/* Compact suggestion desk: use the admin's warm editorial palette consistently. */
+#suggestionsSection{padding:12px!important;margin-bottom:12px!important;border-radius:12px!important}
+#suggestionsSection .head{gap:8px!important;margin-bottom:8px!important;align-items:center!important}
+#suggestionsSection .head h2{margin:0!important;font-size:1rem!important;line-height:1.3!important;letter-spacing:-.015em!important;color:var(--text)!important}
+#suggestionsSection .sector-note{display:block;margin-top:2px!important;font-size:12px!important;line-height:1.35!important;color:var(--muted)!important}
+#suggestionsSection #suggestionsCount{font-size:11px!important;line-height:1.3!important;padding:4px 7px!important;border:1px solid var(--line)!important;border-radius:99px!important;background:var(--surface2)!important;color:var(--muted)!important;white-space:nowrap}
+#suggestionsSection .libraryTools{display:grid!important;grid-template-columns:minmax(130px,1fr) minmax(105px,.62fr) minmax(105px,.62fr) auto!important;gap:6px!important;margin:8px 0 10px!important;padding:0!important;border:0!important}
+#suggestionsSection .libraryTools input,
+#suggestionsSection .libraryTools select{width:100%!important;min-width:0!important;min-height:34px!important;height:34px!important;padding:6px 9px!important;border:1px solid var(--line)!important;border-radius:7px!important;background:var(--surface2)!important;color:var(--text)!important;font:400 12px/1.35 Inter,Mina,system-ui,sans-serif!important;box-shadow:none!important}
+#suggestionsSection input::placeholder,
+#suggestionsSection textarea::placeholder{color:#887967!important;opacity:1!important}
+#suggestionsSection .libraryTools .btn{min-height:34px!important;height:34px!important;padding:5px 10px!important;border-radius:7px!important;font:600 12px/1.2 Inter,Mina,system-ui,sans-serif!important}
+#suggestionsSection .suggestions-admin-list{gap:7px!important}
+#suggestionsSection .suggestions-admin-row{display:grid!important;grid-template-columns:minmax(0,1fr)!important;gap:7px!important;padding:9px 10px!important;border:1px solid var(--line)!important;border-radius:9px!important;background:var(--surface2)!important;box-shadow:none!important}
+#suggestionsSection .suggestions-admin-row>div:first-child{gap:8px!important}
+#suggestionsSection .suggestions-admin-number{font:600 11px/1.35 Inter,Mina,system-ui,sans-serif!important;color:var(--accent)!important}
+#suggestionsSection .suggestions-admin-meta{font:400 11px/1.4 Inter,Mina,system-ui,sans-serif!important;color:var(--muted)!important}
+#suggestionsSection label.suggestions-admin-meta{display:block!important;min-width:0!important;color:#665744!important;font-weight:600!important}
+#suggestionsSection input[data-title],
+#suggestionsSection select[data-category],
+#suggestionsSection select[data-status],
+#suggestionsSection textarea[data-note]{display:block!important;width:100%!important;min-width:0!important;box-sizing:border-box!important;margin-top:3px!important;padding:6px 8px!important;min-height:32px!important;height:auto!important;border:1px solid #cbbba5!important;border-radius:6px!important;background:#fbf7f0!important;color:#352a20!important;font:400 12px/1.4 Inter,Mina,system-ui,sans-serif!important;box-shadow:none!important}
+#suggestionsSection textarea[data-note]{min-height:42px!important;max-height:100px!important;resize:vertical!important}
+#suggestionsSection input:focus-visible,
+#suggestionsSection select:focus-visible,
+#suggestionsSection textarea:focus-visible{outline:2px solid #9a784f!important;outline-offset:1px!important;border-color:#9a784f!important}
+#suggestionsSection .suggestions-admin-actions{display:flex!important;gap:5px!important;flex-wrap:wrap!important;margin-top:1px!important}
+#suggestionsSection .suggestions-admin-actions .btn{min-height:30px!important;height:30px!important;padding:4px 9px!important;border-radius:6px!important;font:600 11px/1.2 Inter,Mina,system-ui,sans-serif!important}
+#suggestionsSection .suggestions-admin-actions .btn:not(.secondary):not(.danger){background:#80613f!important;border-color:#80613f!important;color:#fffaf2!important}
+#suggestionsSection .suggestions-admin-actions .btn.secondary{background:#f8f1e7!important;border-color:#d4c6b3!important;color:#493a2b!important}
+#suggestionsSection .suggestions-admin-actions .btn.danger{background:#fbf0ec!important;border-color:#e0c5bb!important;color:#8a4438!important}
+#suggestionsSection .suggestions-admin-empty{padding:16px 10px!important;border-radius:8px!important;font:400 12px/1.45 Inter,Mina,system-ui,sans-serif!important;color:var(--muted)!important}
+#suggestionsSection .message{margin-top:8px!important;padding:7px 9px!important;border-radius:7px!important;font:400 12px/1.4 Inter,Mina,system-ui,sans-serif!important}
+@media(max-width:700px){
+ #suggestionsSection{padding:10px!important}
+ #suggestionsSection .libraryTools{grid-template-columns:1fr 1fr!important}
+ #suggestionsSection .libraryTools input{grid-column:1/-1}
+ #suggestionsSection .libraryTools #suggestionsRefresh{width:100%!important}
+ #suggestionsSection .suggestions-admin-row{padding:8px!important}
+ #suggestionsSection .head{align-items:flex-start!important}
+}
+@media(prefers-color-scheme:dark){
+ /* This admin panel intentionally keeps its warm light palette for predictable contrast. */
+ #suggestionsSection input[data-title],#suggestionsSection select[data-category],#suggestionsSection select[data-status],#suggestionsSection textarea[data-note]{background:#fbf7f0!important;color:#352a20!important}
+}
+</style>
 </head>
 <body>
 <div class="app">
