@@ -433,8 +433,8 @@ dialog.admin-modal::backdrop{background:rgba(10,7,5,.5);-webkit-backdrop-filter:
 
 
 <section class="panel comment-sector suggestions-admin-sector" data-section="suggestions" id="suggestionsSection">
-<div class="head"><div><h2>Suggestions</h2><small class="sector-note">Visitor suggestions · Admin control</small></div><span id="suggestionsCount">0 suggestions</span></div>
-<div class="libraryTools"><input id="suggestionsSearch" placeholder="Search suggestions…"><button id="suggestionsRefresh" class="btn secondary" type="button">Refresh</button></div>
+<div class="head"><div><h2>Suggestion Desk</h2><small class="sector-note">Review visitor ideas · Track progress · Keep private admin notes</small></div><span id="suggestionsCount">0 suggestions</span></div>
+<div class="libraryTools"><input id="suggestionsSearch" placeholder="Search suggestions…" aria-label="Search suggestions"><select id="suggestionsCategoryFilter" aria-label="Filter by category"><option value="">All categories</option><option value="movie">Movie</option><option value="bug">Bug report</option><option value="feature">Feature request</option><option value="other">Other</option></select><select id="suggestionsStatusFilter" aria-label="Filter by status"><option value="">All statuses</option><option value="new">New</option><option value="reviewing">Reviewing</option><option value="planned">Planned</option><option value="done">Done</option><option value="rejected">Rejected</option></select><button id="suggestionsRefresh" class="btn secondary" type="button">Refresh</button></div>
 <div id="suggestionsList" class="suggestions-admin-list"></div>
 <div id="suggestionsMsg" class="message hidden" aria-live="polite"></div>
 </section>
@@ -1115,62 +1115,59 @@ $('#importBackupFile').onchange=async e=>{
  }catch(err){preview.textContent=err.message||'Could not read this backup.';preview.className='message error'}finally{e.target.value=''}
 };
 </script>
-<script id="public-suggestions-admin-v1">
-(()=>{
+<script id="public-suggestions-admin-v2">
+(()=> {
  const API="https://osplbqpgxrfovjrumsnb.supabase.co/functions/v1/public-suggestions",KEY="sb_publishable_tcBaC8FqwlcFFw-IwKmiVA_y67PZNPX";
  const esc=v=>String(v??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;","\"":"&quot;","'":"&#39;"}[c]));
  const when=v=>{const d=new Date(v);return Number.isNaN(d.getTime())?"":d.toLocaleString(undefined,{dateStyle:"medium",timeStyle:"short"});};
- const list=document.getElementById("suggestionsList"),count=document.getElementById("suggestionsCount"),badge=document.getElementById("suggestionsNavBadge"),search=document.getElementById("suggestionsSearch"),msg=document.getElementById("suggestionsMsg");
+ const list=document.getElementById("suggestionsList"),count=document.getElementById("suggestionsCount"),badge=document.getElementById("suggestionsNavBadge"),search=document.getElementById("suggestionsSearch"),categoryFilter=document.getElementById("suggestionsCategoryFilter"),statusFilter=document.getElementById("suggestionsStatusFilter"),msg=document.getElementById("suggestionsMsg");
  if(!list)return;
  let rows=[];
  const token=()=>document.getElementById("tok")?.value.trim()||"";
- const showMsg=(text,error=false)=>{msg.textContent=text;msg.className="message"+(error?" error":"");};
+ const labels={movie:"Movie suggestion",bug:"Bug report",feature:"Feature request",other:"Other"};
+ const statusLabels={new:"New",reviewing:"Reviewing",planned:"Planned",done:"Done",rejected:"Rejected"};
+ const showMsg=(text,error=false)=>{msg.textContent=text;msg.className="message"+(error?" error":"");msg.classList.toggle("hidden",!text);};
+ const options=(map,current)=>Object.entries(map).map(([value,label])=>'<option value="'+value+'"'+(value===current?' selected':'')+'>'+label+'</option>').join("");
  const render=()=>{
-   const q=(search?.value||"").trim().toLocaleLowerCase();
-   const filtered=rows.filter(x=>String(x.title||"").toLocaleLowerCase().includes(q));
-   if(count)count.textContent=rows.length+" suggestion"+(rows.length===1?"":"s");
-   if(badge)badge.textContent=String(rows.length);
-   list.innerHTML=filtered.length?filtered.map((x,i)=>'<article class="suggestions-admin-row" data-suggestion-id="'+esc(x.id)+'"><div class="suggestions-admin-number">'+(rows.indexOf(x)+1)+'.</div><div><button class="suggestions-admin-title suggestions-admin-title-button" type="button" data-search-suggestion>'+esc(x.title)+'</button><div class="suggestions-admin-meta">'+esc(when(x.created_at))+(x.updated_at&&x.updated_at!==x.created_at?' · edited '+esc(when(x.updated_at)):"")+'</div></div><div class="suggestions-admin-actions"><button class="btn secondary" type="button" data-edit-suggestion>Edit</button><button class="btn danger" type="button" data-delete-suggestion>Delete</button></div></article>').join(''):'<div class="suggestions-admin-empty">No suggestions found.</div>';
-   list.querySelectorAll("[data-edit-suggestion]").forEach(b=>b.onclick=()=>edit(b.closest("[data-suggestion-id]")?.dataset.suggestionId));
+   const q=(search?.value||"").trim().toLocaleLowerCase(),cat=categoryFilter?.value||"",status=statusFilter?.value||"";
+   const filtered=rows.filter(x=>(String(x.title||"")+" "+String(x.admin_note||"")).toLocaleLowerCase().includes(q)&&(!cat||x.category===cat)&&(!status||x.status===status));
+   if(count)count.textContent=filtered.length+" shown · "+rows.length+" total";
+   if(badge)badge.textContent=String(rows.filter(x=>!x.status||x.status==="new").length);
+   list.innerHTML=filtered.length?filtered.map(x=>'<article class="suggestions-admin-row" data-suggestion-id="'+esc(x.id)+'" style="grid-template-columns:minmax(0,1fr);gap:10px"><div style="display:flex;align-items:center;justify-content:space-between;gap:8px;flex-wrap:wrap"><span class="suggestions-admin-number">#'+esc(x.id)+'</span><span class="suggestions-admin-meta">Submitted '+esc(when(x.created_at))+(x.updated_at&&x.updated_at!==x.created_at?' · Updated '+esc(when(x.updated_at)):"")+'</span></div><label class="suggestions-admin-meta">Suggestion title<input data-title maxlength="240" value="'+esc(x.title)+'" style="display:block;width:100%;box-sizing:border-box;margin-top:4px"></label><div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(145px,1fr));gap:8px"><label class="suggestions-admin-meta">Category<select data-category style="display:block;width:100%;margin-top:4px">'+options(labels,x.category||"movie")+'</select></label><label class="suggestions-admin-meta">Status<select data-status style="display:block;width:100%;margin-top:4px">'+options(statusLabels,x.status||"new")+'</select></label></div><label class="suggestions-admin-meta">Private admin note <textarea data-note maxlength="1000" placeholder="Next step, decision reason, duplicate link…" style="display:block;width:100%;min-height:54px;box-sizing:border-box;margin-top:4px">'+esc(x.admin_note||"")+'</textarea></label><div class="suggestions-admin-actions"><button class="btn" type="button" data-save>Save changes</button><button class="btn secondary" type="button" data-find>Find in library</button><button class="btn danger" type="button" data-delete-suggestion>Delete</button></div></article>').join(""):'<div class="suggestions-admin-empty">'+(rows.length?'No suggestions match these filters.':'No suggestions found.')+'</div>';
+   list.querySelectorAll("[data-save]").forEach(b=>b.onclick=()=>save(b.closest("[data-suggestion-id]")));
    list.querySelectorAll("[data-delete-suggestion]").forEach(b=>b.onclick=()=>remove(b.closest("[data-suggestion-id]")?.dataset.suggestionId));
-   list.querySelectorAll("[data-search-suggestion]").forEach(b=>b.onclick=()=>searchSuggestion(b.closest("[data-suggestion-id]")?.dataset.suggestionId));
+   list.querySelectorAll("[data-find]").forEach(b=>b.onclick=()=>searchSuggestion(b.closest("[data-suggestion-id]")?.dataset.suggestionId));
  };
  async function searchSuggestion(id){
    const item=rows.find(x=>String(x.id)===String(id));if(!item)return;
    const query=String(item.title||"").trim();if(!query)return;
-   switchSection("add");
-   const input=document.getElementById("search");if(!input)return;
-   input.value=query;
-   try{
-     await doSearch();
-     requestAnimationFrame(()=>document.getElementById("quickAddSection")?.scrollIntoView({behavior:"smooth",block:"start"}));
-   }catch(e){
-     const results=document.getElementById("results");
-     if(results)results.innerHTML='<div class="message error">'+esc(e.message||"Search failed.")+'</div>';
-   }
+   switchSection("add");const input=document.getElementById("search");if(!input)return;input.value=query;
+   try{await doSearch();requestAnimationFrame(()=>document.getElementById("quickAddSection")?.scrollIntoView({behavior:"smooth",block:"start"}));}
+   catch(e){const results=document.getElementById("results");if(results)results.innerHTML='<div class="message error">'+esc(e.message||"Search failed.")+'</div>';}
  }
  async function load(){
-   list.innerHTML='<div class="suggestions-admin-empty">Loading suggestions…</div>';
-   try{const r=await fetch(API,{cache:"no-store",headers:{apikey:KEY,Accept:"application/json"}});const j=await r.json();if(!r.ok)throw Error(j.error||"Could not load suggestions.");rows=Array.isArray(j.suggestions)?j.suggestions:[];showMsg("");render();}
-   catch(e){showMsg(e.message||"Could not load suggestions.",true);list.innerHTML='<div class="suggestions-admin-empty">Could not load suggestions.</div>';}
+   const t=token();list.innerHTML='<div class="suggestions-admin-empty">Loading suggestions…</div>';
+   if(!t){rows=[];render();showMsg("Connect GitHub in the Connection section to securely load and manage suggestions.",true);return;}
+   try{const r=await fetch(API+"?admin=1",{cache:"no-store",headers:{apikey:KEY,Accept:"application/json","x-github-token":t}});const j=await r.json().catch(()=>({}));if(!r.ok)throw Error(j.error||"Could not load suggestions.");rows=Array.isArray(j.suggestions)?j.suggestions:[];showMsg("");render();}
+   catch(e){rows=[];render();showMsg(e.message||"Could not load suggestions.",true);}
  }
- async function edit(id){
-   const row=list.querySelector('[data-suggestion-id="'+CSS.escape(id)+'"]');if(!row||row.querySelector(".suggestions-admin-edit-box"))return;
-   const item=rows.find(x=>String(x.id)===String(id));if(!item)return;
-   const box=document.createElement("div");box.className="suggestions-admin-edit-box";box.innerHTML='<textarea maxlength="240" aria-label="Edit suggestion"></textarea><div class="suggestions-admin-edit-actions"><button class="btn" type="button" data-save>Save</button><button class="btn secondary" type="button" data-cancel>Cancel</button></div>';
-   row.children[1].appendChild(box);const ta=box.querySelector("textarea");ta.value=item.title;ta.focus();
-   box.querySelector("[data-cancel]").onclick=()=>box.remove();
-   box.querySelector("[data-save]").onclick=async()=>{const title=ta.value.replace(/\s+/g," ").trim(),save=box.querySelector("[data-save]");if(!title)return;const t=token();if(!t){showMsg("Connect GitHub first so the edit can be authorized.",true);return}save.disabled=true;try{const r=await fetch(API,{method:"PATCH",headers:{apikey:KEY,"Content-Type":"application/json","x-github-token":t},body:JSON.stringify({id,title})});const j=await r.json().catch(()=>({}));if(!r.ok)throw Error(j.error||"Edit failed.");await load();}catch(e){showMsg(e.message||"Edit failed.",true)}finally{save.disabled=false}};
+ async function save(row){
+   if(!row)return;const id=row.dataset.suggestionId,t=token();if(!t){showMsg("Connect GitHub first so changes can be authorized.",true);return;}
+   const title=row.querySelector("[data-title]").value.replace(/\s+/g," ").trim(),category=row.querySelector("[data-category]").value,status=row.querySelector("[data-status]").value,admin_note=row.querySelector("[data-note]").value.trim(),button=row.querySelector("[data-save]");
+   if(!title){showMsg("Suggestion title cannot be empty.",true);return;}if(admin_note.length>1000){showMsg("Admin note must be 1000 characters or fewer.",true);return;}
+   button.disabled=true;button.textContent="Saving…";
+   try{const r=await fetch(API,{method:"PATCH",headers:{apikey:KEY,"Content-Type":"application/json","x-github-token":t},body:JSON.stringify({id,title,category,status,admin_note})});const j=await r.json().catch(()=>({}));if(!r.ok)throw Error(j.error||"Save failed.");showMsg("Suggestion saved.");await load();}
+   catch(e){showMsg(e.message||"Save failed.",true);}finally{button.disabled=false;button.textContent="Save changes";}
  }
  async function remove(id){
-   const item=rows.find(x=>String(x.id)===String(id));if(!item)return;
-   if(!confirm('Delete this suggestion?'))return;
-   const t=token();if(!t){showMsg("Connect GitHub first so the delete can be authorized.",true);return}
-   try{const r=await fetch(API,{method:"DELETE",headers:{"Content-Type":"application/json","x-github-token":t},body:JSON.stringify({id})});const j=await r.json().catch(()=>({}));if(!r.ok)throw Error(j.error||"Delete failed.");await load();}catch(e){showMsg(e.message||"Delete failed.",true)}
+   const item=rows.find(x=>String(x.id)===String(id));if(!item)return;if(!confirm('Delete this suggestion permanently?'))return;
+   const t=token();if(!t){showMsg("Connect GitHub first so delete can be authorized.",true);return;}
+   try{const r=await fetch(API,{method:"DELETE",headers:{apikey:KEY,"Content-Type":"application/json","x-github-token":t},body:JSON.stringify({id})});const j=await r.json().catch(()=>({}));if(!r.ok)throw Error(j.error||"Delete failed.");showMsg("Suggestion deleted.");await load();}
+   catch(e){showMsg(e.message||"Delete failed.",true);}
  }
- search?.addEventListener("input",render);
+ search?.addEventListener("input",render);categoryFilter?.addEventListener("change",render);statusFilter?.addEventListener("change",render);
  document.getElementById("suggestionsRefresh")?.addEventListener("click",load);
- document.querySelector('[data-target="suggestions"]')?.addEventListener("click",()=>{load();});
+ document.querySelector('[data-target="suggestions"]')?.addEventListener("click",load);
  load();
 })();
 </script></body>
