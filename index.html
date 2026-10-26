@@ -5413,5 +5413,58 @@ main.list .c:active{
   #g.list button.c>.ci>.my-rating{right:7px!important;bottom:7px!important;max-width:78px!important}
 }
 @media(prefers-reduced-motion:reduce){#g.list button.c{transition:none!important}}
+
+<style id="cineton-mobile-list-color-correction-v6">
+/* Mobile-only correction: stop dark-system preferences from making list rows too dark. */
+@media(max-width:600px){
+  #g.list button.c{
+    background:#e9dfd2!important;
+    color:#352b24!important;
+    border-color:#c8b49b!important;
+    box-shadow:0 1px 3px #4c382012!important;
+  }
+  #g.list button.c>.ci,
+  #g.list button.c:hover>.ci{
+    background:linear-gradient(100deg,#e9dfd2 0%,#f0e7dc 100%)!important;
+    color:#352b24!important;
+  }
+  #g.list button.c>.ci>b,
+  #g.list button.c>.ci>b a{
+    color:#352b24!important;
+    text-shadow:none!important;
+  }
+  #g.list button.c>.ci>small{
+    color:#6e5e50!important;
+    opacity:1!important;
+  }
+  #g.list button.c>.ci::before{
+    background:#9a744b!important;
+    opacity:.9!important;
+  }
+  #g.list button.c>img,
+  #g.list button.c>.ph{
+    border-right:1px solid #bda58a!important;
+  }
+  #g.list button.c>.ph{
+    background:linear-gradient(145deg,#d9c8b4,#c6b097)!important;
+    color:#594735!important;
+  }
+  #g.list button.c>.bd{
+    background:#f2c94c!important;
+    color:#594015!important;
+    border-color:#d5a92f!important;
+  }
+  #g.list button.c>.ci>.my-rating{
+    background:#dfcbb3!important;
+    color:#5d432c!important;
+    border-color:#b99b79!important;
+  }
+  #g.list button.c:hover{
+    background:#f0e7dc!important;
+    border-color:#a98760!important;
+    box-shadow:0 2px 7px #4c382018!important;
+  }
+}
+</style>
 </style>
 </body></html>
