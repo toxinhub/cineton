@@ -5587,25 +5587,40 @@ main.list .c:active{
 
 
 <style id="cineton-search-mobile-expand-v1">
-/* Mobile: compact icon in the toolbar; expand as an overlay so adjacent filters never reflow or shrink. */
+/* Mobile: make the collapsed search affordance visible, then expand over the toolbar without reflowing siblings. */
 @media(max-width:600px){
   .bar .cineton-search-wrap{
+    box-sizing:border-box;
     flex:0 0 38px;
     width:38px;
+    height:38px;
     max-width:100%;
     overflow:hidden;
-    transition:width .24s cubic-bezier(.2,.75,.25,1);
+    border:1px solid color-mix(in srgb,var(--mu) 48%,var(--ac) 52%);
+    border-radius:10px;
+    background:color-mix(in srgb,var(--sf) 78%,var(--bg));
+    box-shadow:inset 0 1px 0 #ffffff0a,0 1px 4px #0002;
+    transition:width .24s cubic-bezier(.2,.75,.25,1),border-color .18s ease,background .18s ease,box-shadow .18s ease;
+  }
+  .bar .cineton-search-wrap:not(.is-expanded):hover,
+  .bar .cineton-search-wrap:not(.is-expanded):focus-within{
+    border-color:var(--ac);
+    background:color-mix(in srgb,var(--sf) 90%,var(--ac) 10%);
+    box-shadow:0 0 0 2px color-mix(in srgb,var(--ac) 15%,transparent),0 2px 7px #0003;
   }
   .bar .cineton-search-wrap #q{
+    box-sizing:border-box;
+    height:36px;
     opacity:0;
     pointer-events:none;
     transition:opacity .14s ease;
   }
   .bar .cineton-search-wrap .cineton-search-action{
-    left:4px;
+    left:3px;
     right:auto;
     width:30px;
     height:30px;
+    border-radius:7px!important;
   }
   .bar .cineton-search-wrap.is-expanded{
     position:absolute;
@@ -5615,13 +5630,16 @@ main.list .c:active{
     z-index:30;
     flex:none;
     width:calc(100% - 32px);
+    height:40px;
     max-width:none;
     overflow:hidden;
-    border-radius:9px;
+    border:1px solid var(--ac);
+    border-radius:10px;
     background:var(--bg);
-    box-shadow:0 4px 16px #0003;
+    box-shadow:0 0 0 3px color-mix(in srgb,var(--ac) 13%,transparent),0 5px 18px #0005;
   }
   .bar .cineton-search-wrap.is-expanded #q{
+    height:38px;
     opacity:1;
     pointer-events:auto;
   }
