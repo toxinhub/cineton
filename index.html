@@ -3311,9 +3311,9 @@ update();
   dialog.id="suggestionsDialog";
   dialog.className="suggestions-dialog";
   dialog.setAttribute("aria-labelledby","suggestionsTitle");
-  dialog.innerHTML='<div class="suggestions-shell"><div class="suggestions-head"><div><p id="suggestionsTitle" class="suggestions-kicker">Visitor Suggestions</p></div><button class="suggestions-close" type="button" aria-label="Close">×</button></div><div class="suggestions-body"><form class="suggestion-compose"><label for="suggestionInput">Have a movie or series in mind? Leave it here.</label><label for="suggestionCategory">Suggestion type</label><select id="suggestionCategory" aria-label="Suggestion type" style="width:100%;margin:0 0 8px;padding:8px;border:1px solid #d8c8ae36;border-radius:4px;background:#120f0d;color:#fffaf2;font:400 .72rem/1.4 Mina,sans-serif"><option value="movie">Movie / series</option><option value="bug">Report a problem</option><option value="feature">Feature request</option><option value="other">Other idea</option></select><div class="suggestion-compose-row"><textarea id="suggestionInput" maxlength="240" required placeholder="Write a movie or series title or describe your idea…"></textarea><button class="suggestion-submit" type="submit">Suggest</button></div><p class="suggestion-note">• No account needed.<br>• Suggestions are public and cannot be edited after submission.</p><div class="suggestion-message" aria-live="polite"></div></form><div class="suggestion-list" aria-live="polite"></div></div></div>';
+  dialog.innerHTML='<div class="suggestions-shell"><div class="suggestions-head"><div><p id="suggestionsTitle" class="suggestions-kicker">Visitor Suggestions</p></div><button class="suggestions-close" type="button" aria-label="Close">×</button></div><div class="suggestions-body"><form class="suggestion-compose"><label for="suggestionInput">Have a movie or series in mind? Leave it here.</label><div class="suggestion-compose-row"><textarea id="suggestionInput" maxlength="240" required placeholder="Write a movie or series title or describe your idea…"></textarea><button class="suggestion-submit" type="submit">Suggest</button></div><p class="suggestion-note">• No account needed.<br>• Suggestions are public and cannot be edited after submission.</p><div class="suggestion-message" aria-live="polite"></div></form><div class="suggestion-list" aria-live="polite"></div></div></div>';
   document.body.appendChild(dialog);
-  const list=dialog.querySelector(".suggestion-list"),form=dialog.querySelector("form"),input=dialog.querySelector("#suggestionInput"),categoryInput=dialog.querySelector("#suggestionCategory"),submit=dialog.querySelector(".suggestion-submit"),msg=dialog.querySelector(".suggestion-message");
+  const list=dialog.querySelector(".suggestion-list"),form=dialog.querySelector("form"),input=dialog.querySelector("#suggestionInput"),submit=dialog.querySelector(".suggestion-submit"),msg=dialog.querySelector(".suggestion-message");
   let libraryRows=[];
   const normalizeTitle=v=>String(v??"").normalize("NFKD").toLocaleLowerCase().replace(/[^a-z0-9]+/g," ").trim();
   const escapeXml=v=>String(v??"").replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
@@ -3436,7 +3436,7 @@ update();
     submit.disabled=true;msg.textContent="Saving…";
     try{
       for(const title of titles){
-        const r=await fetch(API,{method:"POST",headers:{apikey:KEY,Authorization:"Bearer "+KEY,"Content-Type":"application/json"},body:JSON.stringify({title,category:categoryInput?.value||"movie"})});
+        const r=await fetch(API,{method:"POST",headers:{apikey:KEY,Authorization:"Bearer "+KEY,"Content-Type":"application/json"},body:JSON.stringify({title})});
         const j=await r.json().catch(()=>({}));
         if(!r.ok)throw Error(j.error||"Could not save suggestion.");
       }
