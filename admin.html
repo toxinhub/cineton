@@ -1199,7 +1199,7 @@ $('#importBackupFile').onchange=async e=>{
        '<div class="suggestions-admin-actions">'+
          '<button class="btn secondary" type="button" data-edit-toggle>Edit</button>'+
          '<button class="btn '+(hidden?'secondary':'danger')+'" type="button" data-hide>'+(hidden?'Unhide':'Hide')+'</button>'+
-         '<button class="btn secondary" type="button" data-imdb>Search IMDb</button>'+
+         '<button class="btn" type="button" data-add-library>Find &amp; Add to Library</button>'+
        '</div>'+
        '<div class="suggestions-admin-edit-box" data-editor hidden>'+
          '<label class="suggestions-admin-meta">Movie title<input data-title maxlength="240" value="'+esc(x.title)+'"></label>'+
@@ -1212,7 +1212,7 @@ $('#importBackupFile').onchange=async e=>{
    list.querySelectorAll("[data-cancel]").forEach(b=>b.onclick=()=>render());
    list.querySelectorAll("[data-save]").forEach(b=>b.onclick=()=>save(b.closest("[data-suggestion-id]")));
    list.querySelectorAll("[data-hide]").forEach(b=>b.onclick=()=>toggleHidden(b.closest("[data-suggestion-id]")?.dataset.suggestionId));
-   list.querySelectorAll("[data-imdb]").forEach(b=>b.onclick=()=>{const row=b.closest("[data-suggestion-id]"),item=rows.find(x=>String(x.id)===String(row?.dataset.suggestionId));if(item?.title)window.open("https://www.imdb.com/find/?q="+encodeURIComponent(item.title.trim()),"_blank","noopener,noreferrer");});
+   list.querySelectorAll("[data-add-library]").forEach(b=>b.onclick=()=>{const row=b.closest("[data-suggestion-id]"),item=rows.find(x=>String(x.id)===String(row?.dataset.suggestionId));if(!item?.title)return;const query=document.getElementById("search"),searchBtn=document.getElementById("searchBtn"),addTab=document.querySelector(".admin-nav [data-target=\"add\"]");if(!query||!searchBtn){showMsg("The Add New search is unavailable. Open Add New and search for this title.",true);return;}if(addTab)addTab.click();query.value=item.title.trim();searchBtn.click();document.getElementById("quickAddSection")?.scrollIntoView({behavior:"smooth",block:"start"});showMsg("Searching the CineTon title database for: "+item.title.trim());});
  };
  async function load(){
    const t=token();list.innerHTML='<div class="suggestions-admin-empty">Loading suggestions…</div>';
