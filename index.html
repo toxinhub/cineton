@@ -5275,3 +5275,82 @@ main.list .c:active{
 @media(prefers-reduced-motion:reduce){#g.list button.c{transition:none!important}}
 </style>
 
+<style id="cineton-list-view-polish-v4">
+/* List view finish: clearer title hierarchy, reliable rating clearance, and calm warm surfaces. */
+#g.list{align-items:stretch!important;gap:8px!important}
+#g.list button.c{
+  position:relative!important;
+  background:#eee6dc!important;
+  border:1px solid #6b51352b!important;
+  box-shadow:0 1px 3px #4c38200d!important;
+  transition:border-color .16s ease,background-color .16s ease,box-shadow .16s ease,transform .16s ease!important;
+}
+#g.list button.c>.ci{
+  position:relative!important;
+  background:linear-gradient(105deg,#eee6dc 0%,#f1e9df 100%)!important;
+}
+#g.list button.c>.ci>b{
+  color:#352b24!important;
+  letter-spacing:-.012em!important;
+  overflow-wrap:anywhere!important;
+  text-wrap:pretty;
+}
+#g.list button.c>.ci>small{
+  color:#6e5e50!important;
+  font-weight:400!important;
+}
+#g.list button.c>.bd{
+  display:inline-flex!important;align-items:center!important;justify-content:center!important;
+  min-height:20px!important;line-height:1.25!important;
+  background:#f2c94c!important;color:#604516!important;
+  border:1px solid #d9ad32!important;border-radius:4px!important;
+  box-shadow:none!important;text-shadow:none!important;
+}
+#g.list button.c>.ci>.my-rating{
+  display:inline-flex!important;align-items:center!important;justify-content:center!important;
+  min-height:20px!important;line-height:1.25!important;
+  background:#e5d5c2!important;color:#65472f!important;
+  border:1px solid #b99b79!important;border-radius:5px!important;
+  box-shadow:none!important;text-shadow:none!important;
+}
+#g.list button.c>img,#g.list button.c>.ph{
+  border-right:1px solid #6b51352b!important;
+}
+#g.list button.c:hover{
+  background:#f3ece2!important;border-color:#936b426b!important;
+  box-shadow:0 3px 10px #4c382018!important;transform:translateY(-1px)!important;
+}
+#g.list button.c:hover>.ci{background:#f3ece2!important}
+#g.list button.c:focus-visible{
+  outline:2px solid #936b42!important;outline-offset:2px!important;
+  border-color:#936b42!important;box-shadow:0 0 0 3px #936b4218!important;
+}
+#g.list button.c:active{transform:scale(.997)!important;background:#e9dfd2!important}
+@media(max-width:600px){
+  #g.list{gap:7px!important}
+  #g.list button.c{
+    height:92px!important;min-height:92px!important;
+    grid-template-columns:61px minmax(0,1fr)!important;
+  }
+  #g.list button.c>.ci{padding:8px 9px!important;gap:3px!important}
+  #g.list button.c>.ci>b{
+    padding-right:86px!important;font-size:.81rem!important;
+    line-height:1.24!important;letter-spacing:0!important;
+  }
+  #g.list button.c>.ci>small{
+    padding-right:86px!important;font-size:.61rem!important;
+    line-height:1.32!important;
+  }
+  #g.list button.c>.bd{
+    top:8px!important;right:7px!important;max-width:78px!important;
+    min-height:18px!important;padding:1px 4px!important;font-size:.56rem!important;
+  }
+  #g.list button.c>.ci>.my-rating{
+    right:7px!important;bottom:7px!important;max-width:78px!important;
+    min-height:18px!important;padding:1px 4px!important;font-size:.57rem!important;
+  }
+}
+@media(prefers-reduced-motion:reduce){
+  #g.list button.c{transition:none!important}
+}
+</style>
