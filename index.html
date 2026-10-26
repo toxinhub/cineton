@@ -5587,19 +5587,19 @@ main.list .c:active{
 
 
 <style id="cineton-search-mobile-expand-v1">
-/* Mobile: compact search icon by default, expand smoothly on focus or when text exists. */
+/* Mobile: compact icon in the toolbar; expand as an overlay so adjacent filters never reflow or shrink. */
 @media(max-width:600px){
   .bar .cineton-search-wrap{
     flex:0 0 38px;
     width:38px;
     max-width:100%;
     overflow:hidden;
-    transition:flex-basis .22s ease,width .22s ease;
+    transition:width .24s cubic-bezier(.2,.75,.25,1);
   }
   .bar .cineton-search-wrap #q{
     opacity:0;
     pointer-events:none;
-    transition:opacity .16s ease;
+    transition:opacity .14s ease;
   }
   .bar .cineton-search-wrap .cineton-search-action{
     left:4px;
@@ -5608,8 +5608,18 @@ main.list .c:active{
     height:30px;
   }
   .bar .cineton-search-wrap.is-expanded{
-    flex:1 1 100%;
-    width:100%;
+    position:absolute;
+    left:16px;
+    top:50%;
+    transform:translateY(-50%);
+    z-index:30;
+    flex:none;
+    width:calc(100% - 32px);
+    max-width:none;
+    overflow:hidden;
+    border-radius:9px;
+    background:var(--bg);
+    box-shadow:0 4px 16px #0003;
   }
   .bar .cineton-search-wrap.is-expanded #q{
     opacity:1;
