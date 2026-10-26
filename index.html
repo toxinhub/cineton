@@ -140,7 +140,7 @@ body.suggestions-modal-open{overflow:hidden}
 .cinemodal .modal-nav{position:fixed;top:50%;z-index:9999;transform:translateY(-50%);width:42px;height:58px;padding:0;display:grid;place-items:center;border:1px solid color-mix(in srgb,var(--line-strong) 90%,transparent);border-radius:9px;background:color-mix(in srgb,var(--modal) 76%,transparent);color:var(--tx);font:400 36px/1 "Mina",sans-serif;box-shadow:0 4px 18px #0003;backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);opacity:.9;transition:opacity .16s ease,background .16s ease,border-color .16s ease}
 .cinemodal .modal-nav-prev{left:14px}.cinemodal .modal-nav-next{right:14px}
 /* The dialog is transformed during poster-to-modal animation; suppress controls until it settles. */
-.cinemodal[style*="transform"] .modal-nav{opacity:0!important;pointer-events:none!important}
+.cinemodal[style*="will-change"] .modal-nav{opacity:0!important;pointer-events:none!important}
 .cinemodal .modal-nav:hover,.cinemodal .modal-nav:focus-visible{opacity:1;background:color-mix(in srgb,var(--modal) 94%,transparent);border-color:var(--ac);outline:2px solid color-mix(in srgb,var(--ac) 50%,transparent);outline-offset:2px}
 .cinemodal .modal-nav:active{transform:translateY(-50%) scale(.94)}
 .cinemodal .modal-nav:disabled{opacity:.22;cursor:not-allowed;pointer-events:none}
