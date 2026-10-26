@@ -5191,3 +5191,87 @@ main.list .c:active{
   }
 }
 </style>
+
+<style id="cineton-list-view-effective-fix-v3">
+/* Final override: appended after all legacy list-view styles so the active rules win. */
+#g.list{display:flex!important;flex-direction:column!important;gap:9px!important}
+#g.list button.c{
+  display:grid!important;grid-template-columns:64px minmax(0,1fr)!important;
+  align-items:center!important;width:100%!important;
+  height:96px!important;min-height:96px!important;
+  padding:0!important;overflow:hidden!important;
+  border-radius:8px!important;text-align:left!important;
+}
+#g.list button.c>img,#g.list button.c>.ph{
+  grid-column:1!important;grid-row:1!important;
+  display:block!important;width:64px!important;min-width:64px!important;
+  height:95px!important;min-height:95px!important;
+  max-height:95px!important;aspect-ratio:2/3!important;
+  object-fit:cover!important;align-self:center!important;
+}
+#g.list button.c>.ci{
+  grid-column:2!important;grid-row:1!important;
+  display:flex!important;flex-direction:column!important;
+  justify-content:center!important;gap:3px!important;
+  width:100%!important;min-width:0!important;min-height:95px!important;
+  box-sizing:border-box!important;padding:10px 14px!important;
+  overflow:hidden!important;
+}
+#g.list button.c>.ci>b{
+  display:-webkit-box!important;-webkit-box-orient:vertical!important;
+  -webkit-line-clamp:2!important;overflow:hidden!important;
+  min-height:0!important;margin:0!important;padding-right:126px!important;
+  font-size:.94rem!important;line-height:1.28!important;font-weight:700!important;
+}
+#g.list button.c>.ci>small{
+  display:block!important;overflow:hidden!important;text-overflow:ellipsis!important;
+  white-space:nowrap!important;margin:1px 0 0!important;padding-right:126px!important;
+  font-size:.70rem!important;line-height:1.35!important;
+}
+#g.list button.c>.bd{
+  left:auto!important;right:13px!important;top:12px!important;
+  max-width:108px!important;white-space:nowrap!important;
+  padding:2px 5px!important;font-size:.65rem!important;z-index:2!important;
+}
+#g.list button.c>.ci>.my-rating{
+  position:absolute!important;right:13px!important;bottom:11px!important;
+  margin:0!important;max-width:112px!important;white-space:nowrap!important;
+  padding:2px 5px!important;font-size:.67rem!important;
+}
+#g.list button.c:hover{transform:translateY(-1px)!important}
+@media(min-width:601px) and (max-width:900px){
+  #g.list button.c>.ci>b,#g.list button.c>.ci>small{padding-right:110px!important}
+  #g.list button.c>.bd{right:9px!important}
+  #g.list button.c>.ci>.my-rating{right:9px!important}
+}
+@media(max-width:600px){
+  #g.list{gap:7px!important}
+  #g.list button.c{
+    grid-template-columns:57px minmax(0,1fr)!important;
+    height:88px!important;min-height:88px!important;border-radius:7px!important;
+  }
+  #g.list button.c>img,#g.list button.c>.ph{
+    width:57px!important;min-width:57px!important;
+    height:87px!important;min-height:87px!important;max-height:87px!important;
+  }
+  #g.list button.c>.ci{
+    min-height:87px!important;padding:8px 9px!important;gap:3px!important;
+  }
+  #g.list button.c>.ci>b{
+    padding-right:91px!important;font-size:.82rem!important;line-height:1.24!important;
+  }
+  #g.list button.c>.ci>small{
+    padding-right:91px!important;font-size:.62rem!important;line-height:1.3!important;
+  }
+  #g.list button.c>.bd{
+    right:7px!important;top:9px!important;max-width:80px!important;
+    padding:1px 3px!important;font-size:.57rem!important;
+  }
+  #g.list button.c>.ci>.my-rating{
+    right:7px!important;bottom:8px!important;max-width:80px!important;
+    padding:1px 3px!important;font-size:.58rem!important;
+  }
+}
+@media(prefers-reduced-motion:reduce){#g.list button.c{transition:none!important}}
+</style>
+
