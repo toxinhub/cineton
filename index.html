@@ -5534,12 +5534,19 @@ main.list .c:active{
     wrap.appendChild(button);
     const searchIcon = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="10.8" cy="10.8" r="6.8"></circle><path d="m16 16 4.2 4.2"></path></svg>';
     const clearIcon = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><path d="m6 6 12 12M18 6 6 18"></path></svg>';
+    const isMobile = () => window.matchMedia('(max-width:600px)').matches;
     const sync = () => {
       const hasText = input.value.trim().length > 0;
       button.innerHTML = hasText ? clearIcon : searchIcon;
       button.setAttribute('aria-label', hasText ? 'Clear search' : 'Search');
       button.title = hasText ? 'Clear search' : 'Search';
+      if (isMobile()) wrap.classList.toggle('is-expanded', hasText || document.activeElement === input);
+      else wrap.classList.remove('is-expanded');
     };
+    input.addEventListener('focus', sync);
+    input.addEventListener('blur', () => {
+      window.setTimeout(sync, 80);
+    });
     button.addEventListener('click', () => {
       if (input.value.length) {
         input.value = '';
@@ -5575,6 +5582,47 @@ main.list .c:active{
   display:none!important;
   width:0!important;
   height:0!important;
+}
+</style>
+
+
+<style id="cineton-search-mobile-expand-v1">
+/* Mobile: compact search icon by default, expand smoothly on focus or when text exists. */
+@media(max-width:600px){
+  .bar .cineton-search-wrap{
+    flex:0 0 38px;
+    width:38px;
+    max-width:100%;
+    overflow:hidden;
+    transition:flex-basis .22s ease,width .22s ease;
+  }
+  .bar .cineton-search-wrap #q{
+    opacity:0;
+    pointer-events:none;
+    transition:opacity .16s ease;
+  }
+  .bar .cineton-search-wrap .cineton-search-action{
+    left:4px;
+    right:auto;
+    width:30px;
+    height:30px;
+  }
+  .bar .cineton-search-wrap.is-expanded{
+    flex:1 1 100%;
+    width:100%;
+  }
+  .bar .cineton-search-wrap.is-expanded #q{
+    opacity:1;
+    pointer-events:auto;
+  }
+  .bar .cineton-search-wrap.is-expanded .cineton-search-action{
+    left:auto;
+    right:4px;
+  }
+}
+@media(prefers-reduced-motion:reduce){
+  .bar .cineton-search-wrap,
+  .bar .cineton-search-wrap #q{transition:none!important}
 }
 </style>
 
