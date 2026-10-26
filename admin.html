@@ -376,6 +376,19 @@ dialog.admin-modal::backdrop{background:rgba(10,7,5,.5);-webkit-backdrop-filter:
  #suggestionsSection input[data-title],#suggestionsSection select[data-category],#suggestionsSection select[data-status],#suggestionsSection textarea[data-note]{background:#fbf7f0!important;color:#352a20!important}
 }
 </style>
+<style id="suggestion-admin-actions-v1">
+#suggestionsSection .suggestions-admin-item-head{display:flex;flex-direction:column;gap:3px;min-width:0}
+#suggestionsSection .suggestions-admin-title{font-size:14px;line-height:1.45;overflow-wrap:anywhere}
+#suggestionsSection .suggestions-admin-actions{display:flex;gap:6px;flex-wrap:wrap}
+#suggestionsSection .suggestions-admin-actions .btn{min-height:32px!important;height:32px!important;padding:5px 10px!important;border-radius:7px!important;font-size:12px!important}
+#suggestionsSection .suggestions-admin-edit-box[hidden]{display:none!important}
+#suggestionsSection .suggestions-admin-edit-box{display:grid;gap:8px;padding:10px;border:1px solid var(--line);border-radius:9px;background:var(--surface)}
+#suggestionsSection .suggestions-admin-edit-box label{display:block}
+#suggestionsSection .suggestions-admin-edit-box input,#suggestionsSection .suggestions-admin-edit-box select,#suggestionsSection .suggestions-admin-edit-box textarea{display:block;width:100%;box-sizing:border-box;margin-top:4px;padding:7px 9px;min-height:34px;border:1px solid #cbbba5;border-radius:6px;background:#fbf7f0;color:#352a20;font:400 12px/1.4 Inter,Mina,system-ui,sans-serif}
+#suggestionsSection .suggestions-admin-edit-box textarea{min-height:54px;resize:vertical}
+#suggestionsSection .suggestions-admin-edit-actions{display:flex;gap:6px;flex-wrap:wrap}
+#suggestionsSection .suggestions-admin-edit-actions .btn{min-height:32px;height:32px;padding:5px 10px;font-size:12px}
+</style>
 </head>
 <body>
 <div class="app">
@@ -481,7 +494,7 @@ dialog.admin-modal::backdrop{background:rgba(10,7,5,.5);-webkit-backdrop-filter:
 
 <section class="panel comment-sector suggestions-admin-sector" data-section="suggestions" id="suggestionsSection">
 <div class="head"><div><h2>Suggestion Desk</h2><small class="sector-note">Review visitor ideas · Track progress · Keep private admin notes</small></div><span id="suggestionsCount">0 suggestions</span></div>
-<div class="libraryTools"><input id="suggestionsSearch" placeholder="Search suggestions…" aria-label="Search suggestions"><select id="suggestionsCategoryFilter" aria-label="Filter by category"><option value="">All categories</option><option value="movie">Movie</option><option value="bug">Bug report</option><option value="feature">Feature request</option><option value="other">Other</option></select><select id="suggestionsStatusFilter" aria-label="Filter by status"><option value="">All statuses</option><option value="new">New</option><option value="reviewing">Reviewing</option><option value="planned">Planned</option><option value="done">Done</option><option value="rejected">Rejected</option></select><button id="suggestionsRefresh" class="btn secondary" type="button">Refresh</button></div>
+<div class="libraryTools"><input id="suggestionsSearch" placeholder="Search movie suggestions…" aria-label="Search movie suggestions"><select id="suggestionsStatusFilter" aria-label="Filter by status"><option value="">All suggestions</option><option value="new">New</option><option value="reviewing">Reviewing</option><option value="planned">Planned</option><option value="done">Done</option><option value="rejected">Hidden</option></select><button id="suggestionsRefresh" class="btn secondary" type="button">Refresh</button></div>
 <div id="suggestionsList" class="suggestions-admin-list"></div>
 <div id="suggestionsMsg" class="message hidden" aria-live="polite"></div>
 </section>
@@ -1162,57 +1175,73 @@ $('#importBackupFile').onchange=async e=>{
  }catch(err){preview.textContent=err.message||'Could not read this backup.';preview.className='message error'}finally{e.target.value=''}
 };
 </script>
-<script id="public-suggestions-admin-v2">
+<script id="public-suggestions-admin-v3">
 (()=> {
  const API="https://osplbqpgxrfovjrumsnb.supabase.co/functions/v1/public-suggestions",KEY="sb_publishable_tcBaC8FqwlcFFw-IwKmiVA_y67PZNPX";
  const esc=v=>String(v??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;","\"":"&quot;","'":"&#39;"}[c]));
  const when=v=>{const d=new Date(v);return Number.isNaN(d.getTime())?"":d.toLocaleString(undefined,{dateStyle:"medium",timeStyle:"short"});};
- const list=document.getElementById("suggestionsList"),count=document.getElementById("suggestionsCount"),badge=document.getElementById("suggestionsNavBadge"),search=document.getElementById("suggestionsSearch"),categoryFilter=document.getElementById("suggestionsCategoryFilter"),statusFilter=document.getElementById("suggestionsStatusFilter"),msg=document.getElementById("suggestionsMsg");
+ const list=document.getElementById("suggestionsList"),count=document.getElementById("suggestionsCount"),badge=document.getElementById("suggestionsNavBadge"),search=document.getElementById("suggestionsSearch"),statusFilter=document.getElementById("suggestionsStatusFilter"),msg=document.getElementById("suggestionsMsg");
  if(!list)return;
  let rows=[];
  const token=()=>document.getElementById("tok")?.value.trim()||"";
- const labels={movie:"Movie suggestion",bug:"Bug report",feature:"Feature request",other:"Other"};
- const statusLabels={new:"New",reviewing:"Reviewing",planned:"Planned",done:"Done",rejected:"Rejected"};
+ const statusLabels={new:"New",reviewing:"Reviewing",planned:"Planned",done:"Done",rejected:"Hidden"};
  const showMsg=(text,error=false)=>{msg.textContent=text;msg.className="message"+(error?" error":"");msg.classList.toggle("hidden",!text);};
  const options=(map,current)=>Object.entries(map).map(([value,label])=>'<option value="'+value+'"'+(value===current?' selected':'')+'>'+label+'</option>').join("");
  const render=()=>{
-   const q=(search?.value||"").trim().toLocaleLowerCase(),cat=categoryFilter?.value||"",status=statusFilter?.value||"";
-   const filtered=rows.filter(x=>(String(x.title||"")+" "+String(x.admin_note||"")).toLocaleLowerCase().includes(q)&&(!cat||x.category===cat)&&(!status||x.status===status));
+   const q=(search?.value||"").trim().toLocaleLowerCase(),status=statusFilter?.value||"";
+   const filtered=rows.filter(x=>(String(x.title||"")+" "+String(x.admin_note||"")).toLocaleLowerCase().includes(q)&&(!status||x.status===status));
    if(count)count.textContent=filtered.length+" shown · "+rows.length+" total";
    if(badge)badge.textContent=String(rows.filter(x=>!x.status||x.status==="new").length);
-   list.innerHTML=filtered.length?filtered.map(x=>'<article class="suggestions-admin-row" data-suggestion-id="'+esc(x.id)+'" style="grid-template-columns:minmax(0,1fr);gap:10px"><div style="display:flex;align-items:center;justify-content:space-between;gap:8px;flex-wrap:wrap"><span class="suggestions-admin-number">#'+esc(x.id)+'</span><span class="suggestions-admin-meta">Submitted '+esc(when(x.created_at))+(x.updated_at&&x.updated_at!==x.created_at?' · Updated '+esc(when(x.updated_at)):"")+'</span></div><label class="suggestions-admin-meta">Suggestion title<input data-title maxlength="240" value="'+esc(x.title)+'" style="display:block;width:100%;box-sizing:border-box;margin-top:4px"></label><div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(145px,1fr));gap:8px"><label class="suggestions-admin-meta">Category<select data-category style="display:block;width:100%;margin-top:4px">'+options(labels,x.category||"movie")+'</select></label><label class="suggestions-admin-meta">Status<select data-status style="display:block;width:100%;margin-top:4px">'+options(statusLabels,x.status||"new")+'</select></label></div><label class="suggestions-admin-meta">Private admin note <textarea data-note maxlength="1000" placeholder="Next step, decision reason, duplicate link…" style="display:block;width:100%;min-height:54px;box-sizing:border-box;margin-top:4px">'+esc(x.admin_note||"")+'</textarea></label><div class="suggestions-admin-actions"><button class="btn" type="button" data-save>Save changes</button><button class="btn secondary" type="button" data-find>Find in library</button><button class="btn danger" type="button" data-delete-suggestion>Delete</button></div></article>').join(""):'<div class="suggestions-admin-empty">'+(rows.length?'No suggestions match these filters.':'No suggestions found.')+'</div>';
+   list.innerHTML=filtered.length?filtered.map(x=>{
+     const hidden=x.status==="rejected";
+     return '<article class="suggestions-admin-row" data-suggestion-id="'+esc(x.id)+'" style="grid-template-columns:minmax(0,1fr);gap:9px">'+
+       '<div class="suggestions-admin-item-head"><div class="suggestions-admin-title">'+esc(x.title)+'</div><div class="suggestions-admin-meta">#'+esc(x.id)+' · '+esc(when(x.created_at))+(x.updated_at&&x.updated_at!==x.created_at?' · Updated '+esc(when(x.updated_at)):"")+'</div></div>'+
+       '<div class="suggestions-admin-actions">'+
+         '<button class="btn secondary" type="button" data-edit-toggle>Edit</button>'+
+         '<button class="btn '+(hidden?'secondary':'danger')+'" type="button" data-hide>'+(hidden?'Unhide':'Hide')+'</button>'+
+         '<button class="btn secondary" type="button" data-imdb>Search IMDb</button>'+
+       '</div>'+
+       '<div class="suggestions-admin-edit-box" data-editor hidden>'+
+         '<label class="suggestions-admin-meta">Movie title<input data-title maxlength="240" value="'+esc(x.title)+'"></label>'+
+         '<label class="suggestions-admin-meta">Status<select data-status>'+options(statusLabels,x.status||"new")+'</select></label>'+
+         '<label class="suggestions-admin-meta">Private admin note<textarea data-note maxlength="1000" placeholder="Optional private note…">'+esc(x.admin_note||"")+'</textarea></label>'+
+         '<div class="suggestions-admin-edit-actions"><button class="btn" type="button" data-save>Save</button><button class="btn secondary" type="button" data-cancel>Cancel</button></div>'+
+       '</div></article>';
+   }).join(""):'<div class="suggestions-admin-empty">'+(rows.length?'No suggestions match these filters.':'No suggestions found.')+'</div>';
+   list.querySelectorAll("[data-edit-toggle]").forEach(b=>b.onclick=()=>{const row=b.closest("[data-suggestion-id]"),editor=row?.querySelector("[data-editor]");if(editor){editor.hidden=!editor.hidden;b.textContent=editor.hidden?"Edit":"Cancel edit";if(!editor.hidden)row.querySelector("[data-title]")?.focus();}});
+   list.querySelectorAll("[data-cancel]").forEach(b=>b.onclick=()=>render());
    list.querySelectorAll("[data-save]").forEach(b=>b.onclick=()=>save(b.closest("[data-suggestion-id]")));
-   list.querySelectorAll("[data-delete-suggestion]").forEach(b=>b.onclick=()=>remove(b.closest("[data-suggestion-id]")?.dataset.suggestionId));
-   list.querySelectorAll("[data-find]").forEach(b=>b.onclick=()=>searchSuggestion(b.closest("[data-suggestion-id]")?.dataset.suggestionId));
+   list.querySelectorAll("[data-hide]").forEach(b=>b.onclick=()=>toggleHidden(b.closest("[data-suggestion-id]")?.dataset.suggestionId));
+   list.querySelectorAll("[data-imdb]").forEach(b=>b.onclick=()=>{const row=b.closest("[data-suggestion-id]"),item=rows.find(x=>String(x.id)===String(row?.dataset.suggestionId));if(item?.title)window.open("https://www.imdb.com/find/?q="+encodeURIComponent(item.title.trim()),"_blank","noopener,noreferrer");});
  };
- async function searchSuggestion(id){
-   const item=rows.find(x=>String(x.id)===String(id));if(!item)return;
-   const query=String(item.title||"").trim();if(!query)return;
-   switchSection("add");const input=document.getElementById("search");if(!input)return;input.value=query;
-   try{await doSearch();requestAnimationFrame(()=>document.getElementById("quickAddSection")?.scrollIntoView({behavior:"smooth",block:"start"}));}
-   catch(e){const results=document.getElementById("results");if(results)results.innerHTML='<div class="message error">'+esc(e.message||"Search failed.")+'</div>';}
- }
  async function load(){
    const t=token();list.innerHTML='<div class="suggestions-admin-empty">Loading suggestions…</div>';
    if(!t){rows=[];render();showMsg("Connect GitHub in the Connection section to securely load and manage suggestions.",true);return;}
    try{const r=await fetch(API+"?admin=1",{cache:"no-store",headers:{apikey:KEY,Accept:"application/json","x-github-token":t}});const j=await r.json().catch(()=>({}));if(!r.ok)throw Error(j.error||"Could not load suggestions.");rows=Array.isArray(j.suggestions)?j.suggestions:[];showMsg("");render();}
    catch(e){rows=[];render();showMsg(e.message||"Could not load suggestions.",true);}
  }
+ async function patch(id,payload,success){
+   const t=token();if(!t){showMsg("Connect GitHub first so changes can be authorized.",true);return false;}
+   const r=await fetch(API,{method:"PATCH",headers:{apikey:KEY,"Content-Type":"application/json","x-github-token":t},body:JSON.stringify({id,...payload})});
+   const j=await r.json().catch(()=>({}));if(!r.ok)throw Error(j.error||"Update failed.");
+   showMsg(success);await load();return true;
+ }
  async function save(row){
-   if(!row)return;const id=row.dataset.suggestionId,t=token();if(!t){showMsg("Connect GitHub first so changes can be authorized.",true);return;}
-   const title=row.querySelector("[data-title]").value.replace(/\s+/g," ").trim(),category=row.querySelector("[data-category]").value,status=row.querySelector("[data-status]").value,admin_note=row.querySelector("[data-note]").value.trim(),button=row.querySelector("[data-save]");
-   if(!title){showMsg("Suggestion title cannot be empty.",true);return;}if(admin_note.length>1000){showMsg("Admin note must be 1000 characters or fewer.",true);return;}
+   if(!row)return;
+   const title=row.querySelector("[data-title]").value.replace(/\s+/g," ").trim(),status=row.querySelector("[data-status]").value,admin_note=row.querySelector("[data-note]").value.trim(),button=row.querySelector("[data-save]");
+   if(!title){showMsg("Movie title cannot be empty.",true);return;}if(admin_note.length>1000){showMsg("Admin note must be 1000 characters or fewer.",true);return;}
    button.disabled=true;button.textContent="Saving…";
-   try{const r=await fetch(API,{method:"PATCH",headers:{apikey:KEY,"Content-Type":"application/json","x-github-token":t},body:JSON.stringify({id,title,category,status,admin_note})});const j=await r.json().catch(()=>({}));if(!r.ok)throw Error(j.error||"Save failed.");showMsg("Suggestion saved.");await load();}
-   catch(e){showMsg(e.message||"Save failed.",true);}finally{button.disabled=false;button.textContent="Save changes";}
+   try{await patch(row.dataset.suggestionId,{title,status,admin_note},"Suggestion updated.");}
+   catch(e){showMsg(e.message||"Save failed.",true);}finally{button.disabled=false;button.textContent="Save";}
  }
- async function remove(id){
-   const item=rows.find(x=>String(x.id)===String(id));if(!item)return;if(!confirm('Delete this suggestion permanently?'))return;
-   const t=token();if(!t){showMsg("Connect GitHub first so delete can be authorized.",true);return;}
-   try{const r=await fetch(API,{method:"DELETE",headers:{apikey:KEY,"Content-Type":"application/json","x-github-token":t},body:JSON.stringify({id})});const j=await r.json().catch(()=>({}));if(!r.ok)throw Error(j.error||"Delete failed.");showMsg("Suggestion deleted.");await load();}
-   catch(e){showMsg(e.message||"Delete failed.",true);}
+ async function toggleHidden(id){
+   const item=rows.find(x=>String(x.id)===String(id));if(!item)return;
+   const hidden=item.status==="rejected";
+   if(!hidden&&!confirm("Hide this suggestion from the public list? It will remain available in Admin."))return;
+   try{await patch(id,{status:hidden?"new":"rejected"},hidden?"Suggestion is visible again.":"Suggestion hidden from the public list.");}
+   catch(e){showMsg(e.message||"Could not update visibility.",true);}
  }
- search?.addEventListener("input",render);categoryFilter?.addEventListener("change",render);statusFilter?.addEventListener("change",render);
+ search?.addEventListener("input",render);statusFilter?.addEventListener("change",render);
  document.getElementById("suggestionsRefresh")?.addEventListener("click",load);
  document.querySelector('[data-target="suggestions"]')?.addEventListener("click",load);
  load();
