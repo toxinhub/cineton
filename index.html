@@ -5467,4 +5467,96 @@ main.list .c:active{
   }
 }
 </style>
+
+<style id="cineton-search-action-v1">
+/* Compact search action; keeps the existing toolbar layout on desktop and mobile. */
+.bar .cineton-search-wrap{
+  position:relative;
+  display:flex;
+  flex:1 1 230px;
+  min-width:0;
+  align-items:center;
+}
+.bar .cineton-search-wrap #q{
+  flex:1 1 auto;
+  width:100%;
+  min-width:0;
+  padding-right:40px!important;
+}
+.bar .cineton-search-action{
+  position:absolute;
+  right:4px;
+  top:50%;
+  transform:translateY(-50%);
+  width:27px;
+  height:27px;
+  min-width:27px;
+  padding:0!important;
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  border:0!important;
+  border-radius:6px!important;
+  background:transparent!important;
+  color:var(--mu)!important;
+  box-shadow:none!important;
+  cursor:pointer;
+}
+.bar .cineton-search-action:hover,
+.bar .cineton-search-action:focus-visible{
+  color:var(--tx)!important;
+  background:color-mix(in srgb,var(--ac) 15%,transparent)!important;
+  outline:none;
+}
+.bar .cineton-search-action:focus-visible{
+  box-shadow:0 0 0 2px color-mix(in srgb,var(--ac) 42%,transparent)!important;
+}
+.bar .cineton-search-action svg{width:16px;height:16px;display:block;pointer-events:none}
+@media(max-width:600px){
+  .bar .cineton-search-wrap{flex-basis:100%}
+}
+</style>
+<script id="cineton-search-action-v1">
+(()=> {
+  const init = () => {
+    const input = document.getElementById('q');
+    if (!input || input.dataset.actionButtonReady === '1') return;
+    input.dataset.actionButtonReady = '1';
+    const wrap = document.createElement('div');
+    wrap.className = 'cineton-search-wrap';
+    input.parentNode.insertBefore(wrap, input);
+    wrap.appendChild(input);
+    const button = document.createElement('button');
+    button.type = 'button';
+    button.className = 'cineton-search-action';
+    button.setAttribute('aria-label', 'Search');
+    button.title = 'Search';
+    wrap.appendChild(button);
+    const searchIcon = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="10.8" cy="10.8" r="6.8"></circle><path d="m16 16 4.2 4.2"></path></svg>';
+    const clearIcon = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><path d="m6 6 12 12M18 6 6 18"></path></svg>';
+    const sync = () => {
+      const hasText = input.value.trim().length > 0;
+      button.innerHTML = hasText ? clearIcon : searchIcon;
+      button.setAttribute('aria-label', hasText ? 'Clear search' : 'Search');
+      button.title = hasText ? 'Clear search' : 'Search';
+    };
+    button.addEventListener('click', () => {
+      if (input.value.length) {
+        input.value = '';
+        input.dispatchEvent(new Event('input', {bubbles:true}));
+        input.focus();
+      } else {
+        input.focus();
+        if (typeof window.render === 'function') window.render();
+      }
+      sync();
+    });
+    input.addEventListener('input', sync);
+    sync();
+  };
+  if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', init, {once:true});
+  else init();
+})();
+</script>
+
 </body></html>
