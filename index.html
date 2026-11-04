@@ -5654,4 +5654,158 @@ main.list .c:active{
 }
 </style>
 
+
+<style id="cineton-noir-editorial-redesign-v1">
+/* CineTon Noir Editorial — visual-only layer; preserves existing markup and behavior. */
+:root{
+  --bg:#0b0b0d!important;
+  --sf:#151518!important;
+  --tx:#f2efe9!important;
+  --mu:#aaa6a0!important;
+  --ac:#c4a36b!important;
+  --gd:#dfc28e!important;
+  --line:#ffffff16!important;
+  --line-strong:#ffffff2c!important;
+  --modal:#141417!important;
+  --modal-overlay:#0b0b0df5!important;
+  --modal-backdrop:#000c!important;
+  --modal-shadow:#000b!important;
+  color-scheme:dark!important;
+}
+html,body{background-color:var(--bg)!important;color:var(--tx)!important}
+body{
+  background-image:radial-gradient(ellipse at 50% -18%,#29221a 0%,#111114 42%,#0b0b0d 78%)!important;
+  background-attachment:fixed;
+}
+header{
+  max-width:1440px!important;
+  padding:34px 24px 20px!important;
+  border-bottom-color:var(--line)!important;
+}
+header h1{
+  color:#f4f0e8!important;
+  font-family:"Cormorant Garamond",Georgia,serif!important;
+  font-size:clamp(3rem,7vw,5.4rem)!important;
+  letter-spacing:-.045em!important;
+  line-height:.9!important;
+}
+header .sub{color:#b8afa2!important;max-width:720px}
+.film-mark{color:var(--gd)!important}
+.stats-row,.nav-bar{max-width:1440px!important}
+.stats-row{padding:0 24px 12px!important}
+.stat{
+  background:#171719!important;
+  border:1px solid #ffffff1c!important;
+  color:#b8b2a8!important;
+  border-radius:7px!important;
+  box-shadow:0 1px 0 #ffffff08 inset!important;
+}
+.stat b{color:#f2efe9!important}
+.stat:hover,.stat:focus-visible,.stat.active{
+  background:#242326!important;border-color:#c4a36b70!important;color:#fff!important;
+}
+.bar{
+  max-width:1440px!important;
+  padding:12px 24px!important;
+  background:#0b0b0de8!important;
+  border-top:1px solid #ffffff08;
+  border-bottom:1px solid #ffffff12;
+  gap:9px!important;
+}
+.bar button,.toolbar button,.filters button,.filter button,.select-menu button,
+.pagination button,.tab,.chip,.filter-chip{
+  background:#19191c!important;
+  color:#c9c3b9!important;
+  border-color:#ffffff20!important;
+}
+:is(.bar button,.toolbar button,.filters button,.filter button,.select-menu button,
+.pagination button,.tab,.chip,.filter-chip):hover{
+  background:#242326!important;color:#fff!important;border-color:#c4a36b65!important;
+}
+:is(.bar button,.toolbar button,.filters button,.filter button,.select-menu button,
+.pagination button,.tab,.chip,.filter-chip).active,
+:is(.bar button,.toolbar button,.filters button,.filter button,.select-menu button,
+.pagination button,.tab,.chip,.filter-chip)[aria-pressed="true"]{
+  background:#b18d55!important;border-color:#b18d55!important;color:#100f0d!important;
+}
+main,#g{
+  max-width:1440px!important;
+  padding:22px 24px 72px!important;
+  grid-template-columns:repeat(auto-fill,minmax(174px,1fr))!important;
+  gap:18px!important;
+}
+html body #g .c{
+  background:#151518!important;
+  color:#f2efe9!important;
+  border:1px solid #ffffff1c!important;
+  border-radius:9px!important;
+  box-shadow:0 5px 18px #0005!important;
+  overflow:hidden!important;
+}
+html body #g .c .ci{
+  background:linear-gradient(180deg,#19191c 0%,#121214 100%)!important;
+  color:#f2efe9!important;
+  padding:11px 12px 13px!important;
+}
+html body #g .c .ci b{color:#f4f0e8!important;font-weight:600!important}
+html body #g .c .ci small{color:#aaa6a0!important}
+html body #g .c:hover{
+  border-color:#c4a36b85!important;
+  box-shadow:0 12px 30px #0008,0 0 0 1px #c4a36b18!important;
+  transform:translateY(-4px)!important;
+}
+html body #g .c img{transition:transform .45s cubic-bezier(.2,.7,.2,1),filter .3s ease!important}
+html body #g .c:hover img{transform:scale(1.035)!important;filter:saturate(1.06) contrast(1.03)}
+html body #g .c::before{background:#222126!important}
+.bd{color:#f0ca75!important;text-shadow:0 1px 8px #000b!important}
+.rv{background:#c4a36b!important;color:#111!important}
+.my-rating{color:#dfc28e!important}
+.cinemodal{
+  background:#141417!important;color:#f2efe9!important;
+  border:1px solid #c4a36b55!important;border-radius:10px!important;
+  box-shadow:0 30px 100px #000d!important;
+}
+.cinemodal::after{background:#101013ed!important}
+.cinemodal .chips span{background:#ffffff08!important;border-color:#ffffff20!important;color:#c5beb3!important}
+.cinemodal .m{scrollbar-color:#62513a transparent}
+.suggestions-dialog{
+  background:#171719!important;color:#f2efe9!important;
+  border-color:#c4a36b55!important;box-shadow:0 24px 80px #000c!important;
+}
+.suggestions-dialog :is(h1,h2,h3,p,label,small,span,.suggestions-title,
+.suggestions-sub,.suggestion-note,.suggestion-empty,.suggestion-date,
+.suggestion-number,.suggestion-title-text,.suggestion-time,.suggestion-message){
+  color:#eee9df!important;
+}
+input,textarea,select{
+  background:#171719!important;color:#f2efe9!important;border-color:#ffffff24!important;
+}
+input::placeholder,textarea::placeholder{color:#89847d!important}
+button:focus-visible,a:focus-visible,input:focus-visible,select:focus-visible,textarea:focus-visible{
+  outline:2px solid #c4a36b!important;outline-offset:3px!important;
+}
+@media(min-width:1100px){
+  main,#g{grid-template-columns:repeat(auto-fill,minmax(190px,1fr))!important;gap:20px!important}
+}
+@media(max-width:700px){
+  header{padding:25px 16px 14px!important}
+  header h1{font-size:clamp(2.8rem,13vw,4rem)!important}
+  .stats-row{padding:0 16px 9px!important}
+  .nav-bar{padding:8px 16px!important}
+  .bar{padding:9px 12px!important;gap:7px!important}
+  main,#g{
+    padding:16px 12px 88px!important;
+    grid-template-columns:repeat(2,minmax(0,1fr))!important;
+    gap:11px!important;
+  }
+  html body #g .c{border-radius:7px!important}
+  html body #g .c .ci{padding:8px 9px 10px!important}
+  html body #g .c .ci b{font-size:.86rem!important}
+  html body #g .c .ci small{font-size:.68rem!important}
+}
+@media(prefers-reduced-motion:reduce){
+  *,*::before,*::after{scroll-behavior:auto!important;transition-duration:.01ms!important;animation-duration:.01ms!important}
+}
+</style>
+
 </body></html>
