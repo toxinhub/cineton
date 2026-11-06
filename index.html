@@ -1648,10 +1648,10 @@ main.list .c:active{transform:scale(.997)!important}
 }
 </style>
 </head><body><header><a class="home-brand" href="./index.html" aria-label="Home"><h1><span class="title-mark" aria-hidden="true">🎬</span><span data-cineton-shine="CineTon">CineTon</span></h1></a><p class="sub">Some of the films I've watched. Rest of the drama? I'm living it...</p><div class="social-links" aria-label="Social media"><button id="cineton-theme-toggle" type="button" aria-label="Switch to dark mode" aria-pressed="false"><span class="theme-icon" aria-hidden="true">☾</span><span>Dark mode</span></button><a class="social-btn" href="https://www.facebook.com/share/1BznJkcQVk/" target="_blank" rel="noopener noreferrer" aria-label="Facebook" title="Facebook"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M13.5 21v-8h2.7l.4-3h-3.1V8.1c0-.87.24-1.46 1.5-1.46h1.7V4a20 20 0 0 0-2.48-.13c-2.45 0-4.12 1.5-4.12 4.24V10H7.3v3h2.8v8h3.4Z"/></svg></a><a class="social-btn" href="https://www.instagram.com/tonmoybelieve?stkn=bTFndTYzbGs3eXI5" target="_blank" rel="noopener noreferrer" aria-label="Instagram" title="Instagram"><svg viewBox="0 0 24 24" aria-hidden="true" fill="none"><rect x="3.5" y="3.5" width="17" height="17" rx="5" fill="none" stroke="currentColor" stroke-width="1.8"/><circle cx="12" cy="12" r="4" fill="none" stroke="currentColor" stroke-width="1.8"/><circle cx="17.4" cy="6.7" r="1.1" fill="currentColor" stroke="none"/></svg></a></div></header><div id="top-sentinel" aria-hidden="true"></div><div class="nav-bar"><div class="tabs"><button id="t-all">ALL</button><button id="t-watched" class="on">Watched</button><button id="t-watchlist">Watchlist</button></div><div class="nav-actions"><button id="suggestMeBtn" class="suggest-me-btn" type="button" aria-haspopup="dialog" aria-controls="suggestionsDialog"><span aria-hidden="true">✦</span> Suggest Me</button><button id="surprise" class="surprise nav-surprise" type="button" aria-label="Surprise Me" title="Open a random title">🎲 <span>Surprise Me</span></button></div></div><div class="stats-row"><div id="stats" class="stats" aria-label="Statistics"></div></div><div class="bar"><input id="q" type="search" placeholder="Search title, actor or director…" aria-label="Search"><div class="select-wrap"><button class="select-trigger" id="ge-trigger" type="button" aria-haspopup="listbox" aria-expanded="false">All genres <span>></span></button><div class="select-menu" id="ge-menu" role="listbox" aria-label="Genre"><button type="button" role="option" data-value="all" aria-selected="true">All genres</button></div></div><div class="select-wrap"><button class="select-trigger" id="so-trigger" type="button" aria-haspopup="listbox" aria-expanded="false">Newest first <span>></span></button><div class="select-menu" id="so-menu" role="listbox" aria-label="Sort"><button type="button" role="option" data-value="new" aria-selected="true">Newest first</button><button type="button" role="option" data-value="my">My rating</button><button type="button" role="option" data-value="im">IMDb rating</button><button type="button" role="option" data-value="yr">Release year</button><button type="button" role="option" data-value="az">Title (A–Z)</button></div></div><select id="ty" aria-hidden="true" tabindex="-1"><option value="all">All types</option><option value="movie">Movie</option><option value="tv">TV / Show</option></select><select id="ge" aria-hidden="true" tabindex="-1"><option value="all">All genres</option></select><select id="so" aria-hidden="true" tabindex="-1"><option value="new">Newest first</option><option value="my">My rating</option><option value="im">IMDb rating</option><option value="yr">Release year</option><option value="az">Title (A–Z)</option></select><div class="views" role="group" aria-label="View"><button id="v-grid" class="on" aria-label="Grid view" title="Grid view">▦</button><button id="v-list" aria-label="List view" title="List view">☷</button></div><div id="person-filter" class="person-filter-bar" aria-live="polite"><span id="person-filter-label"></span><button class="clear-person" id="clear-person" type="button" aria-label="Clear person filter">×</button></div></div><main id="g" aria-live="polite"></main><nav class="cineton-bottom-nav" aria-label="Primary navigation">
-  <button type="button" data-destination="all" class="is-active" aria-current="page">
+  <button type="button" data-destination="all">
     <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3.5 10.5 12 3.8l8.5 6.7v9a1 1 0 0 1-1 1h-5.2v-6.2H9.7v6.2H4.5a1 1 0 0 1-1-1z"/></svg><span>Home</span>
   </button>
-  <button type="button" data-destination="watched">
+  <button type="button" data-destination="watched" class="is-active" aria-current="page">
     <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="8.5"/><path d="m10 8.5 6 3.5-6 3.5z"/></svg><span>Watched</span>
   </button>
   <button type="button" data-destination="watchlist">
@@ -6452,6 +6452,7 @@ body.suggestions-modal-open .cineton-bottom-nav{opacity:0;pointer-events:none;tr
    b.classList.toggle('is-active',active);
    if(active)b.setAttribute('aria-current','page');else b.removeAttribute('aria-current');
  });
+ activate('watched');
  buttons.forEach(button=>button.addEventListener('click',()=>{
    const destination=button.dataset.destination;
    if(destination==='all'||destination==='watched'||destination==='watchlist'){
@@ -6459,7 +6460,7 @@ body.suggestions-modal-open .cineton-bottom-nav{opacity:0;pointer-events:none;tr
      activate(destination);
    }else if(destination==='rated'){
      if(typeof setStatFilter==='function')setStatFilter('rated');
-     activate('rated');
+     activate(typeof statFilter!=='undefined'&&statFilter==='rated'?'rated':(typeof tab!=='undefined'?tab:'watched'));
    }else if(destination==='discover'){
      activate('discover');
      const search=document.getElementById('q');
