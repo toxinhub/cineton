@@ -6459,8 +6459,13 @@ body.suggestions-modal-open .cineton-bottom-nav{opacity:0;pointer-events:none;tr
      document.getElementById('t-'+destination)?.click();
      activate(destination);
    }else if(destination==='rated'){
-     if(typeof setStatFilter==='function')setStatFilter('rated');
-     activate(typeof statFilter!=='undefined'&&statFilter==='rated'?'rated':(typeof tab!=='undefined'?tab:'watched'));
+     if(typeof setStatFilter==='function'){
+       if(typeof statFilter==='undefined'||statFilter!=='rated'||typeof tab==='undefined'||tab!=='watched'){
+         document.getElementById('t-watched')?.click();
+       }
+       setStatFilter('rated');
+       activate(typeof statFilter!=='undefined'&&statFilter==='rated'?'rated':'watched');
+     }
    }else if(destination==='discover'){
      activate('discover');
      const search=document.getElementById('q');
