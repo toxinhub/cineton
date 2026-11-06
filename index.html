@@ -6071,4 +6071,113 @@ html body #g .c .bd{background:#f8f0e5e8!important;color:#77552d!important;borde
 @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto!important}}
 </style>
 
+
+<style id="cineton-editorial-typography-v3">
+/* Editorial typography refinement: clearer hierarchy, calmer spacing, stronger readability. */
+:root{
+  --ct-type-ink:#30251d;
+  --ct-type-muted:#6e5c4b;
+  --ct-type-accent:#805d37;
+}
+html,body{
+  font-family:"Manrope",system-ui,sans-serif!important;
+  font-kerning:normal;
+  font-optical-sizing:auto;
+  text-rendering:optimizeLegibility;
+  -webkit-font-smoothing:antialiased;
+  -moz-osx-font-smoothing:grayscale;
+}
+body{font-size:14px!important;line-height:1.68!important;letter-spacing:-.012em!important}
+header h1{
+  font-family:"DM Serif Display","Cormorant Garamond",Georgia,serif!important;
+  font-weight:400!important;
+  letter-spacing:-.045em!important;
+  line-height:.98!important;
+  text-wrap:balance;
+}
+header:before{
+  font-size:.62rem!important;
+  letter-spacing:.2em!important;
+  font-weight:800!important;
+}
+header .sub{
+  font-family:"Cormorant Garamond",Georgia,serif!important;
+  font-size:clamp(1.02rem,1.6vw,1.22rem)!important;
+  line-height:1.48!important;
+  letter-spacing:.005em!important;
+}
+.stat,.bar :is(button,input,select),.select-menu button{
+  font-family:"Manrope",sans-serif!important;
+  font-variant-numeric:tabular-nums;
+}
+.stat{font-size:.69rem!important;letter-spacing:.005em!important}
+.tabs button{font-size:.72rem!important;letter-spacing:.055em!important}
+html body #g .c .ci b{
+  font-family:"Manrope",sans-serif!important;
+  font-size:.84rem!important;
+  line-height:1.48!important;
+  font-weight:700!important;
+  letter-spacing:-.028em!important;
+  text-wrap:pretty;
+}
+html body #g .c .ci small{
+  font-size:.68rem!important;
+  line-height:1.55!important;
+  letter-spacing:.005em!important;
+}
+html body #g .c .bd,html body #g .c .rv,html body #g .c .my-rating{
+  font-variant-numeric:tabular-nums;
+  letter-spacing:.025em!important;
+}
+.cinemodal h2{
+  font-family:"DM Serif Display","Cormorant Garamond",Georgia,serif!important;
+  font-size:clamp(2.25rem,4.6vw,3.15rem)!important;
+  font-weight:400!important;
+  line-height:1.02!important;
+  letter-spacing:-.035em!important;
+  text-wrap:balance;
+}
+.cinemodal .subline{
+  font-size:.76rem!important;
+  line-height:1.65!important;
+  letter-spacing:.005em!important;
+}
+.cinemodal .detail-label{
+  font-size:.59rem!important;
+  font-weight:800!important;
+  letter-spacing:.16em!important;
+  line-height:1.5!important;
+}
+.cinemodal .detail-value,.cinemodal .cm.modal-wide{
+  font-size:.82rem!important;
+  line-height:1.78!important;
+  letter-spacing:-.008em!important;
+}
+.cinemodal .chips span{
+  font-size:.65rem!important;
+  font-weight:650!important;
+  letter-spacing:.01em!important;
+}
+.public-comments-head{letter-spacing:.075em!important}
+.public-comment,.public-comment-composer :is(input,textarea){
+  font-size:.78rem!important;
+  line-height:1.7!important;
+}
+input,textarea,select,button{font-family:"Manrope",sans-serif}
+input,textarea{letter-spacing:-.008em}
+@media(max-width:700px){
+  body{font-size:13px!important;line-height:1.65!important}
+  header h1{letter-spacing:-.04em!important}
+  header .sub{font-size:1.02rem!important;line-height:1.48!important}
+  html body #g .c .ci b{font-size:.78rem!important;line-height:1.46!important}
+  html body #g .c .ci small{font-size:.63rem!important;line-height:1.5!important}
+  .cinemodal h2{font-size:clamp(1.8rem,7.2vw,2.35rem)!important}
+  .cinemodal .detail-value,.cinemodal .cm.modal-wide{font-size:.78rem!important;line-height:1.72!important}
+  .public-comment,.public-comment-composer :is(input,textarea){font-size:.72rem!important;line-height:1.65!important}
+}
+@media(prefers-reduced-motion:reduce){
+  html{scroll-behavior:auto!important}
+}
+</style>
+
 </body></html>
