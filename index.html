@@ -6007,4 +6007,68 @@ button:focus-visible,a:focus-visible,input:focus-visible,select:focus-visible,te
 }
 </style>
 
+
+<style id="cineton-light-background-fix-v1">
+/* Restore CineTon's warm light canvas and readable light surfaces. */
+:root{
+  --bg:#f4ecdf!important;--sf:#fbf6ed!important;--tx:#2f241b!important;
+  --mu:#58483a!important;--ac:#77583b!important;--gd:#77552d!important;
+  --line:#6b51321a!important;--line-strong:#6b51322b!important;
+  --modal:#f8f0e5!important;--modal-overlay:#f8f0e5f0!important;
+  --modal-backdrop:#40352c45!important;--modal-shadow:#40352c26!important;
+  color-scheme:light!important;
+}
+html,body{background-color:#f4ecdf!important;color:#2f241b!important}
+body{
+  background-image:radial-gradient(ellipse at 50% 0%,#fffaf2 0%,#f4ecdf 72%)!important;
+  background-attachment:fixed!important;
+}
+header{border-bottom-color:var(--line)!important}
+header h1{color:#2f241b!important}
+header:before{color:#8a6843!important}
+header .sub{color:#58483a!important}
+.stat{background:#fbf6ed!important;color:#58483a!important;border-color:#6b51322b!important}
+.stat b{color:#2f241b!important}
+.stat:hover,.stat:focus-visible,.stat.active{background:#eee3d3!important;color:#2f241b!important;border-color:#b18a5a!important}
+.bar{background:#f4ecdfed!important;border-color:#6b51321a!important;box-shadow:0 8px 24px #5b422510!important}
+.bar button,.toolbar button,.filters button,.filter button,.select-menu button,
+.pagination button,.tab,.chip,.filter-chip{
+  background:#fbf6ed!important;color:#49382b!important;border-color:#6b51322b!important;
+}
+:is(.bar button,.toolbar button,.filters button,.filter button,.select-menu button,
+.pagination button,.tab,.chip,.filter-chip):hover{
+  background:#eee3d3!important;color:#2f241b!important;border-color:#b18a5a!important;
+}
+:is(.bar button,.toolbar button,.filters button,.filter button,.select-menu button,
+.pagination button,.tab,.chip,.filter-chip).active,
+:is(.bar button,.toolbar button,.filters button,.filter button,.select-menu button,
+.pagination button,.tab,.chip,.filter-chip)[aria-pressed="true"]{
+  background:#77583b!important;border-color:#77583b!important;color:#fffaf2!important;
+}
+.bar input,input,textarea,select{
+  background:#fffaf2!important;color:#2f241b!important;border-color:#b9a58b!important;
+}
+.bar input::placeholder,input::placeholder,textarea::placeholder{color:#796958!important}
+html body #g .c{
+  background:#fbf6ed!important;color:#2f241b!important;border-color:#6b51322b!important;
+  box-shadow:0 6px 20px #5b422514!important;
+}
+html body #g .c .ci{background:#fbf6ed!important;color:#2f241b!important}
+html body #g .c .ci b{color:#2f241b!important}
+html body #g .c .ci small{color:#655544!important}
+html body #g .c:hover{border-color:#b18a5a!important;box-shadow:0 12px 28px #5b42251f!important}
+html body #g .c .bd{background:#f8f0e5e8!important;color:#77552d!important;border-color:#b18a5a!important;text-shadow:none!important}
+.rv{background:#77583b!important;color:#fffaf2!important}
+.my-rating{color:#77552d!important}
+.cinemodal{background:#f8f0e5!important;color:#2f241b!important;border-color:#b9a58b!important}
+.cinemodal::after{background:#f8f0e5ed!important}
+.cinemodal .chips span{background:#eee3d3!important;border-color:#d8c8ae!important;color:#58483a!important}
+.cinemodal .subline,.cinemodal .detail-label,.cinemodal .modal-footer{color:#655544!important}
+.suggestions-dialog{background:#fbf6ed!important;color:#2f241b!important;border-color:#b9a58b!important}
+.suggestions-dialog :is(h1,h2,h3,p,label,small,span,.suggestions-title,
+.suggestions-sub,.suggestion-note,.suggestion-empty,.suggestion-date,
+.suggestion-number,.suggestion-title-text,.suggestion-time,.suggestion-message){color:#2f241b!important}
+@media(prefers-reduced-motion:reduce){html{scroll-behavior:auto!important}}
+</style>
+
 </body></html>
