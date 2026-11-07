@@ -706,7 +706,7 @@ dialog.admin-modal .imdb-random-result{gap:12px}
 <details class="backup-box" id="backupTools">
 <summary><span>Backup &amp; Restore</span><small>Library JSON</small></summary>
 <div class="backup-content">
-<div class="backup-actions"><button id="exportBackupBtn" class="btn" type="button">Export Backup</button><label class="btn secondary backup-file-label" for="importBackupFile">Import Backup</label><input id="importBackupFile" type="file" accept=".json,application/json" hidden></div>
+<div class="backup-actions"><button id="scanAttentionBtn" class="btn secondary" type="button">Check library</button><button id="exportBackupBtn" class="btn" type="button">Export Backup</button><label class="btn secondary backup-file-label" for="importBackupFile">Import Backup</label><input id="importBackupFile" type="file" accept=".json,application/json" hidden></div>
 <div id="backupPreview" class="message hidden"></div><div id="backupMsg" class="message hidden"></div>
 <div class="hint backup-note">Library data only. Public Comments are stored separately.</div>
 </div>
@@ -1435,6 +1435,39 @@ async function editPublicComment(id){const row=document.querySelector('.public-a
 $('#publicCommentsDeleteSelected').onclick=async()=>{const ids=selectedPublicCommentIds();if(!ids.length)return;if(!confirm('Warning: '+ids.length+' selected public comment'+(ids.length===1?'':'s')+' will be permanently deleted. Continue?'))return;if(!confirm('Are you sure? This action cannot be undone.'))return;const btn=$('#publicCommentsDeleteSelected'),token=$('#tok').value.trim(),msg=$('#publicCommentsMsg');if(!token){msg.textContent='Connect GitHub first so the delete can be authorized.';msg.className='message error';return}btn.disabled=true;try{for(const id of ids){const r=await fetch(PUBLIC_COMMENTS_FN,{method:'DELETE',headers:{apikey:PUBLIC_COMMENTS_KEY,'Content-Type':'application/json','x-github-token':token},body:JSON.stringify({id})});if(!r.ok)throw Error('One or more comments could not be deleted.')}await loadPublicCommentsAdmin()}catch(e){msg.textContent=e.message||'Bulk delete failed.';msg.className='message error';updatePublicSelection()}finally{btn.disabled=false;updatePublicSelection()}};
 async function deletePublicComment(id){if(!confirm('Warning: This public comment will be permanently deleted. Continue?'))return;if(!confirm('Are you sure? This action cannot be undone.'))return;const msg=$('#publicCommentsMsg'),token=$('#tok').value.trim();if(!token){msg.textContent='Connect GitHub first so the delete can be authorized.';msg.className='message error';return}try{const r=await fetch(PUBLIC_COMMENTS_FN,{method:'DELETE',headers:{apikey:PUBLIC_COMMENTS_KEY,'Content-Type':'application/json','x-github-token':token},body:JSON.stringify({id})});if(!r.ok)throw Error('Delete was not authorized.');await loadPublicCommentsAdmin()}catch(e){msg.textContent=e.message||'Delete failed.';msg.className='message error'}}
 $('#publicCommentsSearch')?.addEventListener('input',loadPublicCommentsAdmin);
+function libraryHealthScan(){
+ const rows=Array.isArray(data)?data:[],seen=new Map(),integrity=[],issues=[];
+ const add=(index,item,reason,critical=false)=>{let row=integrity.find(x=>x.index===index);if(!row){row={index,title:String(item?.title||'Untitled'),id:String(item?.id||''),reasons:[],critical:false};integrity.push(row)}row.reasons.push(reason);row.critical=row.critical||critical};
+ rows.forEach((m,index)=>{
+  if(!m||typeof m!=='object'||Array.isArray(m)){add(index,{},'Invalid record',true);return}
+  const id=String(m.id||'').trim(),type=String(m.type||'').toLowerCase(),status=String(m.status||'').toLowerCase();
+  if(!id)add(index,m,'Missing ID',true);
+  else if(seen.has(id)){add(index,m,'Duplicate ID',true);add(seen.get(id),rows[seen.get(id)],'Duplicate ID',true)}
+  else seen.set(id,index);
+  if(!['movie','tv'].includes(type))add(index,m,'Invalid type',true);
+  if(!['watched','watchlist'].includes(status))add(index,m,'Invalid status',true);
+  if(id&&['movie','tv'].includes(type)&&!id.startsWith(type+'-'))add(index,m,'ID/type mismatch',true);
+  if(m.my_rating!==undefined&&m.my_rating!==null&&m.my_rating!==''&&(!Number.isFinite(Number(m.my_rating))||Number(m.my_rating)<0||Number(m.my_rating)>10))add(index,m,'Invalid rating',true);
+  if(!String(m.title||'').trim())add(index,m,'Missing title',true);
+  if(m.year&&!/^\\d{4}$/.test(String(m.year)))add(index,m,'Unusual year',false);
+  if(m.poster&&typeof m.poster!=='string')add(index,m,'Invalid poster path',false);
+  if(!Array.isArray(m.genres))add(index,m,'Genres field is not an array',false);
+  if(m.watched_on&&Number.isNaN(Date.parse(m.watched_on)))add(index,m,'Invalid watched date',false);
+ });
+ integrity.forEach(x=>x.reasons.forEach(reason=>{if(!x.critical)issues.push({index:x.index,title:x.title,reason})}));
+ return {total:rows.length,integrity,issues,critical:integrity.filter(x=>x.critical)};
+}
+function runHealthScan(){
+ const result=libraryHealthScan(),msg=$('#backupMsg'),preview=$('#backupPreview');
+ const critical=result.critical.length,attention=result.integrity.length-critical;
+ msg.textContent='Library check · '+result.total+' titles · '+critical+' critical · '+attention+' attention';
+ msg.className='message '+(critical?'error':attention?'':'ok');
+ preview.textContent=critical
+  ?result.critical.slice(0,8).map(x=>'#'+(x.index+1)+' '+x.title+': '+x.reasons.join(', ')).join(' · ')
+  :attention?result.issues.slice(0,8).map(x=>'#'+(x.index+1)+' '+x.title+': '+x.reason).join(' · ')
+  :'No data integrity issues found.';
+ preview.className='message';
+}
 function exportLibraryBackup(){
  if(!Array.isArray(data)||!data.length)return alert('There is no library data to export.');
  const payload={format:'cineton-library-backup',version:1,exported_at:new Date().toISOString(),title_count:data.length,data};
@@ -1442,13 +1475,13 @@ function exportLibraryBackup(){
  a.href=url;a.download='cineton-library-backup-'+new Date().toISOString().slice(0,10)+'.json';document.body.appendChild(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(url),1000);
  $('#backupMsg').textContent='✓ Backup exported · '+data.length+' titles';$('#backupMsg').className='message ok';
 }
-$('#scanAttentionBtn').onclick=runHealthScan;$('#integrityBtn').onclick=runHealthScan;$('#exportBackupBtn').onclick=exportLibraryBackup;
+$('#scanAttentionBtn')?.addEventListener('click',runHealthScan);$('#exportBackupBtn')?.addEventListener('click',exportLibraryBackup);
 $('#importBackupFile').onchange=async e=>{
  const file=e.target.files?.[0];if(!file)return;const preview=$('#backupPreview'),msg=$('#backupMsg');preview.className='message';msg.className='message hidden';preview.textContent='Reading backup…';
  try{
   const parsed=JSON.parse(await file.text()),incoming=Array.isArray(parsed)?parsed:parsed?.data;if(!Array.isArray(incoming)||!incoming.length)throw Error('This is not a valid CineTon library backup.');
   const old=data;data=incoming;const check=libraryHealthScan();data=old;
-  const critical=check.integrity.filter(x=>x.reasons.some(v=>['Missing ID','Invalid type','Invalid status','ID/type mismatch','Invalid rating'].includes(v)));
+  const critical=check.integrity.filter(x=>x.reasons.some(v=>['Missing ID','Duplicate ID','Invalid record','Missing title','Invalid type','Invalid status','ID/type mismatch','Invalid rating'].includes(v)));
   preview.innerHTML='<strong>'+esc(file.name)+'</strong> · '+incoming.length+' titles'+(critical.length?' · '+critical.length+' critical issue'+(critical.length===1?'':'s'):' · validation passed')+(check.issues.length?' · '+check.issues.length+' attention item'+(check.issues.length===1?'':'s'):'');
   if(critical.length)throw Error('Backup contains '+critical.length+' critical data issue'+(critical.length===1?'':'s')+'.');
   if(!fileSha)throw Error('Connect GitHub before restoring a backup.');
