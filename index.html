@@ -1901,42 +1901,42 @@ function cinetonEnsureVeil(){
 }
 async function cinetonPosterTransition(direction,sourcePoster,openingRect=null){
   const opening=direction==='open';
-  const duration=cinetonMotionReduced()?110:cinetonMotionDuration(direction);
-  const ease=opening?'cubic-bezier(0.16, 1, 0.3, 1)':'cubic-bezier(0.4, 0, 0.2, 1)';
+  const mobile=window.matchMedia('(max-width:640px)').matches;
+  const duration=cinetonMotionReduced()?1:cinetonMotionDuration(direction);
+  const ease=opening?'cubic-bezier(0.2, 0.75, 0.25, 1)':'cubic-bezier(0.4, 0, 0.2, 1)';
+  /* On phones animate the modal's scrolling content for exit; this avoids dialog
+     transform conflicts with native top-layer rendering and keeps the close visible. */
+  const motionTarget=(!opening&&mobile)?(d.querySelector('.m')||d):d;
   let animation=null;
   try{
-    if(typeof d.animate!=='function')throw new Error('Web Animations API is unavailable');
-    d.style.willChange='transform,opacity';
-    /* Animate the dialog as one unit: no poster-sized FLIP distortion or separate poster reveal. */
-    /* Keep the travel short on phones: the previous 52px movement felt heavy. */
-    const mobile=window.matchMedia('(max-width:640px)').matches;
-    const distance=mobile?26:52;
+    if(typeof motionTarget.animate!=='function')throw new Error('Web Animations API is unavailable');
+    motionTarget.style.willChange='transform,opacity';
+    const distance=mobile?22:44;
     const frames=opening
       ?[{transform:'translate3d(0, '+distance+'px, 0)',opacity:0},{transform:'translate3d(0, 0, 0)',opacity:1}]
       :[{transform:'translate3d(0, 0, 0)',opacity:1},{transform:'translate3d(0, '+distance+'px, 0)',opacity:0}];
-    animation=d.animate(frames,{duration,easing:opening?'cubic-bezier(0.2, 0.75, 0.25, 1)':'cubic-bezier(0.4, 0, 0.2, 1)',fill:'both'});
+    animation=motionTarget.animate(frames,{duration,easing,fill:'both'});
     await animation.finished;
-    /* WAAPI's finished promise can resolve before the final frame is composited.
-       Give the closing frame a paint opportunity before removing the dialog top layer. */
     if(!opening)await new Promise(resolve=>requestAnimationFrame(()=>requestAnimationFrame(resolve)));
     return true;
   }catch(error){
     console.info('Cineton modal transition fallback:',error);
     try{
-      const fade=d.animate(opening?[{opacity:0,transform:'translate3d(0, 52px, 0)'},{opacity:1,transform:'translate3d(0, 0, 0)'}]:[{opacity:1,transform:'translate3d(0, 0, 0)'},{opacity:0,transform:'translate3d(0, 52px, 0)'}],{duration,easing:ease,fill:'both'});
-      await fade.finished;
+      const fallbackTarget=motionTarget;
+      const fallback=fallbackTarget.animate(opening?[{opacity:0,transform:'translate3d(0, 44px, 0)'},{opacity:1,transform:'translate3d(0, 0, 0)'}]:[{opacity:1,transform:'translate3d(0, 0, 0)'},{opacity:0,transform:'translate3d(0, 44px, 0)'}],{duration,easing,fill:'both'});
+      await fallback.finished;
+      if(!opening)await new Promise(resolve=>requestAnimationFrame(()=>requestAnimationFrame(resolve)));
       return true;
     }catch(fallbackError){
       console.info('Cineton modal fallback failed:',fallbackError);
       return false;
     }
   }finally{
-    d.style.removeProperty('will-change');
-    /* Opening can clean up immediately; closing keeps its final frame until dialog.close(). */
+    motionTarget.style.removeProperty('will-change');
     if(opening){
       try{animation?.cancel()}catch{}
-      d.style.removeProperty('transform');
-      d.style.removeProperty('opacity');
+      motionTarget.style.removeProperty('transform');
+      motionTarget.style.removeProperty('opacity');
     }
   }
 }
@@ -1954,8 +1954,9 @@ async function closeCinetonModal(){
     const animated=await cinetonPosterTransition('close',sourcePoster);
     if(!animated){d.style.removeProperty('transform');d.style.removeProperty('opacity')}
     d.close();
-    /* Remove the finished WAAPI effect only after the dialog leaves the top layer, avoiding a close-frame snap. */
+    /* Remove finished WAAPI effects only after the dialog leaves the top layer. */
     d.getAnimations({subtree:true}).forEach(animation=>{try{animation.cancel()}catch{}});
+    d.querySelector('.m')?.getAnimations().forEach(animation=>{try{animation.cancel()}catch{}});
     d.style.removeProperty('transform');d.style.removeProperty('opacity');d.style.removeProperty('will-change');
   }finally{
     const sourceId=d.dataset.sourceMovieId;
@@ -9888,3 +9889,43 @@ html body main#g .c>img{
 }
 </style>
 </body></html>
+
+<style id="cineton-modal-scroll-performance-v36">
+/* Faster, consistent modal motion. Keep the phone exit animation on modal content. */
+:root{--open-ms:245;--close-ms:225}
+@media(max-width:640px){
+  :root{--open-ms:135;--close-ms:205}
+}
+.suggestions-dialog[open]{
+  transition-duration:245ms,245ms,245ms,245ms!important;
+  transition-timing-function:cubic-bezier(.2,.75,.25,1),cubic-bezier(.2,.75,.25,1),ease,ease!important;
+}
+.suggestions-dialog.is-closing{
+  transition-duration:225ms,225ms,225ms,225ms!important;
+  transition-timing-function:cubic-bezier(.4,0,.2,1),cubic-bezier(.4,0,.2,1),ease,ease!important;
+}
+@media(max-width:640px){
+  .suggestions-dialog[open]{transition-duration:175ms,175ms,175ms,175ms!important}
+  .suggestions-dialog.is-closing{transition-duration:195ms,195ms,195ms,195ms!important}
+}
+@media(prefers-reduced-motion:reduce){
+  .suggestions-dialog,.suggestions-dialog::backdrop{transition-duration:1ms!important}
+}
+
+/* Let the browser skip painting far-off poster cards until they approach the viewport. */
+html body main#g .c{
+  content-visibility:auto!important;
+  contain-intrinsic-size:auto 370px;
+}
+@media(max-width:700px){
+  html body main#g .c{contain-intrinsic-size:auto 315px}
+  /* The sticky search strip's backdrop filter is costly during continuous touch scroll. */
+  html body .bar{
+    -webkit-backdrop-filter:none!important;
+    backdrop-filter:none!important;
+  }
+}
+@media(prefers-reduced-motion:reduce){
+  html body main#g .c{content-visibility:visible!important}
+}
+</style>
