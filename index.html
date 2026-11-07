@@ -6526,7 +6526,7 @@ let opened='';
 const activate=n=>btns.forEach(b=>{let on=b.dataset.destination===n;b.classList.toggle('is-active',on);if(on)b.setAttribute('aria-current','page');else b.removeAttribute('aria-current')});
 const close=()=>{opened='';panel.hidden=true;menu.hidden=true;panel.classList.remove('is-open');menu.classList.remove('is-open');btns.forEach(b=>b.setAttribute('aria-expanded','false'))};
 const syncGenres=()=>{let keep=genre.value;genre.innerHTML='<option value="all">All genres</option>';[...document.getElementById('ge').options].forEach(o=>{if(o.value!=='all')genre.add(new Option(o.textContent,o.value))});genre.value=[...genre.options].some(o=>o.value===keep)?keep:(document.getElementById('ge').value||'all')};
-const open=n=>{if(opened===n){close();return}close();opened=n;let el=n==='discover'?panel:menu;el.hidden=false;requestAnimationFrame(()=>el.classList.add('is-open'));dock.querySelector('[data-destination="'+n+'"]')?.setAttribute('aria-expanded','true');if(n==='discover'){syncGenres();search.value=q.value;scope.value=window.cinetonSearchScope||'all';type.value=(typeof statFilter!=='undefined'&&(statFilter==='movie'||statFilter==='tv'))?statFilter:'all';requestAnimationFrame(()=>search.focus({preventScroll:true}))}};
+const open=n=>{if(opened===n){close();return}close();opened=n;let el=n==='discover'?panel:menu;el.hidden=false;requestAnimationFrame(()=>el.classList.add('is-open'));dock.querySelector('[data-destination="'+n+'"]')?.setAttribute('aria-expanded','true');if(n==='discover'){syncGenres();search.value=q.value;scope.value=window.cinetonSearchScope||'all';type.value=(typeof statFilter!=='undefined'&&(statFilter==='movie'||statFilter==='tv'))?statFilter:'all';if(matchMedia('(min-width:701px) and (hover:hover)').matches)requestAnimationFrame(()=>search.focus({preventScroll:true}))}};
 const run=()=>{q.value=search.value;window.cinetonSearchScope=scope.value;if(typeof render==='function')render();document.getElementById('ct-discover-hint').textContent=search.value.trim()?'Filtered by '+scope.options[scope.selectedIndex].text:'Search your movies, series, cast and directors'};
 btns.forEach(b=>b.addEventListener('click',()=>{let n=b.dataset.destination;if(n==='home'){open('home');return}if(n==='discover'){activate(n);open(n);return}close();if(n==='watched'||n==='watchlist'){document.getElementById('t-'+n)?.click();activate(n)}else if(n==='rated'){if(typeof tab!=='undefined'&&tab!=='watched')document.getElementById('t-watched')?.click();if(typeof setStatFilter==='function')setStatFilter('rated');activate('rated')}}));
 menu.querySelectorAll('[data-home-filter]').forEach(b=>b.addEventListener('click',()=>{let f=b.dataset.homeFilter;close();document.getElementById('t-all')?.click();if(typeof setStatFilter==='function'){if(f==='movie'||f==='tv')setStatFilter(f);else if(typeof statFilter!=='undefined'&&statFilter!=='all')setStatFilter('all')}activate('home')}));
@@ -6540,24 +6540,25 @@ document.addEventListener('keydown',e=>{if(e.key==='Escape')close()});
 document.getElementById('q')?.addEventListener('input',()=>{if(search.value!==q.value)search.value=q.value});
 let lastY=window.scrollY,travel=0,direction=0,scrollRaf=0,hidden=false;
 const show=()=>{if(!hidden)return;hidden=false;dock.classList.remove('is-scroll-hidden')};
-const hide=()=>{if(hidden)return;hidden=true;if(opened)close();dock.classList.add('is-scroll-hidden')};
+const hide=()=>{if(hidden)return;hidden=true;dock.classList.add('is-scroll-hidden')};
 const update=()=>{
   scrollRaf=0;
   const y=Math.max(0,window.scrollY),delta=y-lastY;
   lastY=y;
-  if(y<64){travel=0;direction=0;show();return}
-  if(Math.abs(delta)<2)return;
+  if(opened){travel=0;direction=0;show();return}
+  if(y<72){travel=0;direction=0;show();return}
+  if(Math.abs(delta)<3)return;
   const nextDirection=delta>0?1:-1;
   if(nextDirection!==direction){direction=nextDirection;travel=0}
   travel+=Math.abs(delta);
-  if(direction===1&&y>120&&travel>=34)hide();
-  else if(direction===-1&&travel>=18)show();
+  if(direction===1&&y>140&&travel>=48)hide();
+  else if(direction===-1&&travel>=24)show();
 };
-addEventListener('scroll',()=>{
+window.addEventListener('scroll',()=>{
   if(reduce){lastY=window.scrollY;show();return}
   if(!scrollRaf)scrollRaf=requestAnimationFrame(update);
 },{passive:true});
-addEventListener('resize',()=>{lastY=window.scrollY;travel=0;direction=0;show()},{passive:true});
+window.addEventListener('resize',()=>{lastY=window.scrollY;travel=0;direction=0;show()},{passive:true});
 document.addEventListener('visibilitychange',()=>{if(!document.hidden){lastY=window.scrollY;travel=0;direction=0;show()}});
 document.addEventListener('click',e=>{if(e.target.closest('#cineton-bottom-nav button'))show()});
 activate('watched');window.cinetonOpenDiscover=()=>open('discover');window.cinetonCloseNavPanels=close;
@@ -9417,42 +9418,54 @@ html body .ct-discover-panel{
   }
 }
 </style>
-<style id="cineton-dock-background-fill-10-v22">
-/* Subtle 10% surface fill; preserve the transparent, borderless dock treatment. */
-html body .cineton-bottom-nav{
-  background:color-mix(in srgb,var(--sf) 10%,transparent)!important;
-  border-color:transparent!important;
-  box-shadow:none!important;
-  -webkit-backdrop-filter:none!important;
-  backdrop-filter:none!important;
-}
-html[data-theme="dark"] body .cineton-bottom-nav{
-  background:rgba(21,24,32,.10)!important;
-}
-html[data-theme="light"] body .cineton-bottom-nav{
-  background:rgba(255,250,242,.10)!important;
-}
-</style>
 
 
-<style id="cineton-dock-fill-30-light-glass-v23">
-/* 30% dock surface with a restrained, lightweight glass treatment. */
+
+
+
+
+
+
+
+<style id="cineton-liquid-glass-performance-v26">
+/* One authoritative dock surface layer; clear liquid glass with mobile-friendly compositing. */
 html body .cineton-bottom-nav{
-  background:color-mix(in srgb,var(--sf) 30%,transparent)!important;
-  border:1px solid color-mix(in srgb,var(--tx) 10%,transparent)!important;
-  -webkit-backdrop-filter:blur(14px) saturate(1.18)!important;
-  backdrop-filter:blur(14px) saturate(1.18)!important;
-  box-shadow:0 7px 22px rgba(0,0,0,.075),0 1px 0 rgba(255,255,255,.12) inset!important;
+  background:rgba(20,25,34,.085)!important;
+  border:1px solid rgba(255,255,255,.20)!important;
+  -webkit-backdrop-filter:blur(18px) saturate(1.32)!important;
+  backdrop-filter:blur(18px) saturate(1.32)!important;
+  box-shadow:0 9px 26px rgba(0,0,0,.11),0 1px 0 rgba(255,255,255,.22) inset!important;
+  transition:transform .28s cubic-bezier(.2,.75,.25,1),opacity .18s ease!important;
 }
 html[data-theme="dark"] body .cineton-bottom-nav{
-  background:rgba(21,24,32,.30)!important;
-  border-color:rgba(255,255,255,.10)!important;
-  box-shadow:0 8px 24px rgba(0,0,0,.14),0 1px 0 rgba(255,255,255,.09) inset!important;
+  background:rgba(15,20,29,.085)!important;
+  border-color:rgba(255,255,255,.18)!important;
 }
 html[data-theme="light"] body .cineton-bottom-nav{
-  background:rgba(255,250,242,.30)!important;
-  border-color:rgba(255,255,255,.34)!important;
-  box-shadow:0 7px 22px rgba(65,48,28,.065),0 1px 0 rgba(255,255,255,.38) inset!important;
+  background:rgba(255,250,242,.085)!important;
+  border-color:rgba(255,255,255,.38)!important;
+  box-shadow:0 8px 23px rgba(64,48,30,.075),0 1px 0 rgba(255,255,255,.45) inset!important;
+}
+html body .cineton-bottom-nav.is-scroll-hidden{
+  transform:translate3d(-50%,calc(100% + 16px),0)!important;
+  opacity:0!important;
+  pointer-events:none!important;
+}
+@media(max-width:700px){
+  html body .cineton-bottom-nav{
+    -webkit-backdrop-filter:blur(10px) saturate(1.12)!important;
+    backdrop-filter:blur(10px) saturate(1.12)!important;
+    box-shadow:0 6px 17px rgba(0,0,0,.09),0 1px 0 rgba(255,255,255,.19) inset!important;
+    transition:transform .27s cubic-bezier(.2,.75,.25,1),opacity .16s ease!important;
+  }
+  html[data-theme="light"] body .cineton-bottom-nav{
+    box-shadow:0 5px 16px rgba(64,48,30,.065),0 1px 0 rgba(255,255,255,.40) inset!important;
+  }
+}
+@supports not ((backdrop-filter:blur(1px)) or (-webkit-backdrop-filter:blur(1px))){
+  html body .cineton-bottom-nav{
+    background:color-mix(in srgb,var(--sf) 86%,transparent)!important;
+  }
 }
 @media(prefers-reduced-transparency:reduce){
   html body .cineton-bottom-nav{
@@ -9461,77 +9474,8 @@ html[data-theme="light"] body .cineton-bottom-nav{
     backdrop-filter:none!important;
   }
 }
-</style>
-
-
-<style id="cineton-dock-background-fill-20-v24">
-/* Set the dock surface to 20%; retain the existing light-glass treatment. */
-html body .cineton-bottom-nav{
-  background:color-mix(in srgb,var(--sf) 20%,transparent)!important;
-}
-html[data-theme="dark"] body .cineton-bottom-nav{
-  background:rgba(21,24,32,.20)!important;
-}
-html[data-theme="light"] body .cineton-bottom-nav{
-  background:rgba(255,250,242,.20)!important;
-}
-@media(prefers-reduced-transparency:reduce){
-  html body .cineton-bottom-nav{
-    background:color-mix(in srgb,var(--sf) 88%,transparent)!important;
-  }
-}
-</style>
-
-
-<style id="cineton-liquid-glass-smooth-dock-v25">
-/* Transparent liquid-glass dock: clear enough to see the page through it. */
-html body .cineton-bottom-nav{
-  background:rgba(20,25,34,.10)!important;
-  border:1px solid rgba(255,255,255,.20)!important;
-  -webkit-backdrop-filter:blur(22px) saturate(1.45)!important;
-  backdrop-filter:blur(22px) saturate(1.45)!important;
-  box-shadow:0 10px 30px rgba(0,0,0,.12),0 1px 0 rgba(255,255,255,.24) inset!important;
-  transition:transform .30s cubic-bezier(.2,.78,.22,1),opacity .18s ease!important;
-  will-change:transform,opacity;
-}
-html[data-theme="light"] body .cineton-bottom-nav{
-  background:rgba(255,250,242,.10)!important;
-  border-color:rgba(255,255,255,.38)!important;
-  box-shadow:0 9px 26px rgba(64,48,30,.09),0 1px 0 rgba(255,255,255,.48) inset!important;
-}
-html[data-theme="dark"] body .cineton-bottom-nav{
-  background:rgba(15,20,29,.10)!important;
-  border-color:rgba(255,255,255,.18)!important;
-}
-html body .cineton-bottom-nav.is-scroll-hidden{
-  transform:translate3d(-50%,calc(100% + 18px),0)!important;
-  opacity:0!important;
-  pointer-events:none!important;
-}
-@media(max-width:700px){
-  html body .cineton-bottom-nav{
-    background:rgba(19,24,33,.085)!important;
-    -webkit-backdrop-filter:blur(13px) saturate(1.22)!important;
-    backdrop-filter:blur(13px) saturate(1.22)!important;
-    box-shadow:0 7px 20px rgba(0,0,0,.10),0 1px 0 rgba(255,255,255,.20) inset!important;
-    transition:transform .32s cubic-bezier(.18,.82,.22,1),opacity .16s linear!important;
-  }
-  html[data-theme="light"] body .cineton-bottom-nav{
-    background:rgba(255,250,242,.09)!important;
-    box-shadow:0 6px 18px rgba(64,48,30,.07),0 1px 0 rgba(255,255,255,.40) inset!important;
-  }
-  html body .cineton-bottom-nav.is-scroll-hidden{
-    transform:translate3d(-50%,calc(100% + 14px),0)!important;
-  }
-}
-@media(prefers-reduced-transparency:reduce){
-  html body .cineton-bottom-nav{
-    background:color-mix(in srgb,var(--sf) 88%,transparent)!important;
-    -webkit-backdrop-filter:none!important;backdrop-filter:none!important;
-  }
-}
 @media(prefers-reduced-motion:reduce){
-  html body .cineton-bottom-nav{transition:none!important;will-change:auto}
+  html body .cineton-bottom-nav{transition:none!important}
 }
 </style>
 
