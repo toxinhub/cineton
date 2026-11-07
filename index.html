@@ -3287,29 +3287,6 @@ update();
     });
   };
 
-  const wirePoster=()=>{
-    document.querySelectorAll(".cinemodal .modal-top .poster-wrap img").forEach(img=>{
-      if(img.dataset.publicRatingWired==="true")return;
-      const dialog=img.closest(".cinemodal");
-      if(!dialog)return;
-      img.dataset.publicRatingWired="true";
-      img.setAttribute("role","button");
-      img.setAttribute("tabindex","0");
-      img.setAttribute("aria-label","Open public rating");
-      const open=()=>{
-        const mediaId=dialog.dataset.sourceMovieId;
-        if(mediaId)openRatingLayer(dialog,mediaId);
-      };
-      img.addEventListener("click",open);
-      img.addEventListener("keydown",ev=>{
-        if(ev.key==="Enter"||ev.key===" "){
-          ev.preventDefault();
-          open();
-        }
-      });
-    });
-  };
-
   document.addEventListener("click",ev=>{
     const dialog=ev.target.closest(".cinemodal");
     if(!dialog)return;
