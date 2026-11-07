@@ -8768,3 +8768,95 @@ html body .bar>input#q::-ms-clear{display:none!important;width:0!important;heigh
    markup or event handlers, so it can be restored cleanly later. */
 html body .bar{display:none!important}
 </style>
+
+
+<style id="cineton-fluid-content-width-responsive-v11">
+/* Responsive content canvas: consistent alignment and viewport-aware gutters. */
+html body header,
+html body .nav-bar,
+html body .stats-row,
+html body main#g {
+  box-sizing:border-box!important;
+}
+html body header,
+html body .nav-bar,
+html body .stats-row {
+  width:100%!important;
+  max-width:1800px!important;
+  margin-left:auto!important;
+  margin-right:auto!important;
+}
+html body main#g {
+  width:100%!important;
+  max-width:1800px!important;
+  margin-left:auto!important;
+  margin-right:auto!important;
+  box-sizing:border-box!important;
+}
+@media (min-width:1201px) {
+  html body header,
+  html body .nav-bar,
+  html body .stats-row,
+  html body main#g {
+    padding-left:clamp(24px,3vw,52px)!important;
+    padding-right:clamp(24px,3vw,52px)!important;
+  }
+  html body main#g:not(.list) {
+    grid-template-columns:repeat(auto-fill,minmax(clamp(176px,11.5vw,205px),1fr))!important;
+    gap:clamp(12px,1vw,17px)!important;
+    padding-top:16px!important;
+    padding-bottom:54px!important;
+  }
+  html body main#g.list {
+    max-width:1560px!important;
+    gap:9px!important;
+    padding-top:14px!important;
+    padding-bottom:50px!important;
+  }
+}
+@media (min-width:601px) and (max-width:1200px) {
+  html body header,
+  html body .nav-bar,
+  html body .stats-row,
+  html body main#g {
+    padding-left:clamp(14px,2.2vw,28px)!important;
+    padding-right:clamp(14px,2.2vw,28px)!important;
+  }
+  html body main#g:not(.list) {
+    grid-template-columns:repeat(auto-fill,minmax(160px,1fr))!important;
+    gap:clamp(10px,1.2vw,14px)!important;
+    padding-top:14px!important;
+    padding-bottom:48px!important;
+  }
+  html body main#g.list {
+    gap:8px!important;
+    padding-top:14px!important;
+    padding-bottom:48px!important;
+  }
+}
+@media (max-width:600px) {
+  html body header,
+  html body .nav-bar,
+  html body .stats-row {
+    width:100%!important;
+    max-width:none!important;
+    padding-left:12px!important;
+    padding-right:12px!important;
+  }
+  html body main#g {
+    width:100%!important;
+    max-width:none!important;
+    margin:0!important;
+    padding-left:clamp(9px,2.7vw,14px)!important;
+    padding-right:clamp(9px,2.7vw,14px)!important;
+    padding-top:12px!important;
+    padding-bottom:46px!important;
+    grid-template-columns:repeat(2,minmax(0,1fr))!important;
+    gap:10px clamp(8px,2.2vw,11px)!important;
+  }
+  html body main#g.list {
+    grid-template-columns:minmax(0,1fr)!important;
+    gap:8px!important;
+  }
+}
+</style>
