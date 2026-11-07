@@ -7481,3 +7481,53 @@ html[data-theme="light"] .cinemodal .chips .imdb-chip{
   #cineton-featured .cineton-featured-overview{-webkit-line-clamp:1!important}
 }
 </style>
+
+
+<style id="cineton-featured-full-card-poster-v1">
+/* Full-bleed featured poster: image covers the entire card, copy sits above a cinematic lower gradient. */
+#cineton-featured.cineton-featured{
+  position:relative!important;isolation:isolate!important;display:flex!important;
+  align-items:flex-end!important;min-height:340px!important;padding:30px!important;
+  overflow:hidden!important;background:#11141b!important;
+}
+#cineton-featured .cineton-featured-art{
+  position:absolute!important;inset:0!important;z-index:0!important;display:block!important;
+  width:100%!important;height:100%!important;opacity:1!important;overflow:hidden!important;
+  background:#11141b!important;
+}
+#cineton-featured .cineton-featured-art img{
+  display:block!important;width:100%!important;height:100%!important;
+  max-width:none!important;max-height:none!important;object-fit:cover!important;
+  object-position:center 24%!important;border:0!important;border-radius:0!important;
+  box-shadow:none!important;filter:saturate(.9)!important;transform:none!important;mask-image:none!important;
+}
+#cineton-featured:before{
+  content:""!important;position:absolute!important;inset:0!important;z-index:1!important;
+  pointer-events:none!important;
+  background:linear-gradient(180deg,#090b1066 0%,#090b1020 28%,#090b1070 58%,#090b10ed 100%),linear-gradient(90deg,#090b1088 0%,transparent 78%)!important;
+}
+#cineton-featured .cineton-featured-copy{
+  position:relative!important;z-index:2!important;width:min(100%,760px)!important;
+  max-width:760px!important;min-width:0!important;margin:105px 0 0!important;
+  align-self:flex-end!important;text-shadow:0 2px 12px #000b!important;
+}
+#cineton-featured .cineton-featured-eyebrow{color:#f5cf83!important}
+#cineton-featured .cineton-featured-copy h2{color:#fff!important;font-size:clamp(1.55rem,3vw,2.35rem)!important}
+#cineton-featured .cineton-featured-meta,#cineton-featured .cineton-featured-overview{color:#fff!important}
+#cineton-featured .cineton-featured-overview{max-width:650px!important}
+#cineton-featured .cineton-featured-secondary{background:#11141bcc!important;border-color:#ffffff70!important;color:#fff!important}
+#cineton-featured .cineton-featured-poster-placeholder{z-index:0!important}
+@media(max-width:700px){
+  #cineton-featured.cineton-featured{min-height:290px!important;padding:19px!important;border-radius:15px!important}
+  #cineton-featured .cineton-featured-art img{object-position:center 22%!important}
+  #cineton-featured .cineton-featured-copy{width:100%!important;margin-top:95px!important}
+  #cineton-featured .cineton-featured-copy h2{font-size:clamp(1.35rem,5.5vw,1.8rem)!important}
+  #cineton-featured .cineton-featured-overview{-webkit-line-clamp:2!important;font-size:.72rem!important}
+  #cineton-featured .cineton-featured-actions{gap:7px!important;margin-top:10px!important}
+}
+@media(max-width:380px){
+  #cineton-featured.cineton-featured{min-height:265px!important;padding:15px!important}
+  #cineton-featured .cineton-featured-overview{-webkit-line-clamp:1!important}
+}
+@media(prefers-reduced-motion:reduce){#cineton-featured .cineton-featured-art img{transition:none!important}}
+</style>
