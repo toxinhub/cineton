@@ -935,11 +935,18 @@ $('#clearKeys').onclick=()=>{if(confirm('Clear saved connection keys from this b
 $$('#repo,#tok,#tmdb,#omdb').forEach(x=>x.addEventListener('input',()=>{if(x.id==='repo'||x.id==='tok')setConnection('idle','Ready to connect.')}));
 
 function stats(){const w=data.filter(x=>x.status==='watched').length,q=data.filter(x=>x.status==='watchlist').length;$('#total').textContent=data.length;$('#watched').textContent=w;$('#watchlist').textContent=q;$('#libraryCount').textContent=data.length+' title'+(data.length===1?'':'s')}
+const adminLibrarySearchCache=new WeakMap();
+function adminLibrarySearchText(m){
+ const fields=[m.title,m.year,m.imdb,m.my_rating,m.comment,m.director,m.status,...(Array.isArray(m.cast)?m.cast:[])].map(x=>String(x??''));
+ const signature=fields.join('|'),cached=adminLibrarySearchCache.get(m);
+ if(cached&&cached.signature===signature)return cached.text;
+ const text=fields.join(' ').toLocaleLowerCase();adminLibrarySearchCache.set(m,{signature,text});return text;
+}
 function renderLibrary(){
- const q=$('#librarySearch').value.trim().toLocaleLowerCase(),f=$('#libraryFilter').value;
- const rows=data.map((m,i)=>({m,i})).filter(({m})=>{
-  const hay=[m.title,m.year,m.imdb,m.my_rating,m.comment,m.director,m.status,...(m.cast||[])].join(' ').toLocaleLowerCase();
-  return(!q||hay.includes(q))&&(f==='all'||(f==='review'?m.needs_review===true:m.status===f));
+ const q=$('#librarySearch').value.trim().toLocaleLowerCase(),f=$('#libraryFilter').value,rows=[];
+ data.forEach((m,i)=>{
+  const hay=adminLibrarySearchText(m);
+  if((!q||hay.includes(q))&&(f==='all'||(f==='review'?m.needs_review===true:m.status===f)))rows.push({m,i});
  });
  $('#library').innerHTML=rows.length?rows.map(({m,i})=>{
   const poster=m.poster?'https://image.tmdb.org/t/p/w342'+m.poster:'';
@@ -1305,7 +1312,7 @@ document.addEventListener('click',e=>{if(mobileMoreSheet?.classList.contains('op
 document.addEventListener('keydown',e=>{if(e.key==='Escape')closeMobileMore();});
 window.addEventListener('beforeunload',e=>{if(draftDirty){e.preventDefault();e.returnValue=''}});
 document.querySelectorAll('.panel[data-section]').forEach(p=>p.classList.toggle('active',p.dataset.section==='connection'));
-$('#librarySearch').oninput=renderLibrary;$('#libraryFilter').onchange=renderLibrary;$('#randomMovieBtn').onclick=openRandomMovie;
+let librarySearchTimer=0;$('#librarySearch').oninput=()=>{clearTimeout(librarySearchTimer);librarySearchTimer=setTimeout(renderLibrary,160)};$('#libraryFilter').onchange=()=>{clearTimeout(librarySearchTimer);renderLibrary()};$('#randomMovieBtn').onclick=openRandomMovie;
 if($('#repo').value&&$('#tok').value)load().then(async()=>{setConnection('ok','Saved GitHub connection restored.');initPublicActivity();if($('#tmdb').value.trim()&&data.some(m=>!Array.isArray(m.genres)||m.genres.length===0))await syncGenres(true)}).catch(()=>setConnection('idle','Saved credentials found. Click Connect GitHub to verify.'));
 const PUBLIC_COMMENTS_API="https://osplbqpgxrfovjrumsnb.supabase.co",PUBLIC_COMMENTS_KEY="sb_"+"publishable_"+"tcBaC8FqwlcFFw-IwKmiVA_y67PZNPX",PUBLIC_COMMENTS_FN=PUBLIC_COMMENTS_API+"/functions/v1/public-comments";
 const PUBLIC_ACTIVITY_FN=PUBLIC_COMMENTS_API+"/functions/v1/public-activity";
@@ -1604,3 +1611,10 @@ $('#importBackupFile').onchange=async e=>{
 
 
 
+
+<style id="admin-library-render-performance-v1">
+/* Defer painting library cards until they approach the viewport. */
+#library>.item{content-visibility:auto;contain-intrinsic-size:auto 300px}
+#library .itemPoster{content-visibility:visible}
+@media(prefers-reduced-motion:reduce){#library>.item{scroll-behavior:auto!important;animation:none!important;transition:none!important}}
+</style>
