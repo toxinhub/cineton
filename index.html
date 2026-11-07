@@ -7391,3 +7391,15 @@ html[data-theme="light"] .cinemodal .chips .imdb-chip{
 }
 @media(prefers-reduced-motion:reduce){#cineton-featured .cineton-featured-actions button{transition:none!important}}
 </style>
+
+
+<style id="cineton-featured-poster-fit-v1">
+/* Show the complete portrait poster instead of cropping it to fill the wide banner. */
+#cineton-featured .cineton-featured-art{display:flex!important;align-items:center!important;justify-content:flex-end!important;background:#17191f!important;}
+#cineton-featured .cineton-featured-art img{width:auto!important;height:100%!important;max-width:44%!important;object-fit:contain!important;object-position:right center!important;transform:none!important;filter:saturate(.9)!important;}
+#cineton-featured:before{background:linear-gradient(90deg,#101217 0%,#101217f5 38%,#101217d9 56%,#10121755 100%)!important;}
+@media(max-width:700px){
+  #cineton-featured .cineton-featured-art img{max-width:43%!important;object-fit:contain!important;object-position:right center!important;}
+  #cineton-featured:before{background:linear-gradient(90deg,#101217 0%,#101217f5 48%,#101217cf 68%,#10121766 100%)!important;}
+}
+</style>
