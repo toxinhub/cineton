@@ -9264,3 +9264,26 @@ html body .ct-home-menu button:hover,html body .ct-home-menu button:focus-visibl
 }
 @media(prefers-reduced-motion:reduce){html body .cineton-bottom-nav button{transition:none!important}}
 </style>
+\n\n
+<style id="cineton-bottom-nav-force-white-v2">
+/* Final override: every navigation/menu text node must inherit pure white in both themes. */
+html body nav#cineton-bottom-nav,
+html body nav#cineton-bottom-nav *,
+html body #ct-home-menu,
+html body #ct-home-menu *,
+html body #ct-discover-panel,
+html body #ct-discover-panel *{
+  color:#fff!important;
+  -webkit-text-fill-color:#fff!important;
+  text-shadow:none!important;
+}
+html body nav#cineton-bottom-nav svg,
+html body nav#cineton-bottom-nav svg *,
+html body #ct-home-menu svg,
+html body #ct-home-menu svg *{
+  stroke:#fff!important;
+  fill:none!important;
+}
+html body nav#cineton-bottom-nav button:disabled,
+html body #ct-home-menu button:disabled{color:#fff!important;-webkit-text-fill-color:#fff!important;opacity:1!important}
+</style>
