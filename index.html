@@ -1700,7 +1700,105 @@ main.list .c:active{transform:scale(.997)!important}
   main.list .c{transition:none!important}
 }
 </style>
-</head><body><header><a class="home-brand" href="./index.html" aria-label="Home"><h1><span class="title-mark" aria-hidden="true">🎬</span><span data-cineton-shine="CineTon">CineTon</span></h1></a><p class="sub">Some of the films I've watched. Rest of the drama? I'm living it...</p><div class="social-links" aria-label="Social media"><button id="cineton-theme-toggle" type="button" aria-label="Switch to dark mode" aria-pressed="false"><span class="theme-icon" aria-hidden="true">☾</span><span>Dark mode</span></button><a class="social-btn" href="https://www.facebook.com/share/1BznJkcQVk/" target="_blank" rel="noopener noreferrer" aria-label="Facebook" title="Facebook"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M13.5 21v-8h2.7l.4-3h-3.1V8.1c0-.87.24-1.46 1.5-1.46h1.7V4a20 20 0 0 0-2.48-.13c-2.45 0-4.12 1.5-4.12 4.24V10H7.3v3h2.8v8h3.4Z"/></svg></a><a class="social-btn" href="https://www.instagram.com/tonmoybelieve?stkn=bTFndTYzbGs3eXI5" target="_blank" rel="noopener noreferrer" aria-label="Instagram" title="Instagram"><svg viewBox="0 0 24 24" aria-hidden="true" fill="none"><rect x="3.5" y="3.5" width="17" height="17" rx="5" fill="none" stroke="currentColor" stroke-width="1.8"/><circle cx="12" cy="12" r="4" fill="none" stroke="currentColor" stroke-width="1.8"/><circle cx="17.4" cy="6.7" r="1.1" fill="currentColor" stroke="none"/></svg></a></div></header><div id="top-sentinel" aria-hidden="true"></div><div class="nav-bar"><div class="tabs"><button type="button" id="t-all">ALL</button><button type="button" id="t-watched" class="on">Watched</button><button type="button" id="t-watchlist">Watchlist</button></div><div class="nav-actions"><button id="suggestMeBtn" class="suggest-me-btn" type="button" aria-haspopup="dialog" aria-controls="suggestionsDialog"><span aria-hidden="true">✦</span> Suggest Me</button><button id="surprise" class="surprise nav-surprise" type="button" aria-label="Surprise Me" title="Open a random title">🎲 <span>Surprise Me</span></button></div></div><div class="stats-row"><div id="stats" class="stats" aria-label="Statistics"></div></div><section id="cineton-featured" class="cineton-featured" aria-label="Recently added to your library" hidden></section><div class="bar"><input id="q" type="search" placeholder="Search movies, shows, cast or director…" aria-label="Search titles, cast and crew" aria-keyshortcuts="/"><div class="select-wrap"><button class="select-trigger" id="ge-trigger" type="button" aria-haspopup="listbox" aria-expanded="false">All genres <span>></span></button><div class="select-menu" id="ge-menu" role="listbox" aria-label="Genre"><button type="button" role="option" data-value="all" aria-selected="true">All genres</button></div></div><div class="select-wrap"><button class="select-trigger" id="so-trigger" type="button" aria-haspopup="listbox" aria-expanded="false">Newest first <span>></span></button><div class="select-menu" id="so-menu" role="listbox" aria-label="Sort"><button type="button" role="option" data-value="new" aria-selected="true">Newest first</button><button type="button" role="option" data-value="my">My rating</button><button type="button" role="option" data-value="im">IMDb rating</button><button type="button" role="option" data-value="yr">Release year</button><button type="button" role="option" data-value="az">Title (A–Z)</button></div></div><select id="ty" aria-hidden="true" tabindex="-1"><option value="all">All types</option><option value="movie">Movie</option><option value="tv">TV / Show</option></select><select id="ge" aria-hidden="true" tabindex="-1"><option value="all">All genres</option></select><select id="so" aria-hidden="true" tabindex="-1"><option value="new">Newest first</option><option value="my">My rating</option><option value="im">IMDb rating</option><option value="yr">Release year</option><option value="az">Title (A–Z)</option></select><div class="views" role="group" aria-label="View"><button type="button" id="v-grid" class="on" aria-label="Grid view" title="Grid view">▦</button><button type="button" id="v-list" aria-label="List view" title="List view">☷</button></div><div id="person-filter" class="person-filter-bar" aria-live="polite"><span id="person-filter-label"></span><button class="clear-person" id="clear-person" type="button" aria-label="Clear person filter">×</button></div></div><main id="g" aria-live="polite"></main><nav class="cineton-bottom-nav" aria-label="Primary navigation">
+
+<style id="cineton-featured-random-poster-v2">
+/* Featured pick: make the actual poster the visual anchor, not a faint background. */
+.cineton-featured{
+ display:grid!important;
+ grid-template-columns:minmax(210px,.72fr) minmax(0,1.28fr)!important;
+ align-items:stretch!important;
+ gap:clamp(20px,3vw,38px)!important;
+ min-height:360px!important;
+ padding:clamp(22px,3vw,38px)!important;
+ overflow:hidden!important;
+}
+.cineton-featured:before{
+ background:linear-gradient(115deg,color-mix(in srgb,var(--sf) 96%,transparent) 0%,color-mix(in srgb,var(--sf) 90%,transparent) 100%)!important;
+}
+.cineton-featured-art{
+ position:relative!important;
+ z-index:0!important;
+ inset:auto!important;
+ display:flex!important;
+ align-items:center!important;
+ justify-content:center!important;
+ min-width:0!important;
+ min-height:300px!important;
+ overflow:visible!important;
+ opacity:1!important;
+}
+.cineton-featured-art img{
+ display:block!important;
+ width:auto!important;
+ height:clamp(290px,32vw,410px)!important;
+ max-width:100%!important;
+ max-height:100%!important;
+ aspect-ratio:2/3!important;
+ object-fit:contain!important;
+ object-position:center!important;
+ filter:none!important;
+ mask-image:none!important;
+ border-radius:12px!important;
+ box-shadow:0 18px 42px #0005,0 3px 10px #0002!important;
+}
+.cineton-featured-poster-placeholder{
+ display:flex;align-items:center;justify-content:center;
+ width:min(100%,230px);min-height:290px;padding:18px;
+ aspect-ratio:2/3;border:1px solid var(--line-strong);border-radius:12px;
+ background:color-mix(in srgb,var(--sf) 82%,var(--gd) 18%);
+ color:var(--mu);text-align:center;font-weight:750;
+}
+.cineton-featured-copy{
+ position:relative!important;z-index:1!important;
+ align-self:center!important;max-width:700px!important;
+}
+.cineton-featured-eyebrow{font-size:.72rem!important;letter-spacing:.17em!important}
+.cineton-featured-copy h2{
+ margin:15px 0 10px!important;
+ font-size:clamp(2rem,4vw,3.35rem)!important;
+ line-height:1.04!important;
+}
+.cineton-featured-meta{font-size:.84rem!important;line-height:1.6!important;margin-bottom:16px!important}
+.cineton-featured-overview{
+ max-width:620px!important;
+ -webkit-line-clamp:4!important;
+ font-size:.96rem!important;line-height:1.75!important;
+}
+.cineton-featured-actions{margin-top:24px!important}
+@media(max-width:700px){
+ .cineton-featured{
+  grid-template-columns:minmax(112px,.72fr) minmax(0,1.28fr)!important;
+  min-height:270px!important;
+  gap:15px!important;
+  padding:18px 15px!important;
+ }
+ .cineton-featured-art{min-height:230px!important}
+ .cineton-featured-art img{
+  width:100%!important;height:auto!important;
+  max-height:290px!important;aspect-ratio:2/3!important;
+  object-fit:contain!important;border-radius:9px!important;
+ }
+ .cineton-featured-poster-placeholder{min-height:220px;padding:10px}
+ .cineton-featured-copy h2{font-size:clamp(1.35rem,5vw,1.85rem)!important;margin:9px 0 7px!important}
+ .cineton-featured-eyebrow{font-size:.58rem!important;letter-spacing:.12em!important}
+ .cineton-featured-meta{font-size:.68rem!important;line-height:1.5!important;margin-bottom:9px!important}
+ .cineton-featured-overview{-webkit-line-clamp:4!important;font-size:.76rem!important;line-height:1.55!important}
+ .cineton-featured-actions{gap:7px!important;margin-top:13px!important}
+ .cineton-featured-actions button{min-height:36px!important;padding:0 11px!important;font-size:.68rem!important}
+}
+@media(max-width:380px){
+ .cineton-featured{grid-template-columns:minmax(96px,.68fr) minmax(0,1.32fr)!important;gap:11px!important;padding:14px 11px!important}
+ .cineton-featured-art{min-height:205px!important}
+ .cineton-featured-art img{max-height:245px!important}
+ .cineton-featured-poster-placeholder{min-height:195px}
+ .cineton-featured-copy h2{font-size:1.28rem!important}
+ .cineton-featured-overview{-webkit-line-clamp:3!important;font-size:.72rem!important}
+ .cineton-featured-actions{flex-direction:column!important;align-items:stretch!important}
+ .cineton-featured-actions button{width:100%!important}
+}
+@media(prefers-reduced-motion:reduce){.cineton-featured-actions button{transition:none!important}}
+</style>
+</head><body><header><a class="home-brand" href="./index.html" aria-label="Home"><h1><span class="title-mark" aria-hidden="true">🎬</span><span data-cineton-shine="CineTon">CineTon</span></h1></a><p class="sub">Some of the films I've watched. Rest of the drama? I'm living it...</p><div class="social-links" aria-label="Social media"><button id="cineton-theme-toggle" type="button" aria-label="Switch to dark mode" aria-pressed="false"><span class="theme-icon" aria-hidden="true">☾</span><span>Dark mode</span></button><a class="social-btn" href="https://www.facebook.com/share/1BznJkcQVk/" target="_blank" rel="noopener noreferrer" aria-label="Facebook" title="Facebook"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M13.5 21v-8h2.7l.4-3h-3.1V8.1c0-.87.24-1.46 1.5-1.46h1.7V4a20 20 0 0 0-2.48-.13c-2.45 0-4.12 1.5-4.12 4.24V10H7.3v3h2.8v8h3.4Z"/></svg></a><a class="social-btn" href="https://www.instagram.com/tonmoybelieve?stkn=bTFndTYzbGs3eXI5" target="_blank" rel="noopener noreferrer" aria-label="Instagram" title="Instagram"><svg viewBox="0 0 24 24" aria-hidden="true" fill="none"><rect x="3.5" y="3.5" width="17" height="17" rx="5" fill="none" stroke="currentColor" stroke-width="1.8"/><circle cx="12" cy="12" r="4" fill="none" stroke="currentColor" stroke-width="1.8"/><circle cx="17.4" cy="6.7" r="1.1" fill="currentColor" stroke="none"/></svg></a></div></header><div id="top-sentinel" aria-hidden="true"></div><div class="nav-bar"><div class="tabs"><button type="button" id="t-all">ALL</button><button type="button" id="t-watched" class="on">Watched</button><button type="button" id="t-watchlist">Watchlist</button></div><div class="nav-actions"><button id="suggestMeBtn" class="suggest-me-btn" type="button" aria-haspopup="dialog" aria-controls="suggestionsDialog"><span aria-hidden="true">✦</span> Suggest Me</button><button id="surprise" class="surprise nav-surprise" type="button" aria-label="Surprise Me" title="Open a random title">🎲 <span>Surprise Me</span></button></div></div><div class="stats-row"><div id="stats" class="stats" aria-label="Statistics"></div></div><section id="cineton-featured" class="cineton-featured" aria-label="Random featured title from your library" hidden></section><div class="bar"><input id="q" type="search" placeholder="Search movies, shows, cast or director…" aria-label="Search titles, cast and crew" aria-keyshortcuts="/"><div class="select-wrap"><button class="select-trigger" id="ge-trigger" type="button" aria-haspopup="listbox" aria-expanded="false">All genres <span>></span></button><div class="select-menu" id="ge-menu" role="listbox" aria-label="Genre"><button type="button" role="option" data-value="all" aria-selected="true">All genres</button></div></div><div class="select-wrap"><button class="select-trigger" id="so-trigger" type="button" aria-haspopup="listbox" aria-expanded="false">Newest first <span>></span></button><div class="select-menu" id="so-menu" role="listbox" aria-label="Sort"><button type="button" role="option" data-value="new" aria-selected="true">Newest first</button><button type="button" role="option" data-value="my">My rating</button><button type="button" role="option" data-value="im">IMDb rating</button><button type="button" role="option" data-value="yr">Release year</button><button type="button" role="option" data-value="az">Title (A–Z)</button></div></div><select id="ty" aria-hidden="true" tabindex="-1"><option value="all">All types</option><option value="movie">Movie</option><option value="tv">TV / Show</option></select><select id="ge" aria-hidden="true" tabindex="-1"><option value="all">All genres</option></select><select id="so" aria-hidden="true" tabindex="-1"><option value="new">Newest first</option><option value="my">My rating</option><option value="im">IMDb rating</option><option value="yr">Release year</option><option value="az">Title (A–Z)</option></select><div class="views" role="group" aria-label="View"><button type="button" id="v-grid" class="on" aria-label="Grid view" title="Grid view">▦</button><button type="button" id="v-list" aria-label="List view" title="List view">☷</button></div><div id="person-filter" class="person-filter-bar" aria-live="polite"><span id="person-filter-label"></span><button class="clear-person" id="clear-person" type="button" aria-label="Clear person filter">×</button></div></div><main id="g" aria-live="polite"></main><nav class="cineton-bottom-nav" aria-label="Primary navigation">
   <button type="button" data-destination="all">
     <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3.5 10.5 12 3.8l8.5 6.7v9a1 1 0 0 1-1 1h-5.2v-6.2H9.7v6.2H4.5a1 1 0 0 1-1-1z"/></svg><span>Home</span>
   </button>
@@ -1746,23 +1844,33 @@ let cinetonInitialReveal=true;function skeleton(){const g=$('#g');g.innerHTML=Ar
 function updateCinetonFeatured(){
  const host=document.getElementById('cineton-featured');
  if(!host||!Array.isArray(D)||!D.length)return;
- const newest=[...D].filter(m=>m.status==='watched').sort((a,b)=>(b.added_at||'').localeCompare(a.added_at||''))[0]||D[0];
- if(!newest)return;
+ const pool=D.filter(m=>m&&m.status==='watched');
+ const choices=pool.length?pool:D;
+ const featuredMovie=choices[Math.floor(Math.random()*choices.length)];
+ if(!featuredMovie)return;
  host.replaceChildren();
  host.hidden=false;
  const art=document.createElement('div');art.className='cineton-featured-art';
- const image=document.createElement('img');
- if(newest.poster){image.src='https://image.tmdb.org/t/p/w780'+String(newest.poster);image.alt='';image.loading='eager';image.decoding='async';}
- else image.remove();
- art.appendChild(image);
+ if(featuredMovie.poster){
+  const image=document.createElement('img');
+  image.src='https://image.tmdb.org/t/p/w780'+String(featuredMovie.poster);
+  image.alt=String(featuredMovie.title||'Featured title')+' poster';
+  image.loading='eager';image.decoding='async';image.fetchPriority='high';
+  art.appendChild(image);
+ }else{
+  const placeholder=document.createElement('div');
+  placeholder.className='cineton-featured-poster-placeholder';
+  placeholder.textContent=String(featuredMovie.title||'Poster unavailable');
+  art.appendChild(placeholder);
+ }
  const copy=document.createElement('div');copy.className='cineton-featured-copy';
  const eyebrow=document.createElement('span');eyebrow.className='cineton-featured-eyebrow';eyebrow.textContent='LATEST IN YOUR LIBRARY';
- const title=document.createElement('h2');title.textContent=String(newest.title||'Recently added');
- const meta=document.createElement('p');meta.className='cineton-featured-meta';meta.textContent=[newest.year,newest.type==='tv'?'TV / Show':'Movie',(newest.genres||[]).slice(0,2).join(' · ')].filter(Boolean).join('  /  ');
- const overview=document.createElement('p');overview.className='cineton-featured-overview';overview.textContent=String(newest.overview||'A title from your personal movie library.');
+ const title=document.createElement('h2');title.textContent=String(featuredMovie.title||'A pick from your library');
+ const meta=document.createElement('p');meta.className='cineton-featured-meta';meta.textContent=[featuredMovie.year,featuredMovie.type==='tv'?'TV / Show':'Movie',(featuredMovie.genres||[]).slice(0,3).join(' · ')].filter(Boolean).join('  /  ');
+ const overview=document.createElement('p');overview.className='cineton-featured-overview';overview.textContent=String(featuredMovie.overview||'A title selected at random from your personal library.');
  const actions=document.createElement('div');actions.className='cineton-featured-actions';
  const details=document.createElement('button');details.type='button';details.className='cineton-featured-primary';details.textContent='View details';
- details.addEventListener('click',()=>openMovie(newest));
+ details.addEventListener('click',()=>openMovie(featuredMovie));
  const browse=document.createElement('button');browse.type='button';browse.className='cineton-featured-secondary';browse.textContent='Browse library';
  browse.addEventListener('click',()=>{document.querySelector('.bar')?.scrollIntoView({behavior:matchMedia('(prefers-reduced-motion: reduce)').matches?'auto':'smooth',block:'start'});});
  actions.append(details,browse);copy.append(eyebrow,title,meta,overview,actions);host.append(art,copy);
