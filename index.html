@@ -8860,3 +8860,182 @@ html body main#g {
   }
 }
 </style>
+
+
+<style id="cineton-modern-controls-microinteractions-v12">
+/* Modern, consistent control language with restrained motion and clear feedback. */
+html body :is(
+  .nav-actions .suggest-me-btn,
+  .nav-actions .surprise,
+  #cineton-theme-toggle,
+  .social-links .social-btn,
+  .tabs button,
+  .views button,
+  .select-trigger,
+  .select-menu button,
+  .cineton-bottom-nav button,
+  #to-top,
+  .cinemodal button,
+  .person-filter-bar button
+){
+  -webkit-tap-highlight-color:transparent;
+  transition:
+    transform .2s cubic-bezier(.2,.75,.25,1),
+    background-color .2s ease,
+    border-color .2s ease,
+    color .2s ease,
+    box-shadow .22s ease,
+    opacity .2s ease!important;
+}
+@media (hover:hover) and (pointer:fine){
+  html body :is(
+    .nav-actions .suggest-me-btn,
+    .nav-actions .surprise,
+    #cineton-theme-toggle,
+    .social-links .social-btn,
+    .tabs button,
+    .views button,
+    .select-trigger,
+    #to-top,
+    .cinemodal button,
+    .person-filter-bar button
+  ):not(:disabled):hover{
+    transform:translateY(-2px);
+    box-shadow:0 7px 18px color-mix(in srgb,var(--gd,#b99a68) 16%,transparent);
+  }
+  html body .cineton-bottom-nav button:not(:disabled):hover{
+    transform:translateY(-2px);
+  }
+  html body .select-menu button:not(:disabled):hover{
+    padding-left:19px;
+  }
+}
+html body :is(
+  .nav-actions .suggest-me-btn,
+  .nav-actions .surprise,
+  #cineton-theme-toggle,
+  .social-links .social-btn,
+  .tabs button,
+  .views button,
+  .select-trigger,
+  .select-menu button,
+  .cineton-bottom-nav button,
+  #to-top,
+  .cinemodal button,
+  .person-filter-bar button
+):not(:disabled):active{
+  transform:translateY(0) scale(.96);
+  transition-duration:.08s!important;
+  box-shadow:0 1px 3px #0002!important;
+}
+html body :is(
+  .nav-actions .suggest-me-btn,
+  .nav-actions .surprise,
+  #cineton-theme-toggle,
+  .social-links .social-btn,
+  .tabs button,
+  .views button,
+  .select-trigger,
+  .select-menu button,
+  .cineton-bottom-nav button,
+  #to-top,
+  .cinemodal button,
+  .person-filter-bar button
+):focus-visible{
+  outline:2px solid var(--gd,#b99a68)!important;
+  outline-offset:3px!important;
+  box-shadow:0 0 0 5px color-mix(in srgb,var(--gd,#b99a68) 17%,transparent)!important;
+}
+html body .nav-actions :is(.suggest-me-btn,.surprise){
+  position:relative;
+  isolation:isolate;
+  overflow:hidden;
+}
+html body .nav-actions :is(.suggest-me-btn,.surprise)::after{
+  content:"";
+  position:absolute;
+  inset:0;
+  z-index:-1;
+  background:linear-gradient(110deg,transparent 20%,#ffffff20 48%,transparent 76%);
+  transform:translateX(-130%);
+  transition:transform .55s ease;
+  pointer-events:none;
+}
+@media (hover:hover) and (pointer:fine){
+  html body .nav-actions :is(.suggest-me-btn,.surprise):hover::after{
+    transform:translateX(130%);
+  }
+}
+html body #cineton-theme-toggle .theme-icon{
+  display:inline-grid;
+  place-items:center;
+  transform-origin:50% 50%;
+  transition:transform .38s cubic-bezier(.2,.8,.2,1);
+}
+html body #cineton-theme-toggle:hover .theme-icon{
+  transform:rotate(-18deg) scale(1.12);
+}
+html body .social-links .social-btn svg{
+  transition:transform .22s cubic-bezier(.2,.8,.2,1);
+}
+html body .social-links .social-btn:hover svg{
+  transform:scale(1.14);
+}
+html body .tabs button,
+html body .views button{
+  position:relative;
+  overflow:hidden;
+}
+html body .tabs button.on,
+html body .views button.on{
+  box-shadow:0 3px 12px color-mix(in srgb,var(--gd,#b99a68) 22%,transparent);
+}
+html body .cineton-bottom-nav button svg{
+  transition:transform .22s cubic-bezier(.2,.8,.2,1);
+}
+html body .cineton-bottom-nav button:hover svg,
+html body .cineton-bottom-nav button.is-active svg{
+  transform:translateY(-1px) scale(1.08);
+}
+html body .select-trigger span{
+  display:inline-block;
+  transition:transform .2s ease;
+}
+html body .select-wrap.open .select-trigger span{
+  transform:rotate(90deg);
+}
+html body .cinemodal .x:hover{
+  transform:rotate(90deg) scale(1.05);
+}
+html body :is(button,a)[disabled],
+html body button:disabled{
+  cursor:not-allowed!important;
+  opacity:.48;
+  transform:none!important;
+  box-shadow:none!important;
+}
+@media (prefers-reduced-motion:reduce){
+  html body :is(
+    .nav-actions .suggest-me-btn,
+    .nav-actions .surprise,
+    #cineton-theme-toggle,
+    #cineton-theme-toggle .theme-icon,
+    .social-links .social-btn,
+    .social-links .social-btn svg,
+    .tabs button,
+    .views button,
+    .select-trigger,
+    .select-trigger span,
+    .select-menu button,
+    .cineton-bottom-nav button,
+    .cineton-bottom-nav button svg,
+    #to-top,
+    .cinemodal button,
+    .person-filter-bar button
+  ){
+    transition:none!important;
+    animation:none!important;
+  }
+  html body .nav-actions :is(.suggest-me-btn,.surprise)::after{display:none!important}
+}
+</style>
