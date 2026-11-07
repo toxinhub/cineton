@@ -1744,40 +1744,6 @@ async function refreshPublicCommentIndicators(){
   }catch{}
 }
 let cinetonInitialReveal=true;function skeleton(){const g=$('#g');g.innerHTML=Array.from({length:12},()=>'<div class="skel" aria-hidden="true"></div>').join('')}const CINETON_LIBRARY_CACHE='cineton-library-cache-v1';async function loadCinetonLibrary(){const g=$('#g');skeleton();g.setAttribute('aria-busy','true');let loaded=false;try{const r=await fetch('data.json?v=20261012-1',{cache:'no-store'});if(!r.ok)throw Error('HTTP '+r.status);const x=await r.json();if(!Array.isArray(x))throw Error('Invalid library data');D=x;loaded=true;try{localStorage.setItem(CINETON_LIBRARY_CACHE,JSON.stringify(x))}catch{}}catch(error){let cached=null;try{cached=JSON.parse(localStorage.getItem(CINETON_LIBRARY_CACHE)||'null')}catch{}if(Array.isArray(cached)){D=cached;loaded=true}else{document.body.classList.remove('cineton-page-loading');document.body.classList.add('cineton-page-ready');pageLoadFade.remove();g.removeAttribute('aria-busy');g.innerHTML='<div class="empty"><p>Couldn’t load your library right now.</p><button type="button" id="cineton-retry-load">Try again</button></div>';$('#cineton-retry-load')?.addEventListener('click',loadCinetonLibrary);return}}if(loaded){populateGenres();render();g.removeAttribute('aria-busy');refreshPublicCommentIndicators();document.body.classList.remove('cineton-page-loading');document.body.classList.add('cineton-page-ready');requestAnimationFrame(()=>requestAnimationFrame(()=>pageLoadFade.remove()))}}loadCinetonLibrary();function populateGenres(){const names=[...new Set(D.flatMap(m=>Array.isArray(m.genres)?m.genres:[]).filter(Boolean))].sort((a,b)=>a.localeCompare(b));const s=$('#ge'),menu=$('#ge-menu'),current=s.value||'all';s.innerHTML='<option value="all">All genres</option>'+names.map(g=>'<option value="'+e(g)+'">'+e(g)+'</option>').join('');menu.innerHTML='<button type="button" role="option" data-value="all">All genres</button>'+names.map(g=>'<button type="button" role="option" data-value="'+e(g)+'">'+e(g)+'</button>').join('');const selected=[...s.options].some(o=>o.value===current)?current:'all';s.value=selected;menu.querySelectorAll('[role="option"]').forEach(o=>o.setAttribute('aria-selected',o.dataset.value===selected));const chosen=s.options[s.selectedIndex]?.textContent||'All genres';$('#ge-trigger').firstChild.textContent=chosen+' ';initSelect('ge')}
-function updateCinetonFeatured(){
- const host=document.getElementById('cineton-featured');
- if(!host||!Array.isArray(D)||!D.length)return;
- const pool=D.filter(m=>m&&m.status==='watched');
- const choices=pool.length?pool:D;
- const featuredMovie=choices[Math.floor(Math.random()*choices.length)];
- if(!featuredMovie)return;
- host.replaceChildren();
- host.hidden=false;
- const art=document.createElement('div');art.className='cineton-featured-art';
- if(featuredMovie.poster){
-  const image=document.createElement('img');
-  image.src='https://image.tmdb.org/t/p/w780'+String(featuredMovie.poster);
-  image.alt=String(featuredMovie.title||'Featured title')+' poster';
-  image.loading='eager';image.decoding='async';image.fetchPriority='high';
-  art.appendChild(image);
- }else{
-  const placeholder=document.createElement('div');
-  placeholder.className='cineton-featured-poster-placeholder';
-  placeholder.textContent=String(featuredMovie.title||'Poster unavailable');
-  art.appendChild(placeholder);
- }
- const copy=document.createElement('div');copy.className='cineton-featured-copy';
- const eyebrow=document.createElement('span');eyebrow.className='cineton-featured-eyebrow';eyebrow.textContent='LATEST IN YOUR LIBRARY';
- const title=document.createElement('h2');title.textContent=String(featuredMovie.title||'A pick from your library');
- const meta=document.createElement('p');meta.className='cineton-featured-meta';meta.textContent=[featuredMovie.year,featuredMovie.type==='tv'?'TV / Show':'Movie',(featuredMovie.genres||[]).slice(0,3).join(' · ')].filter(Boolean).join('  /  ');
- const overview=document.createElement('p');overview.className='cineton-featured-overview';overview.textContent=String(featuredMovie.overview||'A title selected at random from your personal library.');
- const actions=document.createElement('div');actions.className='cineton-featured-actions';
- const details=document.createElement('button');details.type='button';details.className='cineton-featured-primary';details.textContent='View details';
- details.addEventListener('click',()=>openMovie(featuredMovie));
- const browse=document.createElement('button');browse.type='button';browse.className='cineton-featured-secondary';browse.textContent='Browse library';
- browse.addEventListener('click',()=>{document.querySelector('.bar')?.scrollIntoView({behavior:matchMedia('(prefers-reduced-motion: reduce)').matches?'auto':'smooth',block:'start'});});
- actions.append(details,browse);copy.append(eyebrow,title,meta,overview,actions);host.append(art,copy);
-}
 const pic=(m,eager=false)=>m.poster?`<img class="poster-loading" loading="${eager?'eager':'lazy'}" decoding="async" fetchpriority="${eager?'high':'auto'}" src="https://image.tmdb.org/t/p/w342${e(m.poster)}" srcset="https://image.tmdb.org/t/p/w185${e(m.poster)} 185w, https://image.tmdb.org/t/p/w342${e(m.poster)} 342w, https://image.tmdb.org/t/p/w500${e(m.poster)} 500w" sizes="(max-width:420px) 44vw, (max-width:700px) 30vw, (max-width:1000px) 22vw, 190px" alt="${e(m.title)} poster" onload="this.classList.remove('poster-loading')" onerror="this.replaceWith(Object.assign(document.createElement('div'),{className:'ph',textContent:this.alt.replace(/ poster$/,'')}))">`:`<div class="ph">${e(m.title)}</div>`;function applyView(){const g=$('#g');g.classList.toggle('list',view==='list');$('#v-grid').classList.toggle('on',view==='grid');$('#v-list').classList.toggle('on',view==='list');const pf=$('#person-filter'),pl=$('#person-filter-label');pf.classList.toggle('on',!!personFilter);if(personFilter)pl.textContent=(personFilterType||'Person')+' · '+personFilter}function setStatFilter(f){statFilter=statFilter===f?'all':f;document.querySelectorAll('.stat').forEach(x=>x.classList.toggle('active',x.dataset.filter===statFilter));if(f==='movie'||f==='tv'){$('#ty').value=f}else if(f==='rated'){$('#ty').value='all';$('#so').value='my'}else if(f==='loved'){$('#ty').value='all';$('#so').value='new'}render();window.scrollTo({top:document.querySelector('.bar').offsetTop,behavior:'smooth'})}function renderGrid(L){
   const g=$('#g');
   const frag=document.createDocumentFragment();
