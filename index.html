@@ -8851,3 +8851,70 @@ main.list>.c{content-visibility:auto;contain-intrinsic-size:auto 116px}
   #g .c,.cinemodal{scroll-behavior:auto!important;animation:none!important;transition:none!important}
 }
 </style>
+
+
+
+<style id="cineton-monochrome-type-clear-glass-dock-v1">
+/* Monochrome typography: white in dark mode, black in light mode. */
+html[data-theme="dark"] body :is(h1,h2,h3,h4,h5,h6,p,span,label,a,button,input,textarea,select,option,small,strong,b,em,i,li,dt,dd,summary,figcaption,legend,th,td,.sub,.muted,.meta,.caption){
+  color:#fff!important;
+  -webkit-text-fill-color:#fff!important;
+}
+html[data-theme="light"] body :is(h1,h2,h3,h4,h5,h6,p,span,label,a,button,input,textarea,select,option,small,strong,b,em,i,li,dt,dd,summary,figcaption,legend,th,td,.sub,.muted,.meta,.caption){
+  color:#111!important;
+  -webkit-text-fill-color:#111!important;
+}
+html[data-theme="dark"] body :is(input,textarea,select)::placeholder{color:rgba(255,255,255,.58)!important;-webkit-text-fill-color:rgba(255,255,255,.58)!important}
+html[data-theme="light"] body :is(input,textarea,select)::placeholder{color:rgba(0,0,0,.52)!important;-webkit-text-fill-color:rgba(0,0,0,.52)!important}
+
+/* The dock is clear glass, not a frosted slab. Keep its icons white in both themes. */
+html body .cineton-bottom-nav{
+  background:rgba(16,27,24,.14)!important;
+  border:1px solid rgba(255,255,255,.28)!important;
+  -webkit-backdrop-filter:blur(2px) saturate(1.06)!important;
+  backdrop-filter:blur(2px) saturate(1.06)!important;
+  box-shadow:0 7px 22px rgba(0,0,0,.10),0 1px 0 rgba(255,255,255,.22) inset!important;
+}
+html[data-theme="light"] body .cineton-bottom-nav{
+  background:rgba(255,255,255,.16)!important;
+  border-color:rgba(255,255,255,.48)!important;
+  box-shadow:0 7px 20px rgba(0,0,0,.075),0 1px 0 rgba(255,255,255,.42) inset!important;
+}
+html body .cineton-bottom-nav :is(button,button span,button svg,button svg *){
+  color:#fff!important;
+  -webkit-text-fill-color:#fff!important;
+  stroke:#fff!important;
+}
+html body .cineton-bottom-nav button svg{fill:none!important}
+html body .cineton-bottom-nav button.is-active,
+html body .cineton-bottom-nav button.is-active span,
+html body .cineton-bottom-nav button.is-active svg,
+html body .cineton-bottom-nav button.is-active svg *{
+  color:#fff!important;
+  -webkit-text-fill-color:#fff!important;
+  stroke:#fff!important;
+}
+html body .cineton-bottom-nav button.is-active::after{background:#fff!important;box-shadow:0 0 7px rgba(255,255,255,.42)!important}
+html body .cineton-bottom-nav .ct-nav-home{
+  background:rgba(255,255,255,.055)!important;
+  border-color:rgba(255,255,255,.24)!important;
+  -webkit-backdrop-filter:blur(2px) saturate(1.04)!important;
+  backdrop-filter:blur(2px) saturate(1.04)!important;
+  box-shadow:0 5px 15px rgba(0,0,0,.08),0 1px 0 rgba(255,255,255,.20) inset!important;
+}
+@media(max-width:700px){
+  html body .cineton-bottom-nav{
+    background:rgba(16,27,24,.12)!important;
+    -webkit-backdrop-filter:blur(1px) saturate(1.03)!important;
+    backdrop-filter:blur(1px) saturate(1.03)!important;
+  }
+  html[data-theme="light"] body .cineton-bottom-nav{background:rgba(255,255,255,.14)!important}
+  html body .cineton-bottom-nav .ct-nav-home{
+    -webkit-backdrop-filter:blur(1px) saturate(1.02)!important;
+    backdrop-filter:blur(1px) saturate(1.02)!important;
+  }
+}
+@media(prefers-reduced-transparency:reduce){
+  html body .cineton-bottom-nav{background:rgba(16,27,24,.72)!important;-webkit-backdrop-filter:none!important;backdrop-filter:none!important}
+}
+</style>
