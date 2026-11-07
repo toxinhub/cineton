@@ -1866,9 +1866,10 @@ function setModalPosterAccent(d){
   const img=d.querySelector(".modal-top img"),btn=d.querySelector(".x");if(!img||!btn)return;
   const src=img.currentSrc||img.src;if(!src)return;
   const fallback=()=>{d.style.setProperty("--poster-accent","#b88f65");d.style.setProperty("--poster-color-1","#b88f65");d.style.setProperty("--poster-color-2","#8c7564");d.style.setProperty("--poster-color-3","#d3b99a")};
+  if(cinetonPosterAccentController)cinetonPosterAccentController.abort();
+  cinetonPosterAccentController=null;
   const cached=cinetonPosterAccentCache.get(src);
   if(cached){d.style.setProperty("--poster-color-1",cached[0]);d.style.setProperty("--poster-color-2",cached[1]);d.style.setProperty("--poster-color-3",cached[2]);d.style.setProperty("--poster-accent",cached[0]);return;}
-  if(cinetonPosterAccentController)cinetonPosterAccentController.abort();
   const controller=new AbortController();cinetonPosterAccentController=controller;
   const proxy="https://wsrv.nl/?url="+encodeURIComponent(src)+"&w=72&h=108&fit=inside&output=webp";
   const extract=async()=>{
