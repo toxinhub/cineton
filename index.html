@@ -8001,3 +8001,15 @@ header{
   }
 }
 </style>
+
+
+<style id="cineton-pipe-separated-inline-stats-v1">
+/* Keep library statistics in one line with plain-text pipe separators. */
+.stats-row{width:100%!important;max-width:1200px!important;overflow-x:auto!important;overflow-y:hidden!important;scrollbar-width:none!important}
+.stats-row::-webkit-scrollbar{display:none!important}
+.stats-row .stats{display:flex!important;flex-wrap:nowrap!important;align-items:center!important;justify-content:flex-start!important;gap:0!important;width:max-content!important;min-width:100%!important;white-space:nowrap!important}
+.stats-row .stat{display:inline-flex!important;flex:0 0 auto!important;align-items:center!important;gap:4px!important;margin:0!important;padding:2px 0!important;border:0!important;border-radius:0!important;background:transparent!important;box-shadow:none!important;white-space:nowrap!important}
+.stats-row .stat:not(:last-child)::after{content:"|"!important;display:inline-block!important;margin:0 10px!important;color:currentColor!important;opacity:.62!important;font-weight:400!important}
+.stats-row .stat:hover,.stats-row .stat:focus-visible,.stats-row .stat.active{background:transparent!important;border:0!important;box-shadow:none!important}
+@media(max-width:600px){.stats-row{padding-left:16px!important;padding-right:16px!important}.stats-row .stat{font-size:.64rem!important}.stats-row .stat:not(:last-child)::after{margin:0 7px!important}}
+</style>
