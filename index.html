@@ -177,7 +177,7 @@ body.suggestions-modal-open{overflow:hidden}
 @media(prefers-reduced-motion:reduce){.cinemodal .modal-nav{transition:none}}
 </style><style id="warm-luxury-theme">
 /* Removed legacy desktop zoom: layout now uses responsive widths and spacing. */
-:root{--bg:#f4ecdf;--sf:#fbf6ed;--tx:#2f241b;--mu:#58483a;--ac:#77583b;--gd:#77552d;--line:#6b51321a;--line-strong:#6b51322b;--modal:#f8f0e5;--modal-overlay:#f8f0e5f0;--modal-backdrop:#40352c45;--modal-shadow:#40352c26;color-scheme:light}
+:root{--bg:#f2f5f0;--sf:#ffffff;--tx:#20352b;--mu:#586e60;--ac:#286c50;--gd:#397b5c;--line:#294b3718;--line-strong:#294b3733;--modal:#ffffff;--modal-overlay:#f2f5f0f2;--modal-backdrop:#14291f55;--modal-shadow:#14291f26;color-scheme:light}
 body{background-color:var(--bg);background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180' viewBox='0 0 180 180'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.82' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.20'/%3E%3C/svg%3E");background-size:180px 180px}
 header{border-bottom-color:var(--line);background:color-mix(in srgb,var(--sf) 28%,transparent)}
 #to-top{position:fixed;right:20px;bottom:20px;z-index:8;width:40px;height:40px;padding:0;border:1px solid var(--line-strong);border-radius:50%;background:color-mix(in srgb,var(--sf) 42%,transparent);color:var(--tx);display:grid;place-items:center;font:700 21px/1 "Mina",sans-serif;box-shadow:0 6px 18px #5b422526,0 1px 0 #fff8 inset,0 0 0 1px #fff4 inset;backdrop-filter:blur(1px);-webkit-backdrop-filter:blur(1px);opacity:0;visibility:hidden;pointer-events:none;transform:translateY(8px);}
@@ -207,7 +207,7 @@ header{border-bottom-color:var(--line);background:color-mix(in srgb,var(--sf) 28
 .cinemodal .chips .imdb-chip,.cinemodal .chips .my-chip{color:var(--tx)}
 @media(max-width:639px){
   .cinemodal .detail-label,.cinemodal .cm::before{color:var(--mu);opacity:.98}
-  .cinemodal .modal-footer{color:#544235}
+  .cinemodal .modal-footer{color:var(--mu)}
 }
 
 /* Preserved source layer: social-header-buttons */
@@ -8782,6 +8782,20 @@ html[data-theme] body .bd{color:var(--gd)!important;text-shadow:none!important}
 html[data-theme] body .stat{background:transparent!important;box-shadow:none!important}
 html[data-theme] body .stat.active,html[data-theme] body .stat:hover{background:color-mix(in srgb,var(--gd) 9%,transparent)!important}
 @media(prefers-reduced-motion:reduce){html[data-theme] dialog.cinemodal{scroll-behavior:auto!important}}
+
+/* Theme-aware suggestions UI: remove the old fixed espresso palette in both themes. */
+html[data-theme] .suggestions-dialog{color:var(--ct-text-primary)!important;background:var(--modal)!important;border-color:var(--ct-panel-border)!important}
+html[data-theme] .suggestions-dialog::backdrop{background:var(--modal-backdrop)!important;backdrop-filter:none!important;-webkit-backdrop-filter:none!important}
+html[data-theme] .suggestions-dialog .suggestions-head{background:var(--ct-panel)!important;border-color:var(--ct-panel-border)!important}
+html[data-theme] .suggestions-dialog :is(.suggestions-kicker,.suggestion-number,.suggestion-message){color:var(--ct-text-accent)!important}
+html[data-theme] .suggestions-dialog :is(.suggestions-title,.suggestion-title-text){color:var(--ct-text-primary)!important}
+html[data-theme] .suggestions-dialog :is(.suggestions-sub,.suggestion-note,.suggestion-empty,.suggestion-date,.suggestion-time){color:var(--ct-text-secondary)!important}
+html[data-theme] .suggestions-dialog :is(.suggestion-compose,.suggestion-item){background:var(--ct-panel)!important;border-color:var(--ct-panel-border)!important}
+html[data-theme] .suggestions-dialog .suggestion-compose :is(input,textarea){color:var(--ct-text-primary)!important;background:var(--ct-panel-solid)!important;border-color:var(--ct-panel-border)!important}
+html[data-theme] .suggestions-dialog .suggestion-compose :is(input,textarea)::placeholder{color:var(--ct-text-muted)!important}
+html[data-theme] .suggestions-dialog .suggestion-submit{color:var(--ct-text-on-accent)!important;background:var(--ct-text-accent)!important;border-color:var(--ct-text-accent)!important}
+html[data-theme] .suggestions-dialog .suggestions-close{color:var(--ct-text-secondary)!important;border-color:var(--ct-panel-border)!important}
+html[data-theme] .suggestions-dialog .suggestions-close:hover{color:var(--ct-text-primary)!important;background:var(--ct-hover)!important}
 </style>
 </body></html>
 
