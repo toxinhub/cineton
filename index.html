@@ -7531,3 +7531,27 @@ html[data-theme="light"] .cinemodal .chips .imdb-chip{
 }
 @media(prefers-reduced-motion:reduce){#cineton-featured .cineton-featured-art img{transition:none!important}}
 </style>
+
+
+<style id="cineton-featured-natural-card-crop-v1">
+/* Crop only to the card's own box dimensions; do not apply any extra image scaling. */
+#cineton-featured .cineton-featured-art{
+  position:absolute!important;inset:0!important;width:100%!important;height:100%!important;
+  overflow:hidden!important;display:block!important;
+}
+#cineton-featured .cineton-featured-art img{
+  display:block!important;width:100%!important;height:100%!important;
+  min-width:100%!important;min-height:100%!important;
+  max-width:none!important;max-height:none!important;
+  object-fit:cover!important;object-position:50% 50%!important;
+  transform:none!important;scale:none!important;
+  filter:none!important;zoom:1!important;
+}
+/* The overlay remains responsible for text contrast, not image enlargement. */
+#cineton-featured:before{
+  background:linear-gradient(180deg,#090b1040 0%,#090b1010 34%,#090b1070 62%,#090b10e8 100%)!important;
+}
+@media(max-width:700px){
+  #cineton-featured .cineton-featured-art img{object-position:50% 50%!important}
+}
+</style>
