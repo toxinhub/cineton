@@ -1918,7 +1918,6 @@ async function cinetonPosterTransition(direction,sourcePoster,openingRect=null){
       :[{transform:'translate3d(0,0,0)',opacity:1},{transform:'translate3d(0,'+distance+'px,0)',opacity:0}];
     animation=motionTarget.animate(frames,{duration,easing: ease,fill:'both'});
     await animation.finished;
-    if(!opening)await new Promise(resolve=>requestAnimationFrame(()=>requestAnimationFrame(resolve)));
     return true;
   }catch(error){
     console.info('Cineton modal transition fallback:',error);
@@ -1929,7 +1928,6 @@ async function cinetonPosterTransition(direction,sourcePoster,openingRect=null){
         {duration,easing: ease,fill:'both'}
       );
       await fallback.finished;
-      if(!opening)await new Promise(resolve=>requestAnimationFrame(()=>requestAnimationFrame(resolve)));
       return true;
     }catch(fallbackError){
       console.info('Cineton modal fallback failed:',fallbackError);
@@ -1947,10 +1945,7 @@ async function cinetonPosterTransition(direction,sourcePoster,openingRect=null){
 async function closeCinetonModal(){
   if(!d.open)return;if(cinetonModalBusy){cinetonCloseQueued=true;return}
   cinetonModalBusy=true;
-  /* Paint the open dialog state for one frame before starting the exit motion.
-     This prevents mobile browsers from collapsing the close transition into the same frame. */
   d.classList.add('cineton-backdrop-clear');
-  await new Promise(resolve=>requestAnimationFrame(resolve));
   try{
     const sourceId=d.dataset.sourceMovieId;
     const sourceCard=sourceId&&document.querySelector('.c[data-id="'+CSS.escape(sourceId)+'"]');
@@ -9892,9 +9887,9 @@ html body main#g .c>img{
 }
 </style>
 <style id="cineton-modal-scroll-performance-v37">
-/* Keep modal motion timings short, but leave enough frames for a visible transition. */
-:root{--open-ms:245;--close-ms:225}
-@media(max-width:640px){:root{--open-ms:170;--close-ms:190}}
+/* Snappy modal motion: fast response with a brief, perceptible transition. */
+:root{--open-ms:120;--close-ms:105}
+@media(max-width:640px){:root{--open-ms:95;--close-ms:85}}
 @media(max-width:700px){
   html body main#g .c{contain-intrinsic-size:auto 315px}
   html body .bar{-webkit-backdrop-filter:none!important;backdrop-filter:none!important}
