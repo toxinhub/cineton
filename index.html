@@ -2433,9 +2433,7 @@ body{background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/20
     width:42px;
     height:42px;
   }
-  .modal-close,
-  .cinemodal button[aria-label],
-  .cinemodal .icon-btn{
+  .cinemodal button[aria-label]{
     min-width:40px;
     min-height:40px;
   }
@@ -4553,7 +4551,7 @@ body{
 /* Main-page secondary text must stay dark on the newly light canvas and cards. */
 body :is(p,small,label,li,dt,dd,figcaption),
 body :is(.sub,.ci small,.ph,.empty,.hint,.muted,.meta,.year,.genre,.description,
-.helper-text,.secondary,.caption,.movie-meta,.card-meta,.filter-label,.section-label,
+.helper-text,.secondary,.caption,.movie-meta,.card-meta,
 .stat,.stat span,.person-filter-bar,.public-comments-count,.public-comment-name),
 body input::placeholder,body textarea::placeholder{
   color:#594b60!important;
@@ -6803,7 +6801,7 @@ html[data-theme="dark"]{
 /* Site identity, section headings, descriptions and supporting copy. */
 html[data-theme="light"] :is(header h1,.cineton-featured-copy h2,.cinemodal h2,
   .suggestions-dialog h1,.suggestions-dialog h2,.suggestions-dialog h3,
-  .detail-head h2,.section-title,.page-title){
+  .detail-head h2){
   color:var(--ct-text-primary)!important;
 }
 html[data-theme="light"] :is(header .sub,.cineton-featured-meta,
@@ -7551,7 +7549,7 @@ html[data-theme] main#g.list .c .ci .my-rating{color:var(--ct-text-accent)!impor
 /* Details dialog */
 html[data-theme] .cinemodal{color:var(--ct-text-primary)!important}
 html[data-theme] .cinemodal :is(h1,h2,h3,.detail-value,.story,.public-comment-text,.public-comment-name){color:var(--ct-text-primary)!important}
-html[data-theme] .cinemodal :is(p,.subline,.detail-label,.modal-footer,.cm,.public-comment-time,.public-comment-date,.detail-muted){color:var(--ct-text-secondary)!important}
+html[data-theme] .cinemodal :is(p,.subline,.detail-label,.modal-footer,.cm,.public-comment-time,.public-comment-date){color:var(--ct-text-secondary)!important}
 html[data-theme] .cinemodal :is(input,textarea,select){color:var(--ct-text-primary)!important}
 html[data-theme] .cinemodal :is(input,textarea,select)::placeholder{color:var(--ct-text-muted)!important;opacity:1!important}
 html[data-theme] .cinemodal .chips span{color:var(--ct-text-secondary)!important}
