@@ -9740,4 +9740,49 @@ html[data-theme="dark"] .public-comment-mark{color:#dce4ed!important;opacity:1!i
 }
 </style>
 
+
+<style id="cineton-grid-scroll-performance-v31">
+/* Isolate poster-card layout and paint so scrolling one card does not invalidate neighbors. */
+html body main#g .c{
+  contain:layout paint style!important;
+  content-visibility:visible!important;
+}
+html body main#g{
+  touch-action:pan-y;
+  -webkit-tap-highlight-color:transparent;
+}
+html body main#g .c>img{
+  backface-visibility:hidden;
+  -webkit-backface-visibility:hidden;
+}
+@media(hover:none),(pointer:coarse){
+  html body main#g .c,
+  html body main#g .c>img{
+    transition:none!important;
+    transform:none!important;
+    filter:none!important;
+  }
+  html body main#g .c:hover{
+    transform:none!important;
+    box-shadow:inherit!important;
+  }
+  html body main#g .c:hover>img{
+    transform:none!important;
+    filter:none!important;
+  }
+}
+@media(hover:hover) and (pointer:fine){
+  html body main#g:not(.list) .c>img{
+    transition:transform .24s cubic-bezier(.2,.7,.2,1)!important;
+  }
+}
+@media(prefers-reduced-motion:reduce){
+  html body main#g .c,
+  html body main#g .c>img{
+    transition:none!important;
+    animation:none!important;
+  }
+}
+</style>
+
 </body></html>
