@@ -7585,3 +7585,68 @@ html[data-theme] :is(.film-mark,.cineton-featured-eyebrow,.genre-filter,.person-
 html[data-theme] .cineton-featured{border-color:var(--ct-panel-border)!important}
 @media(prefers-reduced-motion:reduce){html[data-theme] *{transition-duration:.01ms!important}}
 </style>
+
+
+
+<style id="cineton-balanced-interface-typography-v1">
+/* One coherent text hierarchy across both themes; keep poster and rating colors intentional. */
+html[data-theme="dark"]{
+  --ct-text-primary:#e8f0ea!important;
+  --ct-text-secondary:#b9c9bf!important;
+  --ct-text-muted:#93a99a!important;
+  --ct-text-accent:#a6c99a!important;
+  --ct-text-on-accent:#102119!important;
+}
+html[data-theme="light"]{
+  --ct-text-primary:#20352b!important;
+  --ct-text-secondary:#586e60!important;
+  --ct-text-muted:#687d70!important;
+  --ct-text-accent:#286c50!important;
+  --ct-text-on-accent:#ffffff!important;
+}
+/* Global reading color and the site chrome */
+html[data-theme] body{color:var(--ct-text-primary)!important}
+html[data-theme] header :is(h1,.sub,:before){color:var(--ct-text-primary)!important}
+html[data-theme] header .sub{color:var(--ct-text-secondary)!important}
+html[data-theme] .nav-bar{color:var(--ct-text-primary)!important}
+html[data-theme] .tabs button,
+html[data-theme] .nav-actions button,
+html[data-theme] .person-filter-bar button,
+html[data-theme] .person-filter-bar{color:var(--ct-text-secondary)!important}
+html[data-theme] .tabs button.on,
+html[data-theme] .nav-actions button.on,
+html[data-theme] .person-filter-bar button[aria-pressed="true"]{color:var(--ct-text-accent)!important}
+html[data-theme] .stat{color:var(--ct-text-secondary)!important}
+html[data-theme] .stat b{color:var(--ct-text-primary)!important}
+html[data-theme] .bar{color:var(--ct-text-primary)!important}
+html[data-theme] .bar :is(input,select,.select-trigger){color:var(--ct-text-primary)!important}
+html[data-theme] .bar input::placeholder,
+html[data-theme] .bar textarea::placeholder{color:var(--ct-text-muted)!important;opacity:1!important}
+html[data-theme] .select-menu button{color:var(--ct-text-primary)!important}
+html[data-theme] .empty{color:var(--ct-text-secondary)!important}
+html[data-theme] .empty :is(h1,h2,h3,strong,b){color:var(--ct-text-primary)!important}
+html[data-theme] .empty :is(p,small,span){color:var(--ct-text-secondary)!important}
+/* List-view cards only: poster-grid overlays remain white for image contrast. */
+html[data-theme] main#g.list .c,
+html[data-theme] main#g.list .c>.ci{color:var(--ct-text-primary)!important}
+html[data-theme] main#g.list .c .ci :is(b,strong){color:var(--ct-text-primary)!important}
+html[data-theme] main#g.list .c .ci :is(small,span,p){color:var(--ct-text-secondary)!important}
+html[data-theme] main#g.list .c .ci .my-rating{color:var(--ct-text-accent)!important}
+/* Details dialog */
+html[data-theme] .cinemodal{color:var(--ct-text-primary)!important}
+html[data-theme] .cinemodal :is(h1,h2,h3,.detail-value,.story,.public-comment-text,.public-comment-name){color:var(--ct-text-primary)!important}
+html[data-theme] .cinemodal :is(p,.subline,.detail-label,.modal-footer,.cm,.public-comment-time,.public-comment-date,.detail-muted){color:var(--ct-text-secondary)!important}
+html[data-theme] .cinemodal :is(input,textarea,select){color:var(--ct-text-primary)!important}
+html[data-theme] .cinemodal :is(input,textarea,select)::placeholder{color:var(--ct-text-muted)!important;opacity:1!important}
+html[data-theme] .cinemodal .chips span{color:var(--ct-text-secondary)!important}
+/* Suggestions and floating navigation */
+html[data-theme] .suggestions-dialog{color:var(--ct-text-primary)!important}
+html[data-theme] .suggestions-dialog :is(h1,h2,h3,.suggestion-title-text,.suggestion-number){color:var(--ct-text-primary)!important}
+html[data-theme] .suggestions-dialog :is(p,label,small,.suggestions-sub,.suggestion-note,.suggestion-empty,.suggestion-date,.suggestion-time,.suggestion-message){color:var(--ct-text-secondary)!important}
+html[data-theme] .suggestion-compose :is(input,textarea)::placeholder{color:var(--ct-text-muted)!important;opacity:1!important}
+html[data-theme] .cineton-bottom-nav button{color:var(--ct-text-secondary)!important}
+html[data-theme] .cineton-bottom-nav button.is-active{color:var(--ct-text-accent)!important}
+/* Keep semantic colors consistent without recoloring poster art or IMDb labels. */
+html[data-theme] a:not(main#g .c a){color:var(--ct-text-accent)}
+html[data-theme] :where(button,input,textarea,select){accent-color:var(--ct-text-accent)}
+</style>
