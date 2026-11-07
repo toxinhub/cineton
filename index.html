@@ -4330,7 +4330,7 @@ body{
   bar.setAttribute('aria-hidden','true');
   document.body.appendChild(bar);
   const fill=document.createElement('span');
-  fill.style.cssText='display:block;width:100%;height:100%;transform:scaleX(0);transform-origin:left center;background:linear-gradient(90deg,#a88455 0%,#d6b47b 58%,#e4cda5 100%);';
+  fill.style.cssText='display:block;width:100%;height:100%;transform:scaleX(0);transform-origin:left center;background:linear-gradient(90deg,#79b99a 0%,#a6c99a 58%,#b4c4b9 100%);';
   bar.replaceChildren(fill);
   let queued=false;
   function update(){
@@ -6362,7 +6362,7 @@ html[data-theme="dark"] :focus-visible{outline-color:var(--gd)!important}
 .cineton-bottom-nav button.is-active{color:var(--ct-nav-active);background:color-mix(in srgb,var(--gd) 15%,transparent);border-color:color-mix(in srgb,var(--gd) 25%,transparent)}
 .cineton-bottom-nav button:focus-visible{outline:2px solid var(--gd);outline-offset:2px}
 html[data-theme="dark"] .cineton-bottom-nav{--ct-nav-bg:color-mix(in srgb, var(--ct-panel) 93%, transparent);--ct-nav-border:#ffffff28;box-shadow:0 16px 44px #0008,0 2px 8px #0005}
-html[data-theme="dark"] .cineton-bottom-nav button.is-active{background:color-mix(in srgb, var(--gd) 15%, transparent);border-color:color-mix(in srgb, var(--gd) 30%, transparent);color:#e3c18a}
+html[data-theme="dark"] .cineton-bottom-nav button.is-active{background:color-mix(in srgb, var(--gd) 15%, transparent);border-color:color-mix(in srgb, var(--gd) 30%, transparent);color:#a6c99a}
 html[data-theme="light"] .cineton-bottom-nav{--ct-nav-border:color-mix(in srgb, var(--gd) 20%, transparent);box-shadow:0 12px 34px color-mix(in srgb, var(--modal-shadow) 11%, transparent),0 2px 8px color-mix(in srgb, var(--modal-shadow) 5%, transparent)}
 html[data-theme="light"] .cineton-bottom-nav button.is-active{background:color-mix(in srgb, var(--gd) 11%, transparent);border-color:color-mix(in srgb, var(--gd) 20%, transparent);color:var(--gd)}
 body{padding-bottom:112px!important}
@@ -6670,7 +6670,7 @@ main#g .ci small{
 }
 main#g .c .my-rating{
  align-self:flex-start!important;margin-top:5px!important;
- color:#f4cc78!important;font-size:.64rem!important;line-height:1.2!important;
+ color:var(--gd)!important;font-size:.64rem!important;line-height:1.2!important;
  text-shadow:0 1px 4px #000!important;
 }
 main#g .c .bd{top:8px!important;left:8px!important;z-index:2!important}
@@ -8227,7 +8227,7 @@ html body button:disabled{
 html body{padding-bottom:118px!important}html body main#g{padding-bottom:132px!important}html body .nav-bar .tabs{display:none!important}
 html body .cineton-bottom-nav{position:fixed!important;z-index:10020!important;left:50%!important;bottom:max(12px,env(safe-area-inset-bottom))!important;width:min(620px,calc(100vw - 34px))!important;min-height:76px!important;padding:7px 10px!important;display:grid!important;grid-template-columns:minmax(0,1fr) 76px minmax(0,1fr)!important;align-items:center!important;gap:8px!important;overflow:visible!important;isolation:isolate!important;border:1px solid color-mix(in srgb,var(--tx) 16%,transparent)!important;border-radius:25px!important;background:color-mix(in srgb,var(--sf) 9%,transparent)!important;-webkit-backdrop-filter:blur(42px) saturate(1.7)!important;backdrop-filter:blur(42px) saturate(1.7)!important;box-shadow:0 18px 52px #0003,0 1px 0 #ffffff38 inset!important;transform:translate3d(-50%,0,0)!important;opacity:1!important;filter:none!important;will-change:transform,opacity;transition:transform .42s cubic-bezier(.22,.8,.22,1),opacity .28s ease!important}
 html[data-theme="dark"] body .cineton-bottom-nav{background:rgba(11,16,22,.10)!important;border-color:#ffffff26!important;box-shadow:0 20px 54px #0005,0 1px 0 #ffffff2b inset!important}
-html[data-theme="light"] body .cineton-bottom-nav{background:rgba(255,252,246,.12)!important;border-color:#ffffff8c!important;box-shadow:0 16px 44px #3a2f201f,0 1px 0 #ffffff9e inset!important}
+html[data-theme="light"] body .cineton-bottom-nav{background:rgba(255,252,246,.12)!important;border-color:#ffffff8c!important;box-shadow:0 16px 44px #0309061f,0 1px 0 #ffffff9e inset!important}
 html body .ct-nav-group{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));align-items:center;gap:4px;min-width:0}
 html body .cineton-bottom-nav button{position:relative!important;min-width:0!important;min-height:57px!important;padding:6px 3px!important;display:flex!important;flex-direction:column!important;align-items:center!important;justify-content:center!important;gap:4px!important;border:1px solid transparent!important;border-radius:16px!important;background:transparent!important;color:color-mix(in srgb,var(--tx) 72%,transparent)!important;font:650 .64rem/1.05 "Manrope",sans-serif!important;cursor:pointer!important;transition:background .22s ease,color .2s ease,border-color .22s ease,transform .22s ease!important}
 html body .cineton-bottom-nav button svg{width:20px!important;height:20px!important;fill:none!important;stroke:currentColor!important;stroke-width:1.75!important;stroke-linecap:round!important;stroke-linejoin:round!important;flex:0 0 auto}
