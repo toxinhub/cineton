@@ -4169,13 +4169,15 @@ html[data-cineton-dev="1"] .cineton-dev-motion{display:inline-flex}
   -webkit-backdrop-filter:blur(4px) saturate(90%) brightness(96%)!important;
 }
 @media(max-width:640px){
+  /* Keep the warm dim overlay, but avoid expensive mobile blur and SVG grain
+     which can delay the first dialog frame and make closing feel detached. */
+  .cinemodal{backdrop-filter:none!important;-webkit-backdrop-filter:none!important}
   .cinemodal::backdrop{
-    background-color:color-mix(in srgb,#40352c 40%,transparent)!important;
-    background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 150 150' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.82' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.15'/%3E%3C/svg%3E")!important;
-    background-size:150px 150px!important;
-    background-blend-mode:soft-light!important;
-    backdrop-filter:blur(2px) saturate(90%) brightness(96%)!important;
-    -webkit-backdrop-filter:blur(2px) saturate(90%) brightness(96%)!important;
+    background-color:color-mix(in srgb,#40352c 46%,transparent)!important;
+    background-image:none!important;
+    background-blend-mode:normal!important;
+    backdrop-filter:none!important;
+    -webkit-backdrop-filter:none!important;
   }
 }
 
