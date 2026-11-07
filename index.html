@@ -6429,33 +6429,7 @@ html[data-theme="dark"] :focus-visible{outline-color:#dfbd83!important}
 
 
 <style id="cineton-theme-toggle-layout-v4">
-/* One coherent header utility row: theme switch followed by social links. */
-header{position:relative!important;padding-right:28px!important}
-.social-links{
-  position:absolute!important;top:18px!important;right:24px!important;
-  display:flex!important;align-items:center!important;justify-content:flex-end!important;
-  gap:8px!important;z-index:12!important;
-}
-#cineton-theme-toggle{
-  position:static!important;inset:auto!important;transform:none!important;
-  display:inline-flex!important;align-items:center!important;justify-content:center!important;
-  gap:7px!important;height:34px!important;min-height:34px!important;
-  padding:0 11px!important;border-radius:999px!important;
-  font:700 .65rem/1 "Manrope",sans-serif!important;white-space:nowrap!important;
-}
-#cineton-theme-toggle .theme-icon{font-size:.92rem!important;line-height:1!important}
-.social-links .social-btn{flex:0 0 34px!important}
-@media(max-width:700px){
-  header{padding:70px 17px 18px!important}
-  .social-links{top:16px!important;right:16px!important;gap:7px!important}
-  #cineton-theme-toggle{height:33px!important;min-height:33px!important;padding:0 9px!important;font-size:.61rem!important}
-  .social-links .social-btn{width:33px!important;height:33px!important;flex-basis:33px!important}
-}
-@media(max-width:360px){
-  .social-links{right:12px!important;gap:5px!important}
-  #cineton-theme-toggle{padding:0 8px!important}
-}
-@media(prefers-reduced-motion:reduce){#cineton-theme-toggle{transition:none!important}}
+/* Legacy header utility positioning is superseded by the dedicated utilities row and icon-only control layers. */
 
 /* Preserved source layer: cineton-app-navigation-v1 */
 
