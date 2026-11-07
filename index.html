@@ -9282,4 +9282,122 @@ html body .cineton-bottom-nav .ct-nav-home svg{width:20px!important;height:20px!
 html body .ct-nav-home i{display:none!important}
 html body .cineton-bottom-nav .ct-nav-home:hover{background:color-mix(in srgb,var(--tx) 7%,transparent)!important;color:var(--tx)!important}
 @media(max-width:700px){html body .cineton-bottom-nav .ct-nav-home{width:100%!important;height:auto!important;min-height:54px!important;margin:0!important;padding:5px 1px!important;border-radius:13px!important}html body .cineton-bottom-nav .ct-nav-home svg{width:19px!important;height:19px!important}}
-</style></style></body></html>
+</style>
+<style id="cineton-transparent-mobile-polish-v21">
+/* Fully transparent dock: retain readable controls, remove the dock's glass surface entirely. */
+html body .cineton-bottom-nav{
+  background:transparent!important;
+  border-color:transparent!important;
+  box-shadow:none!important;
+  -webkit-backdrop-filter:none!important;
+  backdrop-filter:none!important;
+}
+html[data-theme="dark"] body .cineton-bottom-nav,
+html[data-theme="light"] body .cineton-bottom-nav{
+  background:transparent!important;border-color:transparent!important;box-shadow:none!important;
+}
+html body .cineton-bottom-nav .ct-nav-home{
+  background:transparent!important;border-color:transparent!important;box-shadow:none!important;
+}
+html body .cineton-bottom-nav button{
+  -webkit-tap-highlight-color:transparent;
+  touch-action:manipulation;
+}
+html body .cineton-bottom-nav button:active{
+  transform:scale(.96);
+}
+html body .ct-discover-panel{
+  transition:opacity .2s ease,transform .22s cubic-bezier(.2,.7,.2,1)!important;
+  will-change:transform,opacity;
+}
+@media(max-width:700px){
+  html body .cineton-bottom-nav{
+    width:calc(100vw - 20px)!important;
+    min-height:66px!important;
+    padding:3px 4px!important;
+    gap:3px!important;
+    border-radius:0!important;
+    transition:transform .24s cubic-bezier(.2,.75,.25,1),opacity .2s ease!important;
+  }
+  html body .cineton-bottom-nav .ct-nav-home{
+    min-height:54px!important;
+    margin:0!important;
+    width:100%!important;
+    height:auto!important;
+    background:transparent!important;
+    box-shadow:none!important;
+  }
+  html body .ct-discover-panel{
+    width:calc(100vw - 20px)!important;
+    max-width:560px!important;
+    bottom:calc(max(7px,env(safe-area-inset-bottom)) + 78px)!important;
+    padding:13px!important;
+    border-radius:17px!important;
+    -webkit-backdrop-filter:blur(20px) saturate(1.25)!important;
+    backdrop-filter:blur(20px) saturate(1.25)!important;
+    transform:translate3d(-50%,10px,0)!important;
+    transition:opacity .2s ease,transform .22s cubic-bezier(.2,.7,.2,1)!important;
+  }
+  html body .ct-discover-panel.is-open{
+    transform:translate3d(-50%,0,0)!important;
+  }
+  html body .ct-discover-search{
+    width:100%!important;
+    min-width:0!important;
+    height:46px!important;
+    padding:0 11px!important;
+    gap:8px!important;
+    box-sizing:border-box!important;
+  }
+  html body .ct-discover-search input{
+    min-width:0!important;
+    width:100%!important;
+    height:100%!important;
+    font-size:16px!important;
+    line-height:1.2!important;
+  }
+  html body .ct-discover-search kbd{display:none!important}
+  html body .ct-discover-filters{
+    grid-template-columns:repeat(2,minmax(0,1fr))!important;
+    gap:8px!important;
+    margin-top:10px!important;
+  }
+  html body .ct-discover-filters label:last-child{grid-column:1/-1}
+  html body .ct-discover-filters select{
+    height:40px!important;
+    min-width:0!important;
+    font-size: .7rem!important;
+    padding:0 9px!important;
+  }
+  html body .ct-discover-footer{
+    align-items:center!important;
+    flex-wrap:wrap!important;
+    gap:6px!important;
+    margin-top:8px!important;
+  }
+  html body .ct-discover-footer span{
+    flex:1 1 150px!important;
+    min-width:0!important;
+    font-size:.55rem!important;
+  }
+  html body .ct-discover-footer button{
+    flex:0 0 auto!important;
+    min-height:34px!important;
+    padding:6px 8px!important;
+  }
+}
+@media(max-width:370px){
+  html body .ct-discover-panel{padding:11px!important}
+  html body .ct-discover-heading strong{font-size:.82rem!important}
+  html body .ct-discover-filters{gap:6px!important}
+  html body .ct-discover-filters select{font-size:.65rem!important;padding-inline:6px!important}
+  html body .ct-discover-footer span{display:none!important}
+}
+@media(prefers-reduced-motion:reduce){
+  html body .cineton-bottom-nav,
+  html body .ct-discover-panel,
+  html body .cineton-bottom-nav button{
+    transition:none!important;animation:none!important;scroll-behavior:auto!important;
+  }
+}
+</style></body></html>
