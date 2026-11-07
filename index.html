@@ -7197,4 +7197,136 @@ html[data-theme="dark"] main#g:not(.list) .c>.ci .my-rating{
 }
 </style>
 
+
+
+<style id="cineton-balanced-text-colors-v1">
+/* A consistent text hierarchy for both themes. */
+html[data-theme="light"]{
+  --tx:#2b241d;
+  --mu:#625649;
+  --gd:#805b2e;
+  --ac:#8b6336;
+  --ct-text-primary:#2b241d;
+  --ct-text-secondary:#625649;
+  --ct-text-muted:#796d60;
+  --ct-text-accent:#765126;
+  --ct-text-on-accent:#fffaf2;
+}
+html[data-theme="dark"]{
+  --tx:#f1ede5;
+  --mu:#c3bbaf;
+  --gd:#dfbd83;
+  --ac:#c09a62;
+  --ct-text-primary:#f1ede5;
+  --ct-text-secondary:#c3bbaf;
+  --ct-text-muted:#a49b90;
+  --ct-text-accent:#e2c28d;
+  --ct-text-on-accent:#17130f;
+}
+
+/* Site identity, section headings, descriptions and supporting copy. */
+html[data-theme="light"] :is(header h1,.cineton-featured-copy h2,.cinemodal h2,
+  .suggestions-dialog h1,.suggestions-dialog h2,.suggestions-dialog h3,
+  .detail-head h2,.section-title,.page-title){
+  color:var(--ct-text-primary)!important;
+}
+html[data-theme="light"] :is(header .sub,.cineton-featured-meta,
+  .cineton-featured-overview,.person-filter-bar,.empty,
+  .cinemodal .subline,.cinemodal .detail-label,.cinemodal .modal-footer,
+  .cinemodal .cm,.suggestions-dialog :is(p,small,label,.suggestions-sub,
+  .suggestion-note,.suggestion-empty,.suggestion-date,.suggestion-time,
+  .suggestion-message)){
+  color:var(--ct-text-secondary)!important;
+}
+html[data-theme="light"] :is(.cinemodal .detail-value,
+  .cinemodal .story,.cinemodal .public-comment-text,
+  .cinemodal .public-comment-name,.cinemodal .public-comment,
+  .suggestions-dialog .suggestion-title-text){
+  color:var(--ct-text-primary)!important;
+}
+
+/* Toolbar, tabs, filters, statistics and navigation. */
+html[data-theme="light"] :is(.stat,.tabs button,.select-trigger,
+  .select-menu button,.surprise,.bar .cineton-search-action,
+  .person-filter-bar button,.cineton-bottom-nav button){
+  color:var(--ct-text-secondary)!important;
+}
+html[data-theme="light"] :is(.stat b,.tabs button.on,
+  .select-wrap.open .select-trigger,.select-menu button[aria-selected="true"],
+  .bar .cineton-search-action:hover,.person-filter-bar button:hover,
+  .cineton-bottom-nav button.is-active){
+  color:var(--ct-text-primary)!important;
+}
+html[data-theme="light"] :is(input,textarea,select,.bar input,
+  .suggestion-compose input,.suggestion-compose textarea,
+  .cinemodal .public-comment-composer :is(input,textarea)){
+  color:var(--ct-text-primary)!important;
+}
+html[data-theme="light"] :is(input,textarea)::placeholder{
+  color:var(--ct-text-muted)!important;opacity:1!important;
+}
+
+/* Detail chips, ratings and comment metadata. */
+html[data-theme="light"] .cinemodal .chips :is(span,.imdb-chip,.my-chip){
+  color:var(--ct-text-secondary)!important;
+}
+html[data-theme="light"] :is(.cinemodal .public-comment-time,
+  .cinemodal .public-comment-date,.suggestion-number,.suggestion-date,
+  .suggestion-time){
+  color:var(--ct-text-muted)!important;
+}
+html[data-theme="light"] .cinemodal .detail-label{
+  letter-spacing:.105em!important;
+}
+
+/* Keep the poster-overlay treatment intentionally high contrast. */
+html[data-theme="light"] main#g:not(.list) .c>.ci,
+html[data-theme="light"] main#g:not(.list) .c>.ci :is(b,small){
+  color:#fff!important;
+}
+html[data-theme="light"] main#g:not(.list) .c>.ci .my-rating{
+  color:#ffe0a0!important;
+}
+
+/* Dark theme: soften pure-white text and give secondary copy enough contrast. */
+html[data-theme="dark"] :is(.cinemodal .detail-value,
+  .cinemodal .story,.cinemodal .public-comment-text,
+  .cinemodal .public-comment-name,.suggestions-dialog .suggestion-title-text){
+  color:var(--ct-text-primary)!important;
+}
+html[data-theme="dark"] :is(.cinemodal .subline,.cinemodal .detail-label,
+  .cinemodal .modal-footer,.cinemodal .cm,
+  .cineton-featured-meta,.cineton-featured-overview,
+  .person-filter-bar,.empty){
+  color:var(--ct-text-secondary)!important;
+}
+html[data-theme="dark"] :is(.cinemodal .public-comment-time,
+  .cinemodal .public-comment-date,.suggestion-number,
+  .suggestion-date,.suggestion-time){
+  color:var(--ct-text-muted)!important;
+}
+html[data-theme="dark"] .cinemodal .chips :is(span,.imdb-chip,.my-chip){
+  color:#ded6ca!important;
+}
+html[data-theme="dark"] :is(input,textarea,select,
+  .cinemodal .public-comment-composer :is(input,textarea)){
+  color:var(--ct-text-primary)!important;
+}
+html[data-theme="dark"] :is(input,textarea)::placeholder{
+  color:var(--ct-text-muted)!important;opacity:1!important;
+}
+
+/* Accent colors remain readable rather than glowing or fading into the surface. */
+html[data-theme="light"] :is(.cineton-featured-eyebrow,
+  .film-mark,.person-filter-bar .clear-person,
+  .cinemodal .genre-filter,.cinemodal .person-filter){
+  color:var(--ct-text-accent)!important;
+}
+html[data-theme="dark"] :is(.cineton-featured-eyebrow,
+  .film-mark,.person-filter-bar .clear-person,
+  .cinemodal .genre-filter,.cinemodal .person-filter){
+  color:var(--ct-text-accent)!important;
+}
+</style>
+
 </body></html>
