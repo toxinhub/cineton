@@ -9097,7 +9097,7 @@ html body .cineton-bottom-nav button.is-active{
   html body .cineton-bottom-nav{transition:none!important;will-change:auto}
 }
 </style>
-<script id="cineton-bottom-dock-scroll-behavior-v13">
+<script id="cineton-bottom-dock-scroll-behavior-v14">
 (()=>{
  const dock=document.querySelector('.cineton-bottom-nav');
  if(!dock)return;
@@ -9108,9 +9108,9 @@ html body .cineton-bottom-nav button.is-active{
    const y=Math.max(0,window.scrollY||0);
    const delta=y-previousY;
    const modalOpen=!!document.querySelector('dialog[open]')||document.body.classList.contains('suggestions-modal-open');
-   if(modalOpen||y<48||delta < -5){
+   if(modalOpen||y<56||delta < -2){
      dock.classList.remove('is-scroll-hidden');
-   }else if(delta>5&&y>90){
+   }else if(delta>2&&y>80){
      dock.classList.add('is-scroll-hidden');
    }
    previousY=y;
@@ -9130,4 +9130,39 @@ html body .cineton-bottom-nav button.is-active{
  });
 })();
 </script>
+
+<style id="cineton-glass-dock-transparency-motion-v14">
+/* More transparent glass and a deliberate slide-away / slide-in motion. */
+html body .cineton-bottom-nav{
+  background:color-mix(in srgb,var(--sf) 19%,transparent)!important;
+  border-color:color-mix(in srgb,var(--tx) 13%,transparent)!important;
+  -webkit-backdrop-filter:blur(32px) saturate(1.8)!important;
+  backdrop-filter:blur(32px) saturate(1.8)!important;
+  transition:
+    transform .52s cubic-bezier(.22,.8,.25,1),
+    opacity .38s ease,
+    filter .42s ease,
+    background-color .3s ease,
+    border-color .3s ease!important;
+}
+html[data-theme="dark"] body .cineton-bottom-nav{
+  background:color-mix(in srgb,#151820 23%,transparent)!important;
+  border-color:#ffffff1c!important;
+  box-shadow:0 18px 48px #0005,0 1px 0 #ffffff16 inset!important;
+}
+html[data-theme="light"] body .cineton-bottom-nav{
+  background:color-mix(in srgb,#fffaf2 25%,transparent)!important;
+  border-color:#ffffff75!important;
+  box-shadow:0 14px 38px #59452a14,0 1px 0 #ffffffa8 inset!important;
+}
+html body .cineton-bottom-nav.is-scroll-hidden{
+  opacity:0!important;
+  filter:blur(5px)!important;
+  pointer-events:none!important;
+  transform:translate(-50%,calc(100% + 34px)) scale(.96)!important;
+}
+@media(prefers-reduced-motion:reduce){
+  html body .cineton-bottom-nav{transition:none!important;filter:none!important}
+}
+</style>
 </style>
