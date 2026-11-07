@@ -1997,6 +1997,9 @@ const CinetonMovieModal=(()=>{
 
     requestAnimationFrame(()=>{
       if(!d.open||requestId!==state.request){if(requestId===state.request)state.busy=false;return}
+      /* First RAF reaches the frame boundary; second RAF runs after the shell had a paint opportunity. */
+      requestAnimationFrame(()=>{
+      if(!d.open||requestId!==state.request){if(requestId===state.request)state.busy=false;return}
       try{
         const markup=buildContent(m);
         $('#mb').innerHTML=markup;
@@ -2030,6 +2033,7 @@ const CinetonMovieModal=(()=>{
       }finally{
         if(requestId===state.request)state.busy=false;
       }
+      });
     });
   }
   function close(){
