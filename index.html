@@ -9193,3 +9193,74 @@ dialog.cinemodal[open].is-closing{
   }
 }
 </style>
+
+<style id="cineton-bottom-nav-balanced-modern-v1">
+/* Balanced compact navigation dock with permanently white labels and icons. */
+html body .cineton-bottom-nav{
+  width:min(470px,calc(100vw - 32px))!important;min-height:60px!important;height:60px!important;
+  padding:5px 7px!important;gap:4px!important;grid-template-columns:minmax(0,1fr) 58px minmax(0,1fr)!important;
+  align-items:center!important;border-radius:18px!important;background:rgba(20,23,29,.88)!important;
+  border:1px solid rgba(255,255,255,.16)!important;
+  box-shadow:0 10px 30px rgba(0,0,0,.28),0 1px 0 rgba(255,255,255,.08) inset!important;
+  -webkit-backdrop-filter:blur(12px) saturate(1.12)!important;backdrop-filter:blur(12px) saturate(1.12)!important;
+}
+html body .cineton-bottom-nav .ct-nav-group{
+  min-width:0!important;height:100%!important;display:grid!important;
+  grid-template-columns:repeat(2,minmax(0,1fr))!important;align-items:center!important;gap:3px!important;
+}
+html body .cineton-bottom-nav button,html body .cineton-bottom-nav button span,
+html body .cineton-bottom-nav .ct-nav-home,html body .cineton-bottom-nav .ct-nav-home span,
+html body .ct-home-menu button,html body .ct-home-menu button b,html body .ct-home-menu button small{
+  color:#fff!important;-webkit-text-fill-color:#fff!important;
+}
+html body .cineton-bottom-nav button{
+  min-width:0!important;min-height:48px!important;height:48px!important;padding:4px 2px!important;gap:3px!important;
+  border:1px solid transparent!important;border-radius:12px!important;background:transparent!important;
+  display:flex!important;flex-direction:column!important;align-items:center!important;justify-content:center!important;
+  font:650 .62rem/1.05 "Manrope",sans-serif!important;letter-spacing:0!important;
+}
+html body .cineton-bottom-nav button svg{width:18px!important;height:18px!important;stroke:#fff!important;fill:none!important;opacity:.96!important}
+html body .cineton-bottom-nav button.is-active:not(.ct-nav-home){
+  color:#fff!important;-webkit-text-fill-color:#fff!important;background:rgba(255,255,255,.13)!important;border-color:rgba(255,255,255,.16)!important;
+}
+html body .cineton-bottom-nav button:hover,html body .cineton-bottom-nav button:focus-visible{
+  color:#fff!important;background:rgba(255,255,255,.10)!important;
+}
+html body .cineton-bottom-nav .ct-nav-home-wrap{min-width:0!important;width:100%!important;height:100%!important;display:grid!important;place-items:center!important}
+html body .cineton-bottom-nav .ct-nav-home{
+  width:50px!important;height:48px!important;min-height:48px!important;margin:0!important;padding:4px 2px!important;gap:3px!important;
+  border:1px solid rgba(255,255,255,.22)!important;border-radius:13px!important;background:rgba(255,255,255,.12)!important;
+  box-shadow:0 2px 8px rgba(0,0,0,.16),0 1px 0 rgba(255,255,255,.12) inset!important;
+}
+html body .cineton-bottom-nav .ct-nav-home svg{width:19px!important;height:19px!important;stroke:#fff!important}
+html body .ct-nav-home i{display:none!important}
+html body .ct-home-menu{
+  width:184px!important;padding:6px!important;gap:3px!important;border:1px solid rgba(255,255,255,.18)!important;
+  border-radius:14px!important;background:rgba(20,23,29,.96)!important;box-shadow:0 14px 34px rgba(0,0,0,.3)!important;
+  -webkit-backdrop-filter:blur(12px)!important;backdrop-filter:blur(12px)!important;
+}
+html body .ct-home-menu button{
+  min-height:42px!important;padding:7px 10px!important;border:1px solid transparent!important;border-radius:10px!important;
+  background:transparent!important;text-align:left!important;
+}
+html body .ct-home-menu button:hover,html body .ct-home-menu button:focus-visible{background:rgba(255,255,255,.11)!important}
+@media(max-width:700px){
+  html body .cineton-bottom-nav{
+    width:calc(100vw - 24px)!important;height:58px!important;min-height:58px!important;padding:3px 5px!important;gap:2px!important;
+    grid-template-columns:minmax(0,1fr) 52px minmax(0,1fr)!important;bottom:max(6px,env(safe-area-inset-bottom))!important;border-radius:16px!important;
+  }
+  html body .cineton-bottom-nav .ct-nav-group{gap:2px!important}
+  html body .cineton-bottom-nav button{height:48px!important;min-height:48px!important;padding:3px 1px!important;gap:2px!important;border-radius:10px!important;font-size:.58rem!important}
+  html body .cineton-bottom-nav button svg{width:17px!important;height:17px!important}
+  html body .cineton-bottom-nav .ct-nav-home{width:46px!important;height:46px!important;min-height:46px!important;border-radius:12px!important}
+  html body .cineton-bottom-nav .ct-nav-home svg{width:18px!important;height:18px!important}
+  html body .ct-home-menu{bottom:calc(100% + 10px)!important}
+  html body{padding-bottom:82px!important}html body main#g{padding-bottom:86px!important}
+  html body #to-top,html body #to-top.show{bottom:72px!important}
+}
+@media(max-width:360px){
+  html body .cineton-bottom-nav{width:calc(100vw - 16px)!important}
+  html body .cineton-bottom-nav button{font-size:.54rem!important}
+}
+@media(prefers-reduced-motion:reduce){html body .cineton-bottom-nav button{transition:none!important}}
+</style>
