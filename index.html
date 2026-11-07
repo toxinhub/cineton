@@ -3390,8 +3390,7 @@ update();
     input.style.backgroundImage="";
   };
   const updateGhost=()=>{
-    const raw=input.value.split(/\r?
-/)[0].replace(/\s+/g," ").trim();
+    const raw=input.value.split(/\r?\n/)[0].replace(/\s+/g," ").trim();
     const q=normalizeTitle(raw);
     if(!q){clearGhost();return}
     const match=libraryRows.find(m=>{
@@ -3482,8 +3481,7 @@ update();
   dialog.addEventListener("click",e=>{if(e.target===dialog)closeSuggestions()});
   form.addEventListener("submit",async e=>{
     e.preventDefault();
-    const titles=input.value.split(/\r?
-/).map(line=>line.replace(/^\s*\d+\s*[.)-]\s*/,"").replace(/\s+/g," ").trim()).filter(Boolean);
+    const titles=input.value.split(/\r?\n/).map(line=>line.replace(/^\s*\d+\s*[.)-]\s*/,"").replace(/\s+/g," ").trim()).filter(Boolean);
     if(!titles.length)return;
     if(titles.length>6){msg.textContent="Please submit up to 6 titles at a time.";return;}
     submit.disabled=true;msg.textContent="Saving…";
@@ -8803,7 +8801,6 @@ html[data-theme] .suggestions-dialog .suggestion-submit{color:var(--ct-text-on-a
 html[data-theme] .suggestions-dialog .suggestions-close{color:var(--ct-text-secondary)!important;border-color:var(--ct-panel-border)!important}
 html[data-theme] .suggestions-dialog .suggestions-close:hover{color:var(--ct-text-primary)!important;background:var(--ct-hover)!important}
 
-
 /* Final theme ownership for older mobile-cinema and warm-tonal layers. */
 html[data-theme] body .sub,
 html[data-theme] body .ci small,
@@ -8828,6 +8825,7 @@ html[data-theme] body .cinemodal .detail-label,
 html[data-theme] body .cinemodal .modal-footer,
 html[data-theme] body .cinemodal .subline{color:var(--ct-text-secondary)!important}
 html[data-theme] body :is(button,a,input,select,textarea,[tabindex]):focus-visible{outline-color:var(--ct-focus)!important}
+
 </style>
 </body></html>
 
