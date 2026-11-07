@@ -7496,7 +7496,7 @@ main#g:not(.list) .c>.bd::after{
 <style id="cineton-compact-balanced-header-v1">
 /* Compact, aligned identity header; preserve the existing theme and social actions. */
 header{
-  padding:18px 220px 13px 0!important;
+  padding:18px 0 13px!important;
   min-height:0!important;
 }
 header:before{
@@ -7517,27 +7517,8 @@ header .sub{
   font-size:clamp(.76rem,.95vw,.9rem)!important;
   line-height:1.38!important;
 }
-.social-links{
-  top:50%!important;
-  right:0!important;
-  transform:translateY(-50%)!important;
-  gap:6px!important;
-}
-#cineton-theme-toggle{
-  height:32px!important;
-  min-height:32px!important;
-  padding-inline:10px!important;
-  font-size:.62rem!important;
-}
-.social-links .social-btn{
-  width:32px!important;
-  height:32px!important;
-  flex-basis:32px!important;
-}
+/* Theme/social control geometry is owned by the current utility-row layers. */
 @media(max-width:700px){
-  header{
-    padding:52px 0 12px!important;
-  }
   header:before{
     margin-bottom:4px!important;
     font-size:.49rem!important;
@@ -7553,33 +7534,11 @@ header .sub{
     font-size:.76rem!important;
     line-height:1.4!important;
   }
-  .social-links{
-    top:9px!important;
-    right:0!important;
-    transform:none!important;
-    gap:5px!important;
-  }
-  #cineton-theme-toggle{
-    height:30px!important;
-    min-height:30px!important;
-    padding-inline:9px!important;
-    font-size:.59rem!important;
-  }
-  .social-links .social-btn{
-    width:30px!important;
-    height:30px!important;
-    flex-basis:30px!important;
-  }
 }
 @media(max-width:380px){
   header{padding-top:49px!important}
   header h1{font-size:2.5rem!important}
   header .sub{font-size:.72rem!important}
-  .social-links{gap:4px!important}
-  #cineton-theme-toggle{padding-inline:8px!important}
-}
-@media(prefers-reduced-motion:reduce){
-  .social-links,#cineton-theme-toggle,.social-links .social-btn{transition:none!important}
 }
 </style>
 
