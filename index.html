@@ -7476,3 +7476,238 @@ header .sub{
   .social-links,#cineton-theme-toggle,.social-links .social-btn{transition:none!important}
 }
 </style>
+
+
+<style id="cineton-midnight-cyan-palette-v1">
+/* Midnight Blue + Electric Cyan — unified light/dark palette. */
+:root{
+  --bg:#07111f;--sf:#0d1b2d;--tx:#eaf4ff;--mu:#a8bdd2;
+  --ac:#37c8e0;--gd:#75e2ef;--line:#b9d9f018;--line-strong:#b9d9f03b;
+  --modal:#102239;--modal-overlay:#07111ff2;--modal-backdrop:#020914c9;--modal-shadow:#02091499;
+  --ct-text-primary:#eaf4ff;--ct-text-secondary:#b8cadd;--ct-text-muted:#8299b1;
+  --ct-text-accent:#65d9ea;--ct-text-on-accent:#04131e;
+  --ct-panel:rgba(13,27,45,.88);--ct-panel-solid:#102239;
+  --ct-panel-border:rgba(151,195,224,.17);--ct-hover:rgba(55,200,224,.11);--ct-focus:#42cfe4;
+  --ct-nav-bg:rgba(13,27,45,.94);--ct-nav-border:rgba(151,195,224,.22);
+  --ct-nav-muted:#a8bdd2;--ct-nav-active:#65d9ea;
+  color-scheme:dark;
+}
+html[data-theme="dark"]{
+  --bg:#07111f!important;--sf:#0d1b2d!important;--tx:#eaf4ff!important;--mu:#a8bdd2!important;
+  --ac:#37c8e0!important;--gd:#75e2ef!important;--line:#b9d9f018!important;--line-strong:#b9d9f03b!important;
+  --modal:#102239!important;--modal-overlay:#07111ff2!important;--modal-backdrop:#020914c9!important;--modal-shadow:#02091499!important;
+  --ct-text-primary:#eaf4ff!important;--ct-text-secondary:#b8cadd!important;--ct-text-muted:#8299b1!important;
+  --ct-text-accent:#65d9ea!important;--ct-text-on-accent:#04131e!important;
+  --ct-panel:rgba(13,27,45,.9)!important;--ct-panel-solid:#102239!important;
+  --ct-panel-border:rgba(151,195,224,.17)!important;--ct-hover:rgba(55,200,224,.11)!important;--ct-focus:#42cfe4!important;
+  --ct-nav-bg:rgba(13,27,45,.94)!important;--ct-nav-border:rgba(151,195,224,.22)!important;
+  --ct-nav-muted:#a8bdd2!important;--ct-nav-active:#65d9ea!important;
+  color-scheme:dark!important;
+}
+html[data-theme="light"]{
+  --bg:#edf4fa!important;--sf:#ffffff!important;--tx:#172b43!important;--mu:#536b83!important;
+  --ac:#087f9d!important;--gd:#0ba9c2!important;--line:#294b6818!important;--line-strong:#294b6835!important;
+  --modal:#ffffff!important;--modal-overlay:#edf4faf2!important;--modal-backdrop:#14283b52!important;--modal-shadow:#14283b2b!important;
+  --ct-text-primary:#172b43!important;--ct-text-secondary:#536b83!important;--ct-text-muted:#71869a!important;
+  --ct-text-accent:#087f9d!important;--ct-text-on-accent:#ffffff!important;
+  --ct-panel:rgba(255,255,255,.88)!important;--ct-panel-solid:#ffffff!important;
+  --ct-panel-border:rgba(35,76,107,.15)!important;--ct-hover:rgba(11,169,194,.09)!important;--ct-focus:#0788a6!important;
+  --ct-nav-bg:rgba(255,255,255,.94)!important;--ct-nav-border:rgba(35,76,107,.17)!important;
+  --ct-nav-muted:#536b83!important;--ct-nav-active:#087f9d!important;
+  color-scheme:light!important;
+}
+html[data-theme="light"],html[data-theme="light"] body{
+  background-color:#edf4fa!important;color:#172b43!important;
+}
+html[data-theme="light"] body{
+  background-image:radial-gradient(ellipse at 50% -22%,#ffffff 0%,#edf4fa 58%,#e7f0f7 100%)!important;
+}
+html[data-theme="dark"],html[data-theme="dark"] body{
+  background-color:#07111f!important;color:#eaf4ff!important;
+}
+html[data-theme="dark"] body{
+  background-image:radial-gradient(ellipse at 50% -20%,#142b43 0%,#09182a 43%,#050d18 100%)!important;
+  background-attachment:fixed!important;
+}
+/* Header and identity */
+html[data-theme="dark"] header,html[data-theme="light"] header{
+  background:transparent!important;border-bottom-color:var(--line)!important;color:var(--tx)!important;
+}
+html[data-theme="dark"] header h1,html[data-theme="light"] header h1,
+html[data-theme="dark"] header:before,html[data-theme="light"] header:before{
+  color:var(--tx)!important;
+}
+html[data-theme="dark"] header .sub,html[data-theme="light"] header .sub{
+  color:var(--mu)!important;
+}
+html[data-theme="dark"] .film-mark,html[data-theme="light"] .film-mark{
+  color:var(--gd)!important;
+}
+html[data-theme="dark"] #cineton-theme-toggle,html[data-theme="light"] #cineton-theme-toggle,
+html[data-theme="dark"] .social-links .social-btn,html[data-theme="light"] .social-links .social-btn{
+  color:var(--tx)!important;background:var(--ct-panel)!important;border-color:var(--ct-panel-border)!important;
+}
+/* Stats, navigation and filters */
+html[data-theme="dark"] .stats-row,html[data-theme="light"] .stats-row,
+html[data-theme="dark"] .nav-bar,html[data-theme="light"] .nav-bar{
+  color:var(--tx)!important;
+}
+html[data-theme="dark"] .stat,html[data-theme="light"] .stat{
+  color:var(--ct-text-secondary)!important;background:var(--ct-panel)!important;
+  border:1px solid var(--ct-panel-border)!important;box-shadow:0 3px 12px #06101a0b!important;
+}
+html[data-theme="dark"] .stat b,html[data-theme="light"] .stat b{color:var(--ct-text-primary)!important}
+html[data-theme="dark"] .stat:hover,html[data-theme="dark"] .stat.active,
+html[data-theme="light"] .stat:hover,html[data-theme="light"] .stat.active{
+  background:var(--ct-hover)!important;border-color:var(--ct-focus)!important;
+}
+html[data-theme="dark"] .tabs,html[data-theme="light"] .tabs{
+  background:var(--ct-panel)!important;border-color:var(--ct-panel-border)!important;
+}
+html[data-theme="dark"] .tabs button,html[data-theme="light"] .tabs button{
+  color:var(--ct-text-secondary)!important;background:transparent!important;
+}
+html[data-theme="dark"] .tabs button.on,html[data-theme="light"] .tabs button.on{
+  color:var(--ct-text-on-accent)!important;background:var(--gd)!important;
+}
+html[data-theme="dark"] .nav-actions button,html[data-theme="light"] .nav-actions button,
+html[data-theme="dark"] .person-filter-bar button,html[data-theme="light"] .person-filter-bar button,
+html[data-theme="dark"] .surprise,html[data-theme="light"] .surprise{
+  color:var(--ct-text-secondary)!important;border-color:var(--ct-panel-border)!important;
+}
+html[data-theme="dark"] .bar,html[data-theme="light"] .bar{
+  color:var(--tx)!important;background:var(--ct-panel)!important;
+  border:1px solid var(--ct-panel-border)!important;box-shadow:0 10px 28px #06101a12!important;
+}
+html[data-theme="dark"] .bar :is(button,input,select),html[data-theme="light"] .bar :is(button,input,select),
+html[data-theme="dark"] .select-menu,html[data-theme="light"] .select-menu,
+html[data-theme="dark"] .select-menu button,html[data-theme="light"] .select-menu button,
+html[data-theme="dark"] input,html[data-theme="light"] input,
+html[data-theme="dark"] textarea,html[data-theme="light"] textarea,
+html[data-theme="dark"] select,html[data-theme="light"] select{
+  color:var(--ct-text-primary)!important;background-color:var(--ct-panel-solid)!important;
+  border-color:var(--ct-panel-border)!important;
+}
+html[data-theme="dark"] :is(input,textarea)::placeholder{color:#8299b1!important}
+html[data-theme="light"] :is(input,textarea)::placeholder{color:#71869a!important}
+html[data-theme="dark"] .bar :is(button:hover,button:focus-visible),
+html[data-theme="dark"] .select-menu button:hover,
+html[data-theme="light"] .bar :is(button:hover,button:focus-visible),
+html[data-theme="light"] .select-menu button:hover{
+  background:var(--ct-hover)!important;border-color:var(--ct-focus)!important;
+}
+html[data-theme="dark"] .bar button.on,html[data-theme="dark"] .views button.on,
+html[data-theme="light"] .bar button.on,html[data-theme="light"] .views button.on{
+  color:var(--ct-text-on-accent)!important;background:var(--gd)!important;border-color:var(--gd)!important;
+}
+html[data-theme="dark"] .select-menu button[aria-selected="true"],
+html[data-theme="light"] .select-menu button[aria-selected="true"]{
+  background:var(--ct-hover)!important;color:var(--ct-text-primary)!important;
+}
+html[data-theme="dark"] .person-filter-bar,html[data-theme="light"] .person-filter-bar,
+html[data-theme="dark"] .empty,html[data-theme="light"] .empty{
+  color:var(--ct-text-secondary)!important;
+}
+/* Poster cards retain image-led contrast; list cards use the new surfaces. */
+html[data-theme="dark"] main#g.list .c,html[data-theme="light"] main#g.list .c{
+  color:var(--ct-text-primary)!important;background:var(--ct-panel)!important;
+  border-color:var(--ct-panel-border)!important;box-shadow:0 5px 18px #06101a12!important;
+}
+html[data-theme="dark"] main#g.list .c>.ci,html[data-theme="light"] main#g.list .c>.ci{
+  color:var(--ct-text-primary)!important;background:transparent!important;
+}
+html[data-theme="dark"] main#g.list .c .ci b,html[data-theme="light"] main#g.list .c .ci b{
+  color:var(--ct-text-primary)!important;
+}
+html[data-theme="dark"] main#g.list .c .ci small,html[data-theme="light"] main#g.list .c .ci small{
+  color:var(--ct-text-secondary)!important;
+}
+html[data-theme="dark"] main#g.list .c:hover,html[data-theme="light"] main#g.list .c:hover{
+  background:var(--ct-hover)!important;border-color:var(--ct-focus)!important;
+}
+html[data-theme="dark"] main#g:not(.list) .c,html[data-theme="light"] main#g:not(.list) .c{
+  border-color:#a8c7dc38!important;
+}
+html[data-theme="dark"] main#g:not(.list) .c>.ci,
+html[data-theme="light"] main#g:not(.list) .c>.ci{
+  background:linear-gradient(180deg,transparent 0%,rgba(3,12,22,.18) 20%,rgba(3,12,22,.88) 100%)!important;
+}
+html[data-theme="dark"] main#g:not(.list) .c>.ci :is(b,small),
+html[data-theme="light"] main#g:not(.list) .c>.ci :is(b,small){color:#f4faff!important}
+html[data-theme="dark"] main#g:not(.list) .c>.ci .my-rating,
+html[data-theme="light"] main#g:not(.list) .c>.ci .my-rating{color:#a8eff5!important}
+html[data-theme="dark"] main#g:not(.list) .c>.bd,
+html[data-theme="light"] main#g:not(.list) .c>.bd{
+  color:#f3e5a2!important;-webkit-text-fill-color:#f3e5a2!important;
+}
+/* Details modal, comments and suggestion surfaces */
+html[data-theme="dark"] .cinemodal,html[data-theme="light"] .cinemodal{
+  color:var(--ct-text-primary)!important;background:var(--modal)!important;
+  border-color:var(--ct-panel-border)!important;box-shadow:0 28px 90px var(--modal-shadow)!important;
+}
+html[data-theme="dark"] .cinemodal::after,html[data-theme="light"] .cinemodal::after{
+  background:var(--modal-overlay)!important;
+}
+html[data-theme="dark"] .cinemodal :is(h2,.detail-value,.story,.public-comment-text,.public-comment-name),
+html[data-theme="light"] .cinemodal :is(h2,.detail-value,.story,.public-comment-text,.public-comment-name){
+  color:var(--ct-text-primary)!important;
+}
+html[data-theme="dark"] .cinemodal :is(.subline,.detail-label,.modal-footer,.cm,.public-comment-time,.public-comment-date),
+html[data-theme="light"] .cinemodal :is(.subline,.detail-label,.modal-footer,.cm,.public-comment-time,.public-comment-date){
+  color:var(--ct-text-secondary)!important;
+}
+html[data-theme="dark"] .cinemodal .chips span,html[data-theme="light"] .cinemodal .chips span{
+  color:var(--ct-text-secondary)!important;background:var(--ct-hover)!important;border-color:var(--ct-panel-border)!important;
+}
+html[data-theme="dark"] .cinemodal .public-comments,html[data-theme="light"] .cinemodal .public-comments,
+html[data-theme="dark"] .cinemodal .public-comment,html[data-theme="light"] .cinemodal .public-comment,
+html[data-theme="dark"] .cinemodal .public-comment-composer,html[data-theme="light"] .cinemodal .public-comment-composer{
+  color:var(--ct-text-primary)!important;background:var(--ct-panel)!important;border-color:var(--ct-panel-border)!important;
+}
+html[data-theme="dark"] .cinemodal .public-comment-composer :is(input,textarea),
+html[data-theme="light"] .cinemodal .public-comment-composer :is(input,textarea){
+  color:var(--ct-text-primary)!important;background:var(--ct-panel-solid)!important;border-color:var(--ct-panel-border)!important;
+}
+html[data-theme="dark"] .suggestions-dialog,html[data-theme="light"] .suggestions-dialog{
+  color:var(--ct-text-primary)!important;background:var(--modal)!important;border-color:var(--ct-panel-border)!important;
+}
+html[data-theme="dark"] .suggestions-dialog :is(h1,h2,h3,.suggestion-title-text),
+html[data-theme="light"] .suggestions-dialog :is(h1,h2,h3,.suggestion-title-text){color:var(--ct-text-primary)!important}
+html[data-theme="dark"] .suggestions-dialog :is(p,label,small,.suggestions-sub,.suggestion-note,.suggestion-empty,.suggestion-date,.suggestion-time,.suggestion-message),
+html[data-theme="light"] .suggestions-dialog :is(p,label,small,.suggestions-sub,.suggestion-note,.suggestion-empty,.suggestion-date,.suggestion-time,.suggestion-message){
+  color:var(--ct-text-secondary)!important;
+}
+html[data-theme="dark"] .suggestion-compose :is(input,textarea),
+html[data-theme="light"] .suggestion-compose :is(input,textarea){
+  color:var(--ct-text-primary)!important;background:var(--ct-panel-solid)!important;border-color:var(--ct-panel-border)!important;
+}
+/* Bottom dock, empty states and keyboard focus */
+html[data-theme="dark"] .cineton-bottom-nav,html[data-theme="light"] .cineton-bottom-nav{
+  color:var(--ct-text-secondary)!important;background:var(--ct-nav-bg)!important;border-color:var(--ct-nav-border)!important;
+  box-shadow:0 14px 40px var(--modal-shadow)!important;
+}
+html[data-theme="dark"] .cineton-bottom-nav button,html[data-theme="light"] .cineton-bottom-nav button{
+  color:var(--ct-text-secondary)!important;
+}
+html[data-theme="dark"] .cineton-bottom-nav button.is-active,
+html[data-theme="light"] .cineton-bottom-nav button.is-active{
+  color:var(--ct-text-accent)!important;background:var(--ct-hover)!important;border-color:var(--ct-panel-border)!important;
+}
+html[data-theme="dark"] .empty,html[data-theme="light"] .empty{
+  background:var(--ct-panel)!important;border-color:var(--ct-panel-border)!important;
+}
+html[data-theme="dark"] :focus-visible,html[data-theme="light"] :focus-visible{
+  outline-color:var(--ct-focus)!important;
+}
+/* Consistent semantic accents; IMDb's own yellow remains recognizable. */
+html[data-theme="dark"] :is(.film-mark,.cineton-featured-eyebrow,.genre-filter,.person-filter,.clear-person),
+html[data-theme="light"] :is(.film-mark,.cineton-featured-eyebrow,.genre-filter,.person-filter,.clear-person){
+  color:var(--ct-text-accent)!important;
+}
+html[data-theme="dark"] .cineton-featured,html[data-theme="light"] .cineton-featured{
+  border-color:var(--ct-panel-border)!important;
+}
+@media(prefers-reduced-motion:reduce){
+  html[data-theme="dark"] *,html[data-theme="light"] *{transition-duration:.01ms!important}
+}
+</style>
