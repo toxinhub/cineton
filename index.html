@@ -8074,3 +8074,39 @@ header{
   .stats-row .stat:not(:last-child)::after{margin-left:6px!important;margin-right:6px!important}
 }
 </style>
+
+<style id="cineton-force-statistics-text-only-v2">
+/* Higher-specificity reset overrides legacy theme button surfaces. */
+html[data-theme] .stats-row,
+html[data-theme] .stats-row .stats,
+html[data-theme] .stats-row .stat,
+html[data-theme] .stats-row .stat:hover,
+html[data-theme] .stats-row .stat:focus,
+html[data-theme] .stats-row .stat:focus-visible,
+html[data-theme] .stats-row .stat:active,
+html[data-theme] .stats-row .stat.active,
+html[data-theme] .stats-row .stat[aria-pressed="true"]{
+  background:transparent!important;
+  background-color:transparent!important;
+  background-image:none!important;
+  border:0!important;
+  border-color:transparent!important;
+  border-radius:0!important;
+  box-shadow:none!important;
+  outline:0!important;
+}
+html[data-theme] .stats-row .stat::before{
+  content:none!important;
+  display:none!important;
+  background:none!important;
+  border:0!important;
+  box-shadow:none!important;
+}
+html[data-theme] .stats-row .stat:not(:last-child)::after{
+  content:"|"!important;
+  display:inline-block!important;
+  background:transparent!important;
+  border:0!important;
+  box-shadow:none!important;
+}
+</style>
