@@ -9525,4 +9525,103 @@ html body .cineton-bottom-nav .ct-nav-home{
 }
 </style>
 
+
+<style id="cineton-mobile-nav-animation-compact-v29">
+/* Mobile-only: remove competing legacy hide effects and use one compositor-friendly slide. */
+@media(max-width:700px){
+  html body .cineton-bottom-nav{
+    width:calc(100vw - 24px)!important;
+    min-height:60px!important;
+    height:60px!important;
+    padding:2px 5px!important;
+    bottom:max(6px,env(safe-area-inset-bottom))!important;
+    grid-template-columns:minmax(0,1fr) 54px minmax(0,1fr)!important;
+    gap:2px!important;
+    border-radius:17px!important;
+    transform:translate3d(-50%,0,0)!important;
+    filter:none!important;
+    will-change:transform,opacity;
+    transition:transform .32s cubic-bezier(.22,.72,.18,1),opacity .2s ease!important;
+  }
+  html body .cineton-bottom-nav.is-scroll-hidden{
+    transform:translate3d(-50%,calc(100% + 12px),0)!important;
+    opacity:0!important;
+    filter:none!important;
+    pointer-events:none!important;
+  }
+  html body .cineton-bottom-nav button{
+    min-height:48px!important;
+    padding:3px 1px!important;
+    gap:3px!important;
+    border-radius:11px!important;
+    font-size:.55rem!important;
+    line-height:1!important;
+    transition:background .16s ease,color .16s ease,border-color .16s ease!important;
+  }
+  html body .cineton-bottom-nav button svg{
+    width:17px!important;
+    height:17px!important;
+  }
+  html body .ct-nav-group{gap:1px!important}
+  html body .cineton-bottom-nav .ct-nav-home{
+    width:100%!important;
+    height:auto!important;
+    min-height:48px!important;
+    margin:0!important;
+    padding:3px 1px!important;
+    border-radius:11px!important;
+  }
+  html body .cineton-bottom-nav .ct-nav-home svg{
+    width:18px!important;
+    height:18px!important;
+  }
+  html body{padding-bottom:88px!important}
+  html body main#g{padding-bottom:92px!important}
+  html body #to-top,
+  html body #to-top.show{bottom:76px!important}
+
+  /* Tighter Discover sheet without shrinking the touch targets excessively. */
+  html body .ct-discover-panel{
+    width:calc(100vw - 24px)!important;
+    bottom:calc(max(6px,env(safe-area-inset-bottom)) + 70px)!important;
+    padding:10px!important;
+    border-radius:15px!important;
+    transform:translate3d(-50%,8px,0)!important;
+    transition:opacity .2s ease,transform .24s cubic-bezier(.22,.72,.18,1)!important;
+  }
+  html body .ct-discover-panel.is-open{
+    transform:translate3d(-50%,0,0)!important;
+  }
+  html body .ct-discover-heading{margin-bottom:8px!important;gap:8px!important}
+  html body .ct-discover-heading strong{font-size:.82rem!important}
+  html body .ct-discover-heading small{font-size:.5rem!important}
+  html body .ct-discover-close{width:28px!important;height:28px!important;min-height:28px!important}
+  html body .ct-discover-search{height:42px!important;padding-inline:9px!important}
+  html body .ct-discover-filters{gap:6px!important;margin-top:8px!important}
+  html body .ct-discover-filters label{gap:3px!important}
+  html body .ct-discover-filters select{height:36px!important;padding-inline:7px!important}
+  html body .ct-discover-footer{margin-top:6px!important;gap:4px!important}
+  html body .ct-discover-footer button{min-height:30px!important;padding:4px 7px!important}
+}
+@media(max-width:370px){
+  html body .cineton-bottom-nav{
+    width:calc(100vw - 16px)!important;
+    grid-template-columns:minmax(0,1fr) 50px minmax(0,1fr)!important;
+    padding-inline:3px!important;
+  }
+  html body .cineton-bottom-nav button{font-size:.51rem!important}
+  html body .ct-discover-panel{padding:9px!important}
+  html body .ct-discover-filters{gap:5px!important}
+}
+@media(prefers-reduced-motion:reduce){
+  html body .cineton-bottom-nav,
+  html body .ct-discover-panel,
+  html body .cineton-bottom-nav button{
+    transition:none!important;
+    animation:none!important;
+    will-change:auto!important;
+  }
+}
+</style>
+
 </body></html>
