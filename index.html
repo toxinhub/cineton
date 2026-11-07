@@ -3368,16 +3368,16 @@ update();
   };
   const loadLibrary=async()=>{
     try{
-      const r=await fetch("data.json",{cache:"no-store"});
-      if(!r.ok)throw Error();
-      const j=await r.json();
-      libraryRows=Array.isArray(j)?j.filter(x=>x&&x.title):[];
+      if(window.CinetonLibraryReady)await window.CinetonLibraryReady;
+      const rows=window.CinetonLibraryData;
+      libraryRows=Array.isArray(rows)?rows.filter(x=>x&&x.title):[];
       updateGhost();
     }catch{
       libraryRows=[];
       clearGhost();
     }
   };
+  void loadLibrary();
   input.addEventListener("input",updateGhost);
   input.addEventListener("focus",updateGhost);
   input.addEventListener("keydown",e=>{
