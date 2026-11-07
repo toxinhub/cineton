@@ -7361,3 +7361,27 @@ main#g.list .ci small{font-size:.7rem!important;line-height:1.5!important}
 }
 </style>
 
+
+
+<style id="cineton-grid-imdb-text-only-v1">
+/* Grid IMDb rating: remove the badge surface and keep a soft, readable yellow label. */
+main#g:not(.list) .c>.bd{
+  background:transparent!important;
+  background-color:transparent!important;
+  background-image:none!important;
+  border:0!important;
+  border-color:transparent!important;
+  border-radius:0!important;
+  box-shadow:none!important;
+  padding:0!important;
+  color:#f3df91!important;
+  -webkit-text-fill-color:#f3df91!important;
+  text-shadow:0 1px 3px rgba(0,0,0,.72)!important;
+  font-weight:700!important;
+}
+main#g:not(.list) .c>.bd::before,
+main#g:not(.list) .c>.bd::after{
+  display:none!important;
+  content:none!important;
+}
+</style>
