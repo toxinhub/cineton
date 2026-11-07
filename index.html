@@ -1857,50 +1857,34 @@ function cinetonMotionDuration(direction){
   return cinetonTiming(direction==='open'?'--open-ms':'--close-ms',direction==='open'?240:210)*
     (document.documentElement.dataset.cinetonSlowMotion==='1'?4:1);
 }
-async function cinetonPosterTransition(direction){
-  const opening=direction==='open';
+async function cinetonPosterTransition(){
   const mobile=window.matchMedia('(max-width:640px)').matches;
-  /* Mobile opens directly in its final position: no delayed slide or opacity ramp. */
-  if(opening&&mobile)return true;
-  const duration=cinetonMotionReduced()?1:cinetonMotionDuration(direction);
-  const ease=opening?'cubic-bezier(0.2,0.75,0.25,1)':'cubic-bezier(0.4,0,0.2,1)';
+  const duration=cinetonMotionReduced()?1:cinetonMotionDuration('close');
+  const ease='cubic-bezier(0.4,0,0.2,1)';
   const contentTarget=mobile?(d.querySelector('.m')||d):d;
   const animations=[];
   try{
     if(typeof contentTarget.animate!=='function')throw new Error('Web Animations API is unavailable');
     const distance=mobile?16:44;
-    const contentFrames=mobile
-      ?(opening
-        ?[{transform:'translate3d(0,'+distance+'px,0)'},{transform:'translate3d(0,0,0)'}]
-        :[{transform:'translate3d(0,0,0)'},{transform:'translate3d(0,'+distance+'px,0)'}])
-      :(opening
-        ?[{transform:'translate3d(0,'+distance+'px,0)',opacity:0},{transform:'translate3d(0,0,0)',opacity:1}]
-        :[{transform:'translate3d(0,0,0)',opacity:1},{transform:'translate3d(0,'+distance+'px,0)',opacity:0}]);
     contentTarget.style.willChange='transform'+(mobile?'':',opacity');
-    animations.push(contentTarget.animate(contentFrames,{duration,easing:ease,fill:'both'}));
+    animations.push(contentTarget.animate(
+      mobile
+        ?[{transform:'translate3d(0,0,0)'},{transform:'translate3d(0,'+distance+'px,0)'}]
+        :[{transform:'translate3d(0,0,0)',opacity:1},{transform:'translate3d(0,'+distance+'px,0)',opacity:0}],
+      {duration,easing:ease,fill:'both'}
+    ));
     if(mobile&&contentTarget!==d){
-      /* Fade the dialog shell and its content together; otherwise the inner
-         scroller disappears first while the native dialog remains visible. */
       d.style.willChange='opacity';
-      animations.push(d.animate(
-        opening?[{opacity:0},{opacity:1}]:[{opacity:1},{opacity:0}],
-        {duration,easing:ease,fill:'both'}
-      ));
+      animations.push(d.animate([{opacity:1},{opacity:0}],{duration,easing:ease,fill:'both'}));
     }
     await Promise.all(animations.map(animation=>animation.finished));
     return true;
   }catch(error){
-    console.info('Cineton modal transition fallback:',error);
+    console.info('CineTon modal close transition fallback:',error);
     return false;
   }finally{
     contentTarget.style.removeProperty('will-change');
     if(mobile)d.style.removeProperty('will-change');
-    if(opening){
-      animations.forEach(animation=>{try{animation.cancel()}catch{}});
-      contentTarget.style.removeProperty('transform');
-      contentTarget.style.removeProperty('opacity');
-      d.style.removeProperty('opacity');
-    }
   }
 }
 async function closeCinetonModal(){
@@ -1908,7 +1892,7 @@ async function closeCinetonModal(){
   cinetonModalBusy=true;
   d.classList.add('cineton-backdrop-clear');
   try{
-    const animated=await cinetonPosterTransition('close');
+    const animated=await cinetonPosterTransition();
     if(!animated){d.style.removeProperty('transform');d.style.removeProperty('opacity')}
     d.close();
     /* Remove finished WAAPI effects only after the dialog leaves the top layer. */
