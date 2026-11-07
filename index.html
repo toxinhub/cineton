@@ -1988,41 +1988,53 @@ const CinetonMovieModal=(()=>{
       }
       d.setAttribute('aria-busy','true');
 
-      /* Build the lightweight detail DOM before opening the native dialog.
-         This removes the extra animation-frame wait from the visible opening path. */
-      const markup=buildContent(m);
-      $('#mb').innerHTML=markup;
-
-      const mobilePoster=isMobile()?d.querySelector('.modal-top .poster-wrap'):null;
-      if(mobilePoster){
-        const top=mobilePoster.closest('.modal-top');
-        if(top)top.style.setProperty('grid-template-columns','120px minmax(0,1fr)','important');
-        mobilePoster.style.setProperty('width','120px','important');
-        mobilePoster.style.setProperty('min-width','120px','important');
-        mobilePoster.style.setProperty('max-width','120px','important');
-        mobilePoster.style.setProperty('flex-basis','120px','important');
-        const img=mobilePoster.querySelector('img');
-        if(img){
-          img.style.setProperty('width','120px','important');
-          img.style.setProperty('min-width','120px','important');
-          img.style.setProperty('max-width','120px','important');
-          img.style.setProperty('height','180px','important');
-          img.style.setProperty('min-height','180px','important');
-          img.style.setProperty('max-height','180px','important');
-          img.style.setProperty('aspect-ratio','2 / 3','important');
-        }
-      }
+      /* Open a tiny shell first. Two frames allow the browser to paint it
+         before building the full detail tree on slower mobile devices. */
+      $('#mb').innerHTML='<div class="cineton-modal-loading" role="status" aria-live="polite">Loading…</div>';
       updateNavigation();
-      d.removeAttribute('aria-busy');
-      window.CinetonPerf?.end?.('modal-detail-content',perfStart,{wasAlreadyOpen:wasOpen});
       if(!wasOpen)d.showModal();
-      requestAnimationFrame(()=>enhance(m,requestId,sourceCard));
+
+      requestAnimationFrame(()=>requestAnimationFrame(()=>{
+        if(requestId!==state.request||!d.open)return;
+        try{
+          $('#mb').innerHTML=buildContent(m);
+
+          const mobilePoster=isMobile()?d.querySelector('.modal-top .poster-wrap'):null;
+          if(mobilePoster){
+            const top=mobilePoster.closest('.modal-top');
+            if(top)top.style.setProperty('grid-template-columns','120px minmax(0,1fr)','important');
+            mobilePoster.style.setProperty('width','120px','important');
+            mobilePoster.style.setProperty('min-width','120px','important');
+            mobilePoster.style.setProperty('max-width','120px','important');
+            mobilePoster.style.setProperty('flex-basis','120px','important');
+            const img=mobilePoster.querySelector('img');
+            if(img){
+              img.style.setProperty('width','120px','important');
+              img.style.setProperty('min-width','120px','important');
+              img.style.setProperty('max-width','120px','important');
+              img.style.setProperty('height','180px','important');
+              img.style.setProperty('min-height','180px','important');
+              img.style.setProperty('max-height','180px','important');
+              img.style.setProperty('aspect-ratio','2 / 3','important');
+            }
+          }
+          updateNavigation();
+          d.removeAttribute('aria-busy');
+          window.CinetonPerf?.end?.('modal-detail-content',perfStart,{wasAlreadyOpen:wasOpen});
+          requestAnimationFrame(()=>enhance(m,requestId,sourceCard));
+        }catch(error){
+          console.error('CineTon modal content failed',error);
+          $('#mb').innerHTML='<div class="empty"><p>Could not load movie details.</p></div>';
+          d.removeAttribute('aria-busy');
+        }finally{
+          if(requestId===state.request)state.busy=false;
+        }
+      }));
     }catch(error){
-      console.error('CineTon modal content failed',error);
+      console.error('CineTon modal opening failed',error);
       $('#mb').innerHTML='<div class="empty"><p>Could not load movie details.</p></div>';
       d.removeAttribute('aria-busy');
       if(!wasOpen&&!d.open)d.showModal();
-    }finally{
       if(requestId===state.request)state.busy=false;
     }
   }
