@@ -1909,8 +1909,8 @@ async function cinetonPosterTransition(direction,sourcePoster,openingRect=null){
     d.style.willChange='transform,opacity';
     /* Animate the dialog as one unit: no poster-sized FLIP distortion or separate poster reveal. */
     const frames=opening
-      ?[{transform:'translate3d(0, 9px, 0) scale(.985)',opacity:0},{transform:'translate3d(0, 0, 0) scale(1)',opacity:1}]
-      :[{transform:'translate3d(0, 0, 0) scale(1)',opacity:1},{transform:'translate3d(0, 5px, 0) scale(.99)',opacity:0}];
+      ?[{transform:'translate3d(0, 52px, 0)',opacity:0},{transform:'translate3d(0, 0, 0)',opacity:1}]
+      :[{transform:'translate3d(0, 0, 0)',opacity:1},{transform:'translate3d(0, 52px, 0)',opacity:0}];
     animation=d.animate(frames,{duration,easing:ease,fill:'both'});
     await animation.finished;
     return true;
@@ -4173,8 +4173,8 @@ main.list .cineton-love-heart{
 
 /* Preserved source layer: cineton-poster-modal-flip-v1 */
 
-:root{--open-ms:300;--close-ms:240}
-@media(max-width:640px){:root{--open-ms:260;--close-ms:220}}
+ :root{--open-ms:320;--close-ms:250}
+@media(max-width:640px){:root{--open-ms:285;--close-ms:225}}
 html{scrollbar-gutter:stable}
 .cinemodal{
   width:min(760px,92vw)!important;
@@ -9785,4 +9785,46 @@ html body main#g .c>img{
 }
 </style>
 
+
+<style id="cineton-modal-vertical-motion-v32">
+/* Consistent bottom-to-top opening and bottomward closing for every modal. */
+.cinemodal{transform-origin:center center}
+.suggestions-dialog{
+  transform:translate3d(0,42px,0)!important;
+  opacity:0;
+  transition:opacity 320ms cubic-bezier(.22,1,.36,1),
+    transform 320ms cubic-bezier(.22,1,.36,1),
+    overlay 320ms ease,display 320ms ease!important;
+  transition-behavior:allow-discrete;
+}
+.suggestions-dialog[open]{
+  transform:translate3d(0,0,0)!important;
+  opacity:1;
+}
+.suggestions-dialog.is-closing{
+  transform:translate3d(0,42px,0)!important;
+  opacity:0;
+}
+.suggestions-dialog::backdrop{
+  transition:background-color 250ms ease,backdrop-filter 250ms ease,
+    -webkit-backdrop-filter 250ms ease!important;
+}
+@starting-style{
+  .suggestions-dialog[open]{
+    transform:translate3d(0,42px,0)!important;
+    opacity:0;
+  }
+}
+@media(max-width:640px){
+  .suggestions-dialog{
+    transition-duration:285ms,285ms,225ms,225ms!important;
+  }
+  .suggestions-dialog::backdrop{transition-duration:225ms!important}
+}
+@media(prefers-reduced-motion:reduce){
+  .suggestions-dialog,.suggestions-dialog::backdrop{
+    transition-duration:1ms!important;
+  }
+}
+</style>
 </body></html>
