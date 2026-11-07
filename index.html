@@ -9142,48 +9142,7 @@ html body button:disabled{
 </style>
 
 
-<script id="cineton-bottom-dock-scroll-behavior-v15">
-(()=>{
- const dock=document.querySelector('.cineton-bottom-nav');
- if(!dock||dock.dataset.scrollMotionReady==='true')return;
- dock.dataset.scrollMotionReady='true';
- let lastY=Math.max(0,window.scrollY||0);
- let travel=0;
- let direction=0;
- let raf=0;
- const reduced=window.matchMedia('(prefers-reduced-motion: reduce)').matches;
- const show=()=>dock.classList.remove('is-scroll-hidden');
- const hide=()=>dock.classList.add('is-scroll-hidden');
- const update=()=>{
-   raf=0;
-   const y=Math.max(0,window.scrollY||0);
-   const delta=y-lastY;
-   lastY=y;
-   const modalOpen=!!document.querySelector('dialog[open]')||document.body.classList.contains('suggestions-modal-open');
-   if(modalOpen||y<64){travel=0;show();return}
-   if(Math.abs(delta)<1)return;
-   const nextDirection=delta>0?1:-1;
-   if(nextDirection!==direction){direction=nextDirection;travel=0}
-   travel+=Math.abs(delta);
-   if(direction===1&&y>96&&travel>=14)hide();
-   if(direction===-1&&travel>=9)show();
- };
- const onScroll=()=>{
-   if(reduced){lastY=Math.max(0,window.scrollY||0);show();return}
-   if(!raf)raf=window.requestAnimationFrame(update);
- };
- window.addEventListener('scroll',onScroll,{passive:true});
- window.addEventListener('resize',()=>{lastY=Math.max(0,window.scrollY||0);show()},{passive:true});
- document.addEventListener('click',event=>{
-   if(event.target instanceof Element&&event.target.closest('.cineton-bottom-nav button'))show();
- });
- document.addEventListener('visibilitychange',()=>{
-   if(!document.hidden){lastY=Math.max(0,window.scrollY||0);travel=0;show()}
- });
- document.addEventListener('dialog-open',show);
- show();
-})();
-</script>
+
 
 
 
