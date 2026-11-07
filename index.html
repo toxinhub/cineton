@@ -9419,4 +9419,33 @@ html[data-theme="light"] body .cineton-bottom-nav{
 }
 </style>
 
+
+<style id="cineton-dock-fill-30-light-glass-v23">
+/* 30% dock surface with a restrained, lightweight glass treatment. */
+html body .cineton-bottom-nav{
+  background:color-mix(in srgb,var(--sf) 30%,transparent)!important;
+  border:1px solid color-mix(in srgb,var(--tx) 10%,transparent)!important;
+  -webkit-backdrop-filter:blur(14px) saturate(1.18)!important;
+  backdrop-filter:blur(14px) saturate(1.18)!important;
+  box-shadow:0 7px 22px rgba(0,0,0,.075),0 1px 0 rgba(255,255,255,.12) inset!important;
+}
+html[data-theme="dark"] body .cineton-bottom-nav{
+  background:rgba(21,24,32,.30)!important;
+  border-color:rgba(255,255,255,.10)!important;
+  box-shadow:0 8px 24px rgba(0,0,0,.14),0 1px 0 rgba(255,255,255,.09) inset!important;
+}
+html[data-theme="light"] body .cineton-bottom-nav{
+  background:rgba(255,250,242,.30)!important;
+  border-color:rgba(255,255,255,.34)!important;
+  box-shadow:0 7px 22px rgba(65,48,28,.065),0 1px 0 rgba(255,255,255,.38) inset!important;
+}
+@media(prefers-reduced-transparency:reduce){
+  html body .cineton-bottom-nav{
+    background:color-mix(in srgb,var(--sf) 88%,transparent)!important;
+    -webkit-backdrop-filter:none!important;
+    backdrop-filter:none!important;
+  }
+}
+</style>
+
 </body></html>
