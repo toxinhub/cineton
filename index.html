@@ -7403,3 +7403,81 @@ html[data-theme="light"] .cinemodal .chips .imdb-chip{
   #cineton-featured:before{background:linear-gradient(90deg,#101217 0%,#101217f5 48%,#101217cf 68%,#10121766 100%)!important;}
 }
 </style>
+
+
+<style id="cineton-featured-poster-split-v2">
+/* Replace the tiny contained background poster with a clear, dedicated poster panel. */
+#cineton-featured{
+  position:relative!important;
+  isolation:isolate!important;
+  display:block!important;
+  min-height:276px!important;
+  padding:28px 36% 28px 28px!important;
+  overflow:hidden!important;
+  background:#11141b!important;
+}
+#cineton-featured .cineton-featured-art{
+  position:absolute!important;
+  inset:0 0 0 auto!important;
+  width:36%!important;
+  height:100%!important;
+  min-height:0!important;
+  display:flex!important;
+  align-items:center!important;
+  justify-content:center!important;
+  overflow:hidden!important;
+  opacity:1!important;
+  z-index:0!important;
+  background:linear-gradient(135deg,#292d36,#11141b)!important;
+}
+#cineton-featured .cineton-featured-art img{
+  display:block!important;
+  width:100%!important;
+  height:100%!important;
+  max-width:none!important;
+  max-height:none!important;
+  object-fit:contain!important;
+  object-position:center!important;
+  transform:none!important;
+  filter:none!important;
+  border-radius:0!important;
+  box-shadow:none!important;
+  mask-image:none!important;
+}
+#cineton-featured:before{
+  content:""!important;
+  position:absolute!important;
+  inset:0!important;
+  z-index:1!important;
+  pointer-events:none!important;
+  background:linear-gradient(90deg,#11141b 0%,#11141b 48%,#11141beF 59%,#11141b88 76%,#11141b12 100%)!important;
+}
+#cineton-featured .cineton-featured-copy{
+  position:relative!important;
+  z-index:2!important;
+  max-width:700px!important;
+}
+#cineton-featured .cineton-featured-eyebrow{color:#f0c879!important}
+#cineton-featured .cineton-featured-copy h2,
+#cineton-featured .cineton-featured-meta,
+#cineton-featured .cineton-featured-overview{color:#fff!important}
+@media(max-width:700px){
+  #cineton-featured{
+    min-height:238px!important;
+    padding:20px 39% 20px 17px!important;
+  }
+  #cineton-featured .cineton-featured-art{width:40%!important}
+  #cineton-featured:before{
+    background:linear-gradient(90deg,#11141b 0%,#11141b 45%,#11141bea 58%,#11141b77 78%,#11141b10 100%)!important;
+  }
+  #cineton-featured .cineton-featured-copy h2{font-size:clamp(1.2rem,5vw,1.65rem)!important}
+  #cineton-featured .cineton-featured-overview{-webkit-line-clamp:2!important;font-size:.7rem!important}
+  #cineton-featured .cineton-featured-actions{gap:6px!important;margin-top:9px!important}
+  #cineton-featured .cineton-featured-actions button{min-height:30px!important;padding:0 9px!important;font-size:.64rem!important}
+}
+@media(max-width:380px){
+  #cineton-featured{min-height:220px!important;padding:16px 40% 16px 13px!important}
+  #cineton-featured .cineton-featured-art{width:42%!important}
+  #cineton-featured .cineton-featured-overview{-webkit-line-clamp:1!important}
+}
+</style>
