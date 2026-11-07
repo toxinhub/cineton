@@ -7650,3 +7650,32 @@ html[data-theme] .cineton-bottom-nav button.is-active{color:var(--ct-text-accent
 html[data-theme] a:not(main#g .c a){color:var(--ct-text-accent)}
 html[data-theme] :where(button,input,textarea,select){accent-color:var(--ct-text-accent)}
 </style>
+
+
+
+<style id="cineton-pure-monochrome-text-v1">
+/* Strict monochrome typography: white in dark mode, black in light mode. */
+html[data-theme="dark"]{
+  --tx:#fff!important;--mu:#fff!important;--ac:#fff!important;--gd:#fff!important;
+  --ct-text-primary:#fff!important;--ct-text-secondary:#fff!important;--ct-text-muted:#fff!important;
+  --ct-text-accent:#fff!important;--ct-nav-muted:#fff!important;--ct-nav-active:#fff!important;
+}
+html[data-theme="light"]{
+  --tx:#000!important;--mu:#000!important;--ac:#000!important;--gd:#000!important;
+  --ct-text-primary:#000!important;--ct-text-secondary:#000!important;--ct-text-muted:#000!important;
+  --ct-text-accent:#000!important;--ct-nav-muted:#000!important;--ct-nav-active:#000!important;
+}
+html[data-theme="dark"] body :not(#ct-mono-a#ct-mono-b#ct-mono-c){color:#fff!important}
+html[data-theme="light"] body :not(#ct-mono-a#ct-mono-b#ct-mono-c){color:#000!important}
+/* Placeholder hierarchy uses opacity, not a third text color. */
+html[data-theme="dark"] body :is(input,textarea,select)::placeholder{color:#fff!important;opacity:.62!important}
+html[data-theme="light"] body :is(input,textarea,select)::placeholder{color:#000!important;opacity:.55!important}
+html[data-theme="dark"] body :is(input,textarea,select){-webkit-text-fill-color:#fff!important}
+html[data-theme="light"] body :is(input,textarea,select){-webkit-text-fill-color:#000!important}
+/* Preserve readable white poster overlays and the previously requested IMDb yellow. */
+html[data-theme] body main#g:not(.list) .c>.ci :is(b,small,.my-rating):not(#ct-mono-a#ct-mono-b#ct-mono-c){color:#fff!important}
+html[data-theme] body main#g:not(.list) .c>.bd:not(#ct-mono-a#ct-mono-b#ct-mono-c){
+  color:#f3df91!important;-webkit-text-fill-color:#f3df91!important;
+}
+html[data-theme] ::selection{background:#79b99a66}
+</style>
