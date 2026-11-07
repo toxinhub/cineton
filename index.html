@@ -1970,63 +1970,67 @@ const CinetonMovieModal=(()=>{
     const requestId=++state.request;
     const wasOpen=d.open;
     state.busy=true;
-    try{
-      state.navMode=navMode;
-      state.navIndex=D.findIndex(item=>String(item.id)===String(m.id));
-      const previousId=d.dataset.sourceMovieId;
-      if(previousId){
-        document.querySelector('.c[data-id="'+CSS.escape(previousId)+'"]')?.classList.remove('is-opening');
-      }
-      d.querySelector('.cineton-rating-layer')?.remove();
-      const sourceCard=document.querySelector('.c[data-id="'+CSS.escape(m.id)+'"]');
-      state.sourceCard=sourceCard||null;
-      sourceCard?.classList.add('is-opening');
+    state.navMode=navMode;
+    state.navIndex=D.findIndex(item=>String(item.id)===String(m.id));
+    const previousId=d.dataset.sourceMovieId;
+    if(previousId)document.querySelector('.c[data-id="'+CSS.escape(previousId)+'"]')?.classList.remove('is-opening');
+    d.querySelector('.cineton-rating-layer')?.remove();
+    const sourceCard=document.querySelector('.c[data-id="'+CSS.escape(m.id)+'"]');
+    state.sourceCard=sourceCard||null;
+    sourceCard?.classList.add('is-opening');
 
-      /* Build and insert content before promoting the dialog to the top layer.
-         This avoids showing an empty dialog shell and then forcing a second layout. */
-      const markup=buildContent(m);
-      $('#mb').innerHTML=markup;
+    if(!wasOpen){
+      d.dataset.returnScroll=String(window.scrollY);
+      d.dataset.sourceMovieId=String(m.id);
+      if(!isMobile())d.style.setProperty('--modal-bg',m.poster?'url("'+IMG+m.poster+'")':'none');
       d.setAttribute('aria-labelledby','modal-title');
-      d.removeAttribute('aria-busy');
-
-      const mobilePoster=isMobile()?d.querySelector('.modal-top .poster-wrap'):null;
-      if(mobilePoster){
-        const top=mobilePoster.closest('.modal-top');
-        if(top)top.style.setProperty('grid-template-columns','120px minmax(0,1fr)','important');
-        mobilePoster.style.setProperty('width','120px','important');
-        mobilePoster.style.setProperty('min-width','120px','important');
-        mobilePoster.style.setProperty('max-width','120px','important');
-        mobilePoster.style.setProperty('flex-basis','120px','important');
-        const img=mobilePoster.querySelector('img');
-        if(img){
-          img.style.setProperty('width','120px','important');
-          img.style.setProperty('min-width','120px','important');
-          img.style.setProperty('max-width','120px','important');
-          img.style.setProperty('height','180px','important');
-          img.style.setProperty('min-height','180px','important');
-          img.style.setProperty('max-height','180px','important');
-          img.style.setProperty('aspect-ratio','2 / 3','important');
-        }
-      }
-
-      if(!wasOpen){
-        d.dataset.returnScroll=String(window.scrollY);
-        if(!isMobile())d.style.setProperty('--modal-bg',m.poster?'url("'+IMG+m.poster+'")':'none');
-        d.dataset.sourceMovieId=String(m.id);
-        d.showModal();
-      }else{
-        d.dataset.sourceMovieId=String(m.id);
-      }
-      updateNavigation();
-      window.CinetonPerf?.end?.('modal-open-and-content',perfStart,{wasAlreadyOpen:wasOpen});
-      requestAnimationFrame(()=>enhance(m,requestId,sourceCard));
-    }finally{
-      if(requestId===state.request){
-        d.removeAttribute('aria-busy');
-        if(!d.open)state.sourceCard?.classList.remove('is-opening');
-        state.busy=false;
-      }
+      d.setAttribute('aria-busy','true');
+      /* Promote a tiny shell first. The browser gets a paint opportunity before
+         the full detail markup and its images enter the document. */
+      $('#mb').innerHTML='<div class="cineton-modal-loading" role="status" aria-label="Loading movie details"><span></span></div>';
+      d.showModal();
+    }else{
+      d.dataset.sourceMovieId=String(m.id);
+      d.setAttribute('aria-busy','true');
+      $('#mb').innerHTML='<div class="cineton-modal-loading" role="status" aria-label="Loading movie details"><span></span></div>';
     }
+
+    requestAnimationFrame(()=>{
+      if(!d.open||requestId!==state.request){if(requestId===state.request)state.busy=false;return}
+      try{
+        const markup=buildContent(m);
+        $('#mb').innerHTML=markup;
+        const mobilePoster=isMobile()?d.querySelector('.modal-top .poster-wrap'):null;
+        if(mobilePoster){
+          const top=mobilePoster.closest('.modal-top');
+          if(top)top.style.setProperty('grid-template-columns','120px minmax(0,1fr)','important');
+          mobilePoster.style.setProperty('width','120px','important');
+          mobilePoster.style.setProperty('min-width','120px','important');
+          mobilePoster.style.setProperty('max-width','120px','important');
+          mobilePoster.style.setProperty('flex-basis','120px','important');
+          const img=mobilePoster.querySelector('img');
+          if(img){
+            img.style.setProperty('width','120px','important');
+            img.style.setProperty('min-width','120px','important');
+            img.style.setProperty('max-width','120px','important');
+            img.style.setProperty('height','180px','important');
+            img.style.setProperty('min-height','180px','important');
+            img.style.setProperty('max-height','180px','important');
+            img.style.setProperty('aspect-ratio','2 / 3','important');
+          }
+        }
+        updateNavigation();
+        d.removeAttribute('aria-busy');
+        window.CinetonPerf?.end?.('modal-detail-content',perfStart,{wasAlreadyOpen:wasOpen});
+        requestAnimationFrame(()=>enhance(m,requestId,sourceCard));
+      }catch(error){
+        console.error('CineTon modal content failed',error);
+        $('#mb').innerHTML='<div class="empty"><p>Could not load movie details.</p></div>';
+        d.removeAttribute('aria-busy');
+      }finally{
+        if(requestId===state.request)state.busy=false;
+      }
+    });
   }
   function close(){
     if(!d.open||state.closing)return;
