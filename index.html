@@ -1861,14 +1861,19 @@ function render(){
   L.sort(comparators[so]||comparators.new);
   renderGrid(L);
 }function applyGenreFilter(genre){const s=$('#ge'),exists=[...s.options].some(o=>o.value===genre);if(!exists)return false;s.value=genre;window.cinetonSearchGenre=genre;const dockGenre=document.getElementById('ct-search-genre');if(dockGenre)dockGenre.value=genre;const menu=$('#ge-menu');menu.querySelectorAll('[role="option"]').forEach(o=>o.setAttribute('aria-selected',o.dataset.value===genre));$('#ge-trigger').firstChild.textContent=(s.options[s.selectedIndex]?.textContent||genre)+' ';personFilter=null;personFilterType='';$('#q').value='';statFilter='all';d.dataset.skipReturnScroll='1';closeCinetonModal();requestAnimationFrame(()=>{render();window.scrollTo({top:document.querySelector('.bar').offsetTop,behavior:'smooth'})});return true}const CT_PUBLIC_COMMENTS={url:"https://osplbqpgxrfovjrumsnb.supabase.co",key:"sb_"+"publishable_"+"tcBaC8FqwlcFFw-IwKmiVA_y67PZNPX",fn:"https://osplbqpgxrfovjrumsnb.supabase.co/functions/v1/public-comments"};
+const cinetonPosterAccentCache=new Map();let cinetonPosterAccentController=null;
 function setModalPosterAccent(d){
   const img=d.querySelector(".modal-top img"),btn=d.querySelector(".x");if(!img||!btn)return;
   const src=img.currentSrc||img.src;if(!src)return;
   const fallback=()=>{d.style.setProperty("--poster-accent","#b88f65");d.style.setProperty("--poster-color-1","#b88f65");d.style.setProperty("--poster-color-2","#8c7564");d.style.setProperty("--poster-color-3","#d3b99a")};
+  const cached=cinetonPosterAccentCache.get(src);
+  if(cached){d.style.setProperty("--poster-color-1",cached[0]);d.style.setProperty("--poster-color-2",cached[1]);d.style.setProperty("--poster-color-3",cached[2]);d.style.setProperty("--poster-accent",cached[0]);return;}
+  if(cinetonPosterAccentController)cinetonPosterAccentController.abort();
+  const controller=new AbortController();cinetonPosterAccentController=controller;
   const proxy="https://wsrv.nl/?url="+encodeURIComponent(src)+"&w=72&h=108&fit=inside&output=webp";
   const extract=async()=>{
     try{
-      const res=await fetch(proxy,{mode:"cors",cache:"force-cache"});if(!res.ok)throw Error();
+      const res=await fetch(proxy,{mode:"cors",cache:"force-cache",signal:controller.signal});if(!res.ok)throw Error();
       const blob=await res.blob(),bmp=await createImageBitmap(blob),cv=document.createElement("canvas"),ctx=cv.getContext("2d",{willReadFrequently:true});
       if(!ctx)throw Error();cv.width=72;cv.height=108;ctx.drawImage(bmp,0,0,72,108);bmp.close();
       const p=ctx.getImageData(0,0,72,108).data,bins=new Map();
@@ -1891,9 +1896,12 @@ function setModalPosterAccent(d){
       if(!chosen.length)throw Error();
       while(chosen.length<3)chosen.push(chosen[chosen.length-1]);
       const hex=c=>"#"+[c.r,c.g,c.b].map(v=>Math.round(v).toString(16).padStart(2,"0")).join("");
-      const [c1,c2,c3]=chosen.map(hex);
-      d.style.setProperty("--poster-color-1",c1);d.style.setProperty("--poster-color-2",c2);d.style.setProperty("--poster-color-3",c3);d.style.setProperty("--poster-accent",c1);
-    }catch{fallback()}
+      const [c1,c2,c3]=chosen.map(hex),palette=[c1,c2,c3];
+      if(cinetonPosterAccentCache.size>120)cinetonPosterAccentCache.delete(cinetonPosterAccentCache.keys().next().value);
+      cinetonPosterAccentCache.set(src,palette);
+      const activeImg=d.querySelector(".modal-top img");
+      if(d.open&&d.dataset.sourceMovieId&&((activeImg?.currentSrc||activeImg?.src)===src)){d.style.setProperty("--poster-color-1",c1);d.style.setProperty("--poster-color-2",c2);d.style.setProperty("--poster-color-3",c3);d.style.setProperty("--poster-accent",c1)}
+    }catch{if(!controller.signal.aborted)fallback()}
   };
   fallback();extract();
 }
@@ -1904,6 +1912,7 @@ let cinetonModalClosing=false;
 function closeCinetonModal(){
   if(!d.open||cinetonModalClosing)return;
   cinetonModalClosing=true;
+  cinetonPosterAccentController?.abort();cinetonPosterAccentController=null;
   ++cinetonModalRequest;
   cinetonModalBusy=true;
   d.removeAttribute('aria-busy');
@@ -8849,8 +8858,8 @@ document.documentElement.classList.add('cineton-styles-ready');
 
 <style id="cineton-performance-pass-v2">
 /* Keep off-screen cards out of the active paint/layout work without changing their design. */
-main:not(.list)>.c{content-visibility:auto;contain-intrinsic-size:1px 360px}
-main.list>.c{content-visibility:auto;contain-intrinsic-size:1px 116px}
+main:not(.list)>.c{content-visibility:auto;contain-intrinsic-size:auto 360px}
+main.list>.c{content-visibility:auto;contain-intrinsic-size:auto 116px}
 /* Poster decode and paint are isolated from the card's surrounding layout. */
 #g .c>.poster-loading,#g .c>img{content-visibility:visible}
 @media(max-width:600px){
