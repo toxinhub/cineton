@@ -8110,3 +8110,36 @@ html[data-theme] .stats-row .stat:not(:last-child)::after{
   box-shadow:none!important;
 }
 </style>
+
+<style id="cineton-stats-balanced-type-v2">
+/* Harmonize statistic labels and values; keep counts subtly emphasized. */
+html[data-theme] .stats-row .stat,
+html[data-theme] .stats-row .stat span{
+  font-family:"Mina",sans-serif!important;
+  font-size:clamp(.70rem,.76vw,.74rem)!important;
+  font-weight:500!important;
+  line-height:1.35!important;
+  letter-spacing:0!important;
+}
+html[data-theme] .stats-row .stat b{
+  font-size:1.04em!important;
+  font-weight:700!important;
+  line-height:inherit!important;
+  letter-spacing:0!important;
+}
+html[data-theme] .stats-row .stat:not(:last-child)::after{
+  font-size:.92em!important;
+  line-height:1!important;
+  font-weight:400!important;
+  opacity:.58!important;
+}
+@media(max-width:600px){
+  html[data-theme] .stats-row .stat,
+  html[data-theme] .stats-row .stat span{font-size:.67rem!important;line-height:1.35!important}
+  html[data-theme] .stats-row .stat b{font-size:1.04em!important}
+}
+@media(max-width:360px){
+  html[data-theme] .stats-row .stat,
+  html[data-theme] .stats-row .stat span{font-size:.64rem!important}
+}
+</style>
