@@ -1449,7 +1449,7 @@ function libraryHealthScan(){
   if(id&&['movie','tv'].includes(type)&&!id.startsWith(type+'-'))add(index,m,'ID/type mismatch',true);
   if(m.my_rating!==undefined&&m.my_rating!==null&&m.my_rating!==''&&(!Number.isFinite(Number(m.my_rating))||Number(m.my_rating)<0||Number(m.my_rating)>10))add(index,m,'Invalid rating',true);
   if(!String(m.title||'').trim())add(index,m,'Missing title',true);
-  if(m.year&&!/^\\d{4}$/.test(String(m.year)))add(index,m,'Unusual year',false);
+  if(m.year&&!/^[0-9]{4}$/.test(String(m.year)))add(index,m,'Unusual year',false);
   if(m.poster&&typeof m.poster!=='string')add(index,m,'Invalid poster path',false);
   if(!Array.isArray(m.genres))add(index,m,'Genres field is not an array',false);
   if(m.watched_on&&Number.isNaN(Date.parse(m.watched_on)))add(index,m,'Invalid watched date',false);
