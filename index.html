@@ -1908,11 +1908,17 @@ async function cinetonPosterTransition(direction,sourcePoster,openingRect=null){
     if(typeof d.animate!=='function')throw new Error('Web Animations API is unavailable');
     d.style.willChange='transform,opacity';
     /* Animate the dialog as one unit: no poster-sized FLIP distortion or separate poster reveal. */
+    /* Keep the travel short on phones: the previous 52px movement felt heavy. */
+    const mobile=window.matchMedia('(max-width:640px)').matches;
+    const distance=mobile?26:52;
     const frames=opening
-      ?[{transform:'translate3d(0, 52px, 0)',opacity:0},{transform:'translate3d(0, 0, 0)',opacity:1}]
-      :[{transform:'translate3d(0, 0, 0)',opacity:1},{transform:'translate3d(0, 52px, 0)',opacity:0}];
-    animation=d.animate(frames,{duration,easing:ease,fill:'both'});
+      ?[{transform:'translate3d(0, '+distance+'px, 0)',opacity:0},{transform:'translate3d(0, 0, 0)',opacity:1}]
+      :[{transform:'translate3d(0, 0, 0)',opacity:1},{transform:'translate3d(0, '+distance+'px, 0)',opacity:0}];
+    animation=d.animate(frames,{duration,easing:opening?'cubic-bezier(0.2, 0.75, 0.25, 1)':'cubic-bezier(0.4, 0, 0.2, 1)',fill:'both'});
     await animation.finished;
+    /* WAAPI's finished promise can resolve before the final frame is composited.
+       Give the closing frame a paint opportunity before removing the dialog top layer. */
+    if(!opening)await new Promise(resolve=>requestAnimationFrame(()=>requestAnimationFrame(resolve)));
     return true;
   }catch(error){
     console.info('Cineton modal transition fallback:',error);
@@ -9861,7 +9867,7 @@ html body main#g .c>img{
 <style id="cineton-mobile-modal-motion-v34">
 /* Mobile dialogs should feel immediate; preserve a visible exit frame before closing. */
 @media(max-width:640px){
-  :root{--open-ms:220;--close-ms:240}
+  :root{--open-ms:175;--close-ms:225}
   .suggestions-dialog{
     transition-duration:230ms,230ms,230ms,230ms!important;
   }
