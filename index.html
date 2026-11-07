@@ -6538,12 +6538,27 @@ document.querySelector('.ct-discover-close').addEventListener('click',close);
 document.addEventListener('click',e=>{if(!e.target.closest('#cineton-bottom-nav')&&!e.target.closest('#ct-discover-panel'))close()});
 document.addEventListener('keydown',e=>{if(e.key==='Escape')close()});
 document.getElementById('q')?.addEventListener('input',()=>{if(search.value!==q.value)search.value=q.value});
-let last=scrollY,travel=0,dir=0,raf=0;
-const show=()=>dock.classList.remove('is-scroll-hidden'),hide=()=>{close();dock.classList.add('is-scroll-hidden')};
-const update=()=>{raf=0;let y=Math.max(0,scrollY),d=y-last;last=y;if(y<56){travel=0;dir=0;show();return}if(Math.abs(d)<1)return;let nd=d>0?1:-1;if(nd!==dir){dir=nd;travel=0}travel+=Math.abs(d);if(dir===1&&y>110&&travel>=20)hide();if(dir===-1&&travel>=12)show()};
-addEventListener('scroll',()=>{if(reduce){last=scrollY;show();return}if(!raf)raf=requestAnimationFrame(update)},{passive:true});
-addEventListener('resize',()=>{last=scrollY;show()},{passive:true});
-document.addEventListener('visibilitychange',()=>{if(!document.hidden){last=scrollY;travel=0;show()}});
+let lastY=window.scrollY,travel=0,direction=0,scrollRaf=0,hidden=false;
+const show=()=>{if(!hidden)return;hidden=false;dock.classList.remove('is-scroll-hidden')};
+const hide=()=>{if(hidden)return;hidden=true;if(opened)close();dock.classList.add('is-scroll-hidden')};
+const update=()=>{
+  scrollRaf=0;
+  const y=Math.max(0,window.scrollY),delta=y-lastY;
+  lastY=y;
+  if(y<64){travel=0;direction=0;show();return}
+  if(Math.abs(delta)<2)return;
+  const nextDirection=delta>0?1:-1;
+  if(nextDirection!==direction){direction=nextDirection;travel=0}
+  travel+=Math.abs(delta);
+  if(direction===1&&y>120&&travel>=34)hide();
+  else if(direction===-1&&travel>=18)show();
+};
+addEventListener('scroll',()=>{
+  if(reduce){lastY=window.scrollY;show();return}
+  if(!scrollRaf)scrollRaf=requestAnimationFrame(update);
+},{passive:true});
+addEventListener('resize',()=>{lastY=window.scrollY;travel=0;direction=0;show()},{passive:true});
+document.addEventListener('visibilitychange',()=>{if(!document.hidden){lastY=window.scrollY;travel=0;direction=0;show()}});
 document.addEventListener('click',e=>{if(e.target.closest('#cineton-bottom-nav button'))show()});
 activate('watched');window.cinetonOpenDiscover=()=>open('discover');window.cinetonCloseNavPanels=close;
 })();
@@ -9464,6 +9479,59 @@ html[data-theme="light"] body .cineton-bottom-nav{
   html body .cineton-bottom-nav{
     background:color-mix(in srgb,var(--sf) 88%,transparent)!important;
   }
+}
+</style>
+
+
+<style id="cineton-liquid-glass-smooth-dock-v25">
+/* Transparent liquid-glass dock: clear enough to see the page through it. */
+html body .cineton-bottom-nav{
+  background:rgba(20,25,34,.10)!important;
+  border:1px solid rgba(255,255,255,.20)!important;
+  -webkit-backdrop-filter:blur(22px) saturate(1.45)!important;
+  backdrop-filter:blur(22px) saturate(1.45)!important;
+  box-shadow:0 10px 30px rgba(0,0,0,.12),0 1px 0 rgba(255,255,255,.24) inset!important;
+  transition:transform .30s cubic-bezier(.2,.78,.22,1),opacity .18s ease!important;
+  will-change:transform,opacity;
+}
+html[data-theme="light"] body .cineton-bottom-nav{
+  background:rgba(255,250,242,.10)!important;
+  border-color:rgba(255,255,255,.38)!important;
+  box-shadow:0 9px 26px rgba(64,48,30,.09),0 1px 0 rgba(255,255,255,.48) inset!important;
+}
+html[data-theme="dark"] body .cineton-bottom-nav{
+  background:rgba(15,20,29,.10)!important;
+  border-color:rgba(255,255,255,.18)!important;
+}
+html body .cineton-bottom-nav.is-scroll-hidden{
+  transform:translate3d(-50%,calc(100% + 18px),0)!important;
+  opacity:0!important;
+  pointer-events:none!important;
+}
+@media(max-width:700px){
+  html body .cineton-bottom-nav{
+    background:rgba(19,24,33,.085)!important;
+    -webkit-backdrop-filter:blur(13px) saturate(1.22)!important;
+    backdrop-filter:blur(13px) saturate(1.22)!important;
+    box-shadow:0 7px 20px rgba(0,0,0,.10),0 1px 0 rgba(255,255,255,.20) inset!important;
+    transition:transform .32s cubic-bezier(.18,.82,.22,1),opacity .16s linear!important;
+  }
+  html[data-theme="light"] body .cineton-bottom-nav{
+    background:rgba(255,250,242,.09)!important;
+    box-shadow:0 6px 18px rgba(64,48,30,.07),0 1px 0 rgba(255,255,255,.40) inset!important;
+  }
+  html body .cineton-bottom-nav.is-scroll-hidden{
+    transform:translate3d(-50%,calc(100% + 14px),0)!important;
+  }
+}
+@media(prefers-reduced-transparency:reduce){
+  html body .cineton-bottom-nav{
+    background:color-mix(in srgb,var(--sf) 88%,transparent)!important;
+    -webkit-backdrop-filter:none!important;backdrop-filter:none!important;
+  }
+}
+@media(prefers-reduced-motion:reduce){
+  html body .cineton-bottom-nav{transition:none!important;will-change:auto}
 }
 </style>
 
