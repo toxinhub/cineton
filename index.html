@@ -9007,3 +9007,29 @@ html body .cineton-bottom-nav .ct-nav-home{
   html body .cineton-bottom-nav{-webkit-backdrop-filter:none!important;backdrop-filter:none!important}
 }
 </style>
+<style id="cineton-mobile-grid-animation-budget-v1">
+/* Hundreds of off-screen card shimmer/reveal animations keep the mobile compositor busy during every interaction. */
+@media (max-width:700px){
+  html body main.cineton-grid-reveal .c,
+  html body #g .c,
+  html body #g .c:hover,
+  html body #g .c:focus-visible{
+    animation:none!important;
+    transition:none!important;
+    transform:none!important;
+    opacity:1!important;
+    will-change:auto!important;
+  }
+  html body #g .c::before,
+  html body #g .c img.poster-loading{
+    animation:none!important;
+    background-position:center!important;
+    will-change:auto!important;
+  }
+  html body #g .c img,
+  html body #g .c .ci{
+    transition:none!important;
+    will-change:auto!important;
+  }
+}
+</style>
