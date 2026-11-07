@@ -1964,7 +1964,7 @@ function setModalPosterAccent(d){
 }
 /* CineTon movie modal controller: one synchronous lifecycle for open, close and navigation. */
 const CinetonMovieModal=(()=>{
-  const state={busy:false,closing:false,request:0,sourceCard:null,navIndex:-1,navMode:'sequential'};
+  const state={busy:false,closing:false,closeTimer:null,request:0,sourceCard:null,navIndex:-1,navMode:'sequential'};
   const isMobile=()=>window.matchMedia('(max-width:700px), (pointer:coarse)').matches;
   function updateNavigation(){
     const prev=d.querySelector('.modal-nav-prev'),next=d.querySelector('.modal-nav-next');
@@ -1992,7 +1992,10 @@ const CinetonMovieModal=(()=>{
     window.CinetonPerf?.end?.('modal-enhancement-frame',perfStart);
   }
   function open(m,navMode='sequential'){
-    if(!m||state.busy||state.closing)return;
+    if(!m||state.busy)return;
+    if(state.closeTimer){clearTimeout(state.closeTimer);state.closeTimer=null;}
+    state.closing=false;
+    d.classList.remove('is-closing');
     const perfStart=window.CinetonPerf?.start?.();
     const requestId=++state.request;
     const wasOpen=d.open;
@@ -2065,16 +2068,21 @@ const CinetonMovieModal=(()=>{
     }
   }
   function close(){
-    if(!d.open||state.closing)return;
+    if(!d.open||state.closing||state.closeTimer)return;
     state.closing=true;
     ++state.request;
-    /* Close the native dialog before any optional cleanup. */
-    d.close();
+    d.classList.add('is-closing');
     cinetonPosterAccentController?.abort();
     cinetonPosterAccentController=null;
     d.removeAttribute('aria-busy');
-    state.sourceCard?.classList.remove('is-opening');
-    state.sourceCard=null;
+    const delay=window.matchMedia('(prefers-reduced-motion:reduce)').matches?1:180;
+    state.closeTimer=setTimeout(()=>{
+      state.closeTimer=null;
+      if(d.open&&d.classList.contains('is-closing'))d.close();
+      state.sourceCard?.classList.remove('is-opening');
+      state.sourceCard=null;
+      state.closing=false;
+    },delay);
     state.closing=false;
   }
   function navigate(direction){
@@ -9156,6 +9164,32 @@ html body .cineton-bottom-nav .ct-nav-home{
   html body #g .c .ci{
     transition:none!important;
     will-change:auto!important;
+  }
+}
+</style>
+
+<style id="cineton-movie-modal-slide-motion-v1">
+/* Lightweight vertical entrance/exit for the native movie dialog. */
+dialog.cinemodal[open]{
+  transform:translate3d(0,0,0)!important;
+  opacity:1!important;
+  transition:transform 180ms cubic-bezier(.16,1,.3,1),opacity 150ms ease!important;
+  will-change:transform,opacity;
+}
+@starting-style{
+  dialog.cinemodal[open]{
+    transform:translate3d(0,22px,0)!important;
+    opacity:0!important;
+  }
+}
+dialog.cinemodal[open].is-closing{
+  transform:translate3d(0,24px,0)!important;
+  opacity:0!important;
+  transition:transform 165ms cubic-bezier(.4,0,.2,1),opacity 145ms ease!important;
+}
+@media(prefers-reduced-motion:reduce){
+  dialog.cinemodal[open],dialog.cinemodal[open].is-closing{
+    transition-duration:1ms!important;
   }
 }
 </style>
