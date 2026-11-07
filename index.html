@@ -1781,66 +1781,93 @@ async function refreshPublicCommentIndicators(){
 }
 function skeleton(){const g=$('#g');g.innerHTML=Array.from({length:12},()=>'<div class="skel" aria-hidden="true"></div>').join('')}const CINETON_LIBRARY_CACHE='cineton-library-cache-v1';async function loadCinetonLibrary(){const g=$('#g');skeleton();g.setAttribute('aria-busy','true');let loaded=false;try{const r=await fetch('data.json?v=20261012-1',{cache:'no-cache'});if(!r.ok)throw Error('HTTP '+r.status);const x=await r.json();if(!Array.isArray(x))throw Error('Invalid library data');D=x;loaded=true;const saveLibraryCache=()=>{try{localStorage.setItem(CINETON_LIBRARY_CACHE,JSON.stringify(x))}catch{}};if('requestIdleCallback' in window)requestIdleCallback(saveLibraryCache,{timeout:2500});else setTimeout(saveLibraryCache,1200);}catch(error){let cached=null;try{cached=JSON.parse(localStorage.getItem(CINETON_LIBRARY_CACHE)||'null')}catch{}if(Array.isArray(cached)){D=cached;loaded=true}else{document.body.classList.remove('cineton-page-loading');document.body.classList.add('cineton-page-ready');pageLoadFade.remove();g.removeAttribute('aria-busy');g.innerHTML='<div class="empty"><p>Couldn’t load your library right now.</p><button type="button" id="cineton-retry-load">Try again</button></div>';$('#cineton-retry-load')?.addEventListener('click',loadCinetonLibrary);return}}if(loaded){populateGenres();render();g.removeAttribute('aria-busy');refreshPublicCommentIndicators();document.body.classList.remove('cineton-page-loading');document.body.classList.add('cineton-page-ready');requestAnimationFrame(()=>requestAnimationFrame(()=>pageLoadFade.remove()))}}window.CinetonLibraryReady=loadCinetonLibrary();Object.defineProperty(window,'CinetonLibraryData',{configurable:true,get:()=>D});function populateGenres(){const names=[...new Set(D.flatMap(m=>Array.isArray(m.genres)?m.genres:[]).filter(Boolean))].sort((a,b)=>a.localeCompare(b));const s=$('#ge'),menu=$('#ge-menu'),current=s.value||'all';s.innerHTML='<option value="all">All genres</option>'+names.map(g=>'<option value="'+e(g)+'">'+e(g)+'</option>').join('');menu.innerHTML='<button type="button" role="option" data-value="all">All genres</button>'+names.map(g=>'<button type="button" role="option" data-value="'+e(g)+'">'+e(g)+'</button>').join('');const selected=[...s.options].some(o=>o.value===current)?current:'all';s.value=selected;menu.querySelectorAll('[role="option"]').forEach(o=>o.setAttribute('aria-selected',o.dataset.value===selected));const chosen=s.options[s.selectedIndex]?.textContent||'All genres';$('#ge-trigger').firstChild.textContent=chosen+' ';initSelect('ge')}
 const pic=(m,eager=false)=>m.poster?`<img class="poster-loading" loading="${eager?'eager':'lazy'}" decoding="async" fetchpriority="${eager?'high':'auto'}" src="https://image.tmdb.org/t/p/w342${e(m.poster)}" srcset="https://image.tmdb.org/t/p/w185${e(m.poster)} 185w, https://image.tmdb.org/t/p/w342${e(m.poster)} 342w, https://image.tmdb.org/t/p/w500${e(m.poster)} 500w" sizes="(max-width:420px) 44vw, (max-width:700px) 30vw, (max-width:1000px) 22vw, 190px" alt="${e(m.title)} poster" onload="this.classList.remove('poster-loading')" onerror="this.replaceWith(Object.assign(document.createElement('div'),{className:'ph',textContent:this.alt.replace(/ poster$/,'')}))">`:`<div class="ph">${e(m.title)}</div>`;function applyView(){const g=$('#g');g.classList.toggle('list',view==='list');$('#v-grid').classList.toggle('on',view==='grid');$('#v-list').classList.toggle('on',view==='list');const pf=$('#person-filter'),pl=$('#person-filter-label');pf.classList.toggle('on',!!personFilter);if(personFilter)pl.textContent=(personFilterType||'Person')+' · '+personFilter}function setStatFilter(f){statFilter=statFilter===f?'all':f;document.querySelectorAll('.stat').forEach(x=>x.classList.toggle('active',x.dataset.filter===statFilter));if(f==='movie'||f==='tv'){$('#ty').value=f}else if(f==='rated'){$('#ty').value='all';$('#so').value='my'}else if(f==='loved'){$('#ty').value='all';$('#so').value='new'}render();window.scrollTo({top:document.querySelector('.bar').offsetTop,behavior:'smooth'})}/* Let the browser skip off-screen card paint while preserving their scroll-space estimate. */
+let cinetonGridObserver=null;
 function renderGrid(L){
   const g=$('#g');
-  const frag=document.createDocumentFragment();
+  if(cinetonGridObserver){cinetonGridObserver.disconnect();cinetonGridObserver=null}
   if(!L.length){
     const empty=document.createElement('p');
     empty.className='empty';
     empty.textContent='No titles found.';
-    frag.appendChild(empty);
-    g.replaceChildren(frag);
+    g.replaceChildren(empty);
     return;
   }
-  L.forEach((m,i)=>{
-    const card=document.createElement('button');
-    card.className='c';
-    card.type='button';
-    card.dataset.id=String(m.id);
-    if(m.imdb){
-      const badge=document.createElement('span');
-      badge.className='bd';
-      badge.textContent='IMDb '+String(m.imdb);
-      card.appendChild(badge);
+  const BATCH_SIZE=48;
+  let cursor=0;
+  const sentinel=document.createElement('div');
+  sentinel.className='cineton-grid-sentinel';
+  sentinel.setAttribute('aria-hidden','true');
+  sentinel.style.cssText='grid-column:1/-1;flex:0 0 1px;width:100%;height:1px;min-height:1px;pointer-events:none';
+  function appendBatch(){
+    const frag=document.createDocumentFragment();
+    const end=Math.min(cursor+BATCH_SIZE,L.length);
+    for(;cursor<end;cursor++){
+      const m=L[cursor],i=cursor;
+      const card=document.createElement('button');
+      card.className='c';
+      card.type='button';
+      card.dataset.id=String(m.id);
+      if(m.imdb){
+        const badge=document.createElement('span');
+        badge.className='bd';
+        badge.textContent='IMDb '+String(m.imdb);
+        card.appendChild(badge);
+      }
+      const imageWrap=document.createElement('div');
+      imageWrap.innerHTML=pic(m,i<4);
+      const img=imageWrap.firstElementChild;
+      if(img)card.insertBefore(img,card.firstChild);
+      const info=document.createElement('div');
+      info.className='ci';
+      const title=document.createElement('b');
+      title.textContent=String(m.title??'');
+      info.appendChild(title);
+      const meta=document.createElement('small');
+      meta.textContent=String(m.year??'')+' · '+(m.type==='tv'?'TV / Show':'Movie')+' ·';
+      if(publicCommentMediaIds.has(String(m.id))){
+        const indicator=document.createElement('span');
+        indicator.className='visitor-comment-indicator';
+        indicator.textContent='⎚';
+        indicator.setAttribute('aria-label','Visitor comments');
+        indicator.title='Visitor comments';
+        meta.appendChild(indicator);
+      }
+      if(m.loved){
+        const sep=document.createTextNode(' • ');
+        const heart=document.createElement('span');
+        heart.className='cineton-love-heart';
+        heart.setAttribute('aria-hidden','true');
+        heart.innerHTML='<svg viewBox="0 0 24 24" focusable="false"><path d="M12 20.4 4.7 13.6C2.1 11.2 2 7.2 4.5 4.9a5.6 5.6 0 0 1 7.5.1 5.6 5.6 0 0 1 7.5-.1c2.5 2.3 2.4 6.3-.2 8.7L12 20.4Z"/></svg>';
+        meta.append(sep,heart);
+      }
+      info.appendChild(meta);
+      if(m.my_rating){
+        const rating=document.createElement('span');
+        rating.className='my-rating';
+        rating.textContent='★ '+String(m.my_rating)+'/10';
+        info.appendChild(rating);
+      }
+      card.appendChild(info);
+      frag.appendChild(card);
     }
-    const imageWrap=document.createElement('div');
-    imageWrap.innerHTML=pic(m,i<4);
-    const img=imageWrap.firstElementChild;
-    if(img) card.insertBefore(img,card.firstChild);
-    const info=document.createElement('div');
-    info.className='ci';
-    const title=document.createElement('b');
-    title.textContent=String(m.title??'');
-    info.appendChild(title);
-    const meta=document.createElement('small');
-    meta.textContent=String(m.year??'')+' · '+(m.type==='tv'?'TV / Show':'Movie')+' ·';
-    if(publicCommentMediaIds.has(String(m.id))){
-      const indicator=document.createElement('span');
-      indicator.className='visitor-comment-indicator';
-      indicator.textContent='⎚';
-      indicator.setAttribute('aria-label','Visitor comments');
-      indicator.title='Visitor comments';
-      meta.appendChild(indicator);
+    g.insertBefore(frag,sentinel);
+    if(cursor>=L.length){
+      cinetonGridObserver?.disconnect();
+      cinetonGridObserver=null;
+      sentinel.remove();
     }
-    if(m.loved){
-      const sep=document.createTextNode(' • ');
-      const heart=document.createElement('span');
-      heart.className='cineton-love-heart';
-      heart.setAttribute('aria-hidden','true');
-      heart.innerHTML='<svg viewBox="0 0 24 24" focusable="false"><path d="M12 20.4 4.7 13.6C2.1 11.2 2 7.2 4.5 4.9a5.6 5.6 0 0 1 7.5.1 5.6 5.6 0 0 1 7.5-.1c2.5 2.3 2.4 6.3-.2 8.7L12 20.4Z"/></svg>';
-      meta.append(sep,heart);
-    }
-    info.appendChild(meta);
-    if(m.my_rating){
-      const rating=document.createElement('span');
-      rating.className='my-rating';
-      rating.textContent='★ '+String(m.my_rating)+'/10';
-      info.appendChild(rating);
-    }
-    card.appendChild(info);
-    frag.appendChild(card);
-  });
-  g.replaceChildren(frag);
+  }
+  g.replaceChildren(sentinel);
+  appendBatch();
+  if(cursor>=L.length)return;
+  if('IntersectionObserver' in window){
+    cinetonGridObserver=new IntersectionObserver(entries=>{
+      if(entries.some(entry=>entry.isIntersecting))appendBatch();
+    },{root:null,rootMargin:'1400px 0px',threshold:0});
+    cinetonGridObserver.observe(sentinel);
+  }else{
+    while(cursor<L.length)appendBatch();
+  }
 }
 let industryFilter=null;function applyIndustryFilter(industry){industryFilter=industryFilter===industry?null:industry;personFilter=null;personFilterType='';$('#q').value='';statFilter='all';d.dataset.skipReturnScroll='1';closeCinetonModal();requestAnimationFrame(()=>{render();window.scrollTo({top:document.querySelector('.bar').offsetTop,behavior:'smooth'})});return true}const cinetonSearchIndex=new WeakMap();
 function getCinetonSearchIndex(m){
