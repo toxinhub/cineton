@@ -7650,3 +7650,30 @@ html[data-theme] .cineton-bottom-nav button.is-active{color:var(--ct-text-accent
 html[data-theme] a:not(main#g .c a){color:var(--ct-text-accent)}
 html[data-theme] :where(button,input,textarea,select){accent-color:var(--ct-text-accent)}
 </style>
+
+
+
+<style id="cineton-pure-monochrome-text-v1">
+/* Strict monochrome typography: white in dark mode, black in light mode. */
+html[data-theme="dark"] body,
+html[data-theme="dark"] body *{
+  color:#fff!important;
+}
+html[data-theme="light"] body,
+html[data-theme="light"] body *{
+  color:#000!important;
+}
+/* Keep form hints monochrome too, using opacity for hierarchy rather than grey hues. */
+html[data-theme="dark"] body :is(input,textarea,select)::placeholder{color:#fff!important;opacity:.62!important}
+html[data-theme="light"] body :is(input,textarea,select)::placeholder{color:#000!important;opacity:.55!important}
+html[data-theme="dark"] body :is(input,textarea,select){-webkit-text-fill-color:#fff!important}
+html[data-theme="light"] body :is(input,textarea,select){-webkit-text-fill-color:#000!important}
+/* Poster artwork needs white overlay copy in either theme; preserve IMDb's requested soft yellow. */
+html[data-theme] main#g:not(.list) .c>.ci :is(b,small,.my-rating){color:#fff!important}
+html[data-theme] main#g:not(.list) .c>.bd{
+  color:#f3df91!important;
+  -webkit-text-fill-color:#f3df91!important;
+}
+html[data-theme] main#g:not(.list) .c>.ci .bd{color:#f3df91!important;-webkit-text-fill-color:#f3df91!important}
+html[data-theme] ::selection{background:#79b99a66}
+</style>
