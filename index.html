@@ -7812,3 +7812,47 @@ header{
   }
 }
 </style>
+
+
+<style id="cineton-desktop-header-centered-v1">
+/* Center the brand block on desktop while keeping the utility strip independent. */
+@media(min-width:701px){
+  body header{
+    display:flex!important;
+    flex-direction:column!important;
+    align-items:center!important;
+    justify-content:center!important;
+    box-sizing:border-box!important;
+    width:100%!important;
+    margin-left:auto!important;
+    margin-right:auto!important;
+    padding-left:24px!important;
+    padding-right:24px!important;
+    text-align:center!important;
+  }
+  body header .home-brand{
+    display:block!important;
+    width:100%!important;
+    max-width:100%!important;
+    margin-left:auto!important;
+    margin-right:auto!important;
+    text-align:center!important;
+  }
+  body header h1{
+    display:flex!important;
+    align-items:center!important;
+    justify-content:center!important;
+    width:100%!important;
+    margin-left:auto!important;
+    margin-right:auto!important;
+    text-align:center!important;
+  }
+  body header .sub{
+    display:block!important;
+    width:min(100%,560px)!important;
+    max-width:560px!important;
+    margin:8px auto 0!important;
+    text-align:center!important;
+  }
+}
+</style>
