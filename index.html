@@ -1883,12 +1883,12 @@ async function cinetonPosterTransition(direction){
   }catch(error){
     console.info('Cineton modal transition fallback:',error);
     try{
-      const fallback=motionTarget.animate(
+      animation=motionTarget.animate(
         opening?[{opacity:0,transform:'translate3d(0,20px,0)'},{opacity:1,transform:'translate3d(0,0,0)'}]:
           [{opacity:1,transform:'translate3d(0,0,0)'},{opacity:0,transform:'translate3d(0,20px,0)'}],
         {duration,easing: ease,fill:'both'}
       );
-      await fallback.finished;
+      await animation.finished;
       return true;
     }catch(fallbackError){
       console.info('Cineton modal fallback failed:',fallbackError);
