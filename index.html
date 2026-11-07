@@ -8785,21 +8785,7 @@ html body .cineton-bottom-nav .ct-nav-home{
 html{scroll-behavior:smooth;scroll-padding-top:14px}
 @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto!important}}
 
-/* Dark theme: strengthen muted text, surfaces, controls and separators consistently. */
-html[data-theme="dark"]{
-  --bg:#101216!important;
-  --sf:#1b2028!important;
-  --tx:#f3f5f7!important;
-  --mu:#b9c2cc!important;
-  --ac:#d5ad70!important;
-  --gd:#f0c987!important;
-  --line:#ffffff20!important;
-  --line-strong:#ffffff40!important;
-  --modal:#1a2028!important;
-  --modal-overlay:#141920f5!important;
-  --modal-backdrop:#03060bbd!important;
-  --modal-shadow:#000d!important;
-}
+/* Dark-mode palette values are owned by the Obsidian Jade design-system layer. */
 html[data-theme="dark"] body{color:var(--tx)!important}
 html[data-theme="dark"] .stat,
 html[data-theme="dark"] .surprise,
@@ -8829,7 +8815,7 @@ html[data-theme="dark"] .ct-discover-panel,
 html[data-theme="dark"] .ct-home-menu,
 html[data-theme="dark"] .ct-discover-search,
 html[data-theme="dark"] .ct-discover-filters select{
-  background-color:color-mix(in srgb,var(--sf) 94%,#27313d)!important;
+  background-color:var(--ct-panel)!important;
 }
 html[data-theme="dark"] .stat b,
 html[data-theme="dark"] .ci b,
@@ -8840,7 +8826,7 @@ html[data-theme="dark"] .public-comment,
 html[data-theme="dark"] .public-comment-name,
 html[data-theme="dark"] .public-comment-text{color:var(--tx)!important}
 html[data-theme="dark"] input::placeholder,
-html[data-theme="dark"] textarea::placeholder{color:#aeb8c4!important;opacity:1!important}
+html[data-theme="dark"] textarea::placeholder{color:var(--ct-text-muted)!important;opacity:1!important}
 html[data-theme="dark"] .select-menu button:hover,
 html[data-theme="dark"] .select-menu button:focus-visible,
 html[data-theme="dark"] .stat:hover,
@@ -8849,7 +8835,7 @@ html[data-theme="dark"] :focus-visible{outline-color:var(--gd)!important}
 html[data-theme="dark"] .cinemodal{background:var(--modal)!important;color:var(--tx)!important;border-color:var(--line-strong)!important}
 html[data-theme="dark"] .cinemodal::after{background:var(--modal-overlay)!important}
 html[data-theme="dark"] .public-comments,
-html[data-theme="dark"] .public-comment-composer{background:#202833!important;border-color:#ffffff35!important}
+html[data-theme="dark"] .public-comment-composer{background:var(--ct-panel)!important;border-color:var(--ct-panel-border)!important}
 html[data-theme="dark"] .public-comment-mark{color:#dce4ed!important;opacity:1!important}
 
 /* Mobile: compact the content rhythm while preserving readable poster cards and touch targets. */
