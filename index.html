@@ -2028,7 +2028,7 @@ const CinetonMovieModal=(()=>{
         }finally{
           if(requestId===state.request)state.busy=false;
         }
-      }));
+      });
     }catch(error){
       console.error('CineTon modal opening failed',error);
       $('#mb').innerHTML='<div class="empty"><p>Could not load movie details.</p></div>';
