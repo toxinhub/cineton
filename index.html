@@ -8800,6 +8800,37 @@ html[data-theme] body :is(button,a,input,select,textarea,[tabindex]):focus-visib
 /* Reveal only after every theme override above has been parsed, preventing a one-frame old-palette flash. */
 document.documentElement.classList.add('cineton-styles-ready');
 </script>
+<style id="cineton-final-noir-palette-guard-v1">
+/* Final palette guard: legacy CSS layers may remain for layout, but cannot recolor the UI. */
+html[data-theme="dark"]{
+ --bg:#0b0b0d!important;--sf:#151518!important;--tx:#f2efe9!important;--mu:#aaa6a0!important;--ac:#c4a36b!important;--gd:#dfc28e!important;
+ --line:#ffffff16!important;--line-strong:#ffffff2c!important;--modal:#141417!important;--modal-overlay:#0b0b0df5!important;--modal-backdrop:#000c!important;--modal-shadow:#000b!important;
+ --ct-text-primary:#f2efe9!important;--ct-text-secondary:#c3bbaf!important;--ct-text-muted:#a49b90!important;--ct-text-accent:#dfc28e!important;--ct-text-on-accent:#111114!important;
+ --ct-panel:rgba(21,21,24,.94)!important;--ct-panel-solid:#151518!important;--ct-panel-border:rgba(255,255,255,.13)!important;--ct-hover:rgba(196,163,107,.10)!important;--ct-focus:#dfc28e!important;
+}
+html[data-theme="light"]{
+ --bg:#f3ecdf!important;--sf:#fffaf2!important;--tx:#2b241d!important;--mu:#625649!important;--ac:#8b6336!important;--gd:#805b2e!important;
+ --line:#6c51301f!important;--line-strong:#6c513044!important;--modal:#fff8ee!important;--modal-overlay:#fff8eef2!important;--modal-backdrop:#24180f55!important;--modal-shadow:#24180f35!important;
+ --ct-text-primary:#2b241d!important;--ct-text-secondary:#625649!important;--ct-text-muted:#796d60!important;--ct-text-accent:#765126!important;--ct-text-on-accent:#fffaf2!important;
+ --ct-panel:rgba(255,250,242,.96)!important;--ct-panel-solid:#fffaf2!important;--ct-panel-border:rgba(108,81,48,.16)!important;--ct-hover:rgba(139,99,54,.08)!important;--ct-focus:#8b6336!important;
+}
+html[data-theme="dark"] body{background:#0b0b0d!important;color:#f2efe9!important;background-image:radial-gradient(ellipse at 50% -18%,#29221a 0%,#111114 42%,#0b0b0d 78%)!important}
+html[data-theme="light"] body{background:#f3ecdf!important;color:#2b241d!important;background-image:radial-gradient(ellipse at 50% -18%,#fffaf2 0%,#f3ecdf 72%,#e9dfd2 100%)!important}
+html[data-theme] :is(.stat,.bar,.select-menu,.select-trigger,.surprise){background:var(--ct-panel)!important;color:var(--ct-text-secondary)!important;border-color:var(--ct-panel-border)!important}
+html[data-theme] .bar :is(input,select),html[data-theme] .select-menu button,html[data-theme] .cinemodal :is(input,textarea,select),html[data-theme] .suggestions-dialog :is(input,textarea){background:var(--ct-panel-solid)!important;color:var(--ct-text-primary)!important;border-color:var(--ct-panel-border)!important}
+html[data-theme] :is(header h1,.stat b,.cinemodal h2,.cinemodal .detail-value,.suggestions-dialog h1,.suggestions-dialog h2,.suggestions-dialog h3){color:var(--ct-text-primary)!important}
+html[data-theme] :is(header .sub,.sub,.ci small,.empty,.person-filter-bar,.cinemodal .subline,.cinemodal .detail-label,.cinemodal .modal-footer){color:var(--ct-text-secondary)!important}
+html[data-theme] .film-mark,html[data-theme] .my-rating,html[data-theme] .bd{color:var(--ct-text-accent)!important}
+html[data-theme] .c{background:var(--ct-panel)!important;color:var(--ct-text-primary)!important;border-color:var(--ct-panel-border)!important}
+html[data-theme] .c .ci{color:var(--ct-text-primary)!important}
+html[data-theme] .cinemodal,html[data-theme] .suggestions-dialog{background:var(--modal)!important;color:var(--ct-text-primary)!important;border-color:var(--ct-panel-border)!important}
+html[data-theme] .cinemodal .chips span{background:var(--ct-hover)!important;color:var(--ct-text-secondary)!important;border-color:var(--ct-panel-border)!important}
+html[data-theme] .views button.on,html[data-theme] .bar button.on{background:var(--ct-text-accent)!important;color:var(--ct-text-on-accent)!important;border-color:var(--ct-text-accent)!important}
+html[data-theme="dark"] .cineton-bottom-nav{--ct-nav-bg:rgba(21,21,24,.97)!important;--ct-nav-border:rgba(255,255,255,.16)!important}
+html[data-theme="dark"] .cineton-bottom-nav button.is-active{background:rgba(196,163,107,.15)!important;border-color:rgba(196,163,107,.29)!important;color:#dfc28e!important}
+html[data-theme="light"] .cineton-bottom-nav{--ct-nav-bg:rgba(255,250,242,.97)!important;--ct-nav-border:rgba(108,81,48,.18)!important}
+html[data-theme="light"] .cineton-bottom-nav button.is-active{background:rgba(139,99,54,.11)!important;border-color:rgba(139,99,54,.20)!important;color:#805b37!important}
+</style>
 <!-- Cineton opt-in performance profiler --><script>(()=>{try{if(new URLSearchParams(location.search).has('perf')){const s=document.createElement('script');s.src='./perf-profiler.js';s.defer=true;document.head.appendChild(s)}}catch(e){}})();</script></body></html>
 
 
