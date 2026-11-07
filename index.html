@@ -7330,3 +7330,31 @@ html[data-theme="dark"] :is(.cineton-featured-eyebrow,
 </style>
 
 </body></html>
+
+<style id="cineton-imdb-rating-colors-v1">
+/* IMDb's signature yellow, with dark text on filled chips for clear contrast. */
+:root{
+  --cineton-imdb-yellow:#f5c518;
+  --cineton-imdb-ink:#191919;
+}
+/* Grid/list IMDb score label: retain a crisp yellow identity in both themes. */
+main#g .c>.bd{
+  color:var(--cineton-imdb-yellow)!important;
+  text-shadow:0 1px 4px #000b,0 0 7px #0008!important;
+}
+/* Modal IMDb chip: yellow surface + near-black text, never theme-muted. */
+.cinemodal .chips .imdb-chip{
+  background:var(--cineton-imdb-yellow)!important;
+  border-color:#d6a900!important;
+  color:var(--cineton-imdb-ink)!important;
+  font-weight:800!important;
+  text-shadow:none!important;
+}
+.cinemodal .chips .imdb-chip *{
+  color:var(--cineton-imdb-ink)!important;
+}
+html[data-theme="dark"] .cinemodal .chips .imdb-chip,
+html[data-theme="light"] .cinemodal .chips .imdb-chip{
+  color:var(--cineton-imdb-ink)!important;
+}
+</style>
