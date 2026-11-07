@@ -7143,4 +7143,58 @@ main#g.list .c .rv{top:6px!important;right:6px!important;font-size:.58rem!import
 @media(prefers-reduced-motion:reduce){main#g .c>img{transition:none!important}}
 </style>
 
+
+
+<style id="cineton-poster-layering-hotfix-v2">
+/* The legacy placeholder was painted above the new background poster.
+   Keep the placeholder behind the image, then stack the gradient and copy above it. */
+main#g:not(.list) .c{
+  isolation:isolate!important;
+  position:relative!important;
+}
+main#g:not(.list) .c::before{
+  z-index:-1!important;
+  pointer-events:none!important;
+}
+main#g:not(.list) .c>img,
+main#g:not(.list) .c>.ph{
+  position:absolute!important;
+  inset:0!important;
+  z-index:0!important;
+  display:block!important;
+  width:100%!important;
+  height:100%!important;
+  aspect-ratio:auto!important;
+  object-fit:cover!important;
+}
+main#g:not(.list) .c::after{
+  z-index:1!important;
+  pointer-events:none!important;
+}
+main#g:not(.list) .c>.ci{
+  z-index:2!important;
+  background:linear-gradient(180deg,transparent 0%,rgba(8,8,8,.08) 100%)!important;
+}
+main#g:not(.list) .c>.bd,
+main#g:not(.list) .c>.rv{
+  z-index:3!important;
+}
+/* Dark-theme card rules used to paint an opaque panel over the poster.
+   Retain readable foreground text without hiding the background artwork. */
+html[data-theme="dark"] main#g:not(.list) .c>.ci{
+  background:linear-gradient(180deg,transparent 0%,rgba(8,8,8,.12) 100%)!important;
+  color:#fff!important;
+}
+html[data-theme="dark"] main#g:not(.list) .c>.ci b,
+html[data-theme="dark"] main#g:not(.list) .c>.ci small{
+  color:#fff!important;
+}
+html[data-theme="dark"] main#g:not(.list) .c>.ci .my-rating{
+  color:#f4cc78!important;
+}
+@media(prefers-reduced-motion:reduce){
+  main#g:not(.list) .c>img{transition:none!important}
+}
+</style>
+
 </body></html>
