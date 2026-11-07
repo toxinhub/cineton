@@ -2579,7 +2579,7 @@ body{background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/20
     height:28px !important;
   }
 }
-</style>cky-scroll-compact-v1">
+</style><script id="sticky-bar-scroll-compact-v1">
 (()=>{const bar=document.querySelector('.bar');if(!bar)return;let compact=false,lastY=window.scrollY,ticking=false;
 const update=()=>{const y=window.scrollY;const next=y>18; if(next!==compact){compact=next;bar.classList.toggle('scroll-compact',compact)}lastY=y;ticking=false};
 window.addEventListener('scroll',()=>{if(!ticking){ticking=true;requestAnimationFrame(update)}},{passive:true});
