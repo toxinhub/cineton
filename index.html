@@ -191,8 +191,8 @@ header{border-bottom-color:var(--line);background:color-mix(in srgb,var(--sf) 28
 .stat{border-color:var(--line);box-shadow:0 1px 0 #fff8 inset}.stat:hover,.stat:focus-visible,.stat.active{background:color-mix(in srgb, var(--modal-shadow) 4%, transparent);border-color:var(--line-strong)}.stat:focus-visible{box-shadow:0 0 0 2px color-mix(in srgb, var(--modal-shadow) 7%, transparent)}
 .bar{background:color-mix(in srgb,var(--bg) 91%,transparent);box-shadow:0 5px 18px color-mix(in srgb, var(--modal-shadow) 4%, transparent)}
 .surprise{background:color-mix(in srgb,var(--sf) 58%,transparent);border-color:var(--line);color:var(--mu);box-shadow:0 1px 3px color-mix(in srgb, var(--modal-shadow) 7%, transparent)}.surprise:hover,.surprise:focus-visible{background:color-mix(in srgb,var(--sf) 76%,transparent);border-color:var(--line-strong);color:var(--tx);box-shadow:0 2px 6px color-mix(in srgb, var(--modal-shadow) 9%, transparent)}
-.views button.on,button.on{background:var(--ac);border-color:var(--ac);color:#fff9f1}
-.bar input{border-color:var(--line-strong);box-shadow:0 1px 0 #fff8 inset,0 2px 8px color-mix(in srgb, var(--modal-shadow) 9%, transparent)}.bar input:hover{border-color:color-mix(in srgb, var(--modal-shadow) 28%, transparent)}.bar input:focus{border-color:#8a68436b;box-shadow:0 0 0 2px color-mix(in srgb, var(--gd) 10%, transparent),0 2px 10px color-mix(in srgb, var(--modal-shadow) 11%, transparent)}
+.views button.on,button.on{background:var(--ac);border-color:var(--ac);color:var(--ct-text-on-accent)}
+.bar input{border-color:var(--line-strong);box-shadow:0 1px 0 #fff8 inset,0 2px 8px color-mix(in srgb, var(--modal-shadow) 9%, transparent)}.bar input:hover{border-color:color-mix(in srgb, var(--modal-shadow) 28%, transparent)}.bar input:focus{border-color:color-mix(in srgb, var(--gd) 42%, transparent);box-shadow:0 0 0 2px color-mix(in srgb, var(--gd) 10%, transparent),0 2px 10px color-mix(in srgb, var(--modal-shadow) 11%, transparent)}
 .select-trigger{border-color:var(--line)}.select-wrap.open .select-trigger{border-color:var(--line-strong)}.select-menu{background:color-mix(in srgb,var(--sf) 96%,transparent);border-color:var(--line);box-shadow:0 14px 35px color-mix(in srgb, var(--modal-shadow) 15%, transparent)}.select-menu button:hover,.select-menu button:focus-visible{background:color-mix(in srgb, var(--modal-shadow) 4%, transparent)}.select-menu button[aria-selected="true"]{background:color-mix(in srgb, var(--modal-shadow) 3%, transparent)}
 .c{border-color:var(--line)}.c:hover{box-shadow:0 8px 22px color-mix(in srgb, var(--modal-shadow) 12%, transparent);border-color:var(--line-strong)}.c:focus-visible{border-color:color-mix(in srgb, var(--modal-shadow) 27%, transparent);box-shadow:0 0 0 2px color-mix(in srgb, var(--modal-shadow) 7%, transparent),0 8px 22px color-mix(in srgb, var(--modal-shadow) 12%, transparent)}.c img,.ph{background:var(--sf)}.my-rating{color:var(--ac)}.bd{color:var(--gd);background:transparent}
 .cinemodal{border-color:var(--line-strong);background:color-mix(in srgb,var(--modal) 86%,transparent);backdrop-filter:blur(2px) saturate(112%);-webkit-backdrop-filter:blur(2px) saturate(112%);box-shadow:0 24px 70px var(--modal-shadow)}.cinemodal .m img{box-shadow:0 10px 26px color-mix(in srgb, var(--modal-shadow) 15%, transparent)}.cinemodal .chips span{background:color-mix(in srgb,var(--tx) 3%,transparent);border-color:var(--line)}
@@ -1447,7 +1447,7 @@ main.cineton-grid-reveal .c:hover{
 
 /* Preserved source layer: cineton-list-balance-v1 */
 
-/* List view balance: clearer rows, calmer cocoa surfaces, and consistent metadata alignment. */
+/* List view balance: clearer rows, theme-aware surfaces, and consistent metadata alignment. */
 @media (min-width: 601px) {
   main.list {
     gap: 8px !important;
@@ -2015,12 +2015,12 @@ async function loadPublicComments(mediaId,root){const list=root.querySelector('.
     padding:2px 7px;
     box-shadow:none;
     font-size:.61rem;
-    color:#59483a;
+    color:var(--ct-text-secondary);
   }
 
   .stat:not(:last-child)::after{
     margin-left:7px;
-    color:#8a725b;
+    color:var(--ct-text-secondary);
     opacity:.7;
   }
   .stat b{color:var(--tx)}
@@ -2254,7 +2254,7 @@ async function loadPublicComments(mediaId,root){const list=root.querySelector('.
     border-radius:7px;
     font-size:.68rem;
     padding:5px 8px;
-    background:#f7efe4;
+    background:var(--sf);
   }
   .views button{
     min-width:33px;
@@ -2268,7 +2268,7 @@ async function loadPublicComments(mediaId,root){const list=root.querySelector('.
     padding:4px 8px;
     border-radius:7px;
     font-size:.59rem;
-    background:#f7efe4;
+    background:var(--sf);
   }
   .tabs{gap:12px}
   .tabs button{
@@ -2651,7 +2651,7 @@ update();
 .views button.on{
   background:var(--ac) !important;
   border-color:var(--ac) !important;
-  color:#fff9f1 !important;
+  color:var(--ct-text-on-accent) !important;
   box-shadow:0 1px 0 #fff3 inset,0 2px 6px color-mix(in srgb, var(--modal-shadow) 10%, transparent);
 }
 .views button:active{transform:scale(.95)}
@@ -4313,7 +4313,7 @@ body{
   display:block;
   width:100%;
   height:100%;
-  background:linear-gradient(90deg,#a88455 0%,#d6b47b 58%,#e4cda5 100%);
+  background:linear-gradient(90deg,var(--ac) 0%,var(--gd) 58%,var(--ct-text-secondary) 100%);
   transform:scaleX(0);
   transform-origin:left center;
   will-change:transform;
@@ -4800,13 +4800,13 @@ button,.btn,.chip,.filter-chip,.tab{
 .pagination button,.tab,.chip,.filter-chip)[aria-pressed="true"]{
   background:var(--gd)!important;
   border-color:var(--gd)!important;
-  color:#fff8ef!important;
+  color:var(--ct-text-on-accent)!important;
 }
 /* Movie cards retain poster color; only their surrounding UI is neutralized. */
 #g .c{
   background:var(--sf)!important;
   border-color:color-mix(in srgb, var(--modal-shadow) 17%, transparent)!important;
-  box-shadow:0 2px 8px #4c382012!important;
+  box-shadow:0 2px 8px color-mix(in srgb, var(--modal-shadow) 7%, transparent)!important;
 }
 #g .c .ci{
   background:var(--sf)!important;
@@ -4820,7 +4820,7 @@ button,.btn,.chip,.filter-chip,.tab{
 }
 #g .c:hover{
   border-color:color-mix(in srgb, var(--gd) 40%, transparent)!important;
-  box-shadow:0 5px 16px #4c38201c!important;
+  box-shadow:0 5px 16px color-mix(in srgb, var(--modal-shadow) 11%, transparent)!important;
 }
 #g .c::before{
   background-color:var(--ct-text-secondary)!important;
@@ -4850,7 +4850,7 @@ button,.btn,.chip,.filter-chip,.tab{
   body{
     background-image:linear-gradient(160deg,var(--bg) 0%,var(--bg) 58%,var(--bg) 100%)!important;
   }
-  #g .c{box-shadow:0 1px 5px #4c382010!important}
+  #g .c{box-shadow:0 1px 5px color-mix(in srgb, var(--modal-shadow) 6%, transparent)!important}
 }
 
 /* Preserved source layer: cineton-suggest-me-porcelain-balance-v1 */
@@ -4912,7 +4912,7 @@ button,.btn,.chip,.filter-chip,.tab{
 .suggestion-submit{
   background:var(--gd)!important;
   border-color:var(--gd)!important;
-  color:#fff8ef!important;
+  color:var(--ct-text-on-accent)!important;
 }
 .suggestion-submit:hover,.suggestion-submit:focus-visible{
   background:var(--gd)!important;
@@ -4952,7 +4952,7 @@ main.list .c{
   color:var(--ct-text-primary)!important;
   border:1px solid color-mix(in srgb, var(--modal-shadow) 17%, transparent)!important;
   border-radius:8px!important;
-  box-shadow:0 1px 4px #4c382010!important;
+  box-shadow:0 1px 4px color-mix(in srgb, var(--modal-shadow) 6%, transparent)!important;
   outline-color:var(--gd)!important;
 }
 main.list .c .ci{
@@ -5000,7 +5000,7 @@ main.list .c:hover,
 main.list .c:focus-visible{
   background:var(--sf)!important;
   border-color:color-mix(in srgb, var(--gd) 42%, transparent)!important;
-  box-shadow:0 3px 10px #4c38201a!important;
+  box-shadow:0 3px 10px color-mix(in srgb, var(--modal-shadow) 10%, transparent)!important;
 }
 main.list .c:hover .ci{
   background:var(--sf)!important;
@@ -5295,7 +5295,7 @@ main.list .c:active{
   position:relative!important;
   background:var(--sf)!important;
   border:1px solid color-mix(in srgb, var(--modal-shadow) 17%, transparent)!important;
-  box-shadow:0 1px 3px #4c38200d!important;
+  box-shadow:0 1px 3px color-mix(in srgb, var(--modal-shadow) 5%, transparent)!important;
   transition:border-color .16s ease,background-color .16s ease,box-shadow .16s ease,transform .16s ease!important;
 }
 #g.list button.c>.ci{
@@ -5331,7 +5331,7 @@ main.list .c:active{
 }
 #g.list button.c:hover{
   background:var(--sf)!important;border-color:color-mix(in srgb, var(--gd) 42%, transparent)!important;
-  box-shadow:0 3px 10px #4c382018!important;transform:translateY(-1px)!important;
+  box-shadow:0 3px 10px color-mix(in srgb, var(--modal-shadow) 9%, transparent)!important;transform:translateY(-1px)!important;
 }
 #g.list button.c:hover>.ci{background:var(--sf)!important}
 #g.list button.c:focus-visible{
@@ -5433,7 +5433,7 @@ main.list .c:active{
     background:var(--ct-panel)!important;
     color:var(--ct-text-primary)!important;
     border-color:var(--ct-text-secondary)!important;
-    box-shadow:0 1px 3px #4c382012!important;
+    box-shadow:0 1px 3px color-mix(in srgb, var(--modal-shadow) 7%, transparent)!important;
   }
   #g.list button.c>.ci,
   #g.list button.c:hover>.ci{
@@ -5474,7 +5474,7 @@ main.list .c:active{
   #g.list button.c:hover{
     background:var(--sf)!important;
     border-color:var(--ct-text-secondary)!important;
-    box-shadow:0 2px 7px #4c382018!important;
+    box-shadow:0 2px 7px color-mix(in srgb, var(--modal-shadow) 9%, transparent)!important;
   }
 }
 
@@ -6031,7 +6031,7 @@ body{
 }
 header{border-bottom-color:var(--line)!important}
 header h1{color:var(--ct-text-primary)!important}
-header:before{color:#8a6843!important}
+header:before{color:var(--gd)!important}
 header .sub{color:var(--ct-text-secondary)!important}
 .stat{background:var(--sf)!important;color:var(--ct-text-secondary)!important;border-color:color-mix(in srgb, var(--modal-shadow) 17%, transparent)!important}
 .stat b{color:var(--ct-text-primary)!important}
@@ -7103,7 +7103,7 @@ header .sub{
 }
 .tabs button.on{
   background:var(--gd)!important;
-  color:#20170e!important;
+  color:var(--ct-text-on-accent)!important;
   box-shadow:0 2px 8px rgba(0,0,0,.12)!important;
 }
 .nav-actions{gap:7px!important}
@@ -7164,7 +7164,7 @@ header .sub{
 }
 .bar .views button.on{
   background:var(--gd)!important;
-  color:#20170e!important;
+  color:var(--ct-text-on-accent)!important;
 }
 .select-menu{
   border:1px solid var(--ct-panel-border)!important;
