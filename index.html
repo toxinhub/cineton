@@ -1988,13 +1988,12 @@ const CinetonMovieModal=(()=>{
       }
       d.setAttribute('aria-busy','true');
 
-      /* Open a tiny shell first. Two frames allow the browser to paint it
-         before building the full detail tree on slower mobile devices. */
+      /* Show the native dialog immediately; build details on the next frame. */
+      if(!wasOpen)d.showModal();
       $('#mb').innerHTML='<div class="cineton-modal-loading" role="status" aria-live="polite">Loading…</div>';
       updateNavigation();
-      if(!wasOpen)d.showModal();
 
-      requestAnimationFrame(()=>requestAnimationFrame(()=>{
+      requestAnimationFrame(()=>{
         if(requestId!==state.request||!d.open)return;
         try{
           $('#mb').innerHTML=buildContent(m);
@@ -2042,12 +2041,13 @@ const CinetonMovieModal=(()=>{
     if(!d.open||state.closing)return;
     state.closing=true;
     ++state.request;
+    /* Close the native dialog before any optional cleanup. */
+    d.close();
     cinetonPosterAccentController?.abort();
     cinetonPosterAccentController=null;
     d.removeAttribute('aria-busy');
     state.sourceCard?.classList.remove('is-opening');
     state.sourceCard=null;
-    d.close();
     state.closing=false;
   }
   function navigate(direction){
