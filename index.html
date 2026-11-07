@@ -8992,3 +8992,16 @@ html body .cineton-bottom-nav .ct-nav-home{
   html body .suggestions-dialog.is-closing{transform:none!important;opacity:1!important}
 }
 </style>
+<style id="cineton-mobile-dialog-paint-budget-v1">
+/* The poster-derived ambient blur is decorative, but forces a large filtered image layer on every dialog open. */
+@media (max-width:700px){
+  html body .cinemodal::before{
+    display:none!important;
+    content:none!important;
+    background-image:none!important;
+    filter:none!important;
+    transform:none!important;
+  }
+  html body .cinemodal{box-shadow:0 8px 24px var(--modal-shadow)!important}
+}
+</style>
