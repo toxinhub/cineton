@@ -9039,6 +9039,8 @@ html body button:disabled{
   html body .nav-actions :is(.suggest-me-btn,.surprise)::after{display:none!important}
 }
 
+</style>
+
 <style id="cineton-glass-dock-scroll-hide-v13">
 /* Frosted-glass navigation dock with compact mobile sizing and scroll-direction behavior. */
 html body .cineton-bottom-nav{
@@ -9097,37 +9099,46 @@ html body .cineton-bottom-nav button.is-active{
   html body .cineton-bottom-nav{transition:none!important;will-change:auto}
 }
 </style>
-<script id="cineton-bottom-dock-scroll-behavior-v14">
+<script id="cineton-bottom-dock-scroll-behavior-v15">
 (()=>{
  const dock=document.querySelector('.cineton-bottom-nav');
- if(!dock)return;
- let previousY=Math.max(0,window.scrollY||0);
- let ticking=false;
+ if(!dock||dock.dataset.scrollMotionReady==='true')return;
+ dock.dataset.scrollMotionReady='true';
+ let lastY=Math.max(0,window.scrollY||0);
+ let travel=0;
+ let direction=0;
+ let raf=0;
  const reduced=window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+ const show=()=>dock.classList.remove('is-scroll-hidden');
+ const hide=()=>dock.classList.add('is-scroll-hidden');
  const update=()=>{
+   raf=0;
    const y=Math.max(0,window.scrollY||0);
-   const delta=y-previousY;
+   const delta=y-lastY;
+   lastY=y;
    const modalOpen=!!document.querySelector('dialog[open]')||document.body.classList.contains('suggestions-modal-open');
-   if(modalOpen||y<56||delta < -2){
-     dock.classList.remove('is-scroll-hidden');
-   }else if(delta>2&&y>80){
-     dock.classList.add('is-scroll-hidden');
-   }
-   previousY=y;
-   ticking=false;
+   if(modalOpen||y<64){travel=0;show();return}
+   if(Math.abs(delta)<1)return;
+   const nextDirection=delta>0?1:-1;
+   if(nextDirection!==direction){direction=nextDirection;travel=0}
+   travel+=Math.abs(delta);
+   if(direction===1&&y>96&&travel>=14)hide();
+   if(direction===-1&&travel>=9)show();
  };
- window.addEventListener('scroll',()=>{
-   if(ticking)return;
-   ticking=true;
-   if(reduced){update();return}
-   window.requestAnimationFrame(update);
- },{passive:true});
+ const onScroll=()=>{
+   if(reduced){lastY=Math.max(0,window.scrollY||0);show();return}
+   if(!raf)raf=window.requestAnimationFrame(update);
+ };
+ window.addEventListener('scroll',onScroll,{passive:true});
+ window.addEventListener('resize',()=>{lastY=Math.max(0,window.scrollY||0);show()},{passive:true});
  document.addEventListener('click',event=>{
-   if(event.target.closest('.cineton-bottom-nav button'))dock.classList.remove('is-scroll-hidden');
+   if(event.target instanceof Element&&event.target.closest('.cineton-bottom-nav button'))show();
  });
  document.addEventListener('visibilitychange',()=>{
-   if(!document.hidden){previousY=Math.max(0,window.scrollY||0);dock.classList.remove('is-scroll-hidden')}
+   if(!document.hidden){lastY=Math.max(0,window.scrollY||0);travel=0;show()}
  });
+ document.addEventListener('dialog-open',show);
+ show();
 })();
 </script>
 
@@ -9165,4 +9176,46 @@ html body .cineton-bottom-nav.is-scroll-hidden{
   html body .cineton-bottom-nav{transition:none!important;filter:none!important}
 }
 </style>
+
+<style id="cineton-glass-dock-corrective-v15">
+/* True translucent glass: keep the page visible through the dock while retaining legibility. */
+html body .cineton-bottom-nav{
+  background:rgba(21,24,32,.16)!important;
+  background:color-mix(in srgb,var(--sf) 15%,transparent)!important;
+  border:1px solid color-mix(in srgb,var(--tx) 17%,transparent)!important;
+  -webkit-backdrop-filter:blur(30px) saturate(1.9) contrast(1.04)!important;
+  backdrop-filter:blur(30px) saturate(1.9) contrast(1.04)!important;
+  box-shadow:0 16px 44px rgba(0,0,0,.22),0 1px 0 rgba(255,255,255,.22) inset,0 0 0 1px rgba(255,255,255,.05)!important;
+  transform:translate3d(-50%,0,0)!important;
+  opacity:1!important;
+  filter:none!important;
+  transition:transform .46s cubic-bezier(.2,.78,.22,1),opacity .3s ease,filter .3s ease,background-color .25s ease!important;
+  will-change:transform,opacity;
+  isolation:isolate;
+}
+html[data-theme="dark"] body .cineton-bottom-nav{
+  background:rgba(12,16,24,.15)!important;
+  background:color-mix(in srgb,#151820 16%,transparent)!important;
+  border-color:rgba(255,255,255,.17)!important;
+  box-shadow:0 18px 48px rgba(0,0,0,.34),0 1px 0 rgba(255,255,255,.19) inset!important;
+}
+html[data-theme="light"] body .cineton-bottom-nav{
+  background:rgba(255,250,242,.17)!important;
+  background:color-mix(in srgb,#fffaf2 18%,transparent)!important;
+  border-color:rgba(255,255,255,.58)!important;
+  box-shadow:0 14px 38px rgba(65,48,28,.13),0 1px 0 rgba(255,255,255,.62) inset!important;
+}
+html body .cineton-bottom-nav.is-scroll-hidden{
+  opacity:0!important;
+  filter:blur(3px)!important;
+  pointer-events:none!important;
+  transform:translate3d(-50%,calc(100% + 24px),0) scale(.97)!important;
+}
+html body .cineton-bottom-nav button.is-active{
+  background:color-mix(in srgb,var(--gd) 22%,transparent)!important;
+  border-color:color-mix(in srgb,var(--gd) 36%,transparent)!important;
+}
+@media(prefers-reduced-motion:reduce){
+  html body .cineton-bottom-nav{transition:none!important;filter:none!important;will-change:auto}
+}
 </style>
