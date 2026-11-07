@@ -7358,3 +7358,36 @@ html[data-theme="light"] .cinemodal .chips .imdb-chip{
   color:var(--cineton-imdb-ink)!important;
 }
 </style>
+
+
+<style id="cineton-featured-compact-background-v1">
+#cineton-featured.cineton-featured{display:block!important;position:relative!important;isolation:isolate!important;min-height:196px!important;height:auto!important;margin:10px auto 14px!important;padding:20px 26px!important;overflow:hidden!important;border-radius:18px!important;background:#17191f!important}
+#cineton-featured .cineton-featured-art{position:absolute!important;z-index:-2!important;inset:0!important;display:block!important;min-height:0!important;width:100%!important;height:100%!important;overflow:hidden!important;opacity:1!important}
+#cineton-featured .cineton-featured-art img{display:block!important;width:100%!important;height:100%!important;max-width:none!important;max-height:none!important;aspect-ratio:auto!important;object-fit:cover!important;object-position:center 30%!important;border-radius:0!important;box-shadow:none!important;filter:saturate(.82)!important;mask-image:none!important}
+#cineton-featured:before{content:""!important;position:absolute!important;z-index:-1!important;inset:0!important;background:linear-gradient(90deg,#101217f2 0%,#101217df 42%,#1012179c 72%,#10121755 100%)!important}
+#cineton-featured .cineton-featured-poster-placeholder{position:absolute!important;inset:0!important;display:flex!important;width:100%!important;height:100%!important;min-height:0!important;max-width:none!important;aspect-ratio:auto!important;padding:0!important;border:0!important;border-radius:0!important;background:linear-gradient(120deg,#252832,#17191f)!important;color:#ffffff55!important}
+#cineton-featured .cineton-featured-copy{position:relative!important;z-index:1!important;max-width:650px!important;min-width:0!important;align-self:center!important}
+#cineton-featured .cineton-featured-eyebrow{color:#f0c879!important;font-size:.62rem!important;letter-spacing:.14em!important}
+#cineton-featured .cineton-featured-copy h2{margin:8px 0 5px!important;color:#fff!important;font-size:clamp(1.45rem,2.7vw,2.15rem)!important;line-height:1.08!important}
+#cineton-featured .cineton-featured-meta{margin:0 0 7px!important;color:#e2e2e2!important;font-size:.72rem!important;line-height:1.45!important}
+#cineton-featured .cineton-featured-overview{max-width:540px!important;margin:0!important;color:#e8e8e8!important;font-size:.78rem!important;line-height:1.5!important;-webkit-line-clamp:2!important}
+#cineton-featured .cineton-featured-actions{gap:7px!important;margin-top:11px!important}
+#cineton-featured .cineton-featured-actions button{min-height:32px!important;padding:0 13px!important;font-size:.68rem!important}
+#cineton-featured .cineton-featured-secondary{border-color:#ffffff55!important;background:#17191f99!important;color:#fff!important}
+@media(max-width:700px){
+#cineton-featured.cineton-featured{min-height:166px!important;margin:8px auto 11px!important;padding:15px 16px!important;border-radius:15px!important}
+#cineton-featured:before{background:linear-gradient(90deg,#101217ed 0%,#101217d9 58%,#1012178c 100%)!important}
+#cineton-featured .cineton-featured-art img{object-position:center 28%!important}
+#cineton-featured .cineton-featured-copy h2{margin:7px 0 5px!important;font-size:clamp(1.25rem,5.2vw,1.7rem)!important}
+#cineton-featured .cineton-featured-meta{font-size:.66rem!important;margin-bottom:6px!important}
+#cineton-featured .cineton-featured-overview{font-size:.7rem!important;line-height:1.4!important;-webkit-line-clamp:2!important}
+#cineton-featured .cineton-featured-actions{margin-top:9px!important;gap:6px!important}
+#cineton-featured .cineton-featured-actions button{min-height:30px!important;padding:0 11px!important}
+}
+@media(max-width:380px){
+#cineton-featured.cineton-featured{min-height:156px!important;padding:13px 12px!important}
+#cineton-featured .cineton-featured-overview{-webkit-line-clamp:1!important}
+#cineton-featured .cineton-featured-actions button{font-size:.64rem!important}
+}
+@media(prefers-reduced-motion:reduce){#cineton-featured .cineton-featured-actions button{transition:none!important}}
+</style>
