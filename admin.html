@@ -1618,3 +1618,20 @@ $('#importBackupFile').onchange=async e=>{
 #library .itemPoster{content-visibility:visible}
 @media(prefers-reduced-motion:reduce){#library>.item{scroll-behavior:auto!important;animation:none!important;transition:none!important}}
 </style>
+
+
+<style id="cineton-admin-mobile-interaction-fastpath-v1">
+/* Keep admin dialogs and controls immediately responsive on touch devices. */
+@media(max-width:700px){
+  html body :is(button,a,[role="button"],input,select,textarea){touch-action:manipulation}
+  html body dialog,html body dialog[open]{
+    animation:none!important;transition:none!important;
+    -webkit-backdrop-filter:none!important;backdrop-filter:none!important;
+  }
+  html body dialog::backdrop{
+    background-image:none!important;
+    -webkit-backdrop-filter:none!important;backdrop-filter:none!important;
+    transition:none!important;animation:none!important;
+  }
+}
+</style>
