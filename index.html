@@ -1937,8 +1937,10 @@ async function cinetonPosterTransition(direction,sourcePoster,openingRect=null){
 async function closeCinetonModal(){
   if(!d.open)return;if(cinetonModalBusy){cinetonCloseQueued=true;return}
   cinetonModalBusy=true;
-  /* Drop backdrop glass immediately when closing starts, on both desktop and mobile. */
+  /* Paint the open dialog state for one frame before starting the exit motion.
+     This prevents mobile browsers from collapsing the close transition into the same frame. */
   d.classList.add('cineton-backdrop-clear');
+  await new Promise(resolve=>requestAnimationFrame(resolve));
   try{
     const sourceId=d.dataset.sourceMovieId;
     const sourceCard=sourceId&&document.querySelector('.c[data-id="'+CSS.escape(sourceId)+'"]');
@@ -3508,7 +3510,7 @@ update();
   const closeSuggestions=()=>{
     if(!dialog.open||suggestionsCloseTimer)return;
     dialog.classList.add("is-closing");
-    const closeDuration=window.matchMedia("(max-width:640px)").matches?290:320;
+    const closeDuration=window.matchMedia("(max-width:640px)").matches?210:320;
     suggestionsCloseTimer=window.setTimeout(()=>{
       suggestionsCloseTimer=0;
       dialog.classList.remove("is-closing");
@@ -9853,6 +9855,30 @@ html body main#g .c>img{
 }
 @media(prefers-reduced-motion:reduce){
   .cinemodal,.suggestions-dialog,.suggestions-dialog::backdrop{animation-duration:1ms!important;transition-duration:1ms!important}
+}
+</style>
+
+<style id="cineton-mobile-modal-motion-v34">
+/* Mobile dialogs should feel immediate; preserve a visible exit frame before closing. */
+@media(max-width:640px){
+  :root{--open-ms:220;--close-ms:240}
+  .suggestions-dialog{
+    transition-duration:230ms,230ms,230ms,230ms!important;
+  }
+  .suggestions-dialog[open]{
+    transition-duration:230ms,230ms,230ms,230ms!important;
+  }
+  .suggestions-dialog.is-closing{
+    transition-duration:210ms,210ms,210ms,210ms!important;
+  }
+  .suggestions-dialog::backdrop{
+    transition-duration:180ms!important;
+  }
+}
+@media(prefers-reduced-motion:reduce){
+  .suggestions-dialog,.suggestions-dialog::backdrop{
+    transition-duration:1ms!important;
+  }
 }
 </style>
 </body></html>
