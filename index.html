@@ -8321,3 +8321,87 @@ html body .bar .views button{
   height:24px!important;min-height:24px!important}
 }
 </style>
+
+<style id="cineton-one-line-toolbar-redesign-v5">
+/* Unified, balanced one-line search toolbar across desktop and mobile. */
+html body .bar{
+  position:sticky!important;top:0!important;z-index:50!important;
+  display:flex!important;flex-flow:row nowrap!important;align-items:center!important;
+  justify-content:stretch!important;gap:8px!important;
+  box-sizing:border-box!important;width:min(1200px,calc(100% - 32px))!important;
+  max-width:1200px!important;min-width:0!important;min-height:48px!important;height:auto!important;
+  margin:0 auto!important;padding:7px 10px!important;
+  border-radius:0 0 12px 12px!important;
+  overflow-x:auto!important;overflow-y:hidden!important;scrollbar-width:none!important;
+  transform:none!important;transition:none!important;
+}
+html body .bar::-webkit-scrollbar{display:none!important}
+html body .bar>input#q{
+  display:block!important;position:relative!important;inset:auto!important;
+  flex:1 1 320px!important;width:auto!important;min-width:140px!important;max-width:none!important;
+  height:36px!important;min-height:36px!important;margin:0!important;padding:7px 12px!important;
+  box-sizing:border-box!important;border-radius:9px!important;
+  font-size:.76rem!important;line-height:1.2!important;
+  opacity:1!important;visibility:visible!important;transform:none!important;pointer-events:auto!important;
+}
+html body .bar>.select-wrap{
+  display:block!important;position:relative!important;flex:0 0 142px!important;
+  width:142px!important;min-width:0!important;max-width:142px!important;margin:0!important;
+  transform:none!important;
+}
+html body .bar>.select-wrap .select-trigger{
+  display:flex!important;align-items:center!important;justify-content:space-between!important;
+  width:100%!important;min-width:0!important;height:36px!important;min-height:36px!important;
+  margin:0!important;padding:6px 10px!important;box-sizing:border-box!important;
+  border-radius:9px!important;white-space:nowrap!important;overflow:hidden!important;
+  font-size:.72rem!important;line-height:1.2!important;
+}
+html body .bar>.select-wrap .select-trigger span{flex:0 0 auto!important;margin-left:6px!important}
+html body .bar .views{
+  display:flex!important;position:relative!important;flex:0 0 auto!important;
+  align-items:center!important;justify-content:center!important;gap:4px!important;
+  width:auto!important;min-width:0!important;margin:0 0 0 auto!important;transform:none!important;
+}
+html body .bar .views button{
+  display:grid!important;place-items:center!important;flex:0 0 32px!important;
+  width:32px!important;min-width:32px!important;height:32px!important;min-height:32px!important;
+  margin:0!important;padding:0!important;box-sizing:border-box!important;border-radius:8px!important;
+}
+html body .bar #person-filter{
+  flex:0 0 auto!important;min-width:0!important;max-width:150px!important;
+  flex-wrap:nowrap!important;white-space:nowrap!important;overflow:hidden!important;
+  margin:0!important;
+}
+html body .bar #person-filter-label{min-width:0!important;overflow:hidden!important;text-overflow:ellipsis!important;white-space:nowrap!important}
+@media(max-width:700px){
+  html body .bar{
+    width:calc(100% - 20px)!important;min-height:44px!important;
+    gap:5px!important;padding:5px 6px!important;border-radius:0 0 10px 10px!important;
+  }
+  html body .bar>input#q{
+    flex:1 1 0!important;min-width:88px!important;height:32px!important;min-height:32px!important;
+    padding:5px 7px!important;font-size:.66rem!important;
+  }
+  html body .bar>.select-wrap{
+    flex:0 1 70px!important;width:70px!important;min-width:60px!important;max-width:76px!important;
+  }
+  html body .bar>.select-wrap .select-trigger{
+    height:32px!important;min-height:32px!important;padding:5px 6px!important;
+    gap:2px!important;font-size:.61rem!important;
+  }
+  html body .bar>.select-wrap .select-trigger span{margin-left:2px!important}
+  html body .bar .views{gap:2px!important;margin-left:0!important}
+  html body .bar .views button{
+    flex-basis:25px!important;width:25px!important;min-width:25px!important;
+    height:25px!important;min-height:25px!important;
+  }
+  html body .bar #person-filter{max-width:104px!important;padding:2px 4px!important}
+}
+@media(max-width:360px){
+  html body .bar{width:calc(100% - 16px)!important;gap:4px!important;padding:4px!important}
+  html body .bar>input#q{min-width:78px!important;font-size:.62rem!important;padding-left:6px!important}
+  html body .bar>.select-wrap{flex-basis:64px!important;width:64px!important;min-width:56px!important;max-width:64px!important}
+  html body .bar>.select-wrap .select-trigger{font-size:.57rem!important;padding-left:4px!important;padding-right:4px!important}
+  html body .bar .views button{flex-basis:23px!important;width:23px!important;min-width:23px!important;height:23px!important;min-height:23px!important}
+}
+</style>
