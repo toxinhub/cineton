@@ -6552,128 +6552,34 @@ main#g{padding-bottom:120px!important}
 body.suggestions-modal-open .cineton-bottom-nav{opacity:0;pointer-events:none;transform:translate(-50%,12px)}
 @media(prefers-reduced-motion:reduce){.cineton-bottom-nav button{transition:none!important}}
 </style>
-<script id="cineton-app-navigation-controller-v5">
+<script id="cineton-app-navigation-controller-v6">
 (()=>{
-const dock=document.getElementById('cineton-bottom-nav');
-const menu=document.getElementById('ct-home-menu');
-const bar=document.querySelector('.bar');
-if(!dock||!menu||!bar)return;
-const buttons=[...dock.querySelectorAll('[data-destination]')];
-const mainSearch=document.getElementById('q');
-const mainGenre=document.getElementById('ge');
-const scope=document.getElementById('cineton-search-scope');
-const type=document.getElementById('cineton-discover-type');
-const clear=document.getElementById('cineton-clear-discover');
-const reduce=matchMedia('(prefers-reduced-motion: reduce)').matches;
-let opened='';
-let highlightTimer=0;
-const activate=name=>buttons.forEach(button=>{
- const active=button.dataset.destination===name;
- button.classList.toggle('is-active',active);
- if(active)button.setAttribute('aria-current','page');else button.removeAttribute('aria-current');
-});
-const close=()=>{
- opened='';
- menu.classList.remove('is-open');menu.hidden=true;
- buttons.forEach(button=>button.setAttribute('aria-expanded','false'));
-};
-const syncStats=()=>{
- document.querySelectorAll('.stat').forEach(item=>item.classList.toggle('active',item.dataset.filter===statFilter));
-};
-const runRender=()=>{if(typeof render==='function')render();};
-const showDiscover=()=>{
- close();
- activate('discover');
- bar.classList.add('ct-discover-highlight');
- window.clearTimeout(highlightTimer);
- highlightTimer=window.setTimeout(()=>bar.classList.remove('ct-discover-highlight'),1500);
- const top=bar.getBoundingClientRect().top+window.scrollY-14;
- window.scrollTo({top:Math.max(0,top),behavior:reduce?'auto':'smooth'});
- window.setTimeout(()=>mainSearch?.focus({preventScroll:true}),reduce?0:260);
-};
-buttons.forEach(button=>button.addEventListener('click',()=>{
- const destination=button.dataset.destination;
- if(destination==='discover'){showDiscover();return;}
- if(destination==='home'){
-  if(opened==='home'){close();return;}
-  close();opened='home';menu.hidden=false;
-  requestAnimationFrame(()=>menu.classList.add('is-open'));
-  button.setAttribute('aria-expanded','true');return;
- }
- close();
- if(destination==='watched'||destination==='watchlist'){
-  document.getElementById('t-'+destination)?.click();activate(destination);
- }else if(destination==='rated'){
-  if(typeof tab!=='undefined'&&tab!=='watched')document.getElementById('t-watched')?.click();
-  if(typeof setStatFilter==='function')setStatFilter('rated');
-  activate('rated');
- }
-}));
-menu.querySelectorAll('[data-home-filter]').forEach(button=>button.addEventListener('click',()=>{
- const filter=button.dataset.homeFilter;
- close();document.getElementById('t-all')?.click();
- statFilter=(filter==='movie'||filter==='tv')?filter:'all';
- if(document.getElementById('ty'))document.getElementById('ty').value=statFilter;
- syncStats();runRender();activate('home');
-}));
-mainSearch?.addEventListener('input',()=>{});
-scope?.addEventListener('change',()=>{
- window.cinetonSearchScope=scope.value||'all';
- runRender();
-});
-type?.addEventListener('change',()=>{
- document.getElementById('t-all')?.click();
- statFilter=(type.value==='movie'||type.value==='tv')?type.value:'all';
- const legacyType=document.getElementById('ty');
- if(legacyType)legacyType.value=statFilter;
- syncStats();runRender();activate('discover');
-});
-mainGenre?.addEventListener('input',()=>{
- window.cinetonSearchGenre=mainGenre.value||'all';
-});
-clear?.addEventListener('click',()=>{
- if(mainSearch)mainSearch.value='';
- if(scope)scope.value='all';
- if(type)type.value='all';
- window.cinetonSearchScope='all';window.cinetonSearchGenre='all';
- if(mainGenre){mainGenre.value='all';mainGenre.dispatchEvent(new Event('input',{bubbles:true}));}
- const trigger=document.getElementById('ge-trigger');
- if(trigger&&mainGenre)trigger.firstChild.textContent=(mainGenre.options[mainGenre.selectedIndex]?.textContent||'All genres')+' ';
- document.getElementById('ge-menu')?.querySelectorAll('[role="option"]').forEach(o=>o.setAttribute('aria-selected',String(o.dataset.value==='all')));
- const legacyType=document.getElementById('ty');if(legacyType)legacyType.value='all';
- const sort=document.getElementById('so');if(sort)sort.value='new';
- const sortTrigger=document.getElementById('so-trigger');
- if(sortTrigger)sortTrigger.firstChild.textContent=(sort?.options[sort.selectedIndex]?.textContent||'Newest first')+' ';
- document.getElementById('so-menu')?.querySelectorAll('[role="option"]').forEach(o=>o.setAttribute('aria-selected',String(o.dataset.value==='new')));
- document.getElementById('t-all')?.click();
- statFilter='all';personFilter=null;personFilterType='';industryFilter=null;
- syncStats();runRender();activate('discover');
- mainSearch?.focus({preventScroll:true});
-});
-document.addEventListener('keydown',event=>{if(event.key==='Escape')close();});
-document.addEventListener('click',event=>{
- if(!event.target.closest('#cineton-bottom-nav')&&!event.target.closest('#ct-home-menu'))close();
- if(event.target.closest('#cineton-bottom-nav button'))dock.classList.remove('is-scroll-hidden');
-});
+const dock=document.getElementById('cineton-bottom-nav'),menu=document.getElementById('ct-home-menu'),panel=document.getElementById('ct-discover-panel'),bar=document.querySelector('.bar');
+if(!dock||!menu||!panel||!bar)return;
+const buttons=[...dock.querySelectorAll('[data-destination]')],mainSearch=document.getElementById('q'),mainGenre=document.getElementById('ge'),mainScope=document.getElementById('cineton-search-scope'),mainType=document.getElementById('cineton-discover-type'),mainClear=document.getElementById('cineton-clear-discover');
+const search=panel.querySelector('#ct-dock-search'),scope=panel.querySelector('#ct-search-scope'),type=panel.querySelector('#ct-search-type'),genre=panel.querySelector('#ct-search-genre'),clear=panel.querySelector('#ct-clear-search'),closeButton=panel.querySelector('.ct-discover-close');
+const reduce=matchMedia('(prefers-reduced-motion: reduce)').matches;let opened='';
+const activate=name=>buttons.forEach(b=>{const active=b.dataset.destination===name;b.classList.toggle('is-active',active);if(active)b.setAttribute('aria-current','page');else b.removeAttribute('aria-current')});
+const close=()=>{opened='';menu.classList.remove('is-open');menu.hidden=true;panel.classList.remove('is-open');panel.hidden=true;buttons.forEach(b=>b.setAttribute('aria-expanded','false'))};
+const syncGenres=()=>{if(!genre||!mainGenre)return;genre.innerHTML=[...mainGenre.options].map(o=>{const option=document.createElement('option');option.value=o.value;option.textContent=o.textContent;return option.outerHTML}).join('');genre.value=mainGenre.value||'all'};
+const openDiscover=()=>{close();opened='discover';if(search&&mainSearch)search.value=mainSearch.value;if(scope&&mainScope)scope.value=mainScope.value||'all';if(type&&mainType)type.value=mainType.value||'all';syncGenres();panel.hidden=false;requestAnimationFrame(()=>panel.classList.add('is-open'));buttons.find(b=>b.dataset.destination==='discover')?.setAttribute('aria-expanded','true');activate('discover');};
+const syncSearch=()=>{if(mainSearch){mainSearch.value=search?.value||'';mainSearch.dispatchEvent(new Event('input',{bubbles:true}))}};
+buttons.forEach(button=>button.addEventListener('click',()=>{const d=button.dataset.destination;if(d==='discover'){if(opened==='discover')close();else openDiscover();return}if(d==='home'){if(opened==='home'){close();return}close();opened='home';menu.hidden=false;requestAnimationFrame(()=>menu.classList.add('is-open'));button.setAttribute('aria-expanded','true');return}close();if(d==='watched'||d==='watchlist'){document.getElementById('t-'+d)?.click();activate(d)}else if(d==='rated'){if(typeof setStatFilter==='function')setStatFilter('rated');activate('rated')}}));
+menu.querySelectorAll('[data-home-filter]').forEach(button=>button.addEventListener('click',()=>{const f=button.dataset.homeFilter;close();document.getElementById('t-all')?.click();if(f==='movie'||f==='tv'){if(typeof setStatFilter==='function')setStatFilter(f)}else{statFilter='all';const ty=document.getElementById('ty');if(ty)ty.value='all';if(typeof render==='function')render()}activate('home')}));
+search?.addEventListener('input',syncSearch);
+scope?.addEventListener('change',()=>{if(mainScope){mainScope.value=scope.value;mainScope.dispatchEvent(new Event('change',{bubbles:true}))}window.cinetonSearchScope=scope.value||'all';if(typeof render==='function')render()});
+type?.addEventListener('change',()=>{if(mainType){mainType.value=type.value;mainType.dispatchEvent(new Event('change',{bubbles:true}))}else{document.getElementById('t-all')?.click();statFilter=['movie','tv'].includes(type.value)?type.value:'all';const ty=document.getElementById('ty');if(ty)ty.value=statFilter;if(typeof render==='function')render()}});
+genre?.addEventListener('change',()=>{if(mainGenre){mainGenre.value=genre.value;mainGenre.dispatchEvent(new Event('input',{bubbles:true}))}});
+clear?.addEventListener('click',()=>{mainClear?.click();if(search)search.value='';if(scope)scope.value='all';if(type)type.value='all';syncGenres();if(genre)genre.value='all'});
+closeButton?.addEventListener('click',close);
+document.addEventListener('keydown',e=>{if(e.key==='Escape')close()});
+document.addEventListener('click',e=>{if(!e.target.closest('#cineton-bottom-nav')&&!e.target.closest('#ct-home-menu')&&!e.target.closest('#ct-discover-panel'))close();if(e.target.closest('#cineton-bottom-nav button'))dock.classList.remove('is-scroll-hidden')});
 let lastY=window.scrollY,travel=0,direction=0,raf=0,hidden=false;
-const show=()=>{if(!hidden)return;hidden=false;dock.classList.remove('is-scroll-hidden');};
-const hide=()=>{if(hidden)return;hidden=true;dock.classList.add('is-scroll-hidden');};
-const update=()=>{
- raf=0;const y=Math.max(0,window.scrollY),delta=y-lastY;lastY=y;
- if(opened){travel=0;direction=0;show();return;}
- if(y<72){travel=0;direction=0;show();return;}
- if(Math.abs(delta)<.5)return;
- const next=delta>0?1:-1;if(next!==direction){direction=next;travel=0;}travel+=Math.abs(delta);
- if(direction===1&&y>140&&travel>=48)hide();else if(direction===-1&&travel>=24)show();
-};
-window.addEventListener('scroll',()=>{
- if(reduce){lastY=window.scrollY;show();return;}
- if(!raf)raf=requestAnimationFrame(update);
-},{passive:true});
-window.addEventListener('resize',()=>{lastY=window.scrollY;travel=0;direction=0;show();},{passive:true});
-activate('watched');
-window.cinetonOpenDiscover=showDiscover;
-window.cinetonCloseNavPanels=close;
+const showDock=()=>{if(hidden){hidden=false;dock.classList.remove('is-scroll-hidden')}},hideDock=()=>{if(!hidden){hidden=true;dock.classList.add('is-scroll-hidden')}};
+const update=()=>{raf=0;const y=Math.max(0,window.scrollY),delta=y-lastY;lastY=y;if(opened){travel=0;direction=0;showDock();return}if(y<72){travel=0;direction=0;showDock();return}if(Math.abs(delta)<.5)return;const next=delta>0?1:-1;if(next!==direction){direction=next;travel=0}travel+=Math.abs(delta);if(direction===1&&y>140&&travel>=48)hideDock();else if(direction===-1&&travel>=24)showDock()};
+window.addEventListener('scroll',()=>{if(reduce){lastY=window.scrollY;showDock();return}if(!raf)raf=requestAnimationFrame(update)},{passive:true});
+window.addEventListener('resize',()=>{lastY=window.scrollY;travel=0;direction=0;showDock()},{passive:true});
+activate('watched');window.cinetonOpenDiscover=openDiscover;window.cinetonCloseNavPanels=close;
 })();
 </script>
 
@@ -10118,7 +10024,7 @@ html body #ct-discover-panel .ct-discover-footer button:hover{
 </style>
 <style id="cineton-native-discover-toolbar-v1">
 /* Discover now uses CineTon's own toolbar instead of a detached floating filter card. */
-html body .ct-discover-panel{display:none!important}
+/* Discover panel visibility is controlled by its hidden attribute and open state. */
 html body .bar{
  gap:9px!important;
  padding:12px 14px!important;
