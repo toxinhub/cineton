@@ -9002,7 +9002,75 @@ html[data-theme] body :is(button,a,input,select,textarea,[tabindex]):focus-visib
 /* Reveal only after every theme override above has been parsed, preventing a one-frame old-palette flash. */
 document.documentElement.classList.add('cineton-styles-ready');
 </script>
-<!-- Cineton opt-in performance profiler --><script>(()=>{try{if(new URLSearchParams(location.search).has('perf')){const s=document.createElement('script');s.src='./perf-profiler.js';s.defer=true;document.head.appendChild(s)}}catch(e){}})();</script></body></html>
+<!-- Cineton opt-in performance profiler --><script>(()=>{try{if(new URLSearchParams(location.search).has('perf')){const s=document.createElement('script');s.src='./perf-profiler.js';s.defer=true;document.head.appendChild(s)}}catch(e){}})();</script>
+<style id="cineton-discover-final-theme-override-v2">
+/* Discover must follow the active page theme; it is intentionally excluded from nav's white-text rule. */
+html[data-theme="light"] body #ct-discover-panel{
+  color:#20352b!important;
+  background:#f7faf7!important;
+  border-color:#cbd8ce!important;
+}
+html[data-theme="light"] body #ct-discover-panel .ct-discover-heading strong,
+html[data-theme="light"] body #ct-discover-panel .ct-discover-close,
+html[data-theme="light"] body #ct-discover-panel .ct-discover-search input,
+html[data-theme="light"] body #ct-discover-panel .ct-inline-picker-trigger,
+html[data-theme="light"] body #ct-discover-panel .ct-inline-picker-trigger *,
+html[data-theme="light"] body #ct-discover-panel .ct-inline-picker-option{
+  color:#20352b!important;
+  -webkit-text-fill-color:#20352b!important;
+}
+html[data-theme="light"] body #ct-discover-panel .ct-discover-heading small,
+html[data-theme="light"] body #ct-discover-panel .ct-discover-filters label>span,
+html[data-theme="light"] body #ct-discover-panel .ct-discover-footer span,
+html[data-theme="light"] body #ct-discover-panel .ct-discover-search kbd{
+  color:#586e60!important;
+  -webkit-text-fill-color:#586e60!important;
+}
+html[data-theme="light"] body #ct-discover-panel .ct-discover-search,
+html[data-theme="light"] body #ct-discover-panel .ct-inline-picker-trigger{
+  background:#edf3ee!important;
+}
+html[data-theme="light"] body #ct-discover-panel .ct-inline-picker-list{background:#fff!important}
+html[data-theme="light"] body #ct-discover-panel .ct-discover-footer button{
+  color:#205b3d!important;-webkit-text-fill-color:#205b3d!important;background:#e4f0e6!important;
+}
+html[data-theme="dark"] body #ct-discover-panel{
+  color:#e8f0ea!important;
+  background:#14231b!important;
+  border-color:#40584c!important;
+}
+html[data-theme="dark"] body #ct-discover-panel .ct-discover-heading strong,
+html[data-theme="dark"] body #ct-discover-panel .ct-discover-close,
+html[data-theme="dark"] body #ct-discover-panel .ct-discover-search input,
+html[data-theme="dark"] body #ct-discover-panel .ct-inline-picker-trigger,
+html[data-theme="dark"] body #ct-discover-panel .ct-inline-picker-trigger *,
+html[data-theme="dark"] body #ct-discover-panel .ct-inline-picker-option{
+  color:#e8f0ea!important;
+  -webkit-text-fill-color:#e8f0ea!important;
+}
+html[data-theme="dark"] body #ct-discover-panel .ct-discover-heading small,
+html[data-theme="dark"] body #ct-discover-panel .ct-discover-filters label>span,
+html[data-theme="dark"] body #ct-discover-panel .ct-discover-footer span,
+html[data-theme="dark"] body #ct-discover-panel .ct-discover-search kbd{
+  color:#b4c4b9!important;
+  -webkit-text-fill-color:#b4c4b9!important;
+}
+html[data-theme="dark"] body #ct-discover-panel .ct-discover-search,
+html[data-theme="dark"] body #ct-discover-panel .ct-inline-picker-trigger{
+  background:#20342d!important;
+}
+html[data-theme="dark"] body #ct-discover-panel .ct-inline-picker-list{background:#192a23!important}
+html[data-theme="dark"] body #ct-discover-panel .ct-discover-footer button{
+  color:#d8f6dd!important;-webkit-text-fill-color:#d8f6dd!important;background:#294b35!important;
+}
+html body #ct-discover-panel .ct-discover-search input::placeholder{
+  color:#718579!important;-webkit-text-fill-color:#718579!important;opacity:1!important;
+}
+html[data-theme="dark"] body #ct-discover-panel .ct-discover-search input::placeholder{
+  color:#9eb2a3!important;-webkit-text-fill-color:#9eb2a3!important;
+}
+</style>
+</body></html>
 
 
 
@@ -9264,9 +9332,7 @@ html body .ct-home-menu button:hover,html body .ct-home-menu button:focus-visibl
 html body nav#cineton-bottom-nav,
 html body nav#cineton-bottom-nav *,
 html body #ct-home-menu,
-html body #ct-home-menu *,
-html body #ct-discover-panel,
-html body #ct-discover-panel *{
+html body #ct-home-menu *{
   color:#fff!important;
   -webkit-text-fill-color:#fff!important;
   text-shadow:none!important;
