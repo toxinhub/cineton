@@ -6552,12 +6552,12 @@ main#g{padding-bottom:120px!important}
 body.suggestions-modal-open .cineton-bottom-nav{opacity:0;pointer-events:none;transform:translate(-50%,12px)}
 @media(prefers-reduced-motion:reduce){.cineton-bottom-nav button{transition:none!important}}
 </style>
-<script id="cineton-app-navigation-controller-v4">
+<script id="cineton-app-navigation-controller-v5">
 (()=>{
 const dock=document.getElementById('cineton-bottom-nav');
 const menu=document.getElementById('ct-home-menu');
-const panel=document.getElementById('ct-discover-panel');
-if(!dock||!menu)return;
+const bar=document.querySelector('.bar');
+if(!dock||!menu||!bar)return;
 const buttons=[...dock.querySelectorAll('[data-destination]')];
 const mainSearch=document.getElementById('q');
 const mainGenre=document.getElementById('ge');
@@ -6566,6 +6566,7 @@ const type=document.getElementById('cineton-discover-type');
 const clear=document.getElementById('cineton-clear-discover');
 const reduce=matchMedia('(prefers-reduced-motion: reduce)').matches;
 let opened='';
+let highlightTimer=0;
 const activate=name=>buttons.forEach(button=>{
  const active=button.dataset.destination===name;
  button.classList.toggle('is-active',active);
@@ -6575,18 +6576,20 @@ const close=()=>{
  opened='';
  menu.classList.remove('is-open');menu.hidden=true;
  buttons.forEach(button=>button.setAttribute('aria-expanded','false'));
- if(panel){panel.classList.remove('is-open');panel.hidden=true;}
 };
 const syncStats=()=>{
  document.querySelectorAll('.stat').forEach(item=>item.classList.toggle('active',item.dataset.filter===statFilter));
 };
+const runRender=()=>{if(typeof render==='function')render();};
 const showDiscover=()=>{
  close();
  activate('discover');
- const bar=document.querySelector('.bar');
- bar?.classList.add('ct-discover-focused');
- bar?.scrollIntoView({behavior:reduce?'auto':'smooth',block:'start'});
- if(mainSearch)requestAnimationFrame(()=>mainSearch.focus({preventScroll:true}));
+ bar.classList.add('ct-discover-highlight');
+ window.clearTimeout(highlightTimer);
+ highlightTimer=window.setTimeout(()=>bar.classList.remove('ct-discover-highlight'),1500);
+ const top=bar.getBoundingClientRect().top+window.scrollY-14;
+ window.scrollTo({top:Math.max(0,top),behavior:reduce?'auto':'smooth'});
+ window.setTimeout(()=>mainSearch?.focus({preventScroll:true}),reduce?0:260);
 };
 buttons.forEach(button=>button.addEventListener('click',()=>{
  const destination=button.dataset.destination;
@@ -6609,16 +6612,25 @@ buttons.forEach(button=>button.addEventListener('click',()=>{
 menu.querySelectorAll('[data-home-filter]').forEach(button=>button.addEventListener('click',()=>{
  const filter=button.dataset.homeFilter;
  close();document.getElementById('t-all')?.click();
- if(typeof statFilter!=='undefined')statFilter=(filter==='movie'||filter==='tv')?filter:'all';
- syncStats();if(typeof render==='function')render();activate('home');
+ statFilter=(filter==='movie'||filter==='tv')?filter:'all';
+ if(document.getElementById('ty'))document.getElementById('ty').value=statFilter;
+ syncStats();runRender();activate('home');
 }));
-scope?.addEventListener('change',()=>{window.cinetonSearchScope=scope.value||'all';if(typeof render==='function')render();});
+mainSearch?.addEventListener('input',()=>{});
+scope?.addEventListener('change',()=>{
+ window.cinetonSearchScope=scope.value||'all';
+ runRender();
+});
 type?.addEventListener('change',()=>{
  document.getElementById('t-all')?.click();
- if(typeof statFilter!=='undefined')statFilter=(type.value==='movie'||type.value==='tv')?type.value:'all';
- syncStats();if(typeof render==='function')render();activate('discover');
+ statFilter=(type.value==='movie'||type.value==='tv')?type.value:'all';
+ const legacyType=document.getElementById('ty');
+ if(legacyType)legacyType.value=statFilter;
+ syncStats();runRender();activate('discover');
 });
-mainGenre?.addEventListener('input',()=>{if(type)type.value=(statFilter==='movie'||statFilter==='tv')?statFilter:'all';});
+mainGenre?.addEventListener('input',()=>{
+ window.cinetonSearchGenre=mainGenre.value||'all';
+});
 clear?.addEventListener('click',()=>{
  if(mainSearch)mainSearch.value='';
  if(scope)scope.value='all';
@@ -6628,9 +6640,14 @@ clear?.addEventListener('click',()=>{
  const trigger=document.getElementById('ge-trigger');
  if(trigger&&mainGenre)trigger.firstChild.textContent=(mainGenre.options[mainGenre.selectedIndex]?.textContent||'All genres')+' ';
  document.getElementById('ge-menu')?.querySelectorAll('[role="option"]').forEach(o=>o.setAttribute('aria-selected',String(o.dataset.value==='all')));
+ const legacyType=document.getElementById('ty');if(legacyType)legacyType.value='all';
+ const sort=document.getElementById('so');if(sort)sort.value='new';
+ const sortTrigger=document.getElementById('so-trigger');
+ if(sortTrigger)sortTrigger.firstChild.textContent=(sort?.options[sort.selectedIndex]?.textContent||'Newest first')+' ';
+ document.getElementById('so-menu')?.querySelectorAll('[role="option"]').forEach(o=>o.setAttribute('aria-selected',String(o.dataset.value==='new')));
  document.getElementById('t-all')?.click();
- if(typeof statFilter!=='undefined')statFilter='all';
- syncStats();if(typeof render==='function')render();
+ statFilter='all';personFilter=null;personFilterType='';industryFilter=null;
+ syncStats();runRender();activate('discover');
  mainSearch?.focus({preventScroll:true});
 });
 document.addEventListener('keydown',event=>{if(event.key==='Escape')close();});
@@ -10183,4 +10200,11 @@ html body nav#cineton-bottom-nav .ct-nav-home:active{background:rgba(127,195,143
 @media(prefers-reduced-motion:reduce){
  html body nav#cineton-bottom-nav,html body nav#cineton-bottom-nav button{transition:none!important}
 }
+</style><style id="cineton-discover-toolbar-repair-v1">
+html body .bar.ct-discover-highlight{
+ border-color:rgba(145,211,158,.62)!important;
+ box-shadow:0 0 0 3px rgba(118,194,137,.10),0 8px 26px rgba(0,0,0,.13),0 1px 0 rgba(255,255,255,.08) inset!important;
+ transition:border-color .2s ease,box-shadow .2s ease!important;
+}
+html body .bar #cineton-search-scope,html body .bar #cineton-discover-type{display:block!important;opacity:1!important;visibility:visible!important;pointer-events:auto!important}
 </style>
