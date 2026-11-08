@@ -1880,7 +1880,7 @@ function getCinetonSearchIndex(m){
 }
 function render(){
   applyView();
-  const q=$('#q').value.trim().toLowerCase(),ge=$('#ge').value,so=$('#so').value,scope=window.cinetonSearchScope||'all',extraGenre=window.cinetonSearchGenre;
+  const q=$('#q').value.trim().toLowerCase(),ge=$('#ge').value,so=$('#so').value,scope=window.cinetonSearchScope||'all';
   const categoryFilter=statFilter==='movie'||statFilter==='tv';
   const mediaType=m=>m.type==='tv'&&String(m.id||'').startsWith('tv-')?'tv':'movie';
   const n=v=>parseFloat(v)||0;
@@ -1894,7 +1894,6 @@ function render(){
     if(categoryFilter?type!==statFilter:(tab!=='all'&&m.status!==tab))continue;
     const genres=Array.isArray(m.genres)?m.genres:[];
     if(ge!=='all'&&!genres.includes(ge))continue;
-    if(extraGenre&&extraGenre!=='all'&&!genres.includes(extraGenre))continue;
     if(industryFilter&&m.industry!==industryFilter)continue;
     const index=(q||personFilter)?getCinetonSearchIndex(m):null;
     if(personFilter&&!index.people.has(personFilter))continue;
@@ -6553,51 +6552,179 @@ main#g{padding-bottom:120px!important}
 body.suggestions-modal-open .cineton-bottom-nav{opacity:0;pointer-events:none;transform:translate(-50%,12px)}
 @media(prefers-reduced-motion:reduce){.cineton-bottom-nav button{transition:none!important}}
 </style>
-<script id="cineton-app-navigation-controller-v2">
+<script id="cineton-app-navigation-controller-v3">
 (()=>{
-const dock=document.getElementById('cineton-bottom-nav'),panel=document.getElementById('ct-discover-panel'),menu=document.getElementById('ct-home-menu');
+const dock=document.getElementById('cineton-bottom-nav');
+const panel=document.getElementById('ct-discover-panel');
+const menu=document.getElementById('ct-home-menu');
 if(!dock||!panel||!menu)return;
-const btns=[...dock.querySelectorAll('[data-destination]')],search=document.getElementById('ct-dock-search'),scope=document.getElementById('ct-search-scope'),type=document.getElementById('ct-search-type'),genre=document.getElementById('ct-search-genre'),q=document.getElementById('q'),reduce=matchMedia('(prefers-reduced-motion: reduce)').matches;
+const buttons=[...dock.querySelectorAll('[data-destination]')];
+const search=document.getElementById('ct-dock-search');
+const scope=document.getElementById('ct-search-scope');
+const type=document.getElementById('ct-search-type');
+const genre=document.getElementById('ct-search-genre');
+const mainSearch=document.getElementById('q');
+const mainGenre=document.getElementById('ge');
+const hint=document.getElementById('ct-discover-hint');
+const reduce=matchMedia('(prefers-reduced-motion: reduce)').matches;
 let opened='';
-const activate=n=>btns.forEach(b=>{let on=b.dataset.destination===n;b.classList.toggle('is-active',on);if(on)b.setAttribute('aria-current','page');else b.removeAttribute('aria-current')});
-const close=()=>{opened='';panel.hidden=true;menu.hidden=true;panel.classList.remove('is-open');menu.classList.remove('is-open');btns.forEach(b=>b.setAttribute('aria-expanded','false'))};
-const syncGenres=()=>{let keep=document.getElementById('ge').value||'all';genre.innerHTML='<option value="all">All genres</option>';[...document.getElementById('ge').options].forEach(o=>{if(o.value!=='all')genre.add(new Option(o.textContent,o.value))});genre.value=[...genre.options].some(o=>o.value===keep)?keep:(document.getElementById('ge').value||'all')};
-const open=n=>{if(opened===n){close();return}close();opened=n;let el=n==='discover'?panel:menu;el.hidden=false;requestAnimationFrame(()=>el.classList.add('is-open'));dock.querySelector('[data-destination="'+n+'"]')?.setAttribute('aria-expanded','true');if(n==='discover'){syncGenres();search.value=q.value;scope.value=window.cinetonSearchScope||'all';type.value=(typeof statFilter!=='undefined'&&(statFilter==='movie'||statFilter==='tv'))?statFilter:'all';if(matchMedia('(min-width:701px) and (hover:hover)').matches)requestAnimationFrame(()=>search.focus({preventScroll:true}))}};
-const run=()=>{q.value=search.value;window.cinetonSearchScope=scope.value;if(typeof render==='function')render();document.getElementById('ct-discover-hint').textContent=search.value.trim()?'Filtered by '+scope.options[scope.selectedIndex].text:'Search your movies, series, cast and directors'};
-btns.forEach(b=>b.addEventListener('click',()=>{let n=b.dataset.destination;if(n==='home'){open('home');return}if(n==='discover'){activate(n);open(n);return}close();if(n==='watched'||n==='watchlist'){document.getElementById('t-'+n)?.click();activate(n)}else if(n==='rated'){if(typeof tab!=='undefined'&&tab!=='watched')document.getElementById('t-watched')?.click();if(typeof setStatFilter==='function')setStatFilter('rated');activate('rated')}}));
-menu.querySelectorAll('[data-home-filter]').forEach(b=>b.addEventListener('click',()=>{let f=b.dataset.homeFilter;close();document.getElementById('t-all')?.click();if(typeof setStatFilter==='function'){if(f==='movie'||f==='tv')setStatFilter(f);else if(typeof statFilter!=='undefined'&&statFilter!=='all')setStatFilter('all')}activate('home')}));
-search.addEventListener('input',run);scope.addEventListener('change',run);
-type.addEventListener('change',()=>{document.getElementById('t-all')?.click();if(typeof setStatFilter==='function')setStatFilter(type.value);activate('discover')});
-genre.addEventListener('change',()=>{document.getElementById('ge').value=genre.value;window.cinetonSearchGenre=genre.value;if(typeof render==='function')render()});
-document.getElementById('ct-clear-search').addEventListener('click',()=>{search.value='';scope.value='all';type.value='all';genre.value='all';q.value='';window.cinetonSearchScope='all';window.cinetonSearchGenre='all';document.getElementById('ge').value='all';document.getElementById('t-all')?.click();if(typeof setStatFilter==='function'&&typeof statFilter!=='undefined'&&statFilter!=='all')setStatFilter('all');if(typeof render==='function')render();activate('home')});
-document.querySelector('.ct-discover-close').addEventListener('click',close);
-document.addEventListener('keydown',e=>{if(e.key==='Escape')close()});
-document.getElementById('q')?.addEventListener('input',()=>{if(search.value!==q.value)search.value=q.value});
+let closeTimer=0;
+const activate=name=>buttons.forEach(button=>{
+  const active=button.dataset.destination===name;
+  button.classList.toggle('is-active',active);
+  if(active)button.setAttribute('aria-current','page');
+  else button.removeAttribute('aria-current');
+});
+const syncMainGenre=()=>{
+  if(!mainGenre||!genre)return;
+  const selected=mainGenre.value||'all';
+  genre.innerHTML='';
+  [...mainGenre.options].forEach(option=>genre.add(new Option(option.textContent,option.value)));
+  genre.value=[...genre.options].some(option=>option.value===selected)?selected:'all';
+};
+const syncGenreControls=value=>{
+  const selected=value||'all';
+  if(mainGenre)mainGenre.value=selected;
+  if(genre)genre.value=selected;
+  const menu=document.getElementById('ge-menu');
+  menu?.querySelectorAll('[role="option"]').forEach(option=>option.setAttribute('aria-selected',String(option.dataset.value===selected)));
+  const trigger=document.getElementById('ge-trigger');
+  if(trigger&&mainGenre)trigger.firstChild.textContent=(mainGenre.options[mainGenre.selectedIndex]?.textContent||'All genres')+' ';
+  window.cinetonSearchGenre='all';
+};
+const setHint=()=>{
+  if(!hint)return;
+  const terms=[];
+  if(search?.value.trim())terms.push('“'+search.value.trim()+'”');
+  if(scope&&scope.value!=='all')terms.push(scope.options[scope.selectedIndex]?.text||'');
+  if(type&&type.value!=='all')terms.push(type.options[type.selectedIndex]?.text||'');
+  if(genre&&genre.value!=='all')terms.push(genre.options[genre.selectedIndex]?.text||'');
+  hint.textContent=terms.length?'Active filters · '+terms.join(' · '):'Search your library by title, cast, director or genre';
+};
+const close=()=>{
+  opened='';
+  window.clearTimeout(closeTimer);
+  panel.classList.remove('is-open');
+  menu.classList.remove('is-open');
+  buttons.forEach(button=>button.setAttribute('aria-expanded','false'));
+  panel.hidden=true;
+  menu.hidden=true;
+};
+const open=name=>{
+  if(opened===name){close();return;}
+  close();
+  opened=name;
+  const element=name==='discover'?panel:menu;
+  element.hidden=false;
+  requestAnimationFrame(()=>{if(opened===name)element.classList.add('is-open');});
+  dock.querySelector('[data-destination="'+name+'"]')?.setAttribute('aria-expanded','true');
+  if(name==='discover'){
+    syncMainGenre();
+    if(search&&mainSearch)search.value=mainSearch.value;
+    if(scope)scope.value=window.cinetonSearchScope||'all';
+    if(type)type.value=(typeof statFilter!=='undefined'&&(statFilter==='movie'||statFilter==='tv'))?statFilter:'all';
+    if(genre&&mainGenre)genre.value=mainGenre.value||'all';
+    setHint();
+    if(matchMedia('(min-width:701px) and (hover:hover)').matches)
+      requestAnimationFrame(()=>search?.focus({preventScroll:true}));
+  }
+};
+const renderResults=()=>{
+  if(mainSearch&&search)mainSearch.value=search.value;
+  if(scope)window.cinetonSearchScope=scope.value;
+  if(typeof render==='function')render();
+  setHint();
+};
+buttons.forEach(button=>button.addEventListener('click',()=>{
+  const destination=button.dataset.destination;
+  if(destination==='home'){open('home');return;}
+  if(destination==='discover'){activate('discover');open('discover');return;}
+  close();
+  if(destination==='watched'||destination==='watchlist'){
+    document.getElementById('t-'+destination)?.click();
+    activate(destination);
+  }else if(destination==='rated'){
+    if(typeof tab!=='undefined'&&tab!=='watched')document.getElementById('t-watched')?.click();
+    if(typeof setStatFilter==='function')setStatFilter('rated');
+    activate('rated');
+  }
+}));
+menu.querySelectorAll('[data-home-filter]').forEach(button=>button.addEventListener('click',()=>{
+  const filter=button.dataset.homeFilter;
+  close();
+  document.getElementById('t-all')?.click();
+  if(typeof statFilter!=='undefined')statFilter=(filter==='movie'||filter==='tv')?filter:'all';
+  document.querySelectorAll('.stat').forEach(item=>item.classList.toggle('active',item.dataset.filter===statFilter));
+  if(typeof render==='function')render();
+  activate('home');
+}));
+search?.addEventListener('input',renderResults);
+scope?.addEventListener('change',renderResults);
+type?.addEventListener('change',()=>{
+  document.getElementById('t-all')?.click();
+  if(typeof statFilter!=='undefined')statFilter=(type.value==='movie'||type.value==='tv')?type.value:'all';
+  document.querySelectorAll('.stat').forEach(item=>item.classList.toggle('active',item.dataset.filter===statFilter));
+  if(typeof render==='function')render();
+  setHint();
+  activate('discover');
+});
+genre?.addEventListener('change',()=>{
+  syncGenreControls(genre.value);
+  if(typeof render==='function')render();
+  setHint();
+  activate('discover');
+});
+document.getElementById('ct-clear-search')?.addEventListener('click',()=>{
+  if(search)search.value='';
+  if(scope)scope.value='all';
+  if(type)type.value='all';
+  if(mainSearch)mainSearch.value='';
+  window.cinetonSearchScope='all';
+  window.cinetonSearchGenre='all';
+  syncGenreControls('all');
+  document.getElementById('t-all')?.click();
+  if(typeof statFilter!=='undefined')statFilter='all';
+  document.querySelectorAll('.stat').forEach(item=>item.classList.remove('active'));
+  if(typeof render==='function')render();
+  setHint();
+  activate('discover');
+  search?.focus({preventScroll:true});
+});
+document.querySelector('.ct-discover-close')?.addEventListener('click',close);
+document.addEventListener('keydown',event=>{if(event.key==='Escape'&&opened)close();});
+mainSearch?.addEventListener('input',()=>{
+  if(search&&search.value!==mainSearch.value){search.value=mainSearch.value;setHint();}
+});
 let lastY=window.scrollY,travel=0,direction=0,scrollRaf=0,hidden=false;
-const show=()=>{if(!hidden)return;hidden=false;dock.classList.remove('is-scroll-hidden')};
-const hide=()=>{if(hidden)return;hidden=true;dock.classList.add('is-scroll-hidden')};
+const show=()=>{if(!hidden)return;hidden=false;dock.classList.remove('is-scroll-hidden');};
+const hide=()=>{if(hidden)return;hidden=true;dock.classList.add('is-scroll-hidden');};
 const update=()=>{
   scrollRaf=0;
   const y=Math.max(0,window.scrollY),delta=y-lastY;
   lastY=y;
-  if(opened){travel=0;direction=0;show();return}
-  if(y<72){travel=0;direction=0;show();return}
-  /* Keep sub-3px deltas: slow touch scrolling often moves only 1–2px per frame. */
-  if(Math.abs(delta)<0.5)return;
-  const nextDirection=delta>0?1:-1;
-  if(nextDirection!==direction){direction=nextDirection;travel=0}
+  if(opened){travel=0;direction=0;show();return;}
+  if(y<72){travel=0;direction=0;show();return;}
+  if(Math.abs(delta)<.5)return;
+  const next=delta>0?1:-1;
+  if(next!==direction){direction=next;travel=0;}
   travel+=Math.abs(delta);
   if(direction===1&&y>140&&travel>=48)hide();
   else if(direction===-1&&travel>=24)show();
 };
 window.addEventListener('scroll',()=>{
-  if(reduce){lastY=window.scrollY;show();return}
+  if(reduce){lastY=window.scrollY;show();return;}
   if(!scrollRaf)scrollRaf=requestAnimationFrame(update);
 },{passive:true});
-window.addEventListener('resize',()=>{lastY=window.scrollY;travel=0;direction=0;show()},{passive:true});
-document.addEventListener('visibilitychange',()=>{if(!document.hidden){lastY=window.scrollY;travel=0;direction=0;show()}});
-document.addEventListener('click',e=>{const target=e.target;if(!target.closest('#cineton-bottom-nav')&&!target.closest('#ct-discover-panel'))close();if(target.closest('#cineton-bottom-nav button'))show()});
-activate('watched');window.cinetonOpenDiscover=()=>open('discover');window.cinetonCloseNavPanels=close;
+window.addEventListener('resize',()=>{lastY=window.scrollY;travel=0;direction=0;show();},{passive:true});
+document.addEventListener('visibilitychange',()=>{if(!document.hidden){lastY=window.scrollY;travel=0;direction=0;show();}});
+document.addEventListener('click',event=>{
+  const target=event.target;
+  if(!target.closest('#cineton-bottom-nav')&&!target.closest('#ct-discover-panel'))close();
+  if(target.closest('#cineton-bottom-nav button'))show();
+});
+activate('watched');
+window.cinetonOpenDiscover=()=>open('discover');
+window.cinetonCloseNavPanels=close;
 })();
 </script>
 
@@ -9893,5 +10020,150 @@ html body nav#cineton-bottom-nav .ct-nav-home{
     -webkit-backdrop-filter:none!important;
     backdrop-filter:none!important;
   }
+}
+</style>
+
+
+<style id="cineton-discover-unified-green-v3">
+/* Active destination: a more visible botanical-green glass pill. */
+html body nav#cineton-bottom-nav button.is-active:not(.ct-nav-home),
+html body nav#cineton-bottom-nav button[aria-current="page"]:not(.ct-nav-home){
+  background:linear-gradient(145deg,rgba(91,166,111,.34),rgba(53,119,76,.25))!important;
+  border-color:rgba(139,207,153,.48)!important;
+  box-shadow:0 0 16px rgba(86,177,109,.16),0 1px 0 rgba(220,255,225,.18) inset!important;
+}
+html body nav#cineton-bottom-nav button.is-active:not(.ct-nav-home)::after,
+html body nav#cineton-bottom-nav button[aria-current="page"]:not(.ct-nav-home)::after{
+  background:#b9f2c4!important;
+  box-shadow:0 0 8px rgba(157,239,174,.88),0 0 15px rgba(89,190,113,.45)!important;
+}
+/* Discover: consistent dark-green surface, clear hierarchy and comfortable controls. */
+html body #ct-discover-panel{
+  box-sizing:border-box!important;
+  width:min(540px,calc(100vw - 32px))!important;
+  max-height:min(66vh,480px)!important;
+  overflow:auto!important;
+  overscroll-behavior:contain!important;
+  padding:18px!important;
+  border:1px solid rgba(155,205,164,.30)!important;
+  border-radius:22px!important;
+  color:#f6fff7!important;
+  background:linear-gradient(155deg,rgba(20,35,26,.97),rgba(12,22,17,.96))!important;
+  -webkit-backdrop-filter:blur(7px) saturate(1.12)!important;
+  backdrop-filter:blur(7px) saturate(1.12)!important;
+  box-shadow:0 20px 54px rgba(0,0,0,.34),0 1px 0 rgba(218,255,224,.10) inset!important;
+  scrollbar-width:thin;
+  scrollbar-color:rgba(145,205,157,.42) transparent;
+}
+html body #ct-discover-panel .ct-discover-heading{
+  margin-bottom:14px!important;
+  align-items:center!important;
+}
+html body #ct-discover-panel .ct-discover-heading small{
+  color:#a8d8b1!important;
+  opacity:1!important;
+  letter-spacing:.13em!important;
+}
+html body #ct-discover-panel .ct-discover-heading strong{
+  color:#f6fff7!important;
+  font-size:1rem!important;
+  letter-spacing:-.025em!important;
+}
+html body #ct-discover-panel .ct-discover-close{
+  flex:0 0 36px!important;
+  width:36px!important;height:36px!important;min-height:36px!important;
+  border:1px solid rgba(205,238,210,.18)!important;
+  border-radius:12px!important;
+  background:rgba(225,255,230,.07)!important;
+  color:#fff!important;
+  font-size:1.2rem!important;
+}
+html body #ct-discover-panel .ct-discover-search{
+  box-sizing:border-box!important;
+  height:50px!important;
+  padding:0 13px!important;
+  border:1px solid rgba(163,213,173,.28)!important;
+  border-radius:14px!important;
+  background:rgba(235,255,238,.075)!important;
+  transition:border-color .18s ease,background .18s ease,box-shadow .18s ease!important;
+}
+html body #ct-discover-panel .ct-discover-search:focus-within{
+  border-color:rgba(151,224,164,.72)!important;
+  background:rgba(235,255,238,.10)!important;
+  box-shadow:0 0 0 3px rgba(90,175,108,.13)!important;
+}
+html body #ct-discover-panel .ct-discover-search svg{
+  color:#c8f0cf!important;stroke:#c8f0cf!important;opacity:.95!important;
+}
+html body #ct-discover-panel .ct-discover-search input{
+  color:#fff!important;-webkit-text-fill-color:#fff!important;
+  font-size:.82rem!important;font-weight:600!important;
+}
+html body #ct-discover-panel .ct-discover-search input::placeholder{
+  color:rgba(237,249,239,.58)!important;-webkit-text-fill-color:rgba(237,249,239,.58)!important;
+}
+html body #ct-discover-panel .ct-discover-filters{
+  grid-template-columns:repeat(3,minmax(0,1fr))!important;
+  gap:9px!important;margin-top:14px!important;
+}
+html body #ct-discover-panel .ct-discover-filters label{gap:6px!important}
+html body #ct-discover-panel .ct-discover-filters label>span{
+  color:#b8d9bd!important;opacity:1!important;font-size:.64rem!important;font-weight:750!important;
+}
+html body #ct-discover-panel .ct-discover-filters select{
+  box-sizing:border-box!important;width:100%!important;min-width:0!important;
+  height:42px!important;padding:0 10px!important;
+  border:1px solid rgba(163,213,173,.23)!important;border-radius:11px!important;
+  background:rgba(235,255,238,.075)!important;
+  color:#fff!important;-webkit-text-fill-color:#fff!important;
+  font:650 .69rem "Manrope",sans-serif!important;
+  color-scheme:dark;
+}
+html body #ct-discover-panel .ct-discover-filters select:focus-visible{
+  outline:2px solid rgba(151,224,164,.72)!important;outline-offset:2px!important;
+}
+html body #ct-discover-panel .ct-discover-footer{
+  display:flex!important;align-items:center!important;justify-content:space-between!important;
+  gap:10px!important;margin-top:13px!important;padding-top:11px!important;
+  border-top:1px solid rgba(190,226,195,.12)!important;
+}
+html body #ct-discover-panel .ct-discover-footer span{
+  min-width:0!important;color:#b6cdb9!important;opacity:1!important;
+  font-size:.65rem!important;line-height:1.4!important;
+}
+html body #ct-discover-panel .ct-discover-footer button{
+  flex:0 0 auto!important;min-height:36px!important;padding:7px 12px!important;
+  border:1px solid rgba(150,215,162,.30)!important;border-radius:10px!important;
+  background:rgba(84,157,101,.18)!important;color:#d8f6dd!important;
+  font:750 .67rem "Manrope",sans-serif!important;
+}
+html body #ct-discover-panel .ct-discover-footer button:hover{
+  background:rgba(84,157,101,.30)!important;border-color:rgba(150,215,162,.5)!important;
+}
+@media(max-width:700px){
+  html body #ct-discover-panel{
+    width:calc(100vw - 24px)!important;
+    max-height:min(62dvh,470px)!important;
+    bottom:calc(max(7px,env(safe-area-inset-bottom)) + 76px)!important;
+    padding:14px!important;border-radius:19px!important;
+  }
+  html body #ct-discover-panel .ct-discover-heading{margin-bottom:11px!important}
+  html body #ct-discover-panel .ct-discover-heading strong{font-size:.94rem!important}
+  html body #ct-discover-panel .ct-discover-search{height:48px!important}
+  html body #ct-discover-panel .ct-discover-filters{
+    grid-template-columns:repeat(2,minmax(0,1fr))!important;gap:9px!important;
+  }
+  html body #ct-discover-panel .ct-discover-filters label:last-child{grid-column:1/-1}
+  html body #ct-discover-panel .ct-discover-filters select{height:42px!important;font-size:.72rem!important}
+  html body #ct-discover-panel .ct-discover-footer{align-items:center!important}
+  html body #ct-discover-panel .ct-discover-footer span{font-size:.61rem!important}
+}
+@media(max-width:370px){
+  html body #ct-discover-panel{padding:12px!important}
+  html body #ct-discover-panel .ct-discover-filters{gap:7px!important}
+  html body #ct-discover-panel .ct-discover-filters select{padding-inline:7px!important;font-size:.66rem!important}
+}
+@media(prefers-reduced-motion:reduce){
+  html body #ct-discover-panel *{transition:none!important}
 }
 </style>
