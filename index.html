@@ -10902,3 +10902,112 @@ header:before{
   }
 }
 </style>
+
+
+<style id="cineton-site-wide-type-color-system-v1">
+/* Site-wide typography and text-color hierarchy. Keep poster artwork and the ruby nav pill untouched. */
+html[data-theme="light"]{
+  --ct-text-primary:#292824!important;
+  --ct-text-secondary:#625f59!important;
+  --ct-text-muted:#858078!important;
+  --ct-text-accent:#896447!important;
+  --ct-text-on-accent:#fffaf5!important;
+  --ct-focus:#9a7658!important;
+}
+html[data-theme="dark"]{
+  --ct-text-primary:#f1eae5!important;
+  --ct-text-secondary:#c4b9b5!important;
+  --ct-text-muted:#968c90!important;
+  --ct-text-accent:#d1ad8d!important;
+  --ct-text-on-accent:#211a17!important;
+  --ct-focus:#d1ad8d!important;
+}
+html body{
+  font-family:"Manrope","Mina",system-ui,sans-serif!important;
+  font-size:14px!important;
+  line-height:1.58!important;
+  letter-spacing:-.012em!important;
+  color:var(--ct-text-primary)!important;
+  -webkit-font-smoothing:antialiased;
+  text-rendering:optimizeLegibility;
+}
+html body :is(p,li,dd,dt,figcaption,label,.sub,.meta,.muted,.caption,.description,.detail-label,.modal-footer,.cm,.public-comment-time,.public-comment-date,.suggestions-sub,.suggestion-note,.suggestion-empty,.suggestion-date,.suggestion-time,.person-filter-bar){
+  color:var(--ct-text-secondary)!important;
+  -webkit-text-fill-color:var(--ct-text-secondary)!important;
+}
+html body :is(h2,h3,h4,h5,h6,.section-title,.panel-title,.suggestions-title,.detail-value,.public-comment-name,.suggestion-title-text){
+  color:var(--ct-text-primary)!important;
+  -webkit-text-fill-color:var(--ct-text-primary)!important;
+  letter-spacing:-.025em;
+}
+html body :is(input,textarea,select){
+  color:var(--ct-text-primary)!important;
+  -webkit-text-fill-color:var(--ct-text-primary)!important;
+}
+html body :is(input,textarea,select)::placeholder{
+  color:var(--ct-text-muted)!important;
+  -webkit-text-fill-color:var(--ct-text-muted)!important;
+  opacity:1!important;
+}
+html body :is(.stat,.select-trigger,.select-menu button,.tabs button,.views button,.bar button,.toolbar button,.filters button,.filter button,.nav-actions button:not(.suggest-me-btn)){
+  font-family:"Manrope","Mina",system-ui,sans-serif!important;
+  font-weight:600!important;
+  letter-spacing:-.01em!important;
+}
+html body .stat{color:var(--ct-text-secondary)!important;-webkit-text-fill-color:var(--ct-text-secondary)!important}
+html body .stat b{color:var(--ct-text-primary)!important;-webkit-text-fill-color:var(--ct-text-primary)!important;font-weight:750!important}
+html body :is(.cinemodal,.suggestions-dialog){
+  color:var(--ct-text-primary)!important;
+  font-family:"Manrope","Mina",system-ui,sans-serif!important;
+}
+html body .cinemodal :is(.modal-title,.detail-head h2,.detail-value,.story,.public-comment-text),
+html body .suggestions-dialog :is(.suggestions-title,.suggestion-title-text){
+  color:var(--ct-text-primary)!important;
+  -webkit-text-fill-color:var(--ct-text-primary)!important;
+}
+html body .cinemodal :is(.subline,.detail-label,.modal-footer,.cm,.public-comment-time,.public-comment-date),
+html body .suggestions-dialog :is(.suggestions-sub,.suggestion-note,.suggestion-date,.suggestion-time,.suggestion-empty){
+  color:var(--ct-text-secondary)!important;
+  -webkit-text-fill-color:var(--ct-text-secondary)!important;
+}
+html body main#g.list .c .ci :is(b,strong){
+  color:var(--ct-text-primary)!important;
+  -webkit-text-fill-color:var(--ct-text-primary)!important;
+  font-weight:700!important;
+}
+html body main#g.list .c .ci :is(small,span,p){
+  color:var(--ct-text-secondary)!important;
+  -webkit-text-fill-color:var(--ct-text-secondary)!important;
+}
+html body #ct-discover-panel :is(h2,h3,h4,strong,b,.ct-discover-heading){
+  color:var(--ct-text-primary)!important;
+  -webkit-text-fill-color:var(--ct-text-primary)!important;
+}
+html body #ct-discover-panel :is(p,small,label,.ct-discover-footer span){
+  color:var(--ct-text-secondary)!important;
+  -webkit-text-fill-color:var(--ct-text-secondary)!important;
+}
+html[data-theme="dark"] body :is(.cinemodal,.suggestions-dialog) :is(p,li,small,.subline,.detail-label,.modal-footer,.cm){
+  color:var(--ct-text-secondary)!important;
+  -webkit-text-fill-color:var(--ct-text-secondary)!important;
+}
+/* Navigation labels stay white; preserve the ruby-red selected pill. */
+html body nav#cineton-bottom-nav button[data-destination],
+html body nav#cineton-bottom-nav button[data-destination] span,
+html body nav#cineton-bottom-nav button[data-destination] svg,
+html body nav#cineton-bottom-nav button[data-destination] svg *{
+  color:#fff!important;
+  -webkit-text-fill-color:#fff!important;
+}
+html body :is(button,a,[role="button"],input,textarea,select):focus-visible{
+  outline-color:var(--ct-focus)!important;
+}
+html body ::selection{
+  background:color-mix(in srgb,var(--ct-text-accent) 28%,transparent)!important;
+  color:var(--ct-text-primary)!important;
+}
+@media(max-width:600px){
+  html body{font-size:13px!important;line-height:1.55!important}
+  html body :is(h2,h3,h4,.section-title,.panel-title){letter-spacing:-.02em}
+}
+</style>
