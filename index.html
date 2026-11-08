@@ -9429,6 +9429,33 @@ html body dialog.cinemodal > button.x:focus-visible{
 }
 </style>
 
+
+<style id="cineton-modal-close-x-only-touch-feedback-v2">
+/* Keep touch feedback confined to the X glyph; never paint the button's hit area. */
+html body dialog.cinemodal > button.x{
+  -webkit-tap-highlight-color:transparent!important;
+  touch-action:manipulation!important;
+  user-select:none!important;
+  -webkit-user-select:none!important;
+}
+html body dialog.cinemodal > button.x:active{
+  background:transparent!important;
+  border-color:transparent!important;
+  box-shadow:none!important;
+  outline:none!important;
+  transform:none!important;
+  color:var(--ct-text-accent,#f2c94c)!important;
+  -webkit-text-fill-color:currentColor!important;
+  text-shadow:0 0 9px color-mix(in srgb,var(--ct-text-accent,#f2c94c) 55%,transparent)!important;
+}
+html body dialog.cinemodal > button.x:focus,
+html body dialog.cinemodal > button.x:focus-visible{
+  outline:none!important;
+  background:transparent!important;
+  box-shadow:none!important;
+}
+</style>
+
 </body></html>
 
 
