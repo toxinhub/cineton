@@ -9503,6 +9503,49 @@ body{
   html,body{scroll-behavior:auto!important}
 }
 </style>
+
+<style id="cineton-wordmark-text-light-sweep-restore-v1">
+/* Bring back the moving cinematic light on the CineTon lettering, matching the film-mark shine. */
+html body.cineton-page-ready header .home-brand h1 > span:not(.title-mark){
+  position:relative!important;
+  isolation:isolate!important;
+  text-shadow:
+    0 0 .025em color-mix(in srgb,currentColor 22%,transparent),
+    0 0 .16em color-mix(in srgb,var(--gd) 20%,transparent)!important;
+}
+html body.cineton-page-ready header .home-brand h1 > span:not(.title-mark)::after{
+  content:attr(data-cineton-shine)!important;
+  position:absolute!important;
+  inset:0!important;
+  display:block!important;
+  pointer-events:none!important;
+  color:transparent!important;
+  -webkit-text-fill-color:transparent!important;
+  background-image:linear-gradient(118deg,
+    transparent 34%,
+    rgba(255,255,255,0) 43%,
+    rgba(255,250,220,.96) 50%,
+    rgba(255,255,255,0) 57%,
+    transparent 66%)!important;
+  background-size:230% 100%!important;
+  background-position:180% 0!important;
+  background-clip:text!important;
+  -webkit-background-clip:text!important;
+  font:inherit!important;
+  line-height:inherit!important;
+  letter-spacing:inherit!important;
+  white-space:pre!important;
+  opacity:0!important;
+  animation:cinetonTitleLightSweep 15s cubic-bezier(.4,0,.2,1) 900ms infinite!important;
+  z-index:2!important;
+}
+@media(prefers-reduced-motion:reduce){
+  html body.cineton-page-ready header .home-brand h1 > span:not(.title-mark)::after{
+    animation:none!important;
+    opacity:0!important;
+  }
+}
+</style>
 </body></html>
 
 
