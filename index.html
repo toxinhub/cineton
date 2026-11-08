@@ -6552,16 +6552,28 @@ main#g{padding-bottom:120px!important}
 body.suggestions-modal-open .cineton-bottom-nav{opacity:0;pointer-events:none;transform:translate(-50%,12px)}
 @media(prefers-reduced-motion:reduce){.cineton-bottom-nav button{transition:none!important}}
 </style>
-<script id="cineton-app-navigation-controller-v6">
+<script id="cineton-app-navigation-controller-v7">
 (()=>{
 const dock=document.getElementById('cineton-bottom-nav'),menu=document.getElementById('ct-home-menu'),panel=document.getElementById('ct-discover-panel'),bar=document.querySelector('.bar');
 if(!dock||!menu||!panel||!bar)return;
 const buttons=[...dock.querySelectorAll('[data-destination]')],mainSearch=document.getElementById('q'),mainGenre=document.getElementById('ge'),mainScope=document.getElementById('cineton-search-scope'),mainType=document.getElementById('cineton-discover-type'),mainClear=document.getElementById('cineton-clear-discover');
 const search=panel.querySelector('#ct-dock-search'),scope=panel.querySelector('#ct-search-scope'),type=panel.querySelector('#ct-search-type'),genre=panel.querySelector('#ct-search-genre'),clear=panel.querySelector('#ct-clear-search'),closeButton=panel.querySelector('.ct-discover-close');
 const reduce=matchMedia('(prefers-reduced-motion: reduce)').matches;let opened='';
+const pickerMap=new Map();
+const buildPicker=(select,title)=>{
+ if(!select||pickerMap.has(select))return;
+ const wrap=document.createElement('div');wrap.className='ct-inline-picker';
+ const trigger=document.createElement('button');trigger.type='button';trigger.className='ct-inline-picker-trigger';trigger.setAttribute('aria-haspopup','listbox');trigger.setAttribute('aria-expanded','false');
+ const list=document.createElement('div');list.className='ct-inline-picker-list';list.setAttribute('role','listbox');list.hidden=true;
+ const paint=()=>{const chosen=select.options[select.selectedIndex];trigger.innerHTML='<span>'+((chosen&&chosen.textContent)||title)+'</span><i aria-hidden="true">⌄</i>';list.innerHTML='';[...select.options].forEach(option=>{const item=document.createElement('button');item.type='button';item.className='ct-inline-picker-option'+(option.value===select.value?' is-selected':'');item.setAttribute('role','option');item.setAttribute('aria-selected',String(option.value===select.value));item.textContent=option.textContent;item.addEventListener('click',()=>{select.value=option.value;select.dispatchEvent(new Event('change',{bubbles:true}));paint();list.hidden=true;trigger.setAttribute('aria-expanded','false');wrap.classList.remove('is-open')});list.appendChild(item)})};
+ trigger.addEventListener('click',()=>{const opening=list.hidden;panel.querySelectorAll('.ct-inline-picker-list').forEach(other=>{other.hidden=true;other.closest('.ct-inline-picker')?.classList.remove('is-open');other.previousElementSibling?.setAttribute('aria-expanded','false')});list.hidden=!opening;trigger.setAttribute('aria-expanded',String(opening));wrap.classList.toggle('is-open',opening)});
+ select.addEventListener('change',paint);select.insertAdjacentElement('afterend',wrap);wrap.append(trigger,list);select.classList.add('ct-native-picker-source');pickerMap.set(select,paint);paint();
+};
+const refreshPickers=()=>pickerMap.forEach(paint=>paint());
+buildPicker(scope,'All fields');buildPicker(type,'All titles');buildPicker(genre,'All genres');
 const activate=name=>buttons.forEach(b=>{const active=b.dataset.destination===name;b.classList.toggle('is-active',active);if(active)b.setAttribute('aria-current','page');else b.removeAttribute('aria-current')});
 const close=()=>{opened='';menu.classList.remove('is-open');menu.hidden=true;panel.classList.remove('is-open');panel.hidden=true;buttons.forEach(b=>b.setAttribute('aria-expanded','false'))};
-const syncGenres=()=>{if(!genre||!mainGenre)return;genre.innerHTML=[...mainGenre.options].map(o=>{const option=document.createElement('option');option.value=o.value;option.textContent=o.textContent;return option.outerHTML}).join('');genre.value=mainGenre.value||'all'};
+const syncGenres=()=>{if(!genre||!mainGenre)return;genre.innerHTML=[...mainGenre.options].map(o=>{const option=document.createElement('option');option.value=o.value;option.textContent=o.textContent;return option.outerHTML}).join('');genre.value=mainGenre.value||'all';refreshPickers()};
 const openDiscover=()=>{close();opened='discover';if(search&&mainSearch)search.value=mainSearch.value;if(scope&&mainScope)scope.value=mainScope.value||'all';if(type&&mainType)type.value=mainType.value||'all';syncGenres();panel.hidden=false;requestAnimationFrame(()=>panel.classList.add('is-open'));buttons.find(b=>b.dataset.destination==='discover')?.setAttribute('aria-expanded','true');activate('discover');};
 const syncSearch=()=>{if(mainSearch){mainSearch.value=search?.value||'';mainSearch.dispatchEvent(new Event('input',{bubbles:true}))}};
 buttons.forEach(button=>button.addEventListener('click',()=>{const d=button.dataset.destination;if(d==='discover'){if(opened==='discover')close();else openDiscover();return}if(d==='home'){if(opened==='home'){close();return}close();opened='home';menu.hidden=false;requestAnimationFrame(()=>menu.classList.add('is-open'));button.setAttribute('aria-expanded','true');return}close();if(d==='watched'||d==='watchlist'){document.getElementById('t-'+d)?.click();activate(d)}else if(d==='rated'){if(typeof setStatFilter==='function')setStatFilter('rated');activate('rated')}}));
@@ -10113,4 +10125,21 @@ html body .bar.ct-discover-highlight{
  transition:border-color .2s ease,box-shadow .2s ease!important;
 }
 html body .bar #cineton-search-scope,html body .bar #cineton-discover-type{display:block!important;opacity:1!important;visibility:visible!important;pointer-events:auto!important}
+</style>
+<style id="cineton-discover-inline-picker-v1">
+html body #ct-discover-panel .ct-discover-filters label{position:relative;align-content:start}
+html body #ct-discover-panel select.ct-native-picker-source{position:absolute!important;width:1px!important;height:1px!important;padding:0!important;margin:-1px!important;overflow:hidden!important;clip:rect(0,0,0,0)!important;white-space:nowrap!important;border:0!important;opacity:0!important;pointer-events:none!important}
+html body #ct-discover-panel .ct-inline-picker{position:relative;min-width:0;width:100%}
+html body #ct-discover-panel .ct-inline-picker-trigger{width:100%!important;min-width:0!important;height:38px!important;min-height:38px!important;display:flex!important;align-items:center!important;justify-content:space-between!important;gap:7px!important;padding:0 10px!important;border:1px solid color-mix(in srgb,var(--tx) 16%,transparent)!important;border-radius:10px!important;background:color-mix(in srgb,var(--sf) 58%,transparent)!important;color:var(--tx)!important;font:650 .68rem "Manrope",sans-serif!important;text-align:left!important;box-shadow:0 1px 0 #ffffff0b inset!important}
+html body #ct-discover-panel .ct-inline-picker-trigger span{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+html body #ct-discover-panel .ct-inline-picker-trigger i{font-style:normal;opacity:.7;transition:transform .16s ease}
+html body #ct-discover-panel .ct-inline-picker.is-open .ct-inline-picker-trigger{border-color:color-mix(in srgb,var(--ac) 55%,var(--tx))!important}
+html body #ct-discover-panel .ct-inline-picker.is-open .ct-inline-picker-trigger i{transform:rotate(180deg)}
+html body #ct-discover-panel .ct-inline-picker-list{display:grid;gap:3px;width:100%;max-height:142px;overflow-y:auto;overscroll-behavior:contain;margin-top:5px;padding:5px;border:1px solid color-mix(in srgb,var(--tx) 14%,transparent);border-radius:10px;background:color-mix(in srgb,var(--sf) 97%,var(--bg));box-shadow:0 8px 20px #0002;scrollbar-width:thin}
+html body #ct-discover-panel .ct-inline-picker-list[hidden]{display:none!important}
+html body #ct-discover-panel .ct-inline-picker-option{width:100%!important;min-height:30px!important;height:auto!important;padding:6px 8px!important;border:0!important;border-radius:7px!important;background:transparent!important;color:var(--tx)!important;text-align:left!important;font:600 .66rem "Manrope",sans-serif!important}
+html body #ct-discover-panel .ct-inline-picker-option:hover,html body #ct-discover-panel .ct-inline-picker-option.is-selected{background:color-mix(in srgb,var(--ac) 17%,transparent)!important}
+html body #ct-discover-panel .ct-inline-picker-option.is-selected{font-weight:800!important}
+@media(max-width:700px){html body #ct-discover-panel .ct-inline-picker-trigger{height:38px!important;min-height:38px!important;font-size:.65rem!important}html body #ct-discover-panel .ct-inline-picker-list{max-height:125px}}
+@media(prefers-reduced-motion:reduce){html body #ct-discover-panel .ct-inline-picker-trigger i{transition:none!important}}
 </style>
