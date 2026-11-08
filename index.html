@@ -11931,3 +11931,42 @@ html body dialog.cinemodal #modal-title{
   letter-spacing:-.035em!important;
 }
 </style>
+
+<style id="cineton-wordmark-lightbar-final-cascade-v5">
+/* Final override: a real luminous bar travels across the wordmark, above all earlier styles. */
+html body header .home-brand h1 > span[data-cineton-shine]{
+  position:relative!important;
+  display:inline-block!important;
+  overflow:visible!important;
+  isolation:isolate!important;
+}
+html body header .home-brand h1 > span[data-cineton-shine]::after{
+  content:""!important;
+  position:absolute!important;
+  top:-.08em!important;
+  bottom:-.08em!important;
+  left:-24%!important;
+  width:.34em!important;
+  display:block!important;
+  pointer-events:none!important;
+  background:linear-gradient(90deg,
+    transparent 0%,
+    rgba(255,255,255,.18) 18%,
+    rgba(255,255,238,.98) 48%,
+    rgba(255,220,130,.88) 62%,
+    rgba(255,255,255,.16) 82%,
+    transparent 100%)!important;
+  border-radius:50%!important;
+  filter:blur(.035em) drop-shadow(0 0 .10em rgba(255,244,190,.95)) drop-shadow(0 0 .24em rgba(255,220,130,.72))!important;
+  opacity:0!important;
+  transform:skewX(-17deg)!important;
+  animation:cinetonWordmarkActualBarV5 3.2s ease-in-out infinite!important;
+  z-index:20!important;
+}
+@keyframes cinetonWordmarkActualBarV5{
+  0%{left:-24%;opacity:0}
+  8%{opacity:1}
+  88%{opacity:1}
+  100%{left:108%;opacity:0}
+}
+</style>
