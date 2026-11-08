@@ -11220,3 +11220,14 @@ html body main#g.list .c>.bd *{
   text-shadow:0 1px 3px rgba(0,0,0,.72)!important;
 }
 </style>
+
+<style id="cineton-light-mode-imdb-yellow-fix-v4">
+/* The light-theme typography layer explicitly reset grid IMDb to --gd (green).
+   Override that exact theme selector so both themes use the same IMDb yellow. */
+html[data-theme] body main#g:not(.list) .c>.bd,
+html[data-theme] body main#g:not(.list) .c>.bd *{
+  color:#F2C94C!important;
+  -webkit-text-fill-color:#F2C94C!important;
+  text-shadow:0 1px 3px rgba(0,0,0,.72)!important;
+}
+</style>
