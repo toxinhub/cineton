@@ -11208,3 +11208,15 @@ html body .cinemodal .chips .imdb-chip{
   text-shadow:none!important;
 }
 </style>
+
+<style id="cineton-grid-imdb-yellow-specificity-fix-v3">
+/* Override the older, more-specific --gd (green) rule on poster-grid IMDb labels. */
+html body main#g:not(.list) .c>.bd,
+html body main#g:not(.list) .c>.bd *,
+html body main#g.list .c>.bd,
+html body main#g.list .c>.bd *{
+  color:#F2C94C!important;
+  -webkit-text-fill-color:#F2C94C!important;
+  text-shadow:0 1px 3px rgba(0,0,0,.72)!important;
+}
+</style>
