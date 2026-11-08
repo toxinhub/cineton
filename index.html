@@ -10399,3 +10399,157 @@ html body nav#cineton-bottom-nav button[data-destination][aria-current="page"] s
   opacity:1!important;font-weight:750!important;
 }
 </style>
+
+
+<style id="cineton-discover-premium-refine-v1">
+/* Discover panel refinement: cinematic plum glass, clearer grouping and warmer restrained accents. */
+html body #ct-discover-panel{
+  position:fixed!important;
+  isolation:isolate!important;
+  border:1px solid rgba(191,151,112,.34)!important;
+  border-radius:23px!important;
+  background:
+    radial-gradient(ellipse at 8% 0%,rgba(151,105,112,.16),transparent 42%),
+    linear-gradient(152deg,rgba(39,31,42,.985),rgba(23,22,29,.985) 72%,rgba(28,25,30,.985))!important;
+  box-shadow:0 24px 64px rgba(0,0,0,.40),0 1px 0 rgba(255,244,229,.12) inset,0 0 0 1px rgba(255,255,255,.025)!important;
+  padding:19px!important;
+}
+html body #ct-discover-panel::before{
+  content:""!important;position:absolute!important;z-index:-1!important;
+  left:22px!important;right:22px!important;top:0!important;height:1px!important;
+  background:linear-gradient(90deg,transparent,rgba(220,180,137,.72),transparent)!important;
+  pointer-events:none!important;
+}
+html body #ct-discover-panel .ct-discover-heading{
+  gap:14px!important;margin-bottom:15px!important;
+}
+html body #ct-discover-panel .ct-discover-heading small{
+  display:block!important;margin-bottom:5px!important;
+  color:#d3ad88!important;font-size:.57rem!important;font-weight:800!important;
+  letter-spacing:.17em!important;
+}
+html body #ct-discover-panel .ct-discover-heading strong{
+  display:block!important;color:#fff8f0!important;
+  font-size:1.04rem!important;font-weight:800!important;letter-spacing:-.035em!important;
+}
+html body #ct-discover-panel .ct-discover-close{
+  border:1px solid rgba(221,190,164,.22)!important;border-radius:12px!important;
+  background:rgba(255,245,235,.065)!important;color:#f9eee5!important;
+  transition:background .18s ease,border-color .18s ease,transform .18s ease!important;
+}
+html body #ct-discover-panel .ct-discover-close:hover{
+  background:rgba(197,151,112,.18)!important;border-color:rgba(221,190,164,.48)!important;
+  transform:rotate(90deg)!important;
+}
+html body #ct-discover-panel .ct-discover-search{
+  height:51px!important;border:1px solid rgba(210,177,148,.26)!important;
+  border-radius:15px!important;background:rgba(255,248,240,.065)!important;
+  box-shadow:0 1px 0 rgba(255,255,255,.045) inset!important;
+}
+html body #ct-discover-panel .ct-discover-search:focus-within{
+  border-color:rgba(220,177,135,.72)!important;
+  background:rgba(255,248,240,.095)!important;
+  box-shadow:0 0 0 3px rgba(183,133,96,.14),0 1px 0 rgba(255,255,255,.06) inset!important;
+}
+html body #ct-discover-panel .ct-discover-search svg{
+  color:#d9b894!important;stroke:#d9b894!important;
+}
+html body #ct-discover-panel .ct-discover-search input{
+  color:#fff9f3!important;-webkit-text-fill-color:#fff9f3!important;
+  font-size:.83rem!important;font-weight:550!important;
+}
+html body #ct-discover-panel .ct-discover-search input::placeholder{
+  color:rgba(241,226,212,.53)!important;-webkit-text-fill-color:rgba(241,226,212,.53)!important;
+}
+html body #ct-discover-panel .ct-discover-search kbd{
+  border:1px solid rgba(230,205,181,.17)!important;border-radius:6px!important;
+  background:rgba(255,255,255,.055)!important;padding:3px 6px!important;
+}
+html body #ct-discover-panel .ct-discover-filters{
+  gap:10px!important;margin-top:16px!important;
+}
+html body #ct-discover-panel .ct-discover-filters label>span{
+  color:#d0b9a6!important;font-size:.61rem!important;font-weight:800!important;
+  letter-spacing:.055em!important;
+}
+html body #ct-discover-panel .ct-inline-picker-trigger{
+  min-height:41px!important;height:41px!important;border-radius:11px!important;
+  border:1px solid rgba(210,177,148,.22)!important;
+  background:rgba(255,248,240,.065)!important;color:#fff5eb!important;
+  box-shadow:0 1px 0 rgba(255,255,255,.04) inset!important;
+  transition:border-color .18s ease,background .18s ease,box-shadow .18s ease!important;
+}
+html body #ct-discover-panel .ct-inline-picker-trigger:hover,
+html body #ct-discover-panel .ct-inline-picker.is-open .ct-inline-picker-trigger{
+  border-color:rgba(220,177,135,.62)!important;background:rgba(197,151,112,.12)!important;
+}
+html body #ct-discover-panel .ct-inline-picker-trigger span,
+html body #ct-discover-panel .ct-inline-picker-trigger i{color:#fff5eb!important}
+html body #ct-discover-panel .ct-inline-picker-list{
+  border:1px solid rgba(210,177,148,.25)!important;border-radius:12px!important;
+  background:#29232c!important;box-shadow:0 12px 30px rgba(0,0,0,.28)!important;
+}
+html body #ct-discover-panel .ct-inline-picker-option{color:#f5eae0!important}
+html body #ct-discover-panel .ct-inline-picker-option:hover,
+html body #ct-discover-panel .ct-inline-picker-option.is-selected{
+  background:rgba(190,145,108,.20)!important;color:#ffe0bd!important;
+}
+html body #ct-discover-panel .ct-discover-footer{
+  margin-top:15px!important;padding-top:12px!important;
+  border-top:1px solid rgba(220,190,164,.14)!important;
+}
+html body #ct-discover-panel .ct-discover-footer span{
+  color:rgba(239,224,211,.70)!important;font-size:.64rem!important;
+}
+html body #ct-discover-panel .ct-discover-footer button{
+  min-height:35px!important;border:1px solid rgba(210,169,128,.35)!important;
+  border-radius:10px!important;background:rgba(183,133,96,.13)!important;
+  color:#f2d7bd!important;transition:background .18s ease,border-color .18s ease,transform .18s ease!important;
+}
+html body #ct-discover-panel .ct-discover-footer button:hover{
+  background:rgba(183,133,96,.23)!important;border-color:rgba(220,177,135,.58)!important;
+  transform:translateY(-1px)!important;
+}
+/* Light theme gets a genuinely light surface instead of inheriting the dark glass. */
+html[data-theme="light"] body #ct-discover-panel{
+  border-color:rgba(135,98,76,.24)!important;
+  background:radial-gradient(ellipse at 8% 0%,rgba(191,150,120,.12),transparent 45%),linear-gradient(150deg,rgba(255,253,250,.99),rgba(246,240,235,.99))!important;
+  box-shadow:0 22px 56px rgba(54,39,30,.18),0 1px 0 #fff inset!important;
+  color:#302831!important;
+}
+html[data-theme="light"] body #ct-discover-panel .ct-discover-heading strong{color:#302831!important}
+html[data-theme="light"] body #ct-discover-panel .ct-discover-heading small{color:#98704f!important}
+html[data-theme="light"] body #ct-discover-panel .ct-discover-close{
+  color:#44362f!important;background:rgba(116,83,61,.06)!important;border-color:rgba(116,83,61,.18)!important;
+}
+html[data-theme="light"] body #ct-discover-panel .ct-discover-search,
+html[data-theme="light"] body #ct-discover-panel .ct-inline-picker-trigger{
+  background:rgba(255,255,255,.86)!important;border-color:#ded2c8!important;
+}
+html[data-theme="light"] body #ct-discover-panel .ct-discover-search input,
+html[data-theme="light"] body #ct-discover-panel .ct-inline-picker-trigger span,
+html[data-theme="light"] body #ct-discover-panel .ct-inline-picker-trigger i{color:#302831!important;-webkit-text-fill-color:#302831!important}
+html[data-theme="light"] body #ct-discover-panel .ct-discover-search input::placeholder{color:#8b8179!important;-webkit-text-fill-color:#8b8179!important}
+html[data-theme="light"] body #ct-discover-panel .ct-discover-search svg{color:#967052!important;stroke:#967052!important}
+html[data-theme="light"] body #ct-discover-panel .ct-discover-filters label>span{color:#756357!important}
+html[data-theme="light"] body #ct-discover-panel .ct-inline-picker-list{background:#fffdfa!important;border-color:#ded2c8!important}
+html[data-theme="light"] body #ct-discover-panel .ct-inline-picker-option{color:#382f2a!important}
+html[data-theme="light"] body #ct-discover-panel .ct-inline-picker-option:hover,
+html[data-theme="light"] body #ct-discover-panel .ct-inline-picker-option.is-selected{background:#f1e4d8!important;color:#704b32!important}
+html[data-theme="light"] body #ct-discover-panel .ct-discover-footer{border-top-color:rgba(116,83,61,.15)!important}
+html[data-theme="light"] body #ct-discover-panel .ct-discover-footer span{color:#786b61!important}
+html[data-theme="light"] body #ct-discover-panel .ct-discover-footer button{color:#765237!important;background:#f3e8dd!important;border-color:#dfcbbb!important}
+@media(max-width:700px){
+  html body #ct-discover-panel{
+    width:calc(100vw - 20px)!important;max-height:min(66dvh,520px)!important;
+    padding:15px!important;border-radius:20px!important;
+  }
+  html body #ct-discover-panel .ct-discover-heading strong{font-size:.98rem!important}
+  html body #ct-discover-panel .ct-discover-search{height:48px!important}
+  html body #ct-discover-panel .ct-discover-filters{gap:9px!important;margin-top:14px!important}
+  html body #ct-discover-panel .ct-inline-picker-trigger{height:40px!important;min-height:40px!important}
+}
+@media(prefers-reduced-motion:reduce){
+  html body #ct-discover-panel *{transition:none!important;transform:none!important}
+}
+</style>
