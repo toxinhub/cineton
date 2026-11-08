@@ -1749,6 +1749,7 @@ html body dialog.cinemodal::backdrop{
 html body dialog.cinemodal .modal-nav{opacity:.86!important}
 html body dialog.cinemodal[style*="will-change"] .modal-nav{opacity:.86!important;pointer-events:auto!important}
 </style>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Outfit:wght@500;600;700;800&display=swap">
 </head><body><header><a class="home-brand" href="./index.html" aria-label="Home"><h1><span class="title-mark" aria-hidden="true">🎬</span><span data-cineton-shine="CineTon">CineTon</span></h1></a><p class="sub">Some of the films I've watched. Rest of the drama? I'm living it...</p></header><div class="cineton-header-utilities"><div class="nav-actions"><button id="suggestMeBtn" class="suggest-me-btn" type="button" aria-haspopup="dialog" aria-controls="suggestionsDialog"><span aria-hidden="true">✦</span> Suggest Me</button><button id="surprise" class="surprise nav-surprise" type="button" aria-label="Surprise Me" title="Open a random title">🎲 <span>Surprise Me</span></button></div><div class="social-links" aria-label="Social media"><button id="cineton-theme-toggle" type="button" aria-label="Switch to dark mode" aria-pressed="false" title="Switch to dark appearance"><span class="theme-icon" aria-hidden="true">☾</span></button><a class="social-btn" href="https://www.facebook.com/share/1BznJkcQVk/" target="_blank" rel="noopener noreferrer" aria-label="Facebook" title="Facebook"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M13.5 21v-8h2.7l.4-3h-3.1V8.1c0-.87.24-1.46 1.5-1.46h1.7V4a20 20 0 0 0-2.48-.13c-2.45 0-4.12 1.5-4.12 4.24V10H7.3v3h2.8v8h3.4Z"/></svg></a><a class="social-btn" href="https://www.instagram.com/tonmoybelieve?stkn=bTFndTYzbGs3eXI5" target="_blank" rel="noopener noreferrer" aria-label="Instagram" title="Instagram"><svg viewBox="0 0 24 24" aria-hidden="true" fill="none"><rect x="3.5" y="3.5" width="17" height="17" rx="5" fill="none" stroke="currentColor" stroke-width="1.8"/><circle cx="12" cy="12" r="4" fill="none" stroke="currentColor" stroke-width="1.8"/><circle cx="17.4" cy="6.7" r="1.1" fill="currentColor" stroke="none"/></svg></a></div></div><div id="top-sentinel" aria-hidden="true"></div><div class="nav-bar"><div class="tabs"><button type="button" id="t-all">ALL</button><button type="button" id="t-watched" class="on">Watched</button><button type="button" id="t-watchlist">Watchlist</button></div></div><div class="stats-row"><div id="stats" class="stats" aria-label="Statistics"></div></div><div class="bar"><input id="q" type="search" placeholder="Search movies, shows, cast or director…" aria-label="Search titles, cast and crew" aria-keyshortcuts="/"><label class="ct-inline-filter ct-scope-filter"><span>Search in</span><select id="cineton-search-scope" aria-label="Search in"><option value="all">All fields</option><option value="title">Title</option><option value="cast">Cast</option><option value="director">Director</option></select></label><label class="ct-inline-filter ct-type-filter"><span>Type</span><select id="cineton-discover-type" aria-label="Media type"><option value="all">All titles</option><option value="movie">Movies</option><option value="tv">Series</option></select></label><button type="button" id="cineton-clear-discover" class="ct-inline-clear">Clear</button><div class="select-wrap"><button class="select-trigger" id="ge-trigger" type="button" aria-haspopup="listbox" aria-expanded="false">All genres <span>></span></button><div class="select-menu" id="ge-menu" role="listbox" aria-label="Genre"><button type="button" role="option" data-value="all" aria-selected="true">All genres</button></div></div><div class="select-wrap"><button class="select-trigger" id="so-trigger" type="button" aria-haspopup="listbox" aria-expanded="false">Newest first <span>></span></button><div class="select-menu" id="so-menu" role="listbox" aria-label="Sort"><button type="button" role="option" data-value="new" aria-selected="true">Newest first</button><button type="button" role="option" data-value="my">My rating</button><button type="button" role="option" data-value="im">IMDb rating</button><button type="button" role="option" data-value="yr">Release year</button><button type="button" role="option" data-value="az">Title (A–Z)</button></div></div><select id="ty" aria-hidden="true" tabindex="-1"><option value="all">All types</option><option value="movie">Movie</option><option value="tv">TV / Show</option></select><select id="ge" aria-hidden="true" tabindex="-1"><option value="all">All genres</option></select><select id="so" aria-hidden="true" tabindex="-1"><option value="new">Newest first</option><option value="my">My rating</option><option value="im">IMDb rating</option><option value="yr">Release year</option><option value="az">Title (A–Z)</option></select><div class="views" role="group" aria-label="View"><button type="button" id="v-grid" class="on" aria-label="Grid view" title="Grid view">▦</button><button type="button" id="v-list" aria-label="List view" title="List view">☷</button></div><div id="person-filter" class="person-filter-bar" aria-live="polite"><span id="person-filter-label"></span><button class="clear-person" id="clear-person" type="button" aria-label="Clear person filter">×</button></div></div><main id="g" aria-live="polite"></main><nav class="cineton-bottom-nav" id="cineton-bottom-nav" aria-label="Primary navigation">
 <div class="ct-nav-group"><button data-destination="watched" class="is-active" aria-current="page" type="button"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="8.5"/><path d="m10 8.5 6 3.5-6 3.5z"/></svg><span>Watched</span></button><button data-destination="watchlist" type="button"><svg viewBox="0 0 24 24"><path d="M6 3.8h12v16.4l-6-3.8-6 3.8z"/></svg><span>Watchlist</span></button></div>
 <div class="ct-nav-home-wrap"><button class="ct-nav-home" data-destination="home" type="button" aria-haspopup="true" aria-expanded="false" aria-controls="ct-home-menu"><svg viewBox="0 0 24 24"><path d="M3.5 10.5 12 3.8l8.5 6.7v9a1 1 0 0 1-1 1h-5.2v-6.2H9.7v6.2H4.5a1 1 0 0 1-1-1z"/></svg><span>Home</span><i></i></button><div class="ct-home-menu" id="ct-home-menu" role="menu" hidden><button type="button" role="menuitem" data-home-filter="all"><b>All library</b><small>Every movie &amp; series</small></button><button type="button" role="menuitem" data-home-filter="movie"><b>Movies</b><small>Feature films</small></button><button type="button" role="menuitem" data-home-filter="tv"><b>Series</b><small>TV &amp; shows</small></button></div></div>
@@ -9357,6 +9358,33 @@ html body header h1 :is(span,.title-mark,.film-mark){
 }
 @media(max-width:380px){
   html body header h1{font-size:2.48rem!important}
+}
+</style>
+
+
+<style id="cineton-brand-title-bold-v2">
+/* Bold, contemporary brand wordmark with responsive proportions. */
+html body header h1{
+  font-family:"Outfit","Manrope",sans-serif!important;
+  font-size:clamp(3.05rem,5.8vw,4.35rem)!important;
+  font-weight:700!important;
+  font-style:normal!important;
+  line-height:.98!important;
+  letter-spacing:-.065em!important;
+  font-synthesis:none!important;
+}
+html body header h1 :is(span,.title-mark,.film-mark){
+  font-family:inherit!important;
+}
+@media(max-width:700px){
+  html body header h1{
+    font-size:clamp(2.55rem,9.4vw,3.15rem)!important;
+    line-height:1!important;
+    letter-spacing:-.055em!important;
+  }
+}
+@media(max-width:380px){
+  html body header h1{font-size:2.42rem!important}
 }
 </style>
 
