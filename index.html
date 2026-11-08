@@ -10367,3 +10367,26 @@ html body nav#cineton-bottom-nav button.ct-nav-home[aria-current="page"]{
   html body nav#cineton-bottom-nav .ct-nav-liquid-indicator{transition:none!important}
 }
 </style>
+
+
+<style id="cineton-nav-champagne-contrast-fix-v1">
+/* Explicitly override the dock's global white-text rule inside the pale yellow active pill. */
+html body nav#cineton-bottom-nav button[data-destination].is-active,
+html body nav#cineton-bottom-nav button[data-destination][aria-current="page"],
+html body nav#cineton-bottom-nav button[data-destination].is-active span,
+html body nav#cineton-bottom-nav button[data-destination][aria-current="page"] span,
+html body nav#cineton-bottom-nav button[data-destination].is-active svg,
+html body nav#cineton-bottom-nav button[data-destination][aria-current="page"] svg,
+html body nav#cineton-bottom-nav button[data-destination].is-active svg *,
+html body nav#cineton-bottom-nav button[data-destination][aria-current="page"] svg *{
+  color:#40371f!important;
+  -webkit-text-fill-color:#40371f!important;
+  stroke:#40371f!important;
+}
+html body nav#cineton-bottom-nav button[data-destination].is-active svg,
+html body nav#cineton-bottom-nav button[data-destination][aria-current="page"] svg{fill:none!important}
+html body nav#cineton-bottom-nav button[data-destination].is-active span,
+html body nav#cineton-bottom-nav button[data-destination][aria-current="page"] span{
+  opacity:1!important;text-shadow:none!important;font-weight:800!important;
+}
+</style>
