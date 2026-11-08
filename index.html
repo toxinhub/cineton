@@ -9390,6 +9390,45 @@ html body header h1 :is(span,.title-mark,.film-mark){
 }
 </style>
 
+
+<style id="cineton-modal-close-minimal-x-v1">
+/* Minimal modal close: remove the circular control chrome and enlarge only the X. */
+html body dialog.cinemodal > button.x{
+  display:grid!important;
+  place-items:center!important;
+  width:48px!important;
+  height:48px!important;
+  padding:0!important;
+  border:0!important;
+  border-radius:0!important;
+  outline:0!important;
+  background:transparent!important;
+  box-shadow:none!important;
+  color:var(--ct-text-primary,#fff)!important;
+  -webkit-text-fill-color:currentColor!important;
+  font-family:Arial,sans-serif!important;
+  font-size:34px!important;
+  font-weight:300!important;
+  line-height:1!important;
+  text-shadow:0 1px 5px rgba(0,0,0,.42)!important;
+  appearance:none!important;
+  -webkit-appearance:none!important;
+}
+html body dialog.cinemodal > button.x:hover,
+html body dialog.cinemodal > button.x:focus-visible,
+html body dialog.cinemodal > button.x:active{
+  border:0!important;
+  border-radius:0!important;
+  outline:0!important;
+  background:transparent!important;
+  box-shadow:none!important;
+  transform:scale(1.06)!important;
+}
+html body dialog.cinemodal > button.x:focus-visible{
+  filter:drop-shadow(0 0 3px currentColor)!important;
+}
+</style>
+
 </body></html>
 
 
