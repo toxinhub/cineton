@@ -9287,3 +9287,16 @@ html body #ct-home-menu svg *{
 html body nav#cineton-bottom-nav button:disabled,
 html body #ct-home-menu button:disabled{color:#fff!important;-webkit-text-fill-color:#fff!important;opacity:1!important}
 </style>
+
+
+<style id="cineton-bottom-nav-transparency-v1">
+/* A lighter, clearer navigation dock: retain contrast while reducing the glass blur. */
+html body nav.cineton-bottom-nav,
+html body .cineton-bottom-nav{
+  background:rgba(20,23,29,.48)!important;
+  -webkit-backdrop-filter:blur(2px) saturate(1.04)!important;
+  backdrop-filter:blur(2px) saturate(1.04)!important;
+  border-color:rgba(255,255,255,.20)!important;
+  box-shadow:0 7px 22px rgba(0,0,0,.18),0 1px 0 rgba(255,255,255,.07) inset!important;
+}
+</style>
