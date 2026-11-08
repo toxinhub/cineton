@@ -9332,6 +9332,34 @@ html body dialog.cinemodal #modal-title{
 }
 </style>
 
+
+<style id="cineton-brand-title-final-v1">
+/* Brand wordmark: refined editorial serif, balanced across desktop and mobile. */
+html body header h1{
+  font-family:"Cormorant Garamond",Georgia,serif!important;
+  font-size:clamp(3.35rem,6.2vw,4.8rem)!important;
+  font-weight:500!important;
+  font-style:normal!important;
+  line-height:.94!important;
+  letter-spacing:-.035em!important;
+  font-synthesis:none!important;
+  text-wrap:balance!important;
+}
+html body header h1 :is(span,.title-mark,.film-mark){
+  font-family:inherit!important;
+}
+@media(max-width:700px){
+  html body header h1{
+    font-size:clamp(2.65rem,10vw,3.35rem)!important;
+    line-height:.96!important;
+    letter-spacing:-.03em!important;
+  }
+}
+@media(max-width:380px){
+  html body header h1{font-size:2.48rem!important}
+}
+</style>
+
 </body></html>
 
 
