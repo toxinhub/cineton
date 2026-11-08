@@ -10737,3 +10737,155 @@ html[data-theme="light"] body #ct-discover-panel .ct-discover-footer button{colo
   html body #ct-discover-panel *{transition:none!important;transform:none!important}
 }
 </style>
+
+
+<style id="cineton-darkmode-color-balance-v2">
+/* Final dark-mode color balance: neutral charcoal base, subtle plum depth, soft bronze accents. */
+html[data-theme="dark"]{
+  --bg:#15131a!important;
+  --sf:#1d1a22!important;
+  --tx:#f0e9e4!important;
+  --mu:#bdb2b0!important;
+  --ac:#b98f70!important;
+  --gd:#c9a27f!important;
+  --line:rgba(224,207,195,.095)!important;
+  --line-strong:rgba(224,207,195,.18)!important;
+  --modal:#211c26!important;
+  --modal-overlay:rgba(21,19,26,.97)!important;
+  --modal-backdrop:rgba(8,7,11,.78)!important;
+  --modal-shadow:rgba(0,0,0,.60)!important;
+  --ct-text-primary:#f0e9e4!important;
+  --ct-text-secondary:#bdb2b0!important;
+  --ct-text-muted:#91878a!important;
+  --ct-text-accent:#c9a27f!important;
+  --ct-text-on-accent:#211a17!important;
+  --ct-panel:rgba(31,27,36,.97)!important;
+  --ct-panel-solid:#25202a!important;
+  --ct-panel-border:rgba(224,207,195,.14)!important;
+  --ct-hover:rgba(201,162,127,.095)!important;
+  --ct-focus:#d1ad8d!important;
+  --ct-nav-bg:rgba(29,25,34,.88)!important;
+  --ct-nav-border:rgba(224,207,195,.17)!important;
+  color-scheme:dark!important;
+}
+html[data-theme="dark"],html[data-theme="dark"] body{
+  background-color:#15131a!important;
+  color:#f0e9e4!important;
+}
+html[data-theme="dark"] body{
+  background-image:
+    radial-gradient(ellipse at 50% -30%,rgba(91,65,83,.20) 0%,transparent 56%),
+    linear-gradient(180deg,#1a161e 0%,#15131a 58%,#121016 100%)!important;
+  background-attachment:fixed!important;
+}
+/* Re-establish clear text levels after legacy monochrome rules. */
+html[data-theme="dark"] body :is(p,li,dd,dt,figcaption,.sub,.muted,.meta,.caption,.detail-label,.modal-footer,.cm,.public-comment-time,.public-comment-date,.suggestions-sub,.suggestion-note,.suggestion-empty,.suggestion-date,.suggestion-time,.suggestion-message,.ct-discover-heading small,.ct-discover-filters label>span,.ct-discover-footer span,.person-filter-bar){
+  color:var(--ct-text-secondary)!important;
+  -webkit-text-fill-color:var(--ct-text-secondary)!important;
+}
+html[data-theme="dark"] body :is(h1,h2,h3,h4,h5,h6,strong,b,.detail-value,.story,.public-comment-name,.public-comment-text,.suggestions-title,.suggestion-title-text,.stat b){
+  color:var(--ct-text-primary)!important;
+  -webkit-text-fill-color:var(--ct-text-primary)!important;
+}
+html[data-theme="dark"] body :is(.my-rating,.film-mark,.cineton-featured-eyebrow){
+  color:var(--ct-text-accent)!important;
+  -webkit-text-fill-color:var(--ct-text-accent)!important;
+}
+/* Distinct surface elevations: controls < cards < dialogs. */
+html[data-theme="dark"] body :is(.bar,.stat,.select-menu,.select-trigger,.surprise,.empty,.suggestion-item,.suggestion-compose,.public-comments,.public-comment-composer){
+  background-color:var(--ct-panel)!important;
+  border-color:var(--ct-panel-border)!important;
+  box-shadow:none!important;
+}
+html[data-theme="dark"] body :is(input,textarea,select,option),
+html[data-theme="dark"] body .bar input,
+html[data-theme="dark"] body .suggestion-compose :is(input,textarea),
+html[data-theme="dark"] body .cinemodal :is(input,textarea,select){
+  color:var(--ct-text-primary)!important;
+  -webkit-text-fill-color:var(--ct-text-primary)!important;
+  background-color:#1a1720!important;
+  border-color:var(--ct-panel-border)!important;
+}
+html[data-theme="dark"] body :is(input,textarea,select)::placeholder{
+  color:var(--ct-text-muted)!important;
+  -webkit-text-fill-color:var(--ct-text-muted)!important;
+  opacity:1!important;
+}
+html[data-theme="dark"] body :is(.stat,.bar,.select-trigger,.surprise,.select-menu button,.tabs button,.views button,.nav-actions button){
+  color:var(--ct-text-secondary)!important;
+  -webkit-text-fill-color:var(--ct-text-secondary)!important;
+}
+html[data-theme="dark"] body :is(.stat:hover,.stat.active,.stat:focus-visible,.select-menu button:hover,.select-menu button:focus-visible,.views button.on,.tabs button.on){
+  background:var(--ct-hover)!important;
+  border-color:rgba(201,162,127,.32)!important;
+  color:var(--ct-text-accent)!important;
+  -webkit-text-fill-color:var(--ct-text-accent)!important;
+}
+/* List view gets layered surfaces; poster grid art and its white overlay typography are preserved. */
+html[data-theme="dark"] body main#g.list .c{
+  background:linear-gradient(145deg,#25202a,#201c25)!important;
+  border-color:var(--ct-panel-border)!important;
+  box-shadow:0 3px 14px rgba(0,0,0,.12)!important;
+}
+html[data-theme="dark"] body main#g.list .c .ci :is(b,strong){
+  color:var(--ct-text-primary)!important;-webkit-text-fill-color:var(--ct-text-primary)!important;
+}
+html[data-theme="dark"] body main#g.list .c .ci :is(small,span,p){
+  color:var(--ct-text-secondary)!important;-webkit-text-fill-color:var(--ct-text-secondary)!important;
+}
+html[data-theme="dark"] body .cinemodal,
+html[data-theme="dark"] body .suggestions-dialog{
+  background:linear-gradient(155deg,#27212c 0%,#211c26 72%,#1d1922 100%)!important;
+  color:var(--ct-text-primary)!important;
+  border-color:rgba(224,207,195,.16)!important;
+}
+html[data-theme="dark"] body .cinemodal :is(.public-comments,.public-comment,.public-comment-composer),
+html[data-theme="dark"] body .suggestions-dialog :is(.suggestion-compose,.suggestion-item,.suggestions-head){
+  background:#1c1921!important;border-color:var(--ct-panel-border)!important;
+}
+/* Discover uses the same subdued plum family, not a brighter competing brown. */
+html[data-theme="dark"] body #ct-discover-panel{
+  background:
+    radial-gradient(ellipse at 8% 0%,rgba(151,105,112,.105),transparent 46%),
+    linear-gradient(150deg,rgba(38,32,43,.985),rgba(27,24,32,.99) 78%)!important;
+  border-color:rgba(201,162,127,.22)!important;
+  box-shadow:0 22px 58px rgba(0,0,0,.42),0 1px 0 rgba(255,245,235,.075) inset!important;
+}
+html[data-theme="dark"] body #ct-discover-panel :is(.ct-discover-search,.ct-inline-picker-trigger){
+  background:rgba(255,248,240,.045)!important;
+  border-color:rgba(201,162,127,.20)!important;
+}
+html[data-theme="dark"] body #ct-discover-panel .ct-inline-picker-list{
+  background:#25202a!important;border-color:rgba(201,162,127,.22)!important;
+}
+html[data-theme="dark"] body #ct-discover-panel .ct-inline-picker-option:is(:hover,.is-selected){
+  background:rgba(201,162,127,.14)!important;color:#f0d4b9!important;
+  -webkit-text-fill-color:#f0d4b9!important;
+}
+/* Dock glass now follows the plum canvas; the ruby active pill and white labels stay unchanged. */
+html[data-theme="dark"] body nav#cineton-bottom-nav{
+  background:rgba(27,23,32,.28)!important;
+  border-color:rgba(224,207,195,.20)!important;
+  box-shadow:0 10px 28px rgba(0,0,0,.22),0 1px 0 rgba(255,255,255,.10) inset!important;
+}
+html[data-theme="dark"] body nav#cineton-bottom-nav button[data-destination],
+html[data-theme="dark"] body nav#cineton-bottom-nav button[data-destination] span,
+html[data-theme="dark"] body nav#cineton-bottom-nav button[data-destination] svg,
+html[data-theme="dark"] body nav#cineton-bottom-nav button[data-destination] svg *{
+  color:#fff!important;-webkit-text-fill-color:#fff!important;stroke:#fff!important;
+}
+html[data-theme="dark"] body nav#cineton-bottom-nav .ct-nav-liquid-indicator{
+  border-color:rgba(255,105,113,.96)!important;
+  background:linear-gradient(145deg,rgba(226,66,75,.19),rgba(196,43,53,.125) 58%,rgba(153,29,40,.095))!important;
+}
+html[data-theme="dark"] body :where(button,a,input,textarea,select,[tabindex]):focus-visible{
+  outline-color:var(--ct-focus)!important;
+}
+html[data-theme="dark"] body ::selection{
+  color:#211a17!important;background:rgba(201,162,127,.34)!important;
+}
+@media(prefers-reduced-motion:reduce){
+  html[data-theme="dark"] body *{transition-duration:.01ms!important}
+}
+</style>
+
