@@ -9817,3 +9817,81 @@ html body nav#cineton-bottom-nav .ct-nav-home{
   }
 }
 </style>
+
+
+<style id="cineton-nav-crystal-clear-filled-icons-v1">
+/* Near-clear navigation surface with bolder, instantly readable destination icons. */
+html body nav#cineton-bottom-nav{
+  background:rgba(13,20,17,.24)!important;
+  -webkit-backdrop-filter:blur(.5px) saturate(1.04)!important;
+  backdrop-filter:blur(.5px) saturate(1.04)!important;
+  border-color:rgba(210,230,214,.22)!important;
+  box-shadow:
+    0 8px 22px rgba(0,0,0,.14),
+    0 1px 0 rgba(255,255,255,.09) inset!important;
+}
+html[data-theme="light"] body nav#cineton-bottom-nav{
+  background:rgba(13,20,17,.29)!important;
+}
+html body nav#cineton-bottom-nav button svg{
+  width:20px!important;
+  height:20px!important;
+  stroke-width:2.1!important;
+  opacity:1!important;
+}
+/* Watched: solid disc with a contrasting play mark. */
+html body nav#cineton-bottom-nav button[data-destination="watched"] svg circle{
+  fill:#fff!important;stroke:#fff!important;
+}
+html body nav#cineton-bottom-nav button[data-destination="watched"] svg path{
+  fill:#17221b!important;stroke:#17221b!important;
+}
+/* Solid bookmark, home and star glyphs. */
+html body nav#cineton-bottom-nav button[data-destination="watchlist"] svg path,
+html body nav#cineton-bottom-nav button.ct-nav-home svg path,
+html body nav#cineton-bottom-nav button[data-destination="rated"] svg path{
+  fill:#fff!important;
+  stroke:#fff!important;
+  stroke-linejoin:round!important;
+}
+/* Keep the search lens open so it remains recognizable at small sizes. */
+html body nav#cineton-bottom-nav button[data-destination="discover"] svg circle{
+  fill:none!important;
+  stroke:#fff!important;
+  stroke-width:2.5!important;
+}
+html body nav#cineton-bottom-nav button[data-destination="discover"] svg path{
+  fill:none!important;
+  stroke:#fff!important;
+  stroke-width:2.5!important;
+  stroke-linecap:round!important;
+}
+html body nav#cineton-bottom-nav button.is-active:not(.ct-nav-home),
+html body nav#cineton-bottom-nav button[aria-current="page"]:not(.ct-nav-home){
+  -webkit-backdrop-filter:blur(3px) saturate(1.12)!important;
+  backdrop-filter:blur(3px) saturate(1.12)!important;
+}
+html body nav#cineton-bottom-nav .ct-nav-home{
+  -webkit-backdrop-filter:blur(2px) saturate(1.08)!important;
+  backdrop-filter:blur(2px) saturate(1.08)!important;
+}
+@media(max-width:700px){
+  html body nav#cineton-bottom-nav{
+    background:rgba(13,20,17,.22)!important;
+    -webkit-backdrop-filter:blur(.35px) saturate(1.03)!important;
+    backdrop-filter:blur(.35px) saturate(1.03)!important;
+  }
+  html body nav#cineton-bottom-nav button.is-active:not(.ct-nav-home),
+  html body nav#cineton-bottom-nav button[aria-current="page"]:not(.ct-nav-home){
+    -webkit-backdrop-filter:blur(2.5px) saturate(1.10)!important;
+    backdrop-filter:blur(2.5px) saturate(1.10)!important;
+  }
+}
+@media(prefers-reduced-transparency:reduce){
+  html body nav#cineton-bottom-nav{
+    background:rgba(17,29,22,.92)!important;
+    -webkit-backdrop-filter:none!important;
+    backdrop-filter:none!important;
+  }
+}
+</style>
