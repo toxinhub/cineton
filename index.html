@@ -10143,3 +10143,34 @@ html body #ct-discover-panel .ct-inline-picker-option.is-selected{font-weight:80
 @media(max-width:700px){html body #ct-discover-panel .ct-inline-picker-trigger{height:38px!important;min-height:38px!important;font-size:.65rem!important}html body #ct-discover-panel .ct-inline-picker-list{max-height:125px}}
 @media(prefers-reduced-motion:reduce){html body #ct-discover-panel .ct-inline-picker-trigger i{transition:none!important}}
 </style>
+
+<style id="cineton-discover-readable-contrast-v1">
+/* Restore a clear type hierarchy inside Discover; avoid inheriting global white button text. */
+html body #ct-discover-panel{color:var(--tx)!important}
+html body #ct-discover-panel .ct-discover-heading small,
+html body #ct-discover-panel .ct-discover-filters label>span,
+html body #ct-discover-panel .ct-discover-footer span{color:var(--mu)!important}
+html body #ct-discover-panel .ct-discover-heading strong{color:var(--tx)!important}
+html body #ct-discover-panel .ct-discover-search{color:var(--mu)!important}
+html body #ct-discover-panel .ct-discover-search input{color:var(--tx)!important}
+html body #ct-discover-panel .ct-discover-search input::placeholder{color:var(--mu)!important;opacity:.82!important}
+html body #ct-discover-panel .ct-discover-search kbd{color:var(--mu)!important}
+html body #ct-discover-panel .ct-discover-close{color:var(--tx)!important}
+html body #ct-discover-panel .ct-discover-footer button{color:var(--tx)!important}
+html body #ct-discover-panel .ct-inline-picker-trigger,
+html body #ct-discover-panel .ct-inline-picker-trigger span,
+html body #ct-discover-panel .ct-inline-picker-trigger i{color:var(--tx)!important}
+html body #ct-discover-panel .ct-inline-picker-list{color:var(--tx)!important}
+html body #ct-discover-panel .ct-inline-picker-option,
+html body #ct-discover-panel .ct-inline-picker-option span{color:var(--tx)!important}
+html[data-theme="light"] body #ct-discover-panel .ct-inline-picker-trigger{background:#f4f7f3!important;border-color:#cbd8ce!important;color:#20352b!important}
+html[data-theme="light"] body #ct-discover-panel .ct-inline-picker-list{background:#fff!important;border-color:#d4dfd6!important}
+html[data-theme="light"] body #ct-discover-panel .ct-inline-picker-option{color:#263d30!important}
+html[data-theme="light"] body #ct-discover-panel .ct-inline-picker-option:hover,
+html[data-theme="light"] body #ct-discover-panel .ct-inline-picker-option.is-selected{background:#e4f0e6!important;color:#205b3d!important}
+html[data-theme="dark"] body #ct-discover-panel .ct-inline-picker-trigger{background:#20342d!important;border-color:#40584c!important;color:#e8f0ea!important}
+html[data-theme="dark"] body #ct-discover-panel .ct-inline-picker-list{background:#192a23!important;border-color:#40584c!important}
+html[data-theme="dark"] body #ct-discover-panel .ct-inline-picker-option{color:#e4eee7!important}
+html[data-theme="dark"] body #ct-discover-panel .ct-inline-picker-option:hover,
+html[data-theme="dark"] body #ct-discover-panel .ct-inline-picker-option.is-selected{background:#2c4939!important;color:#c9f0d5!important}
+</style>
