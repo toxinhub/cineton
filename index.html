@@ -12270,3 +12270,41 @@ html body dialog.cinemodal > .x:active .ct-modal-close-glyph{
  color:var(--ct-text-accent,#f2c94c)!important;
 }
 </style>
+
+<style id="cineton-modal-close-hover-square-hard-reset-v5">
+/* Hard reset the hover tile on the actual span close control. */
+html body dialog#d.cinemodal > span.x,
+html body dialog#d.cinemodal > span.x:hover,
+html body dialog#d.cinemodal > span.x:active,
+html body dialog#d.cinemodal > span.x:focus,
+html body dialog#d.cinemodal > span.x:focus-visible{
+  background: none !important;
+  background-color: transparent !important;
+  background-image: none !important;
+  border: 0 !important;
+  border-color: transparent !important;
+  border-radius: 0 !important;
+  outline: 0 !important;
+  box-shadow: none !important;
+  filter: none !important;
+  -webkit-filter: none !important;
+  -webkit-tap-highlight-color: transparent !important;
+}
+html body dialog#d.cinemodal > span.x:hover,
+html body dialog#d.cinemodal > span.x:active{
+  color: inherit !important;
+}
+html body dialog#d.cinemodal > span.x::before,
+html body dialog#d.cinemodal > span.x::after{
+  content: none !important;
+  display: none !important;
+  background: none !important;
+  box-shadow: none !important;
+}
+html body dialog#d.cinemodal > span.x .ct-modal-close-glyph{
+  background: none !important;
+  border: 0 !important;
+  outline: 0 !important;
+  box-shadow: none !important;
+}
+</style>
