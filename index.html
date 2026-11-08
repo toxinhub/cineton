@@ -11011,3 +11011,140 @@ html body ::selection{
   html body :is(h2,h3,h4,.section-title,.panel-title){letter-spacing:-.02em}
 }
 </style>
+
+
+<style id="cineton-type-color-balance-v2">
+/* Balanced type scale and semantic text colors for both themes. */
+html[data-theme="light"]{
+  --ct-text-primary:#302a27!important;
+  --ct-text-secondary:#655b55!important;
+  --ct-text-muted:#8b8179!important;
+  --ct-text-accent:#805b3e!important;
+  --ct-text-soft:#756a63!important;
+  --ct-control-text:#514740!important;
+  --ct-placeholder:#92877f!important;
+}
+html[data-theme="dark"]{
+  --ct-text-primary:#f1eae5!important;
+  --ct-text-secondary:#c6bbb6!important;
+  --ct-text-muted:#988d91!important;
+  --ct-text-accent:#d3b08f!important;
+  --ct-text-soft:#ada1a1!important;
+  --ct-control-text:#e2d8d2!important;
+  --ct-placeholder:#988d91!important;
+}
+/* Consistent base rhythm; avoid oversized global text on compact interfaces. */
+html body{
+  font-family:"Manrope","Mina",system-ui,sans-serif!important;
+  font-size:14px!important;
+  line-height:1.55!important;
+  letter-spacing:-.008em!important;
+  color:var(--ct-text-primary)!important;
+}
+html body :is(h1,h2,h3,h4,h5,h6){
+  color:var(--ct-text-primary)!important;
+  -webkit-text-fill-color:var(--ct-text-primary)!important;
+  line-height:1.22!important;
+  font-weight:750!important;
+  letter-spacing:-.035em!important;
+  text-wrap:balance;
+}
+html body h1{font-size:clamp(1.55rem,2.7vw,2.05rem)!important}
+html body h2{font-size:clamp(1.18rem,1.8vw,1.42rem)!important}
+html body h3{font-size:1.04rem!important}
+html body h4{font-size:.94rem!important}
+html body :is(p,li,dd,dt,figcaption,.description,.story,.public-comment-text){
+  color:var(--ct-text-secondary)!important;
+  -webkit-text-fill-color:var(--ct-text-secondary)!important;
+  line-height:1.58!important;
+}
+html body :is(small,.sub,.meta,.muted,.caption,.detail-label,.modal-footer,.cm,
+.public-comment-time,.public-comment-date,.suggestions-sub,.suggestion-note,
+.suggestion-date,.suggestion-time,.suggestion-empty,.person-filter-bar){
+  color:var(--ct-text-muted)!important;
+  -webkit-text-fill-color:var(--ct-text-muted)!important;
+  line-height:1.45!important;
+}
+html body :is(a:not(nav a),.my-rating,.film-mark,.cineton-featured-eyebrow){
+  color:var(--ct-text-accent);
+}
+html body :is(input,textarea,select){
+  color:var(--ct-control-text)!important;
+  -webkit-text-fill-color:var(--ct-control-text)!important;
+  font:500 .86rem/1.4 "Manrope","Mina",system-ui,sans-serif!important;
+}
+html body :is(input,textarea,select)::placeholder{
+  color:var(--ct-placeholder)!important;
+  -webkit-text-fill-color:var(--ct-placeholder)!important;
+  opacity:1!important;
+}
+html body :is(button,.select-trigger,.select-menu button,.tabs button,.views button,
+.toolbar button,.filters button,.filter button,.nav-actions button:not(.suggest-me-btn)){
+  font-family:"Manrope","Mina",system-ui,sans-serif!important;
+  font-size:.82rem!important;
+  line-height:1.25!important;
+  font-weight:650!important;
+  letter-spacing:-.012em!important;
+}
+html body main#g.list .c .ci :is(b,strong){
+  color:var(--ct-text-primary)!important;
+  -webkit-text-fill-color:var(--ct-text-primary)!important;
+  font-size:.91rem!important;
+  line-height:1.35!important;
+  font-weight:750!important;
+}
+html body main#g.list .c .ci :is(small,span,p){
+  color:var(--ct-text-secondary)!important;
+  -webkit-text-fill-color:var(--ct-text-secondary)!important;
+  font-size:.76rem!important;
+  line-height:1.45!important;
+}
+html body :is(.cinemodal,.suggestions-dialog){
+  color:var(--ct-text-primary)!important;
+  font-family:"Manrope","Mina",system-ui,sans-serif!important;
+}
+html body .cinemodal :is(.modal-title,.detail-head h2,.detail-value),
+html body .suggestions-dialog :is(.suggestions-title,.suggestion-title-text){
+  color:var(--ct-text-primary)!important;
+  -webkit-text-fill-color:var(--ct-text-primary)!important;
+  line-height:1.25!important;
+}
+html body .cinemodal :is(.subline,.detail-label,.modal-footer,.cm,
+.public-comment-time,.public-comment-date),
+html body .suggestions-dialog :is(.suggestions-sub,.suggestion-note,
+.suggestion-date,.suggestion-time,.suggestion-empty){
+  color:var(--ct-text-muted)!important;
+  -webkit-text-fill-color:var(--ct-text-muted)!important;
+}
+html body #ct-discover-panel :is(h2,h3,h4,strong,b,.ct-discover-heading){
+  color:var(--ct-text-primary)!important;
+  -webkit-text-fill-color:var(--ct-text-primary)!important;
+}
+html body #ct-discover-panel :is(p,small,label,.ct-discover-footer span){
+  color:var(--ct-text-secondary)!important;
+  -webkit-text-fill-color:var(--ct-text-secondary)!important;
+}
+/* Keep the established white dock labels and ruby active indicator unchanged. */
+html body nav#cineton-bottom-nav button[data-destination],
+html body nav#cineton-bottom-nav button[data-destination] span,
+html body nav#cineton-bottom-nav button[data-destination] svg,
+html body nav#cineton-bottom-nav button[data-destination] svg *{
+  color:#fff!important;
+  -webkit-text-fill-color:#fff!important;
+  stroke:#fff!important;
+}
+@media(max-width:700px){
+  html body{font-size:13.25px!important;line-height:1.52!important}
+  html body h1{font-size:1.48rem!important}
+  html body h2{font-size:1.14rem!important}
+  html body h3{font-size:1rem!important}
+  html body :is(button,.select-trigger,.select-menu button,.tabs button,.views button){
+    font-size:.79rem!important;
+  }
+  html body main#g.list .c .ci :is(b,strong){font-size:.86rem!important}
+  html body main#g.list .c .ci :is(small,span,p){font-size:.73rem!important}
+}
+@media(prefers-reduced-motion:reduce){
+  html body *{scroll-behavior:auto!important}
+}
+</style>
