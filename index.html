@@ -9448,3 +9448,93 @@ html body nav#cineton-bottom-nav button:not(.is-active):not(.ct-nav-home):focus-
   box-shadow:none!important;
 }
 </style>
+
+
+<style id="cineton-bottom-nav-liquid-sage-v1">
+/* Balanced liquid-glass dock: muted sage tint, coherent edge and restrained depth. */
+html body nav#cineton-bottom-nav{
+  border:1px solid rgba(184,218,193,.34)!important;
+  border-radius:999px!important;
+  background:
+    radial-gradient(120% 150% at 50% -35%,rgba(220,244,226,.15),transparent 58%),
+    linear-gradient(145deg,rgba(23,39,31,.42),rgba(10,18,16,.34))!important;
+  -webkit-backdrop-filter:blur(12px) saturate(1.38)!important;
+  backdrop-filter:blur(12px) saturate(1.38)!important;
+  box-shadow:
+    0 14px 34px rgba(0,0,0,.22),
+    0 2px 5px rgba(0,0,0,.10),
+    0 1px 0 rgba(242,255,245,.22) inset,
+    0 -1px 0 rgba(155,198,168,.10) inset!important;
+}
+html[data-theme="light"] body nav#cineton-bottom-nav{
+  /* Keep the dock dark enough for the requested always-white labels in light theme too. */
+  background:
+    radial-gradient(120% 150% at 50% -35%,rgba(220,244,226,.16),transparent 58%),
+    linear-gradient(145deg,rgba(25,40,32,.46),rgba(12,20,17,.38))!important;
+  border-color:rgba(190,225,199,.40)!important;
+}
+/* A soft sage glass inset only on the selected destination. */
+html body nav#cineton-bottom-nav button.is-active:not(.ct-nav-home){
+  border:1px solid rgba(190,226,199,.32)!important;
+  border-radius:15px!important;
+  background:
+    linear-gradient(145deg,rgba(184,222,194,.19),rgba(128,177,143,.095))!important;
+  box-shadow:
+    0 0 13px rgba(160,211,174,.15),
+    0 0 25px rgba(160,211,174,.09),
+    0 1px 0 rgba(242,255,245,.17) inset,
+    0 -1px 0 rgba(126,176,141,.10) inset!important;
+}
+/* The central Home key shares the same material and border language. */
+html body nav#cineton-bottom-nav .ct-nav-home{
+  border:1px solid rgba(190,226,199,.40)!important;
+  border-radius:18px!important;
+  background:
+    radial-gradient(130% 110% at 50% 0%,rgba(225,246,230,.20),transparent 68%),
+    linear-gradient(145deg,rgba(157,198,168,.20),rgba(255,255,255,.065))!important;
+  box-shadow:
+    0 7px 18px rgba(0,0,0,.18),
+    0 1px 0 rgba(242,255,245,.23) inset,
+    0 -1px 0 rgba(126,176,141,.12) inset!important;
+}
+/* Unified white iconography and restrained tactile response. */
+html body nav#cineton-bottom-nav button,
+html body nav#cineton-bottom-nav button span,
+html body nav#cineton-bottom-nav button svg{
+  color:#fff!important;
+  -webkit-text-fill-color:#fff!important;
+}
+html body nav#cineton-bottom-nav button:not(.is-active):not(.ct-nav-home){
+  border-color:transparent!important;
+  background:transparent!important;
+  box-shadow:none!important;
+}
+html body nav#cineton-bottom-nav button:not(.is-active):not(.ct-nav-home):hover,
+html body nav#cineton-bottom-nav button:not(.is-active):not(.ct-nav-home):focus-visible{
+  background:rgba(190,226,199,.075)!important;
+  border-color:rgba(190,226,199,.14)!important;
+}
+html body nav#cineton-bottom-nav button.is-active:not(.ct-nav-home)::after{
+  width:5px!important;height:5px!important;border-radius:50%!important;
+  background:#d8f0dd!important;
+  box-shadow:0 0 7px rgba(216,240,221,.88),0 0 15px rgba(158,207,171,.58)!important;
+}
+@media(max-width:700px){
+  html body nav#cineton-bottom-nav{
+    -webkit-backdrop-filter:blur(8px) saturate(1.28)!important;
+    backdrop-filter:blur(8px) saturate(1.28)!important;
+    box-shadow:
+      0 10px 26px rgba(0,0,0,.20),
+      0 1px 0 rgba(242,255,245,.20) inset,
+      0 -1px 0 rgba(155,198,168,.09) inset!important;
+  }
+  html body nav#cineton-bottom-nav button.is-active:not(.ct-nav-home){border-radius:13px!important}
+  html body nav#cineton-bottom-nav .ct-nav-home{border-radius:15px!important}
+}
+@media(prefers-reduced-transparency:reduce){
+  html body nav#cineton-bottom-nav{
+    background:rgba(17,29,22,.96)!important;
+    -webkit-backdrop-filter:none!important;backdrop-filter:none!important;
+  }
+}
+</style>
