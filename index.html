@@ -9071,74 +9071,63 @@ html[data-theme="dark"] body #ct-discover-panel .ct-discover-search input::place
 }
 </style>
 
-<style id="cineton-nav-liquid-indicator-v1">
+<style id="cineton-nav-liquid-indicator-v2">
 html body nav#cineton-bottom-nav{position:fixed!important;isolation:isolate!important;overflow:visible!important}
 html body nav#cineton-bottom-nav .ct-nav-liquid-indicator{
   position:absolute!important;z-index:0!important;left:0;top:0;
   width:0;height:0;opacity:0;pointer-events:none!important;
-  border:1px solid rgba(151,218,164,.56);
-  border-radius:14px;
-  background:linear-gradient(145deg,rgba(117,196,133,.36),rgba(54,132,77,.25));
-  box-shadow:0 5px 18px rgba(61,143,81,.20),0 1px 0 rgba(237,255,239,.28) inset,0 -1px 0 rgba(34,99,51,.10) inset;
-  -webkit-backdrop-filter:blur(8px) saturate(1.25);
-  backdrop-filter:blur(8px) saturate(1.25);
+  border:1px solid rgba(117,164,128,.48);
+  border-radius:15px;
+  background:linear-gradient(145deg,rgba(143,190,151,.34),rgba(91,145,105,.26));
+  box-shadow:0 4px 15px rgba(48,105,65,.14),0 1px 0 rgba(255,255,255,.34) inset,0 -1px 0 rgba(44,91,54,.08) inset;
+  -webkit-backdrop-filter:blur(5px) saturate(1.12);
+  backdrop-filter:blur(5px) saturate(1.12);
   transform:translate3d(0,0,0);
-  transition:transform .58s cubic-bezier(.22,1.32,.36,1),width .42s cubic-bezier(.22,1.32,.36,1),height .32s ease,opacity .16s ease,border-radius .32s ease;
-  will-change:transform,width;
+  transition:transform .68s cubic-bezier(.16,1,.3,1),width .38s cubic-bezier(.2,.8,.2,1),height .30s ease,opacity .18s ease,border-radius .30s ease;
+  will-change:transform,width,height;
 }
 html body nav#cineton-bottom-nav .ct-nav-liquid-indicator::before{
-  content:"";position:absolute;inset:1px 2px auto;height:38%;border-radius:inherit;
-  background:linear-gradient(180deg,rgba(255,255,255,.22),rgba(255,255,255,0));
+  content:"";position:absolute;inset:1px 2px auto;height:34%;border-radius:inherit;
+  background:linear-gradient(180deg,rgba(255,255,255,.23),rgba(255,255,255,0));
   pointer-events:none;
 }
 html body nav#cineton-bottom-nav .ct-nav-liquid-indicator.is-ready{opacity:1}
-html body nav#cineton-bottom-nav button[data-destination]{
-  position:relative!important;z-index:1!important;
-  background:transparent!important;border-color:transparent!important;
-  box-shadow:none!important;
-  transition:color .2s ease,transform .2s ease!important;
-}
-html body nav#cineton-bottom-nav button[data-destination].is-active,
-html body nav#cineton-bottom-nav button[data-destination][aria-current="page"]{
-  background:transparent!important;border-color:transparent!important;
-  box-shadow:none!important;
-}
-html body nav#cineton-bottom-nav button[data-destination].is-active::after,
-html body nav#cineton-bottom-nav button[data-destination][aria-current="page"]::after{display:none!important}
-html body nav#cineton-bottom-nav button[data-destination].is-active svg,
-html body nav#cineton-bottom-nav button[data-destination][aria-current="page"] svg{
-  filter:drop-shadow(0 1px 4px rgba(177,255,190,.34))!important;
+@media(hover:hover){
+ html body nav#cineton-bottom-nav button[data-destination]:hover:not(:active){transform:translateY(-1px)!important}
 }
 @media(prefers-reduced-motion:reduce){
  html body nav#cineton-bottom-nav .ct-nav-liquid-indicator{transition:none!important}
 }
 </style>
-<script id="cineton-nav-liquid-indicator-controller-v1">
+<script id="cineton-nav-liquid-indicator-controller-v2">
 (()=>{
  const dock=document.getElementById('cineton-bottom-nav');
- if(!dock||dock.dataset.liquidIndicatorReady==='1')return;
- dock.dataset.liquidIndicatorReady='1';
- const indicator=document.createElement('span');
- indicator.className='ct-nav-liquid-indicator';
- indicator.setAttribute('aria-hidden','true');
- dock.appendChild(indicator);
- let frame=0;
+ if(!dock)return;
+ let indicator=dock.querySelector('.ct-nav-liquid-indicator');
+ if(!indicator){indicator=document.createElement('span');indicator.className='ct-nav-liquid-indicator';indicator.setAttribute('aria-hidden','true');dock.appendChild(indicator);}
+ if(dock.dataset.liquidIndicatorReady==='2')return;
+ dock.dataset.liquidIndicatorReady='2';
+ let frame=0,lastActive=null;
  const move=()=>{
    frame=0;
    const active=dock.querySelector('button[data-destination].is-active,button[data-destination][aria-current="page"]');
-   if(!active)return;
+   if(!active||!active.getClientRects().length)return;
    const d=dock.getBoundingClientRect(),b=active.getBoundingClientRect();
+   const x=b.left-d.left-dock.clientLeft,y=b.top-d.top-dock.clientTop;
+   if(active!==lastActive){indicator.style.borderRadius=getComputedStyle(active).borderRadius||'15px';lastActive=active;}
    indicator.style.width=b.width+'px';
    indicator.style.height=b.height+'px';
-   indicator.style.transform='translate3d('+(b.left-d.left)+'px,'+(b.top-d.top)+'px,0)';
+   indicator.style.transform='translate3d('+x+'px,'+y+'px,0)';
    indicator.classList.add('is-ready');
  };
  const schedule=()=>{if(!frame)frame=requestAnimationFrame(move)};
  const observer=new MutationObserver(schedule);
- observer.observe(dock,{subtree:true,attributes:true,attributeFilter:['class','aria-current']});
- dock.addEventListener('click',schedule);
+ observer.observe(dock,{subtree:true,attributes:true,attributeFilter:['class','aria-current','style']});
+ dock.addEventListener('click',schedule,{passive:true});
  window.addEventListener('resize',schedule,{passive:true});
- if(window.visualViewport)window.visualViewport.addEventListener('resize',schedule,{passive:true});
+ window.addEventListener('scroll',schedule,{passive:true,capture:true});
+ if(window.visualViewport){window.visualViewport.addEventListener('resize',schedule,{passive:true});window.visualViewport.addEventListener('scroll',schedule,{passive:true});}
+ if('ResizeObserver'in window){const ro=new ResizeObserver(schedule);ro.observe(dock);dock.querySelectorAll('button[data-destination]').forEach(b=>ro.observe(b));}
  requestAnimationFrame(()=>requestAnimationFrame(move));
 })();
 </script>
@@ -10311,4 +10300,34 @@ html[data-theme="dark"] body #ct-discover-panel .ct-inline-picker-list{backgroun
 html[data-theme="dark"] body #ct-discover-panel .ct-inline-picker-option{color:#e4eee7!important}
 html[data-theme="dark"] body #ct-discover-panel .ct-inline-picker-option:hover,
 html[data-theme="dark"] body #ct-discover-panel .ct-inline-picker-option.is-selected{background:#2c4939!important;color:#c9f0d5!important}
+</style>
+
+<style id="cineton-nav-liquid-finish-v2">
+/* One restrained sage-green active surface; the moving indicator is the only active pill. */
+html body nav#cineton-bottom-nav button[data-destination],
+html body nav#cineton-bottom-nav button[data-destination].is-active,
+html body nav#cineton-bottom-nav button[data-destination][aria-current="page"]{
+ background:transparent!important;border-color:transparent!important;box-shadow:none!important;
+ transition:color .22s ease,transform .22s cubic-bezier(.2,.8,.2,1)!important;
+}
+html body nav#cineton-bottom-nav button[data-destination].is-active::after,
+html body nav#cineton-bottom-nav button[data-destination][aria-current="page"]::after{display:none!important}
+html body nav#cineton-bottom-nav button[data-destination].is-active svg,
+html body nav#cineton-bottom-nav button[data-destination][aria-current="page"] svg{
+ filter:drop-shadow(0 1px 3px rgba(64,111,75,.22))!important;
+}
+html body nav#cineton-bottom-nav .ct-nav-liquid-indicator{
+ border-color:rgba(111,158,121,.48)!important;
+ background:linear-gradient(145deg,rgba(166,202,169,.40),rgba(113,164,123,.31))!important;
+ box-shadow:0 3px 13px rgba(50,103,62,.13),0 1px 0 rgba(255,255,255,.36) inset!important;
+}
+html[data-theme="dark"] body nav#cineton-bottom-nav .ct-nav-liquid-indicator{
+ border-color:rgba(128,174,137,.42)!important;
+ background:linear-gradient(145deg,rgba(102,151,111,.38),rgba(64,112,76,.34))!important;
+ box-shadow:0 3px 14px rgba(0,0,0,.18),0 1px 0 rgba(222,244,225,.12) inset!important;
+}
+html body nav#cineton-bottom-nav button.ct-nav-home.is-active,
+html body nav#cineton-bottom-nav button.ct-nav-home[aria-current="page"]{
+ background:transparent!important;border-color:transparent!important;box-shadow:none!important;
+}
 </style>
