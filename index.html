@@ -6576,7 +6576,7 @@ const close=()=>{opened='';menu.classList.remove('is-open');menu.hidden=true;pan
 const syncGenres=()=>{if(!genre||!mainGenre)return;genre.innerHTML=[...mainGenre.options].map(o=>{const option=document.createElement('option');option.value=o.value;option.textContent=o.textContent;return option.outerHTML}).join('');genre.value=mainGenre.value||'all';refreshPickers()};
 const openDiscover=()=>{close();opened='discover';if(search&&mainSearch)search.value=mainSearch.value;if(scope&&mainScope)scope.value=mainScope.value||'all';if(type&&mainType)type.value=mainType.value||'all';syncGenres();panel.hidden=false;requestAnimationFrame(()=>panel.classList.add('is-open'));buttons.find(b=>b.dataset.destination==='discover')?.setAttribute('aria-expanded','true');activate('discover');};
 const syncSearch=()=>{if(mainSearch){mainSearch.value=search?.value||'';mainSearch.dispatchEvent(new Event('input',{bubbles:true}))}};
-buttons.forEach(button=>button.addEventListener('click',()=>{const d=button.dataset.destination;if(d==='discover'){if(opened==='discover')close();else openDiscover();return}if(d==='home'){if(opened==='home'){close();return}close();opened='home';menu.hidden=false;requestAnimationFrame(()=>menu.classList.add('is-open'));button.setAttribute('aria-expanded','true');return}close();if(d==='watched'||d==='watchlist'){document.getElementById('t-'+d)?.click();activate(d)}else if(d==='rated'){if(typeof setStatFilter==='function')setStatFilter('rated');activate('rated')}}));
+buttons.forEach(button=>button.addEventListener('click',()=>{const d=button.dataset.destination;if(d==='discover'){if(opened==='discover')close();else openDiscover();return}if(d==='home'){if(opened==='home'){close();return}close();opened='home';menu.hidden=false;requestAnimationFrame(()=>menu.classList.add('is-open'));button.setAttribute('aria-expanded','true');activate('home');return}close();if(d==='watched'||d==='watchlist'){document.getElementById('t-'+d)?.click();activate(d)}else if(d==='rated'){if(typeof setStatFilter==='function')setStatFilter('rated');activate('rated')}}));
 menu.querySelectorAll('[data-home-filter]').forEach(button=>button.addEventListener('click',()=>{const f=button.dataset.homeFilter;close();document.getElementById('t-all')?.click();if(f==='movie'||f==='tv'){if(typeof setStatFilter==='function')setStatFilter(f)}else{statFilter='all';const ty=document.getElementById('ty');if(ty)ty.value='all';if(typeof render==='function')render()}activate('home')}));
 search?.addEventListener('input',syncSearch);
 scope?.addEventListener('change',()=>{if(mainScope){mainScope.value=scope.value;mainScope.dispatchEvent(new Event('change',{bubbles:true}))}window.cinetonSearchScope=scope.value||'all';if(typeof render==='function')render()});
@@ -9070,6 +9070,78 @@ html[data-theme="dark"] body #ct-discover-panel .ct-discover-search input::place
   color:#9eb2a3!important;-webkit-text-fill-color:#9eb2a3!important;
 }
 </style>
+
+<style id="cineton-nav-liquid-indicator-v1">
+html body nav#cineton-bottom-nav{position:fixed!important;isolation:isolate!important;overflow:visible!important}
+html body nav#cineton-bottom-nav .ct-nav-liquid-indicator{
+  position:absolute!important;z-index:0!important;left:0;top:0;
+  width:0;height:0;opacity:0;pointer-events:none!important;
+  border:1px solid rgba(151,218,164,.56);
+  border-radius:14px;
+  background:linear-gradient(145deg,rgba(117,196,133,.36),rgba(54,132,77,.25));
+  box-shadow:0 5px 18px rgba(61,143,81,.20),0 1px 0 rgba(237,255,239,.28) inset,0 -1px 0 rgba(34,99,51,.10) inset;
+  -webkit-backdrop-filter:blur(8px) saturate(1.25);
+  backdrop-filter:blur(8px) saturate(1.25);
+  transform:translate3d(0,0,0);
+  transition:transform .58s cubic-bezier(.22,1.32,.36,1),width .42s cubic-bezier(.22,1.32,.36,1),height .32s ease,opacity .16s ease,border-radius .32s ease;
+  will-change:transform,width;
+}
+html body nav#cineton-bottom-nav .ct-nav-liquid-indicator::before{
+  content:"";position:absolute;inset:1px 2px auto;height:38%;border-radius:inherit;
+  background:linear-gradient(180deg,rgba(255,255,255,.22),rgba(255,255,255,0));
+  pointer-events:none;
+}
+html body nav#cineton-bottom-nav .ct-nav-liquid-indicator.is-ready{opacity:1}
+html body nav#cineton-bottom-nav button[data-destination]{
+  position:relative!important;z-index:1!important;
+  background:transparent!important;border-color:transparent!important;
+  box-shadow:none!important;
+  transition:color .2s ease,transform .2s ease!important;
+}
+html body nav#cineton-bottom-nav button[data-destination].is-active,
+html body nav#cineton-bottom-nav button[data-destination][aria-current="page"]{
+  background:transparent!important;border-color:transparent!important;
+  box-shadow:none!important;
+}
+html body nav#cineton-bottom-nav button[data-destination].is-active::after,
+html body nav#cineton-bottom-nav button[data-destination][aria-current="page"]::after{display:none!important}
+html body nav#cineton-bottom-nav button[data-destination].is-active svg,
+html body nav#cineton-bottom-nav button[data-destination][aria-current="page"] svg{
+  filter:drop-shadow(0 1px 4px rgba(177,255,190,.34))!important;
+}
+@media(prefers-reduced-motion:reduce){
+ html body nav#cineton-bottom-nav .ct-nav-liquid-indicator{transition:none!important}
+}
+</style>
+<script id="cineton-nav-liquid-indicator-controller-v1">
+(()=>{
+ const dock=document.getElementById('cineton-bottom-nav');
+ if(!dock||dock.dataset.liquidIndicatorReady==='1')return;
+ dock.dataset.liquidIndicatorReady='1';
+ const indicator=document.createElement('span');
+ indicator.className='ct-nav-liquid-indicator';
+ indicator.setAttribute('aria-hidden','true');
+ dock.appendChild(indicator);
+ let frame=0;
+ const move=()=>{
+   frame=0;
+   const active=dock.querySelector('button[data-destination].is-active,button[data-destination][aria-current="page"]');
+   if(!active)return;
+   const d=dock.getBoundingClientRect(),b=active.getBoundingClientRect();
+   indicator.style.width=b.width+'px';
+   indicator.style.height=b.height+'px';
+   indicator.style.transform='translate3d('+(b.left-d.left)+'px,'+(b.top-d.top)+'px,0)';
+   indicator.classList.add('is-ready');
+ };
+ const schedule=()=>{if(!frame)frame=requestAnimationFrame(move)};
+ const observer=new MutationObserver(schedule);
+ observer.observe(dock,{subtree:true,attributes:true,attributeFilter:['class','aria-current']});
+ dock.addEventListener('click',schedule);
+ window.addEventListener('resize',schedule,{passive:true});
+ if(window.visualViewport)window.visualViewport.addEventListener('resize',schedule,{passive:true});
+ requestAnimationFrame(()=>requestAnimationFrame(move));
+})();
+</script>
 </body></html>
 
 
