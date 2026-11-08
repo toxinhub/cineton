@@ -9411,3 +9411,40 @@ html body .cineton-bottom-nav button:focus-visible{
   html body .cineton-bottom-nav{background:rgba(17,18,22,.92)!important;-webkit-backdrop-filter:none!important;backdrop-filter:none!important}
 }
 </style>
+
+
+<style id="cineton-bottom-nav-active-glow-v1">
+/* Active Glow Navigation: illuminate only the selected destination. */
+html body nav#cineton-bottom-nav button:not(.is-active):not(.ct-nav-home){
+  background:transparent!important;
+  border-color:transparent!important;
+  box-shadow:none!important;
+}
+html body nav#cineton-bottom-nav button.is-active:not(.ct-nav-home){
+  color:#fff!important;
+  -webkit-text-fill-color:#fff!important;
+  background:rgba(205,166,119,.13)!important;
+  border-color:rgba(225,192,151,.22)!important;
+  box-shadow:
+    0 0 10px rgba(205,166,119,.13),
+    0 0 20px rgba(205,166,119,.10),
+    0 0 2px rgba(235,210,177,.22) inset!important;
+  text-shadow:0 0 8px rgba(235,210,177,.16)!important;
+}
+html body nav#cineton-bottom-nav button.is-active:not(.ct-nav-home) svg,
+html body nav#cineton-bottom-nav button.is-active:not(.ct-nav-home) svg *{
+  stroke:#fff!important;
+  fill:none!important;
+  filter:drop-shadow(0 0 3px rgba(235,210,177,.35));
+}
+html body nav#cineton-bottom-nav button.is-active:not(.ct-nav-home)::after{
+  background:#f0d4ae!important;
+  box-shadow:0 0 6px rgba(240,212,174,.85),0 0 13px rgba(205,166,119,.48)!important;
+}
+html body nav#cineton-bottom-nav button:not(.is-active):not(.ct-nav-home):hover,
+html body nav#cineton-bottom-nav button:not(.is-active):not(.ct-nav-home):focus-visible{
+  background:rgba(255,255,255,.045)!important;
+  border-color:rgba(255,255,255,.10)!important;
+  box-shadow:none!important;
+}
+</style>
