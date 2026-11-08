@@ -11642,3 +11642,27 @@ html body header h1 :is(span,.title-mark,.film-mark){
   html body header h1{font-size:2.2rem!important}
 }
 </style>
+
+
+<style id="cineton-modal-title-size-boost-v1">
+/* Slightly larger movie title, scaled independently for desktop and mobile. */
+html body dialog.cinemodal .detail-head h2,
+html body dialog.cinemodal #modal-title{
+  font-size:clamp(1.95rem,2.55vw,2.32rem)!important;
+  line-height:1.1!important;
+  letter-spacing:-.025em!important;
+}
+@media(max-width:700px){
+  html body dialog.cinemodal .detail-head h2,
+  html body dialog.cinemodal #modal-title{
+    font-size:clamp(1.55rem,5.6vw,1.78rem)!important;
+    line-height:1.12!important;
+  }
+}
+@media(max-width:380px){
+  html body dialog.cinemodal .detail-head h2,
+  html body dialog.cinemodal #modal-title{
+    font-size:1.48rem!important;
+  }
+}
+</style>
