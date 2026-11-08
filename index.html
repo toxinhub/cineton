@@ -10887,21 +10887,18 @@ html[data-theme="dark"] body ::selection{
 @media(prefers-reduced-motion:reduce){
   html[data-theme="dark"] body *{transition-duration:.01ms!important}
 }
-</style>
-
-
-
-/* cineton-tagline-compact-v1 */
-/* Make the small editorial eyebrow above the main title more discreet. */
+/* cineton-tagline-compact-v2 — active inside the final stylesheet */
 header:before{
-  font-size:.49rem!important;
-  letter-spacing:.17em!important;
-  margin-bottom:10px!important;
+  font-size:.42rem!important;
+  letter-spacing:.13em!important;
+  margin:0 0 7px 2px!important;
+  font-weight:700!important;
 }
-@media(max-width:600px){
+@media(max-width:700px){
   header:before{
-    font-size:.45rem!important;
-    letter-spacing:.14em!important;
-    margin-bottom:8px!important;
+    font-size:.39rem!important;
+    letter-spacing:.11em!important;
+    margin-bottom:5px!important;
   }
 }
+</style>
