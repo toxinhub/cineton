@@ -2769,11 +2769,8 @@ body{background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/20
   }
 }
 </style><script id="sticky-bar-scroll-compact-v1">
-(()=>{const bar=document.querySelector('.bar');if(!bar)return;let compact=false,lastY=window.scrollY,ticking=false;
-const update=()=>{const y=window.scrollY;const next=y>18; if(next!==compact){compact=next;bar.classList.toggle('scroll-compact',compact)}lastY=y;ticking=false};
-window.addEventListener('scroll',()=>{if(!ticking){ticking=true;requestAnimationFrame(update)}},{passive:true});
-update();
-})();
+/* Keep toolbar geometry stable during scrolling; avoid per-frame layout changes. */
+(()=>{const bar=document.querySelector('.bar');if(bar)bar.classList.remove('scroll-compact')})();
 </script><style id="sticky-bar-backdrop-blur-v6">
 /* Sticky bar — preserve the warm translucent surface with a lighter blur. */
 .bar{
@@ -9128,8 +9125,8 @@ html body nav#cineton-bottom-nav .ct-nav-liquid-indicator.is-ready{opacity:1}
  observer.observe(dock,{subtree:true,attributes:true,attributeFilter:['class','aria-current','style']});
  dock.addEventListener('click',schedule,{passive:true});
  window.addEventListener('resize',schedule,{passive:true});
- window.addEventListener('scroll',schedule,{passive:true,capture:true});
- if(window.visualViewport){window.visualViewport.addEventListener('resize',schedule,{passive:true});window.visualViewport.addEventListener('scroll',schedule,{passive:true});}
+ /* The dock is fixed to the viewport; scrolling does not change its indicator geometry. */
+ if(window.visualViewport){window.visualViewport.addEventListener('resize',schedule,{passive:true});}
  if('ResizeObserver'in window){const ro=new ResizeObserver(schedule);ro.observe(dock);dock.querySelectorAll('button[data-destination]').forEach(b=>ro.observe(b));}
  requestAnimationFrame(()=>requestAnimationFrame(move));
 })();
@@ -9456,6 +9453,56 @@ html body dialog.cinemodal > button.x:focus-visible{
 }
 </style>
 
+
+<style id="cineton-fast-scroll-stability-v1">
+/* Native scrolling stays on the browser compositor; avoid scroll-time visual effects. */
+html,body{
+  scroll-behavior:auto!important;
+  overscroll-behavior-y:auto;
+}
+body{
+  -webkit-overflow-scrolling:touch;
+}
+.bar{
+  backdrop-filter:none!important;
+  -webkit-backdrop-filter:none!important;
+  transition:none!important;
+}
+@media(max-width:700px){
+  html body main#g{
+    touch-action:pan-y!important;
+    overscroll-behavior-y:contain;
+  }
+  html body main#g>.c{
+    content-visibility:auto!important;
+    contain:layout paint style!important;
+    contain-intrinsic-size:auto 360px;
+    transition:none!important;
+    animation:none!important;
+    filter:none!important;
+  }
+  html body main#g>.c :is(img,.ph){
+    backface-visibility:hidden;
+    -webkit-backface-visibility:hidden;
+  }
+  html body .bar{
+    background:color-mix(in srgb,var(--sf) 96%,transparent)!important;
+  }
+}
+@media(hover:none),(pointer:coarse){
+  html body main#g>.c,
+  html body main#g>.c *{
+    scroll-behavior:auto!important;
+  }
+  html body main#g>.c:hover{
+    transform:none!important;
+    box-shadow:none!important;
+  }
+}
+@media(prefers-reduced-motion:reduce){
+  html,body{scroll-behavior:auto!important}
+}
+</style>
 </body></html>
 
 
