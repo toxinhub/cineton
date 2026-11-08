@@ -10333,44 +10333,37 @@ html body nav#cineton-bottom-nav button.ct-nav-home[aria-current="page"]{
 </style>
 
 <style id="cineton-nav-champagne-yellow-v1">
-/* Champagne-yellow liquid pill: restrained gold, clear active-state contrast. */
+/* Soft coral-red active liquid pill; keep the moving indicator above the dock surface. */
 html body nav#cineton-bottom-nav{
-  border-color:rgba(201,174,98,.30)!important;
-  box-shadow:0 12px 34px rgba(0,0,0,.23),0 1px 0 rgba(255,255,255,.16) inset,0 0 0 1px rgba(201,174,98,.055)!important;
+  border-color:rgba(214,133,135,.34)!important;
+  box-shadow:0 12px 34px rgba(0,0,0,.20),0 1px 0 rgba(255,255,255,.14) inset,0 0 0 1px rgba(214,133,135,.06)!important;
 }
 html body nav#cineton-bottom-nav .ct-nav-liquid-indicator{
-  border:1px solid rgba(177,145,62,.66)!important;
-  background:linear-gradient(135deg,rgba(250,239,197,.98),rgba(233,217,154,.96) 58%,rgba(222,199,126,.94))!important;
-  box-shadow:0 3px 11px rgba(113,86,27,.16),0 1px 0 rgba(255,255,255,.72) inset,0 -1px 0 rgba(153,119,42,.10) inset!important;
-  -webkit-backdrop-filter:blur(4px) saturate(1.04)!important;
-  backdrop-filter:blur(4px) saturate(1.04)!important;
+  z-index:0!important;
+  border:1px solid rgba(181,91,99,.56)!important;
+  background:linear-gradient(135deg,#F5C9C7 0%,#EFB4B4 58%,#E8A3A6 100%)!important;
+  box-shadow:0 3px 12px rgba(117,47,54,.16),0 1px 0 rgba(255,255,255,.68) inset,0 -1px 0 rgba(130,55,62,.08) inset!important;
+  -webkit-backdrop-filter:blur(3px) saturate(1.02)!important;
+  backdrop-filter:blur(3px) saturate(1.02)!important;
   transition:transform .52s cubic-bezier(.22,.85,.25,1),width .30s cubic-bezier(.22,.75,.25,1),height .24s ease,border-radius .24s ease,opacity .16s ease!important;
 }
 html body nav#cineton-bottom-nav .ct-nav-liquid-indicator::before{
-  background:linear-gradient(180deg,rgba(255,255,255,.42),rgba(255,255,255,0))!important;
+  background:linear-gradient(180deg,rgba(255,255,255,.38),rgba(255,255,255,0))!important;
 }
-html body nav#cineton-bottom-nav button[data-destination].is-active,
-html body nav#cineton-bottom-nav button[data-destination][aria-current="page"]{
-  color:#40371f!important;
-  -webkit-text-fill-color:#40371f!important;
+html body nav#cineton-bottom-nav>.ct-nav-group,
+html body nav#cineton-bottom-nav>.ct-nav-home-wrap{
+  position:relative!important;z-index:1!important;
 }
-html body nav#cineton-bottom-nav button[data-destination].is-active svg,
-html body nav#cineton-bottom-nav button[data-destination][aria-current="page"] svg{
-  color:#40371f!important;stroke:#40371f!important;fill:none!important;
-  filter:drop-shadow(0 1px 1px rgba(255,255,255,.22))!important;
-}
-html body nav#cineton-bottom-nav button.ct-nav-home.is-active,
-html body nav#cineton-bottom-nav button.ct-nav-home[aria-current="page"]{
-  color:#40371f!important;-webkit-text-fill-color:#40371f!important;
+html body nav#cineton-bottom-nav button[data-destination]{
+  position:relative!important;z-index:2!important;
 }
 @media(prefers-reduced-motion:reduce){
   html body nav#cineton-bottom-nav .ct-nav-liquid-indicator{transition:none!important}
 }
 </style>
 
-
 <style id="cineton-nav-champagne-contrast-fix-v1">
-/* Explicitly override the dock's global white-text rule inside the pale yellow active pill. */
+/* Override the legacy all-white navigation rule for the active pale-coral pill. */
 html body nav#cineton-bottom-nav button[data-destination].is-active,
 html body nav#cineton-bottom-nav button[data-destination][aria-current="page"],
 html body nav#cineton-bottom-nav button[data-destination].is-active span,
@@ -10379,14 +10372,17 @@ html body nav#cineton-bottom-nav button[data-destination].is-active svg,
 html body nav#cineton-bottom-nav button[data-destination][aria-current="page"] svg,
 html body nav#cineton-bottom-nav button[data-destination].is-active svg *,
 html body nav#cineton-bottom-nav button[data-destination][aria-current="page"] svg *{
-  color:#40371f!important;
-  -webkit-text-fill-color:#40371f!important;
-  stroke:#40371f!important;
+  color:#54272D!important;
+  -webkit-text-fill-color:#54272D!important;
+  stroke:#54272D!important;
+  text-shadow:none!important;
 }
 html body nav#cineton-bottom-nav button[data-destination].is-active svg,
-html body nav#cineton-bottom-nav button[data-destination][aria-current="page"] svg{fill:none!important}
+html body nav#cineton-bottom-nav button[data-destination][aria-current="page"] svg{
+  fill:none!important;opacity:1!important;
+}
 html body nav#cineton-bottom-nav button[data-destination].is-active span,
 html body nav#cineton-bottom-nav button[data-destination][aria-current="page"] span{
-  opacity:1!important;text-shadow:none!important;font-weight:800!important;
+  opacity:1!important;font-weight:800!important;
 }
 </style>
