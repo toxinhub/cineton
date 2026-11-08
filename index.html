@@ -12134,3 +12134,94 @@ html body dialog.cinemodal > button.x:active .ct-modal-close-glyph{
   }
 }
 </style>
+
+
+<style id="cineton-modal-close-square-touch-clean-v3">
+/* Final close-control reset: eliminate the square pressed/focus tile; animate only the X glyph. */
+html body dialog.cinemodal > button.x,
+html body dialog.cinemodal > button.x:hover,
+html body dialog.cinemodal > button.x:active,
+html body dialog.cinemodal > button.x:focus,
+html body dialog.cinemodal > button.x:focus-visible{
+  -webkit-appearance:none!important;
+  appearance:none!important;
+  background:transparent!important;
+  background-color:transparent!important;
+  background-image:none!important;
+  border:0!important;
+  border-color:transparent!important;
+  border-radius:0!important;
+  outline:0!important;
+  outline-color:transparent!important;
+  box-shadow:none!important;
+  -webkit-box-shadow:none!important;
+  filter:none!important;
+  -webkit-tap-highlight-color:transparent!important;
+  -webkit-focus-ring-color:transparent!important;
+}
+html body dialog.cinemodal > button.x{
+  min-width:40px!important;
+  min-height:40px!important;
+  padding:0!important;
+  overflow:visible!important;
+  transform:none!important;
+  transition:none!important;
+}
+html body dialog.cinemodal > button.x::before,
+html body dialog.cinemodal > button.x::after{
+  content:none!important;
+  display:none!important;
+  background:none!important;
+  box-shadow:none!important;
+}
+html body dialog.cinemodal > button.x .ct-modal-close-glyph{
+  display:block!important;
+  background:none!important;
+  box-shadow:none!important;
+  transform-origin:center!important;
+  transition:transform .34s cubic-bezier(.2,.8,.2,1),color .2s ease,text-shadow .2s ease!important;
+  pointer-events:none!important;
+}
+@media(hover:hover) and (pointer:fine){
+  html body dialog.cinemodal > button.x:hover{
+    background:transparent!important;
+    box-shadow:none!important;
+    transform:none!important;
+  }
+  html body dialog.cinemodal > button.x:hover .ct-modal-close-glyph{
+    transform:rotate(90deg) scale(1.12)!important;
+    color:var(--ct-text-accent,#f2c94c)!important;
+  }
+}
+html body dialog.cinemodal > button.x:active .ct-modal-close-glyph{
+  animation:cinetonCloseGlyphTapV3 .34s cubic-bezier(.2,.8,.2,1)!important;
+  color:var(--ct-text-accent,#f2c94c)!important;
+}
+@keyframes cinetonCloseGlyphTapV3{
+  0%{transform:rotate(0) scale(1)}
+  55%{transform:rotate(180deg) scale(.78)}
+  100%{transform:rotate(360deg) scale(1)}
+}
+@media(hover:none),(pointer:coarse){
+  html body dialog.cinemodal > button.x:hover,
+  html body dialog.cinemodal > button.x:focus,
+  html body dialog.cinemodal > button.x:focus-visible{
+    background:transparent!important;
+    box-shadow:none!important;
+    outline:0!important;
+    filter:none!important;
+    transform:none!important;
+  }
+  html body dialog.cinemodal > button.x:hover .ct-modal-close-glyph{
+    transform:none!important;
+    color:inherit!important;
+    text-shadow:inherit!important;
+  }
+}
+@media(prefers-reduced-motion:reduce){
+  html body dialog.cinemodal > button.x .ct-modal-close-glyph{
+    animation:none!important;
+    transition:none!important;
+  }
+}
+</style>
