@@ -11970,3 +11970,88 @@ html body header .home-brand h1 > span[data-cineton-shine]::after{
   100%{left:108%;opacity:0}
 }
 </style>
+
+
+<style id="cineton-modal-close-animated-x-isolated-v1">
+/* Animate only the X itself; the button hit-area remains visually inert. */
+html body dialog.cinemodal > button.x{
+  display:grid!important;
+  place-items:center!important;
+  -webkit-tap-highlight-color:transparent!important;
+  tap-highlight-color:transparent!important;
+  touch-action:manipulation!important;
+  background:transparent!important;
+  border:0!important;
+  box-shadow:none!important;
+  outline:none!important;
+  transition:color .18s ease,text-shadow .2s ease!important;
+  transform-origin:center!important;
+  isolation:isolate!important;
+}
+html body dialog.cinemodal > button.x::before,
+html body dialog.cinemodal > button.x::after{
+  background:transparent!important;
+  box-shadow:none!important;
+}
+html body dialog.cinemodal > button.x:hover{
+  background:transparent!important;
+  box-shadow:none!important;
+  color:var(--ct-text-accent,#f2c94c)!important;
+  text-shadow:0 0 8px color-mix(in srgb,var(--ct-text-accent,#f2c94c) 58%,transparent)!important;
+  animation:cinetonCloseXHoverV1 .42s cubic-bezier(.2,.8,.2,1) both!important;
+}
+html body dialog.cinemodal > button.x:active{
+  background:transparent!important;
+  border:0!important;
+  box-shadow:none!important;
+  outline:none!important;
+  color:var(--ct-text-accent,#f2c94c)!important;
+  text-shadow:0 0 10px color-mix(in srgb,var(--ct-text-accent,#f2c94c) 65%,transparent)!important;
+  animation:cinetonCloseXTapV1 .28s ease-out both!important;
+}
+html body dialog.cinemodal > button.x:focus{
+  outline:none!important;
+  background:transparent!important;
+  box-shadow:none!important;
+}
+html body dialog.cinemodal > button.x:focus-visible{
+  outline:2px solid color-mix(in srgb,var(--ct-text-accent,#f2c94c) 65%,transparent)!important;
+  outline-offset:2px!important;
+  background:transparent!important;
+  box-shadow:none!important;
+}
+@keyframes cinetonCloseXHoverV1{
+  0%{transform:rotate(0) scale(1)}
+  65%{transform:rotate(90deg) scale(1.13)}
+  100%{transform:rotate(90deg) scale(1.06)}
+}
+@keyframes cinetonCloseXTapV1{
+  0%{transform:rotate(90deg) scale(1.06)}
+  55%{transform:rotate(180deg) scale(.88)}
+  100%{transform:rotate(135deg) scale(1)}
+}
+/* Touchscreens get no sticky hover state or painted tap rectangle. */
+@media(hover:none),(pointer:coarse){
+  html body dialog.cinemodal > button.x:hover{
+    animation:none!important;
+    transform:none!important;
+    background:transparent!important;
+    box-shadow:none!important;
+    color:var(--ct-text-primary,#fff)!important;
+    text-shadow:0 1px 5px rgba(0,0,0,.42)!important;
+  }
+  html body dialog.cinemodal > button.x:active{
+    animation:cinetonCloseXTapV1 .28s ease-out both!important;
+    background:transparent!important;
+    box-shadow:none!important;
+  }
+}
+@media(prefers-reduced-motion:reduce){
+  html body dialog.cinemodal > button.x,
+  html body dialog.cinemodal > button.x:hover,
+  html body dialog.cinemodal > button.x:active{
+    animation:none!important;
+    transition:none!important;
+  }
+}
+</style>
