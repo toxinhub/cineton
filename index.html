@@ -11148,3 +11148,41 @@ html body nav#cineton-bottom-nav button[data-destination] svg *{
   html body *{scroll-behavior:auto!important}
 }
 </style>
+
+
+<style id="cineton-brand-title-imdb-soft-yellow-v1">
+/* Restore a stronger CineTon wordmark and make its film icon proportionate. */
+html body header .home-brand h1{
+  display:flex!important;
+  align-items:center!important;
+  justify-content:center!important;
+  gap:.17em!important;
+  font-size:clamp(3.05rem,6.2vw,4.85rem)!important;
+  line-height:.98!important;
+  font-weight:400!important;
+}
+html body header .home-brand h1 .title-mark{
+  display:inline-block!important;
+  flex:0 0 auto!important;
+  font-size:.84em!important;
+  line-height:1!important;
+  transform:translateY(-.025em)!important;
+}
+@media(max-width:700px){
+  html body header .home-brand h1{
+    font-size:clamp(2.85rem,11.4vw,3.8rem)!important;
+    gap:.15em!important;
+  }
+  html body header .home-brand h1 .title-mark{font-size:.82em!important}
+}
+@media(max-width:380px){
+  html body header .home-brand h1{font-size:2.62rem!important}
+}
+/* Soft, pale yellow IMDb rating text in both poster cards and film details. */
+html body .c .bd,
+html body .cinemodal .chips .imdb-chip{
+  color:#f6e6a5!important;
+  -webkit-text-fill-color:#f6e6a5!important;
+  text-shadow:0 0 7px rgba(246,230,165,.18)!important;
+}
+</style>
