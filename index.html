@@ -1926,7 +1926,7 @@ function renderGrid(L){
     g.replaceChildren(empty);
     return;
   }
-  const BATCH_SIZE=48;
+  const BATCH_SIZE=view==='list'?72:48;
   let cursor=0;
   const sentinel=document.createElement('div');
   sentinel.className='cineton-grid-sentinel';
@@ -12987,4 +12987,54 @@ html body main#g.list > button.c.cineton-editorial-row:focus-visible{
     mask-image:linear-gradient(90deg,#000 0,#000 32px,transparent 72px,transparent calc(100% - 72px),#000 calc(100% - 32px),#000 100%)!important;
   }
 }
+</style>
+<style id="cineton-list-clean-layout-gutter-v6">
+html body #g.list{
+ display:grid!important;grid-template-columns:minmax(0,1fr)!important;grid-auto-flow:row!important;
+ align-items:start!important;column-gap:26px!important;row-gap:0!important;width:100%!important;
+ max-width:1480px!important;margin-inline:auto!important;padding:24px clamp(30px,3.4vw,52px) 136px!important;
+ position:relative!important;isolation:isolate!important;overflow:visible!important;background:transparent!important;
+}
+html body #g.list::before{
+ content:""!important;position:absolute!important;inset:0!important;z-index:0!important;pointer-events:none!important;opacity:.72!important;
+ background-image:
+ url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='156' height='620' viewBox='0 0 156 620' fill='none'%3E%3Cg stroke='%2379b99a' stroke-width='1.15' stroke-linecap='round' opacity='.25'%3E%3Cpath d='M-18 74 C20 74 25 28 60 28 S100 120 136 120 158 74 178 74'/%3E%3Cpath d='M-18 91 C20 91 25 45 60 45 S100 137 136 137 158 91 178 91' opacity='.65'/%3E%3Cpath d='M-18 108 C20 108 25 62 60 62 S100 154 136 154 158 108 178 108' opacity='.4'/%3E%3Cpath d='M-18 350 C28 350 36 294 76 294 S116 398 156 398 166 350 178 350'/%3E%3Cpath d='M-18 367 C28 367 36 311 76 311 S116 415 156 415 166 367 178 367' opacity='.6'/%3E%3C/g%3E%3Cg stroke='%23d4ad55' stroke-width='.9' opacity='.18'%3E%3Cpath d='M-12 520 C34 470 76 470 112 520 S164 570 178 520'/%3E%3Cpath d='M-12 535 C34 485 76 485 112 535 S164 585 178 535'/%3E%3Cpath d='M-12 550 C34 500 76 500 112 550 S164 600 178 550'/%3E%3C/g%3E%3C/svg%3E"),
+ url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='156' height='620' viewBox='0 0 156 620' fill='none'%3E%3Cg stroke='%2379b99a' stroke-width='1.15' stroke-linecap='round' opacity='.25'%3E%3Cpath d='M-18 74 C20 74 25 28 60 28 S100 120 136 120 158 74 178 74'/%3E%3Cpath d='M-18 91 C20 91 25 45 60 45 S100 137 136 137 158 91 178 91' opacity='.65'/%3E%3Cpath d='M-18 108 C20 108 25 62 60 62 S100 154 136 154 158 108 178 108' opacity='.4'/%3E%3Cpath d='M-18 350 C28 350 36 294 76 294 S116 398 156 398 166 350 178 350'/%3E%3Cpath d='M-18 367 C28 367 36 311 76 311 S116 415 156 415 166 367 178 367' opacity='.6'/%3E%3C/g%3E%3Cg stroke='%23d4ad55' stroke-width='.9' opacity='.18'%3E%3Cpath d='M-12 520 C34 470 76 470 112 520 S164 570 178 520'/%3E%3Cpath d='M-12 535 C34 485 76 485 112 535 S164 585 178 535'/%3E%3Cpath d='M-12 550 C34 500 76 500 112 550 S164 600 178 550'/%3E%3C/g%3E%3C/svg%3E");
+ background-repeat:repeat-y,repeat-y!important;background-position:left top,right top!important;
+ background-size:clamp(92px,11vw,156px) 620px,clamp(92px,11vw,156px) 620px!important;
+}
+html body #g.list > button.c.cineton-editorial-row{
+ display:flex!important;align-items:center!important;width:100%!important;min-width:0!important;min-height:50px!important;
+ margin:0!important;padding:10px 9px!important;position:relative!important;z-index:1!important;
+ border:0!important;border-bottom:1px solid color-mix(in srgb,var(--gd) 19%,var(--line-strong))!important;
+ border-radius:0!important;background:transparent!important;box-shadow:none!important;color:var(--tx)!important;
+ text-align:left!important;transform:none!important;transition:background-color .16s ease,border-color .16s ease!important;
+ contain:layout style!important;
+}
+html body #g.list .cineton-list-line{
+ display:flex!important;flex-wrap:wrap!important;align-items:baseline!important;min-width:0!important;width:100%!important;
+ gap:3px 8px!important;color:var(--tx)!important;font-family:"Mina",sans-serif!important;font-size:.82rem!important;
+ line-height:1.55!important;font-weight:400!important;letter-spacing:0!important;
+}
+html body #g.list .cineton-list-index{flex:0 0 auto!important;min-width:1.8em!important;color:var(--gd)!important;font:700 .72rem/1.5 "Manrope",sans-serif!important;font-variant-numeric:tabular-nums!important}
+html body #g.list .cineton-list-title{color:var(--tx)!important;font:600 .98rem/1.38 "DM Serif Display","Cormorant Garamond",serif!important;letter-spacing:.003em!important;overflow-wrap:anywhere!important}
+html body #g.list .cineton-list-year{color:var(--mu)!important;font:400 .7rem/1.5 "Manrope",sans-serif!important;font-variant-numeric:tabular-nums!important;white-space:nowrap!important}
+html body #g.list .cineton-list-imdb{color:#d4ad55!important;font:700 .69rem/1.5 "Manrope",sans-serif!important;font-variant-numeric:tabular-nums!important;white-space:nowrap!important;text-shadow:none!important}
+html body #g.list .cineton-list-my-rating{color:var(--gd)!important;font:700 .71rem/1.5 "Manrope",sans-serif!important;font-variant-numeric:tabular-nums!important;white-space:nowrap!important}
+html body #g.list .cineton-list-separator{color:var(--mu)!important;opacity:.48!important;font:400 .68rem/1.5 "Manrope",sans-serif!important}
+html body #g.list > button.c.cineton-editorial-row:hover{background:color-mix(in srgb,var(--gd) 5%,transparent)!important;border-bottom-color:color-mix(in srgb,var(--gd) 38%,var(--line-strong))!important;box-shadow:none!important}
+html body #g.list > button.c.cineton-editorial-row:focus-visible{outline:2px solid color-mix(in srgb,var(--gd) 60%,transparent)!important;outline-offset:-2px!important;background:color-mix(in srgb,var(--gd) 6%,transparent)!important}
+html body #g.list > .cineton-grid-sentinel,html body #g.list > .empty{grid-column:1/-1!important;position:relative!important;z-index:1!important}
+@media(min-width:900px){html body #g.list{grid-template-columns:repeat(2,minmax(0,1fr))!important;column-gap:30px!important}html body #g.list .cineton-list-line{font-size:.8rem!important;gap:3px 7px!important}html body #g.list .cineton-list-title{font-size:.94rem!important}}
+@media(max-width:899px){html body #g.list{grid-template-columns:minmax(0,1fr)!important;padding:18px 24px 128px!important}}
+@media(max-width:600px){
+ html body #g.list{padding:12px 18px 118px!important}
+ html body #g.list::before{background-size:88px 560px,88px 560px!important;opacity:.54!important}
+ html body #g.list > button.c.cineton-editorial-row{min-height:46px!important;padding:9px 6px!important}
+ html body #g.list .cineton-list-line{font-size:.75rem!important;line-height:1.58!important;gap:2px 6px!important}
+ html body #g.list .cineton-list-title{font-size:.91rem!important}
+ html body #g.list .cineton-list-index{font-size:.67rem!important}
+ html body #g.list .cineton-list-year,html body #g.list .cineton-list-imdb,html body #g.list .cineton-list-my-rating{font-size:.65rem!important}
+}
+@media(prefers-reduced-motion:reduce){html body #g.list > button.c.cineton-editorial-row{transition:none!important}}
 </style>
