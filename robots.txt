@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://toxinhub.github.io/cineton/sitemap.xml
