@@ -1914,7 +1914,7 @@ async function refreshPublicCommentIndicators(){
   }catch{}
 }
 function skeleton(){const g=$('#g');g.innerHTML=Array.from({length:12},()=>'<div class="skel" aria-hidden="true"></div>').join('')}const CINETON_LIBRARY_CACHE='cineton-library-cache-v1';async function loadCinetonLibrary(){const g=$('#g');skeleton();g.setAttribute('aria-busy','true');let loaded=false;try{const r=await fetch('data.json?v=20261012-1',{cache:'no-cache'});if(!r.ok)throw Error('HTTP '+r.status);const x=await r.json();if(!Array.isArray(x))throw Error('Invalid library data');D=x;loaded=true;const saveLibraryCache=()=>{try{localStorage.setItem(CINETON_LIBRARY_CACHE,JSON.stringify(x))}catch{}};if('requestIdleCallback' in window)requestIdleCallback(saveLibraryCache,{timeout:2500});else setTimeout(saveLibraryCache,1200);}catch(error){let cached=null;try{cached=JSON.parse(localStorage.getItem(CINETON_LIBRARY_CACHE)||'null')}catch{}if(Array.isArray(cached)){D=cached;loaded=true}else{document.body.classList.remove('cineton-page-loading');document.body.classList.add('cineton-page-ready');pageLoadFade.remove();g.removeAttribute('aria-busy');g.innerHTML='<div class="empty"><p>Couldn’t load your library right now.</p><button type="button" id="cineton-retry-load">Try again</button></div>';$('#cineton-retry-load')?.addEventListener('click',loadCinetonLibrary);return}}if(loaded){populateGenres();render();g.removeAttribute('aria-busy');refreshPublicCommentIndicators();document.body.classList.remove('cineton-page-loading');document.body.classList.add('cineton-page-ready');requestAnimationFrame(()=>requestAnimationFrame(()=>pageLoadFade.remove()))}}window.CinetonLibraryReady=loadCinetonLibrary();Object.defineProperty(window,'CinetonLibraryData',{configurable:true,get:()=>D});function populateGenres(){const names=[...new Set(D.flatMap(m=>Array.isArray(m.genres)?m.genres:[]).filter(Boolean))].sort((a,b)=>a.localeCompare(b));const s=$('#ge'),menu=$('#ge-menu'),current=s.value||'all';s.innerHTML='<option value="all">All genres</option>'+names.map(g=>'<option value="'+e(g)+'">'+e(g)+'</option>').join('');menu.innerHTML='<button type="button" role="option" data-value="all">All genres</button>'+names.map(g=>'<button type="button" role="option" data-value="'+e(g)+'">'+e(g)+'</button>').join('');const selected=[...s.options].some(o=>o.value===current)?current:'all';s.value=selected;menu.querySelectorAll('[role="option"]').forEach(o=>o.setAttribute('aria-selected',o.dataset.value===selected));const chosen=s.options[s.selectedIndex]?.textContent||'All genres';$('#ge-trigger').firstChild.textContent=chosen+' ';initSelect('ge')}
-const pic=(m,eager=false)=>m.poster?`<img class="poster-loading" loading="${eager?'eager':'lazy'}" decoding="async" fetchpriority="${eager?'high':'auto'}" src="https://image.tmdb.org/t/p/w342${e(m.poster)}" srcset="https://image.tmdb.org/t/p/w185${e(m.poster)} 185w, https://image.tmdb.org/t/p/w342${e(m.poster)} 342w, https://image.tmdb.org/t/p/w500${e(m.poster)} 500w" sizes="(max-width:420px) 44vw, (max-width:700px) 30vw, (max-width:1000px) 22vw, 190px" alt="${e(m.title)} poster" onload="this.classList.remove('poster-loading')" onerror="this.replaceWith(Object.assign(document.createElement('div'),{className:'ph',textContent:this.alt.replace(/ poster$/,'')}))">`:`<div class="ph">${e(m.title)}</div>`;function applyView(){const g=$('#g');g.classList.toggle('list',view==='list');$('#v-grid').classList.toggle('on',view==='grid');$('#v-list').classList.toggle('on',view==='list');const pf=$('#person-filter'),pl=$('#person-filter-label');pf.classList.toggle('on',!!personFilter);if(personFilter)pl.textContent=(personFilterType||'Person')+' · '+personFilter}function setStatFilter(f){statFilter=statFilter===f?'all':f;document.querySelectorAll('.stat').forEach(x=>x.classList.toggle('active',x.dataset.filter===statFilter));if(f==='movie'||f==='tv'){$('#ty').value=f}else if(f==='rated'){$('#ty').value='all';$('#so').value='my'}else if(f==='loved'){$('#ty').value='all';$('#so').value='new'}render();window.scrollTo({top:document.querySelector('.bar').offsetTop,behavior:'smooth'})}/* Let the browser skip off-screen card paint while preserving their scroll-space estimate. */
+const pic=(m,eager=false)=>m.poster?`<img class="poster-loading" loading="${eager?'eager':'lazy'}" decoding="async" fetchpriority="${eager?'high':'auto'}" src="https://image.tmdb.org/t/p/w342${e(m.poster)}" srcset="https://image.tmdb.org/t/p/w185${e(m.poster)} 185w, https://image.tmdb.org/t/p/w342${e(m.poster)} 342w, https://image.tmdb.org/t/p/w500${e(m.poster)} 500w" sizes="(max-width:420px) 44vw, (max-width:700px) 30vw, (max-width:1000px) 22vw, 190px" alt="${e(m.title)} poster" onload="this.classList.remove('poster-loading')" onerror="this.replaceWith(Object.assign(document.createElement('div'),{className:'ph',textContent:this.alt.replace(/ poster$/,'')}))">`:`<div class="ph">${e(m.title)}</div>`;function applyView(){const g=$('#g');g.classList.toggle('list',view==='list');$('#v-grid').classList.toggle('on',view==='grid');$('#v-list').classList.toggle('on',view==='list');$('#v-grid').setAttribute('aria-pressed',String(view==='grid'));$('#v-list').setAttribute('aria-pressed',String(view==='list'));const pf=$('#person-filter'),pl=$('#person-filter-label');pf.classList.toggle('on',!!personFilter);if(personFilter)pl.textContent=(personFilterType||'Person')+' · '+personFilter}function setStatFilter(f){statFilter=statFilter===f?'all':f;document.querySelectorAll('.stat').forEach(x=>x.classList.toggle('active',x.dataset.filter===statFilter));if(f==='movie'||f==='tv'){$('#ty').value=f}else if(f==='rated'){$('#ty').value='all';$('#so').value='my'}else if(f==='loved'){$('#ty').value='all';$('#so').value='new'}render();window.scrollTo({top:document.querySelector('.bar').offsetTop,behavior:'smooth'})}/* Let the browser skip off-screen card paint while preserving their scroll-space estimate. */
 let cinetonGridObserver=null;
 function renderGrid(L){
   const g=$('#g');
@@ -1953,7 +1953,7 @@ function renderGrid(L){
         if(m.imdb)part('cineton-list-imdb','IMDb '+String(m.imdb));
         if(m.status==='watched'&&Number(m.my_rating)>0)part('cineton-list-my-rating','['+String(m.my_rating)+']');
         parts.forEach((item,index)=>{
-          if(index)line.appendChild(document.createTextNode(' - '));
+          if(index){const sep=document.createElement('span');sep.className='cineton-list-separator';sep.textContent='-';sep.setAttribute('aria-hidden','true');line.appendChild(sep);}
           const span=document.createElement('span');
           span.className=item.cls;
           span.textContent=item.text;
@@ -12558,5 +12558,164 @@ html[data-theme="light"] #g.list::before{
 }
 @media(prefers-reduced-motion:reduce){
   .cineton-header-utilities .cineton-header-view-switch button{transition:none!important}
+}
+</style>
+
+
+
+<style id="cineton-editorial-list-rebuild-v2">
+/* Full-bleed editorial soundwave field; rows remain open text, not boxed cards. */
+html body main#g.list{
+  position:relative!important;
+  isolation:isolate!important;
+  display:flex!important;
+  flex-direction:column!important;
+  align-items:stretch!important;
+  gap:0!important;
+  overflow:visible!important;
+  min-width:0!important;
+  padding:20px 20px 58px!important;
+  background:transparent!important;
+}
+html body main#g.list::before{
+  content:""!important;
+  position:absolute!important;
+  z-index:0!important;
+  inset:0!important;
+  pointer-events:none!important;
+  opacity:1!important;
+  background-image:
+    radial-gradient(ellipse at 12% 10%,color-mix(in srgb,var(--gd) 8%,transparent),transparent 48%),
+    radial-gradient(ellipse at 88% 82%,color-mix(in srgb,var(--ac) 7%,transparent),transparent 48%),
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='1440' height='640' viewBox='0 0 1440 640' fill='none'%3E%3Cg stroke='%2379b99a' stroke-width='1.35' stroke-linecap='round' opacity='.20'%3E%3Cpath d='M-30 118 C130 118 140 45 290 45 S470 210 620 210 810 65 960 65 1190 175 1470 175'/%3E%3Cpath d='M-30 137 C130 137 140 64 290 64 S470 229 620 229 810 84 960 84 1190 194 1470 194' opacity='.58'/%3E%3Cpath d='M-30 156 C130 156 140 83 290 83 S470 248 620 248 810 103 960 103 1190 213 1470 213' opacity='.34'/%3E%3Cpath d='M-30 468 C130 468 175 360 320 360 S500 555 680 555 870 390 1030 390 1260 500 1470 500'/%3E%3Cpath d='M-30 487 C130 487 175 379 320 379 S500 574 680 574 870 409 1030 409 1260 519 1470 519' opacity='.55'/%3E%3C/g%3E%3Cg stroke='%23a6c99a' stroke-width='1.05' stroke-linecap='round' opacity='.16'%3E%3Cpath d='M-20 300 C160 190 260 190 420 300 S700 410 860 300 1140 190 1460 300'/%3E%3Cpath d='M-20 317 C160 207 260 207 420 317 S700 427 860 317 1140 207 1460 317'/%3E%3Cpath d='M-20 334 C160 224 260 224 420 334 S700 444 860 334 1140 224 1460 334'/%3E%3C/g%3E%3Cg stroke='%23a6c99a' stroke-width='1' opacity='.13'%3E%3Cpath d='M1190 0v640 M1205 0v640 M1220 0v640' stroke-dasharray='2 13'/%3E%3C/g%3E%3Cg fill='%2379b99a' opacity='.22'%3E%3Ccircle cx='1190' cy='24' r='2.4'/%3E%3Ccircle cx='1205' cy='24' r='2.4'/%3E%3Ccircle cx='1220' cy='24' r='2.4'/%3E%3Ccircle cx='1190' cy='616' r='2.4'/%3E%3Ccircle cx='1205' cy='616' r='2.4'/%3E%3Ccircle cx='1220' cy='616' r='2.4'/%3E%3C/g%3E%3C/svg%3E");
+  background-repeat:no-repeat,no-repeat,repeat-y!important;
+  background-size:100% 100%,100% 100%,100% 640px!important;
+  background-position:center,center,center top!important;
+}
+html body main#g.list > button.c.cineton-editorial-row{
+  appearance:none!important;
+  -webkit-appearance:none!important;
+  display:block!important;
+  position:relative!important;
+  z-index:1!important;
+  flex:0 0 auto!important;
+  width:100%!important;
+  min-width:0!important;
+  min-height:48px!important;
+  height:auto!important;
+  margin:0!important;
+  padding:11px 8px!important;
+  overflow:visible!important;
+  border:0!important;
+  border-radius:0!important;
+  outline:0!important;
+  background:transparent!important;
+  box-shadow:none!important;
+  color:var(--tx)!important;
+  text-align:left!important;
+  transform:none!important;
+  cursor:pointer!important;
+  transition:background-color .18s ease,color .18s ease!important;
+}
+html body main#g.list > button.c.cineton-editorial-row::before{
+  content:none!important;
+  display:none!important;
+}
+html body main#g.list > button.c.cineton-editorial-row::after{
+  content:""!important;
+  position:absolute!important;
+  left:8px!important;
+  right:8px!important;
+  bottom:0!important;
+  height:1px!important;
+  pointer-events:none!important;
+  background:linear-gradient(90deg,transparent,color-mix(in srgb,var(--line-strong) 78%,var(--gd) 22%),transparent)!important;
+  opacity:.72!important;
+}
+html body main#g.list .cineton-list-line{
+  display:flex!important;
+  flex-wrap:wrap!important;
+  align-items:baseline!important;
+  column-gap:.48rem!important;
+  row-gap:.12rem!important;
+  width:100%!important;
+  min-width:0!important;
+  color:var(--tx)!important;
+  font-family:"Mina","Manrope",sans-serif!important;
+  font-size:.86rem!important;
+  line-height:1.7!important;
+  font-weight:400!important;
+  letter-spacing:.004em!important;
+  overflow-wrap:anywhere!important;
+  text-wrap:pretty!important;
+}
+html body main#g.list .cineton-list-line > span{min-width:0!important}
+html body main#g.list .cineton-list-index{
+  flex:0 0 auto!important;
+  color:var(--gd)!important;
+  font-variant-numeric:tabular-nums!important;
+  font-weight:650!important;
+}
+html body main#g.list .cineton-list-title{
+  color:var(--tx)!important;
+  font-weight:650!important;
+  letter-spacing:-.012em!important;
+}
+html body main#g.list .cineton-list-year{
+  color:var(--mu)!important;
+  font-weight:400!important;
+  font-variant-numeric:tabular-nums!important;
+}
+html body main#g.list .cineton-list-imdb{
+  color:#d5a943!important;
+  font-weight:650!important;
+  white-space:nowrap!important;
+}
+html body main#g.list .cineton-list-my-rating{
+  color:var(--gd)!important;
+  font-weight:700!important;
+  white-space:nowrap!important;
+  font-variant-numeric:tabular-nums!important;
+}
+html body main#g.list .cineton-list-separator{
+  flex:0 0 auto!important;
+  color:var(--mu)!important;
+  opacity:.58!important;
+  font-size:.78em!important;
+  line-height:1!important;
+}
+html body main#g.list > button.c.cineton-editorial-row:hover{
+  background:color-mix(in srgb,var(--gd) 4%,transparent)!important;
+  box-shadow:none!important;
+  transform:none!important;
+}
+html body main#g.list > button.c.cineton-editorial-row:focus-visible{
+  outline:2px solid color-mix(in srgb,var(--gd) 68%,transparent)!important;
+  outline-offset:-3px!important;
+  background:color-mix(in srgb,var(--gd) 5%,transparent)!important;
+  box-shadow:none!important;
+}
+html body main#g.list > button.c.cineton-editorial-row:active{
+  background:color-mix(in srgb,var(--gd) 8%,transparent)!important;
+  transform:none!important;
+}
+html body main#g.list > .empty{
+  position:relative!important;
+  z-index:1!important;
+}
+html[data-theme="light"] body main#g.list::before{
+  background-image:
+    radial-gradient(ellipse at 12% 10%,#7eaa8c18,transparent 48%),
+    radial-gradient(ellipse at 88% 82%,#9ab69b14,transparent 48%),
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='1440' height='640' viewBox='0 0 1440 640' fill='none'%3E%3Cg stroke='%234c8062' stroke-width='1.35' stroke-linecap='round' opacity='.15'%3E%3Cpath d='M-30 118 C130 118 140 45 290 45 S470 210 620 210 810 65 960 65 1190 175 1470 175'/%3E%3Cpath d='M-30 137 C130 137 140 64 290 64 S470 229 620 229 810 84 960 84 1190 194 1470 194' opacity='.58'/%3E%3Cpath d='M-30 156 C130 156 140 83 290 83 S470 248 620 248 810 103 960 103 1190 213 1470 213' opacity='.34'/%3E%3Cpath d='M-30 468 C130 468 175 360 320 360 S500 555 680 555 870 390 1030 390 1260 500 1470 500'/%3E%3Cpath d='M-20 300 C160 190 260 190 420 300 S700 410 860 300 1140 190 1460 300'/%3E%3Cpath d='M-20 317 C160 207 260 207 420 317 S700 427 860 317 1140 207 1460 317'/%3E%3Cpath d='M-20 334 C160 224 260 224 420 334 S700 444 860 334 1140 224 1460 334'/%3E%3C/g%3E%3C/svg%3E");
+}
+@media(max-width:600px){
+  html body main#g.list{padding:14px 10px 46px!important}
+  html body main#g.list > button.c.cineton-editorial-row{min-height:46px!important;padding:10px 5px!important}
+  html body main#g.list .cineton-list-line{font-size:.76rem!important;line-height:1.68!important;column-gap:.34rem!important;row-gap:.08rem!important}
+  html body main#g.list > button.c.cineton-editorial-row::after{left:5px!important;right:5px!important}
+}
+@media(prefers-reduced-motion:reduce){
+  html body main#g.list > button.c.cineton-editorial-row{transition:none!important}
 }
 </style>
