@@ -12863,3 +12863,48 @@ html[data-theme="dark"] body main#g.list::before{
   html body main#g.list > button.c.cineton-editorial-row{transition:none!important}
 }
 </style>
+
+
+<style id="cineton-list-gutter-palette-pattern-v4">
+/* Restore the editorial jade palette and make the page-gutter artwork visibly legible. */
+html body main#g.list{
+  --list-jade:var(--gd);
+  --list-gold:#d4ad55;
+  --list-wave:color-mix(in srgb,var(--gd) 58%,var(--ac) 42%);
+  background:
+    radial-gradient(ellipse at 0% 8%,color-mix(in srgb,var(--gd) 8%,transparent),transparent 34%),
+    radial-gradient(ellipse at 100% 88%,color-mix(in srgb,var(--ac) 7%,transparent),transparent 34%),
+    transparent!important;
+}
+html body main#g.list::before{
+  opacity:1!important;
+  background-image:
+    radial-gradient(ellipse at 0% 18%,color-mix(in srgb,var(--gd) 13%,transparent),transparent 72%),
+    radial-gradient(ellipse at 100% 76%,color-mix(in srgb,var(--ac) 11%,transparent),transparent 72%),
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='660' viewBox='0 0 300 660' fill='none'%3E%3Cg stroke='%2379b99a' stroke-width='1.35' stroke-linecap='round' opacity='.62'%3E%3Cpath d='M-20 72 C45 72 48 22 104 22 S160 122 216 122 260 62 320 62'/%3E%3Cpath d='M-20 90 C45 90 48 40 104 40 S160 140 216 140 260 80 320 80' opacity='.72'/%3E%3Cpath d='M-20 108 C45 108 48 58 104 58 S160 158 216 158 260 98 320 98' opacity='.48'/%3E%3Cpath d='M-20 350 C42 350 66 284 122 284 S180 400 236 400 270 338 320 338'/%3E%3Cpath d='M-20 368 C42 368 66 302 122 302 S180 418 236 418 270 356 320 356' opacity='.7'/%3E%3C/g%3E%3Cg stroke='%23d4ad55' stroke-width='1.05' stroke-linecap='round' opacity='.44'%3E%3Cpath d='M-10 520 C58 462 118 462 170 520 S260 578 320 520'/%3E%3Cpath d='M-10 536 C58 478 118 478 170 536 S260 594 320 536'/%3E%3Cpath d='M-10 552 C58 494 118 494 170 552 S260 610 320 552'/%3E%3C/g%3E%3C/svg%3E");
+  background-repeat:no-repeat,no-repeat,repeat-y!important;
+  background-position:left top,right bottom,left top!important;
+  background-size:auto,auto,300px 660px!important;
+  -webkit-mask-image:linear-gradient(90deg,#000 0,#000 84px,transparent 168px,transparent calc(100% - 168px),#000 calc(100% - 84px),#000 100%)!important;
+  mask-image:linear-gradient(90deg,#000 0,#000 84px,transparent 168px,transparent calc(100% - 168px),#000 calc(100% - 84px),#000 100%)!important;
+  filter:saturate(1.08)!important;
+}
+html body main#g.list > button.c.cineton-editorial-row{
+  border-bottom-color:color-mix(in srgb,var(--gd) 24%,var(--line-strong))!important;
+}
+html body main#g.list .cineton-list-index,
+html body main#g.list .cineton-list-my-rating{color:var(--gd)!important}
+html body main#g.list .cineton-list-imdb{
+  color:#d4ad55!important;
+  text-shadow:0 0 12px #d4ad5528!important;
+}
+html[data-theme="light"] body main#g.list::before{opacity:.82!important;filter:saturate(.9)!important}
+html[data-theme="dark"] body main#g.list::before{opacity:.9!important;filter:saturate(1.08)!important}
+@media(max-width:600px){
+  html body main#g.list::before{
+    background-size:auto,auto,220px 560px!important;
+    -webkit-mask-image:linear-gradient(90deg,#000 0,#000 42px,transparent 88px,transparent calc(100% - 88px),#000 calc(100% - 42px),#000 100%)!important;
+    mask-image:linear-gradient(90deg,#000 0,#000 42px,transparent 88px,transparent calc(100% - 88px),#000 calc(100% - 42px),#000 100%)!important;
+  }
+}
+</style>
