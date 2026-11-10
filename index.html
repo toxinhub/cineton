@@ -12013,3 +12013,75 @@ html[data-theme="dark"] body dialog#suggestionsDialog .suggestion-message{
   html body dialog#suggestionsDialog .suggestion-compose textarea{transition:none!important}
 }
 </style>
+\n
+<style id="cineton-suggest-list-dark-contrast-v1">
+/* Suggest Me list: explicit dark-theme contrast and readable row structure. */
+html[data-theme="dark"] body dialog#suggestionsDialog .suggestion-list{
+  color:#edf3ed!important;
+}
+html[data-theme="dark"] body dialog#suggestionsDialog .suggestion-group{
+  margin:0 0 20px!important;padding:0!important;
+}
+html[data-theme="dark"] body dialog#suggestionsDialog .suggestion-date-row{
+  margin:0 0 9px!important;gap:10px!important;
+}
+html[data-theme="dark"] body dialog#suggestionsDialog .suggestion-date-line{
+  height:1px!important;background:rgba(190,211,194,.28)!important;
+}
+html[data-theme="dark"] body dialog#suggestionsDialog .suggestion-date{
+  color:#d1ddd2!important;font-size:.68rem!important;font-weight:700!important;
+  letter-spacing:.035em!important;
+}
+html[data-theme="dark"] body dialog#suggestionsDialog .suggestion-item{
+  display:grid!important;grid-template-columns:32px minmax(0,1fr)!important;
+  gap:9px!important;align-items:center!important;
+  padding:11px 12px!important;margin:0 0 7px!important;
+  border:1px solid rgba(190,211,194,.17)!important;border-radius:8px!important;
+  background:linear-gradient(105deg,rgba(220,238,222,.075),rgba(220,238,222,.035))!important;
+}
+html[data-theme="dark"] body dialog#suggestionsDialog .suggestion-number{
+  color:#c2d9c5!important;-webkit-text-fill-color:#c2d9c5!important;
+  font-size:.72rem!important;font-weight:700!important;text-align:center!important;
+}
+html[data-theme="dark"] body dialog#suggestionsDialog .suggestion-item-content{
+  min-width:0!important;padding:0!important;
+}
+html[data-theme="dark"] body dialog#suggestionsDialog .suggestion-item-main{
+  display:flex!important;align-items:center!important;justify-content:space-between!important;
+  gap:12px!important;min-width:0!important;
+}
+html[data-theme="dark"] body dialog#suggestionsDialog .suggestion-title-text{
+  color:#f0f4ef!important;-webkit-text-fill-color:#f0f4ef!important;
+  font-size:.88rem!important;font-weight:600!important;line-height:1.5!important;
+  opacity:1!important;
+}
+html[data-theme="dark"] body dialog#suggestionsDialog .suggestion-time{
+  color:#bdcbbf!important;-webkit-text-fill-color:#bdcbbf!important;
+  font-size:.61rem!important;opacity:1!important;
+}
+html[data-theme="dark"] body dialog#suggestionsDialog .suggestion-empty{
+  color:#d2ded3!important;-webkit-text-fill-color:#d2ded3!important;
+  background:#202d24!important;border:1px solid rgba(190,211,194,.18)!important;
+  border-radius:9px!important;padding:22px 14px!important;
+}
+html[data-theme="dark"] body dialog#suggestionsDialog .suggestion-message{
+  color:#d5e2d6!important;-webkit-text-fill-color:#d5e2d6!important;
+}
+@media(max-width:600px){
+  html[data-theme="dark"] body dialog#suggestionsDialog .suggestion-item{
+    grid-template-columns:26px minmax(0,1fr)!important;gap:8px!important;
+    padding:10px!important;
+  }
+  html[data-theme="dark"] body dialog#suggestionsDialog .suggestion-title-text{
+    font-size:.82rem!important;line-height:1.48!important;
+  }
+  html[data-theme="dark"] body dialog#suggestionsDialog .suggestion-time{
+    font-size:.56rem!important;
+  }
+}
+@media(max-width:380px){
+  html[data-theme="dark"] body dialog#suggestionsDialog .suggestion-item-main{
+    align-items:flex-start!important;flex-direction:column!important;gap:2px!important;
+  }
+}
+</style>
