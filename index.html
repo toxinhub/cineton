@@ -12115,3 +12115,76 @@ html[data-theme="light"] body dialog.cinemodal .person-filter:focus-visible{
   box-shadow:none!important;
 }
 </style>
+
+
+<style id="cineton-modal-navigation-premium-v2">
+/* Premium, modal-relative navigation controls with balanced edge spacing. */
+html body dialog.cinemodal > button.modal-nav{
+  position:absolute!important;
+  top:50%!important;
+  z-index:30!important;
+  display:grid!important;
+  place-items:center!important;
+  width:44px!important;
+  height:44px!important;
+  min-width:44px!important;
+  min-height:44px!important;
+  margin:0!important;
+  padding:0 0 3px!important;
+  border:1px solid color-mix(in srgb,var(--tx) 19%,transparent)!important;
+  border-radius:50%!important;
+  background:color-mix(in srgb,var(--modal) 82%,transparent)!important;
+  color:var(--tx)!important;
+  -webkit-text-fill-color:var(--tx)!important;
+  font:400 34px/1 "Cormorant Garamond",serif!important;
+  box-shadow:0 5px 18px #0003,0 1px 0 #ffffff18 inset!important;
+  -webkit-backdrop-filter:blur(12px) saturate(125%)!important;
+  backdrop-filter:blur(12px) saturate(125%)!important;
+  opacity:.9;
+  transform:translateY(-50%)!important;
+  transition:background-color .2s ease,border-color .2s ease,color .2s ease,box-shadow .22s ease,opacity .2s ease,transform .22s cubic-bezier(.2,.75,.25,1)!important;
+  cursor:pointer!important;
+  touch-action:manipulation;
+}
+html body dialog.cinemodal > button.modal-nav-prev{left:14px!important;right:auto!important}
+html body dialog.cinemodal > button.modal-nav-next{right:14px!important;left:auto!important}
+@media(hover:hover) and (pointer:fine){
+  html body dialog.cinemodal > button.modal-nav:not(:disabled):hover{
+    opacity:1!important;
+    color:var(--ac)!important;
+    -webkit-text-fill-color:var(--ac)!important;
+    background:color-mix(in srgb,var(--modal) 94%,var(--ac))!important;
+    border-color:color-mix(in srgb,var(--ac) 55%,transparent)!important;
+    box-shadow:0 8px 22px #0004,0 0 0 3px color-mix(in srgb,var(--ac) 12%,transparent),0 1px 0 #ffffff20 inset!important;
+    transform:translateY(-50%) scale(1.055)!important;
+  }
+}
+html body dialog.cinemodal > button.modal-nav:focus-visible{
+  outline:2px solid var(--ac)!important;
+  outline-offset:3px!important;
+}
+html body dialog.cinemodal > button.modal-nav:active:not(:disabled){
+  transform:translateY(-50%) scale(.94)!important;
+  box-shadow:0 2px 8px #0003!important;
+}
+html body dialog.cinemodal > button.modal-nav:disabled{
+  opacity:.2!important;
+  filter:saturate(.35);
+  box-shadow:none!important;
+}
+html body dialog.cinemodal > button.modal-nav[hidden]{
+  display:none!important;
+}
+@media(max-width:639px){
+  html body dialog.cinemodal > button.modal-nav{
+    width:36px!important;height:36px!important;min-width:36px!important;min-height:36px!important;
+    font-size:29px!important;padding-bottom:2px!important;
+    -webkit-backdrop-filter:blur(9px)!important;backdrop-filter:blur(9px)!important;
+  }
+  html body dialog.cinemodal > button.modal-nav-prev{left:6px!important}
+  html body dialog.cinemodal > button.modal-nav-next{right:6px!important}
+}
+@media(prefers-reduced-motion:reduce){
+  html body dialog.cinemodal > button.modal-nav{transition:none!important}
+}
+</style>
