@@ -11933,3 +11933,83 @@ html[data-theme="dark"] body dialog#suggestionsDialog::backdrop{
 }
 </style>
 
+\n
+<style id="cineton-suggest-input-clarity-v2">
+/* Suggest Me: make the writing area unmistakably interactive in both themes. */
+html body dialog#suggestionsDialog .suggestion-compose{
+  background:var(--ct-panel-solid,#f7faf6)!important;
+  border:1px solid var(--ct-panel-border,rgba(43,78,54,.22))!important;
+  border-radius:10px!important;
+}
+html body dialog#suggestionsDialog .suggestion-compose label{
+  display:block!important;color:var(--ct-text-primary,#203229)!important;
+  font-size:.76rem!important;font-weight:700!important;letter-spacing:.01em!important;
+  line-height:1.45!important;margin:0 0 9px!important;
+}
+html body dialog#suggestionsDialog .suggestion-compose textarea{
+  display:block!important;width:100%!important;min-height:92px!important;
+  padding:12px 13px!important;border:1.5px solid #829487!important;
+  border-radius:8px!important;background:#fff!important;color:#203229!important;
+  -webkit-text-fill-color:#203229!important;caret-color:#286c50!important;
+  font:400 .84rem/1.55 "Mina",sans-serif!important;
+  outline:none!important;box-shadow:0 1px 2px rgba(20,40,26,.06) inset!important;
+  transition:border-color .16s ease,box-shadow .16s ease,background .16s ease!important;
+}
+html body dialog#suggestionsDialog .suggestion-compose textarea::placeholder{
+  color:#65766a!important;-webkit-text-fill-color:#65766a!important;opacity:1!important;
+}
+html body dialog#suggestionsDialog .suggestion-compose textarea:hover{
+  border-color:#526d5a!important;
+}
+html body dialog#suggestionsDialog .suggestion-compose textarea:focus,
+html body dialog#suggestionsDialog .suggestion-compose textarea:focus-visible{
+  border-color:#286c50!important;
+  box-shadow:0 0 0 3px rgba(52,118,83,.19),0 1px 2px rgba(20,40,26,.06) inset!important;
+  background:#fff!important;
+}
+html body dialog#suggestionsDialog .suggestion-note{
+  color:var(--ct-text-secondary,#596b60)!important;font-size:.65rem!important;
+  line-height:1.5!important;margin-top:9px!important;
+}
+html body dialog#suggestionsDialog .suggestion-message{
+  color:var(--ct-text-primary,#203229)!important;
+}
+html[data-theme="dark"] body dialog#suggestionsDialog .suggestion-compose{
+  background:#202b24!important;border-color:#435448!important;
+}
+html[data-theme="dark"] body dialog#suggestionsDialog .suggestion-compose label{
+  color:#e4ece5!important;
+}
+html[data-theme="dark"] body dialog#suggestionsDialog .suggestion-compose textarea{
+  background:#101914!important;color:#f0f4ef!important;
+  -webkit-text-fill-color:#f0f4ef!important;caret-color:#c4e0c8!important;
+  border:1.5px solid #687d6d!important;
+  box-shadow:0 1px 3px rgba(0,0,0,.28) inset!important;
+}
+html[data-theme="dark"] body dialog#suggestionsDialog .suggestion-compose textarea::placeholder{
+  color:#b1c0b4!important;-webkit-text-fill-color:#b1c0b4!important;opacity:1!important;
+}
+html[data-theme="dark"] body dialog#suggestionsDialog .suggestion-compose textarea:hover{
+  border-color:#9aaf9e!important;
+}
+html[data-theme="dark"] body dialog#suggestionsDialog .suggestion-compose textarea:focus,
+html[data-theme="dark"] body dialog#suggestionsDialog .suggestion-compose textarea:focus-visible{
+  border-color:#c0d9c3!important;
+  box-shadow:0 0 0 3px rgba(177,211,182,.22),0 1px 3px rgba(0,0,0,.28) inset!important;
+  background:#111c15!important;
+}
+html[data-theme="dark"] body dialog#suggestionsDialog .suggestion-note{
+  color:#c0cdc2!important;
+}
+html[data-theme="dark"] body dialog#suggestionsDialog .suggestion-message{
+  color:#e2ebe3!important;
+}
+@media(max-width:600px){
+  html body dialog#suggestionsDialog .suggestion-compose textarea{
+    min-height:104px!important;font-size:.86rem!important;padding:12px!important;
+  }
+}
+@media(prefers-reduced-motion:reduce){
+  html body dialog#suggestionsDialog .suggestion-compose textarea{transition:none!important}
+}
+</style>
