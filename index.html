@@ -8791,11 +8791,7 @@ html[data-theme] body :is(.person-filter,.genre-filter,.industry-chip,.modal-nav
 html[data-theme] body :is(.person-filter.active,.genre-filter.active,.industry-chip.active,.modal-nav.active,.ct-inline-picker-option.is-selected){
  background:var(--ct-hover)!important;color:var(--ct-text-accent)!important;border-color:var(--line-strong)!important
 }
-html[data-theme] body :is(.suggest-me-btn,.suggestion-submit,.public-comment-submit){
- background:linear-gradient(135deg,var(--ac),color-mix(in srgb,var(--ac) 78%,#173d2a))!important;
- color:var(--ct-text-on-accent)!important;-webkit-text-fill-color:var(--ct-text-on-accent)!important;
- border-color:var(--ac)!important
-}
+/* Buttons retain their own neutral/semantic styling; no site-wide green recolor. */
 html[data-theme] body main#g:not(.list) .c{
  background:color-mix(in srgb,var(--sf) 97%,var(--bg))!important;border-color:var(--line)!important
 }
@@ -11863,3 +11859,77 @@ html[data-theme="dark"] body dialog#suggestionsDialog .suggestion-item+.suggesti
   html body dialog#suggestionsDialog *{transition:none!important}
 }
 </style>
+
+
+<style id="cineton-suggest-modal-dark-balance-v1">
+/* Suggest Me dialog: quiet, layered graphite–jade dark palette. */
+html[data-theme="dark"] body dialog#suggestionsDialog.suggestions-dialog{
+ background:#17221c!important;color:#edf1eb!important;
+ border:1px solid rgba(190,211,194,.17)!important;
+ box-shadow:0 28px 90px rgba(0,0,0,.56),0 1px 0 rgba(255,255,255,.035) inset!important
+}
+html[data-theme="dark"] body dialog#suggestionsDialog .suggestions-shell{
+ background:linear-gradient(180deg,#1b2921 0%,#17231c 100%)!important;
+ color:#edf1eb!important
+}
+html[data-theme="dark"] body dialog#suggestionsDialog .suggestions-head{
+ background:linear-gradient(135deg,#223229 0%,#1d2a22 100%)!important;
+ border-bottom:1px solid rgba(190,211,194,.13)!important
+}
+html[data-theme="dark"] body dialog#suggestionsDialog .suggestions-kicker{color:#a8b9a9!important}
+html[data-theme="dark"] body dialog#suggestionsDialog #suggestionsTitle{color:#f0f3ee!important}
+html[data-theme="dark"] body dialog#suggestionsDialog .suggestions-sub{color:#b7c2b8!important}
+html[data-theme="dark"] body dialog#suggestionsDialog .suggestions-body{background:transparent!important}
+html[data-theme="dark"] body dialog#suggestionsDialog .suggestion-compose{
+ background:#202e25!important;border:1px solid rgba(190,211,194,.16)!important;
+ box-shadow:0 7px 22px rgba(0,0,0,.16),0 1px 0 rgba(255,255,255,.025) inset!important
+}
+html[data-theme="dark"] body dialog#suggestionsDialog .suggestion-compose label{color:#d5ded5!important}
+html[data-theme="dark"] body dialog#suggestionsDialog .suggestion-compose textarea{
+ background:#141e18!important;color:#edf2ec!important;-webkit-text-fill-color:#edf2ec!important;
+ border:1px solid #405146!important;box-shadow:none!important
+}
+html[data-theme="dark"] body dialog#suggestionsDialog .suggestion-compose textarea::placeholder{
+ color:#9eaca1!important;-webkit-text-fill-color:#9eaca1!important;opacity:1!important
+}
+html[data-theme="dark"] body dialog#suggestionsDialog .suggestion-compose textarea:focus{
+ border-color:#829b86!important;box-shadow:0 0 0 2px rgba(150,180,154,.13)!important
+}
+/* Neutral graphite action, not a green CTA. */
+html[data-theme="dark"] body dialog#suggestionsDialog .suggestion-submit{
+ background:linear-gradient(180deg,#39463d,#303c34)!important;
+ border:1px solid #59675b!important;color:#f0f3ee!important;
+ -webkit-text-fill-color:#f0f3ee!important;box-shadow:0 4px 12px rgba(0,0,0,.2)!important
+}
+html[data-theme="dark"] body dialog#suggestionsDialog .suggestion-submit:hover,
+html[data-theme="dark"] body dialog#suggestionsDialog .suggestion-submit:focus-visible{
+ background:#465449!important;border-color:#788a79!important;color:#fff!important;
+ -webkit-text-fill-color:#fff!important
+}
+html[data-theme="dark"] body dialog#suggestionsDialog .suggestion-submit:disabled{opacity:.48!important}
+html[data-theme="dark"] body dialog#suggestionsDialog .suggestion-note{color:#aebbb0!important}
+html[data-theme="dark"] body dialog#suggestionsDialog .suggestion-message{color:#c2d1c3!important}
+html[data-theme="dark"] body dialog#suggestionsDialog .suggestion-date{color:#b9c7ba!important}
+html[data-theme="dark"] body dialog#suggestionsDialog .suggestion-date-line{background:#3a493e!important}
+html[data-theme="dark"] body dialog#suggestionsDialog .suggestion-number{color:#b5c5b6!important}
+html[data-theme="dark"] body dialog#suggestionsDialog .suggestion-title-text{
+ color:#e8eee8!important;-webkit-text-fill-color:#e8eee8!important
+}
+html[data-theme="dark"] body dialog#suggestionsDialog .suggestion-time,
+html[data-theme="dark"] body dialog#suggestionsDialog .suggestion-empty{color:#aebbb0!important}
+html[data-theme="dark"] body dialog#suggestionsDialog .suggestion-item+.suggestion-item{
+ border-top-color:rgba(190,211,194,.13)!important
+}
+html[data-theme="dark"] body dialog#suggestionsDialog .suggestions-close{
+ background:#29372d!important;border:1px solid #4b5c4e!important;color:#dce5dc!important;
+ -webkit-text-fill-color:#dce5dc!important
+}
+html[data-theme="dark"] body dialog#suggestionsDialog .suggestions-close:hover{
+ background:#344438!important;color:#fff!important;-webkit-text-fill-color:#fff!important
+}
+html[data-theme="dark"] body dialog#suggestionsDialog::backdrop{
+ background:rgba(4,9,6,.72)!important;backdrop-filter:blur(5px)!important;
+ -webkit-backdrop-filter:blur(5px)!important
+}
+</style>
+
