@@ -11469,3 +11469,115 @@ html body :is(.person-filter,.genre-filter,.industry-chip,[role="option"]):activ
   }
 }
 </style>
+
+
+<style id="cineton-controls-motion-cascade-fix-v2">
+/* High-specificity interaction layer: wins over legacy !important control rules. */
+html body button,
+html body a.social-btn,
+html body [role="button"],
+html body [role="option"],
+html body .ct-inline-clear,
+html body .clear-person{
+  -webkit-tap-highlight-color:transparent!important;
+  transition:
+    transform .22s cubic-bezier(.2,.8,.2,1),
+    box-shadow .22s ease,
+    filter .2s ease,
+    background-color .22s ease,
+    border-color .22s ease,
+    color .2s ease!important;
+}
+@media(hover:hover) and (pointer:fine){
+  html body button:hover,
+  html body a.social-btn:hover,
+  html body [role="button"]:hover,
+  html body [role="option"]:hover,
+  html body .ct-inline-clear:hover,
+  html body .clear-person:hover{
+    filter:brightness(1.09) saturate(1.06)!important;
+  }
+  html body button:active,
+  html body a.social-btn:active,
+  html body [role="button"]:active,
+  html body [role="option"]:active,
+  html body .ct-inline-clear:active,
+  html body .clear-person:active{
+    transform:scale(.955)!important;
+    filter:brightness(.97)!important;
+  }
+}
+/* Explicit dock selectors override its older hover/active transforms. */
+html body nav.cineton-bottom-nav button{
+  transition:transform .26s cubic-bezier(.2,.8,.2,1),background-color .22s ease,box-shadow .22s ease,color .2s ease!important;
+}
+@media(hover:hover) and (pointer:fine){
+  html body nav.cineton-bottom-nav button:hover{
+    transform:translateY(-3px) scale(1.035)!important;
+    filter:brightness(1.12)!important;
+  }
+}
+html body nav.cineton-bottom-nav button:active{
+  transform:scale(.92)!important;
+}
+/* Inline SVGs are the actual dock and social icons; animate them directly. */
+html body button svg,
+html body a.social-btn svg,
+html body [role="button"] svg{
+  transform-box:fill-box!important;
+  transform-origin:center!important;
+  transition:transform .28s cubic-bezier(.2,.8,.2,1),filter .2s ease!important;
+}
+@media(hover:hover) and (pointer:fine){
+  html body button:hover svg,
+  html body a.social-btn:hover svg,
+  html body [role="button"]:hover svg{
+    transform:translateY(-1.5px) scale(1.13)!important;
+    filter:drop-shadow(0 2px 4px rgba(0,0,0,.2))!important;
+  }
+}
+html body button:active svg,
+html body a.social-btn:active svg,
+html body [role="button"]:active svg{
+  transform:scale(.86)!important;
+}
+/* Header action icons are text glyphs rather than SVGs. */
+html body .nav-actions button > span:first-child,
+html body #cineton-theme-toggle .theme-icon{
+  display:inline-block!important;
+  transform-origin:center!important;
+  transition:transform .3s cubic-bezier(.2,.8,.2,1),filter .2s ease!important;
+}
+@media(hover:hover) and (pointer:fine){
+  html body .nav-actions button:hover > span:first-child,
+  html body #cineton-theme-toggle:hover .theme-icon{
+    transform:rotate(12deg) scale(1.2)!important;
+    filter:drop-shadow(0 0 5px currentColor)!important;
+  }
+}
+html body .nav-actions button:active > span:first-child,
+html body #cineton-theme-toggle:active .theme-icon{
+  transform:scale(.82)!important;
+}
+html body button:focus-visible,
+html body a.social-btn:focus-visible,
+html body [role="button"]:focus-visible{
+  outline:2px solid var(--gd,#77aa8a)!important;
+  outline-offset:3px!important;
+}
+@media(prefers-reduced-motion:reduce){
+  html body button,
+  html body a.social-btn,
+  html body [role="button"],
+  html body [role="option"],
+  html body button svg,
+  html body a.social-btn svg,
+  html body [role="button"] svg,
+  html body .nav-actions button > span:first-child,
+  html body #cineton-theme-toggle .theme-icon{
+    transition:none!important;
+    animation:none!important;
+    transform:none!important;
+  }
+}
+</style>
