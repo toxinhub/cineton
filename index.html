@@ -12085,3 +12085,33 @@ html[data-theme="dark"] body dialog#suggestionsDialog .suggestion-message{
   }
 }
 </style>
+
+
+<style id="cineton-modal-person-chip-transparent-v1">
+/* Keep cast and director names as inline text links, never white button tiles. */
+html[data-theme="light"] body dialog.cinemodal .person-filter,
+html[data-theme="light"] body dialog.cinemodal .person-list .person-filter,
+html[data-theme="light"] body dialog.cinemodal .detail-value .person-filter{
+  appearance:none!important;
+  -webkit-appearance:none!important;
+  background:transparent!important;
+  background-color:transparent!important;
+  background-image:none!important;
+  color:var(--ct-text-accent)!important;
+  -webkit-text-fill-color:var(--ct-text-accent)!important;
+  border:0!important;
+  border-bottom:1px dashed var(--ct-panel-border)!important;
+  border-radius:0!important;
+  box-shadow:none!important;
+  padding:0!important;
+}
+html[data-theme="light"] body dialog.cinemodal .person-filter:hover,
+html[data-theme="light"] body dialog.cinemodal .person-filter:focus-visible{
+  background:transparent!important;
+  background-color:transparent!important;
+  color:var(--ct-text-primary)!important;
+  -webkit-text-fill-color:var(--ct-text-primary)!important;
+  border-bottom-color:var(--ct-text-accent)!important;
+  box-shadow:none!important;
+}
+</style>
