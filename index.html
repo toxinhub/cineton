@@ -11368,3 +11368,104 @@ html body dialog#d.cinemodal > span.x:focus-visible .ct-modal-close-glyph{
 
 
 
+
+
+<style id="cineton-modern-controls-icons-motion-v1">
+/* Unified modern interaction language for CineTon controls and icons. */
+html body :is(button,[role="button"],.social-btn,.ct-inline-clear,.clear-person):not(.x):not(.ct-modal-close-glyph){
+  -webkit-tap-highlight-color:transparent;
+  touch-action:manipulation;
+  transition:
+    color .2s ease,
+    background-color .22s ease,
+    border-color .22s ease,
+    box-shadow .24s ease,
+    opacity .2s ease,
+    transform .24s cubic-bezier(.2,.75,.25,1),
+    filter .2s ease;
+}
+@media(hover:hover) and (pointer:fine){
+  html body button:not(.x):not(.ct-modal-close-glyph):not([data-destination]):not(.ct-nav-home):hover,
+  html body [role="button"]:not([data-destination]):hover,
+  html body .social-btn:hover,
+  html body .ct-inline-clear:hover,
+  html body .clear-person:hover{
+    filter:brightness(1.045);
+  }
+  html body button:not(.x):not(.ct-modal-close-glyph):not([data-destination]):not(.ct-nav-home):active,
+  html body [role="button"]:not([data-destination]):active,
+  html body .social-btn:active,
+  html body .ct-inline-clear:active,
+  html body .clear-person:active{
+    transform:translateY(0) scale(.975);
+    filter:brightness(.98);
+  }
+}
+html body :is(button,[role="button"],.social-btn,.ct-inline-clear,.clear-person):focus-visible{
+  outline:2px solid color-mix(in srgb,var(--ct-accent,var(--ct-jade,#69a987)) 72%,transparent);
+  outline-offset:3px;
+}
+html body :is(button,[role="button"],.social-btn,.ct-inline-clear,.clear-person):disabled,
+html body :is(button,[role="button"],.social-btn,.ct-inline-clear,.clear-person)[aria-disabled="true"]{
+  cursor:not-allowed;
+  opacity:.52;
+  filter:saturate(.65);
+  transform:none!important;
+}
+html body :is(button,[role="button"],.social-btn,.ct-inline-clear,.clear-person) :is(svg,i,[class*="icon"],[data-lucide]){
+  transform-origin:center;
+  transition:transform .28s cubic-bezier(.2,.75,.25,1),color .2s ease,opacity .2s ease;
+}
+@media(hover:hover) and (pointer:fine){
+  html body :is(button,[role="button"],.social-btn,.ct-inline-clear,.clear-person):not([data-destination]):hover :is(svg,i,[class*="icon"],[data-lucide]){
+    transform:scale(1.08);
+  }
+}
+/* Top utility actions: clear feedback without changing their established colors. */
+html body :is(.suggest-me-btn,.nav-surprise,#cineton-theme-toggle,.theme-icon,.social-btn){
+  transition:transform .25s cubic-bezier(.2,.8,.2,1),box-shadow .22s ease,background-color .22s ease,border-color .22s ease,filter .2s ease!important;
+}
+@media(hover:hover) and (pointer:fine){
+  html body :is(.suggest-me-btn,.nav-surprise,#cineton-theme-toggle,.social-btn):hover{
+    transform:translateY(-2px);
+    box-shadow:0 7px 18px rgba(24,54,39,.13);
+  }
+  html body :is(.suggest-me-btn,.nav-surprise,#cineton-theme-toggle,.social-btn):hover :is(svg,i,.theme-icon){
+    transform:rotate(-5deg) scale(1.09);
+  }
+}
+/* Bottom dock: keep its liquid active-pill behavior; add restrained icon motion only. */
+html body .cineton-bottom-nav :is(button,[role="button"]) svg,
+html body .cineton-bottom-nav :is(button,[role="button"]) i{
+  transition:transform .28s cubic-bezier(.2,.8,.2,1),opacity .2s ease;
+}
+@media(hover:hover) and (pointer:fine){
+  html body .cineton-bottom-nav :is(button,[role="button"]):hover svg,
+  html body .cineton-bottom-nav :is(button,[role="button"]):hover i{
+    transform:translateY(-1.5px) scale(1.08);
+  }
+}
+html body .cineton-bottom-nav :is(button,[role="button"]):active svg,
+html body .cineton-bottom-nav :is(button,[role="button"]):active i{
+  transform:scale(.91);
+}
+/* Small controls and filter chips receive a crisp, tactile response. */
+html body :is(.person-filter,.genre-filter,.industry-chip,[role="option"],.stat,.modal-nav,.public-comments-toggle,.public-comment-submit,.public-comment-resize){
+  transition:background-color .2s ease,border-color .2s ease,color .2s ease,box-shadow .22s ease,transform .22s cubic-bezier(.2,.75,.25,1)!important;
+}
+@media(hover:hover) and (pointer:fine){
+  html body :is(.person-filter,.genre-filter,.industry-chip,[role="option"],.stat,.modal-nav,.public-comments-toggle,.public-comment-submit,.public-comment-resize):hover{
+    transform:translateY(-1px);
+  }
+}
+html body :is(.person-filter,.genre-filter,.industry-chip,[role="option"]):active{
+  transform:scale(.97);
+}
+@media(prefers-reduced-motion:reduce){
+  html body :is(button,[role="button"],.social-btn,.ct-inline-clear,.clear-person),
+  html body :is(button,[role="button"],.social-btn,.ct-inline-clear,.clear-person) :is(svg,i,[class*="icon"],[data-lucide]){
+    transition:none!important;
+    animation:none!important;
+  }
+}
+</style>
